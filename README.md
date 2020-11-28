@@ -14,6 +14,7 @@ for (player in ServerPlayer.List)
 ptr = [[0x1E4A1220] + 0x12] + 0x144;
 *ptr = 1;
 ~~~
+(Under discussion)
 ## Feedback
 - Request a new feature
 - File an issue
