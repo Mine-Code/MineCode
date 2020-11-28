@@ -1,5 +1,6 @@
 # MineCode
-(https://img.shields.io/github/issues/yukikamome316/MineCode?style=flat-square) (https://img.shields.io/github/license/yukikamome316/MineCode)
+[![license](https://github.com/yukikamome316/MineCode\LICENSE)](https://img.shields.io/github/license/yukikamome316/MineCode)
+
 [MineCode](https://github.com/yukikamome316/MineCode/) is a programming language which allows you to make cheat codes easier, faster and emmits PowerPC assembles or something else.
 ## Sample Code
 ~~~
