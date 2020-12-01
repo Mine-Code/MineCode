@@ -41,6 +41,11 @@ info:
 	@echo "| exec"
 	@echo "| cxx:$(CXX)"
 	@echo "|   c:$(CC)"
+	@echo "|-------------------"
+	@echo "| flags"
+	@echo "| cxx: $(CXXFLAGS)"
+	@echo "|   c: $(CFLAGS)"
+	@echo "|  ld: $(LDFLAGS)"
 	@echo "--------------------"
 
 # Program Rule
