@@ -15,7 +15,7 @@ TARGET=MineCode
 ## Arguments
 CXXDEP   ?= -MMD -MP -MF $(subst :,/,$(subst /,_,$(@:obj/%.o=dep:%.d)))
 LDFLAGS  ?=
-CXXFLAGS ?=
+CXXFLAGS ?= $(addprefix -I,$(INCDIR))
 
 ## File list
 SRCS := $(wildcard $(SRCDIR)/*.cpp)
