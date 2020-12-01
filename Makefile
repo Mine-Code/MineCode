@@ -15,9 +15,10 @@ TARGET=MineCode
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(subst :,/,$(subst /,_,$(@:obj/%.o=dep:%.d)))
 COMPFLAGS?= -Wall -Wextra -c
+INCLUDES ?= $(addprefix -I,$(INCDIR))
 LDFLAGS  ?=
-CXXFLAGS ?= $(addprefix -I,$(INCDIR)) $(DEPEND) $(COMPFLAGS) 
-CFLAGS   ?= $(addprefix -I,$(INCDIR)) $(DEPEND) $(COMPFLAGS)
+CXXFLAGS ?= $(DEPEND) $(COMPFLAGS) 
+CFLAGS   ?= $(DEPEND) $(COMPFLAGS)
 
 ## File list
 SRCS := $(wildcard $(SRCDIR)/*.cpp)
