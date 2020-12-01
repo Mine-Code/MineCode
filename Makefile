@@ -51,12 +51,12 @@ info:
 # Program Rule
 $(TARGET): $(OBJS)
 	@echo "building $@"
-	@$(CXX) -o $@ $(WX_CPPFLAGS) $(LDFLAGS) $(OBJS) $(WX_LIB)
+	@$(CXX) -o $@ $(LDFLAGS) $(OBJS)
 
 # .cpp -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.cpp' to '$@'"
-	@$(CXX) -std=gnu++11 -c -o $@ $(CXXDEP) -Wall -Wextra  $(WX_CPPFLAGS) -I $(INCDIR) $(CXXFLAGS) $(SRCDIR)/$*.cpp
+	@$(CXX) -std=gnu++11 -c -o $@ $(CXXDEP) -Wall -Wextra $(CXXFLAGS) $(SRCDIR)/$*.cpp
 
 # Source Dependencies
 -include $(DEPS)
