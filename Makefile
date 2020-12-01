@@ -14,9 +14,10 @@ TARGET=MineCode
 
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(subst :,/,$(subst /,_,$(@:obj/%.o=dep:%.d)))
+COMPFLAGS?= -Wall -Wextra
 LDFLAGS  ?=
-CXXFLAGS ?= $(addprefix -I,$(INCDIR)) $(DEPEND) 
-CFLAGS   ?= $(addprefix -I,$(INCDIR)) $(DEPEND)
+CXXFLAGS ?= $(addprefix -I,$(INCDIR)) $(DEPEND) $(COMPFLAGS) 
+CFLAGS   ?= $(addprefix -I,$(INCDIR)) $(DEPEND) $(COMPFLAGS)
 
 ## File list
 SRCS := $(wildcard $(SRCDIR)/*.cpp)
@@ -57,12 +58,12 @@ $(TARGET): $(OBJS)
 # .cpp -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.cpp' to '$@'"
-	@$(CXX) -std=gnu++11 -c -o $@ -Wall -Wextra $(CXXFLAGS) $(SRCDIR)/$*.cpp
+	@$(CXX) -std=gnu++11 -c -o $@ $(CXXFLAGS) $(SRCDIR)/$*.cpp
 
 # .c -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.c' to '$@'"
-	@$(C) -std=gnu11 -c -o $@ -Wall -Wextra $(CFLAGS) $(SRCDIR)/$*.c
+	@$(C) -std=gnu11 -c -o $@ $(CFLAGS) $(SRCDIR)/$*.c
 
 # Source Dependencies
 -include $(DEPS)
