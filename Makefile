@@ -7,7 +7,7 @@ CC  := gcc
 SRCDIR := src
 OBJDIR := obj
 DEPDIR := dep
-INCDIR := inc
+INCS := inc
 
 ## Files
 TARGET=MineCode
@@ -15,10 +15,10 @@ TARGET=MineCode
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(subst :,/,$(subst /,_,$(@:obj/%.o=dep:%.d)))
 COMPFLAGS?= -Wall -Wextra -c
-INCLUDES ?= $(addprefix -I,$(INCDIR))
+INCLUDES ?= $(addprefix -I,$(INCS))
 LDFLAGS  ?=
-CXXFLAGS ?= $(DEPEND) $(COMPFLAGS) 
-CFLAGS   ?= $(DEPEND) $(COMPFLAGS)
+CXXFLAGS ?= $(INCLUDES) $(DEPEND) $(COMPFLAGS) 
+CFLAGS   ?= $(INCLUDES) $(DEPEND) $(COMPFLAGS)
 
 ## File list
 SRCS := $(wildcard $(SRCDIR)/*.cpp)
@@ -37,7 +37,7 @@ clean:
 info:
 	@echo "--------------------"
 	@echo "| source  : $(SRCDIR) : $(SRCS)"
-	@echo "| include : $(INCDIR) : -----"
+	@echo "| includes: $(INCS) : -----"
 	@echo "| object  : $(OBJDIR) : $(OBJS)"
 	@echo "| depend  : $(DEPDIR) : $(DEPS)"
 	@echo "|-------------------"
