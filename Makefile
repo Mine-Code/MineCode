@@ -59,5 +59,10 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.cpp' to '$@'"
 	@$(CXX) -std=gnu++11 -c -o $@ -Wall -Wextra $(CXXFLAGS) $(SRCDIR)/$*.cpp
 
+# .c -> .o
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	@echo "compile '$(SRCDIR)/$*.c' to '$@'"
+	@$(C) -std=gnu11 -c -o $@ -Wall -Wextra $(CFLAGS) $(SRCDIR)/$*.c
+
 # Source Dependencies
 -include $(DEPS)
