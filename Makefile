@@ -1,8 +1,7 @@
 
 # Commands
-WX_CONFIG ?= wx-config
-CXX := `$(WX_CONFIG) --cxx`
-CC  := `$(WX_CONFIG) --cc`
+CXX := g++
+CC  := gcc
 
 ## Directorys
 SRCDIR := src
