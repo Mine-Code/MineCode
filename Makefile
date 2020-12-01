@@ -63,7 +63,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 # .c -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.c' to '$@'"
-	@$(C) -std=gnu11 -o $@ $(CFLAGS) $(SRCDIR)/$*.c
+	@$(CC) -std=gnu11 -o $@ $(CFLAGS) $(SRCDIR)/$*.c
 
 # Source Dependencies
 -include $(DEPS)
