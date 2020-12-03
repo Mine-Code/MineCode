@@ -59,7 +59,7 @@ $(TARGET): $(OBJS)
 # .cpp -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.cpp' to '$@'"
-	@$(CXX) -std=gnu++11 -o $@ $(CXXFLAGS) $(SRCDIR)/$*.cpp
+	@$(CXX) -std=gnu++17 -o $@ $(CXXFLAGS) $(SRCDIR)/$*.cpp
 
 # .c -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
