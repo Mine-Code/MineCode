@@ -18,8 +18,8 @@ INCLUDES ?= $(addprefix -I,$(INCS))
 COMPFLAGS?= -Wall -Wextra -c $(INCLUDES) $(DEPEND)
 
 LDFLAGS  ?=
-CXXFLAGS ?= $(COMPFLAGS)
-CFLAGS   ?= $(COMPFLAGS)
+CXXFLAGS ?= $(COMPFLAGS) -std=gnu++17
+CFLAGS   ?= $(COMPFLAGS) -std=gnu11
 
 ## File list
 SRCS := $(wildcard $(SRCDIR)/*.cpp)
@@ -60,12 +60,12 @@ $(TARGET): $(OBJS)
 # .cpp -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.cpp' to '$@'"
-	@$(CXX) -std=gnu++17 -o $@ $(CXXFLAGS) $(SRCDIR)/$*.cpp
+	@$(CXX) -o $@ $(CXXFLAGS) $(SRCDIR)/$*.cpp
 
 # .c -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.c' to '$@'"
-	@$(CC) -std=gnu11 -o $@ $(CFLAGS) $(SRCDIR)/$*.c
+	@$(CC)  -o $@ $(CFLAGS) $(SRCDIR)/$*.c
 
 # Source Dependencies
 -include $(DEPS)
