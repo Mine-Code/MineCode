@@ -1,0 +1,3 @@
+[submodule "autotool"]
+	path = autotool
+	url = git@github.com:syoch/autotool.git
