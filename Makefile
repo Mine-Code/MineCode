@@ -62,7 +62,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@$(CXX) -o $@ $(CXXFLAGS) $(SRCDIR)/$*.cpp
 
 # .c -> .o
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo "compile '$(SRCDIR)/$*.c' to '$@'"
 	@$(CC)  -o $@ $(CFLAGS) $(SRCDIR)/$*.c
 
