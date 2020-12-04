@@ -7,14 +7,13 @@ CC  := gcc
 SRCDIR := src
 OBJDIR := obj
 DEPDIR := dep
-INCS := inc
 
 ## Files
 TARGET=MineCode
 
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(subst :,/,$(subst /,_,$(@:obj/%.o=dep:%.d)))
-INCLUDES ?= $(addprefix -I,$(INCS))
+INCLUDES ?= -Iinclude
 COMPFLAGS?= -Wall -Wextra -c $(INCLUDES) $(DEPEND)
 
 LDFLAGS  ?=
@@ -38,7 +37,7 @@ clean:
 info:
 	@echo "--------------------"
 	@echo "| source  : $(SRCDIR) : $(SRCS)"
-	@echo "| includes: $(INCS) : -----"
+	@echo "| includes: include : -----"
 	@echo "| object  : $(OBJDIR) : $(OBJS)"
 	@echo "| depend  : $(DEPDIR) : $(DEPS)"
 	@echo "|-------------------"
