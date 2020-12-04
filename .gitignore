@@ -38,3 +38,4 @@ MineCode
 *.exe
 *.out
 *.app
+/Debug
