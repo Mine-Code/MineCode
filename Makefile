@@ -26,13 +26,16 @@ OBJS := $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 DEPS := $(SRCS:$(SRCDIR)/%.cpp=$(DEPDIR)/%.d)
 
 ### Targets
-.PHONY: all clean
+.PHONY: all clean run
 all: $(TARGET)
 
 # PHONY Targets
 clean:
 	$(RM) dep/* obj/*
 	$(RM) $(TARGET)
+	
+run: $(TARGET)
+	@./$(TARGET)
 
 info:
 	@echo "--------------------"
