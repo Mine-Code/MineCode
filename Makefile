@@ -21,7 +21,7 @@ DEPDIR := $(BUILD)/dep
 TESTEXE:=$(BUILD)/test
 
 ## Files
-TARGET=MineCode
+TARGET?:=MineCode
 
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(@:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
@@ -48,10 +48,10 @@ clean:
 
 test: $(TESTEXE)/$(TEST)
 	@echo "run [test $(TEST)]"
-	@$(TESTEXE)/$(TEST)
+	@./$<
 
 run: $(TARGET)
-	@./$(TARGET)
+	@./$<
 
 info:
 	@echo "--------------------"
