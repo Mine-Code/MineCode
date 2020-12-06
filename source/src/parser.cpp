@@ -17,4 +17,10 @@ void parser::set(std::wstring src){
 }
 void parser::tokenize(){
     //TODO: tokenize for word,int
+    size_t progsize=string.length();
+    for (size_t i = 0; i < progsize; i++)
+    {
+        std::wcout<<string[i];
+    }
+    
 }
