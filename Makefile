@@ -14,6 +14,7 @@ DEPDIR := $(BUILD)/dep
 TARGET=MineCode
 
 ## Arguments
+DEPEND   ?= -MMD -MP -MF $(subst :,/,$(subst /,_,$(@:$(OBJDIR)/%.o=$(DEPDIR)/%.d)))
 INCLUDES ?= -Isource/include
 COMPFLAGS?= -Wall -Wextra -c $(INCLUDES) $(DEPEND)
 
