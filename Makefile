@@ -21,7 +21,7 @@ DEPDIR := $(BUILD)/dep
 TESTEXE:=$(BUILD)/test
 
 ## Files
-TARGET?:=MineCode
+TARGET=MineCode
 
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(@:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
