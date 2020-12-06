@@ -65,12 +65,12 @@ $(TARGET): $(OBJS)
 # .cpp -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.cpp' to '$@'"
-	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $(SRCDIR)/$*.cpp
+	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $<
 
 # .c -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo "compile '$(SRCDIR)/$*.c' to '$@'"
-	@$(CC)  $(DEPEND) $(CFLAGS)   -o $@ $(SRCDIR)/$*.c
+	@$(CC)  $(DEPEND) $(CFLAGS)   -o $@ $<
 
 # test source
 $(TESTEXE)/%: test/%.cpp
