@@ -3,6 +3,7 @@
 .vs
 # binary
 MineCode
+build/test/*
 
 # https://github.com/github/gitignore/blob/master/C++.gitignore
 
