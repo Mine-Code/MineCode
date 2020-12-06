@@ -34,7 +34,7 @@ all: $(TARGET)
 
 # PHONY Targets
 clean:
-	$(RM) $(DEPDIR)/* $(OBJDIR)/*
+	$(RM) $(DEPDIR)/* $(OBJDIR)/* $(TESTEXE)/*
 	$(RM) $(TARGET)
 
 test: $(TESTEXE)/$(TEST)
