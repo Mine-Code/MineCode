@@ -6,7 +6,11 @@
 #include <vector>
 
 class parser{
-    
+private:
+    std::string string;
+    int index;
+public:
+
 };
 
 #endif
