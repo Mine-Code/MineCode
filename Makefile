@@ -16,7 +16,7 @@ TARGET=MineCode
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(@:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
 INCLUDES ?= -Isource/include
-COMPFLAGS?= -Wall -Wextra -c $(INCLUDES) $(DEPEND)
+COMPFLAGS?= -Wall -Wextra -c $(INCLUDES)
 
 LDFLAGS  ?=
 CXXFLAGS ?= $(COMPFLAGS) -std=gnu++17
@@ -66,12 +66,12 @@ $(TARGET): $(OBJS)
 # .cpp -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "compile '$(SRCDIR)/$*.cpp' to '$@'"
-	@$(CXX) -o $@ $(CXXFLAGS) $(SRCDIR)/$*.cpp
+	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $(SRCDIR)/$*.cpp
 
 # .c -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo "compile '$(SRCDIR)/$*.c' to '$@'"
-	@$(CC)  -o $@ $(CFLAGS) $(SRCDIR)/$*.c
+	@$(CC)  $(DEPEND) $(CFLAGS)   -o $@ $(SRCDIR)/$*.c
 
 # Source Dependencies
 -include $(DEPS)
