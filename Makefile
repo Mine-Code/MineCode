@@ -5,8 +5,10 @@ CC  := gcc
 
 ## Directorys
 SRCDIR := src
-OBJDIR := obj
-DEPDIR := dep
+
+BUILD  := build
+OBJDIR := $(BUILD)/obj
+DEPDIR := $(BUILD)/dep
 
 ## Files
 TARGET=MineCode
