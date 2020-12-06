@@ -11,6 +11,7 @@ private:
     int index;
     std::vector<std::wstring> tokens;
 public:
+    void tokenize();
     void debug();
 };
 
