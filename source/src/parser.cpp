@@ -15,3 +15,6 @@ void parser::debug(){
 void parser::set(std::wstring src){
     string=src;
 }
+void parser::tokenize(){
+    
+}
