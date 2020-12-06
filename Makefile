@@ -36,9 +36,7 @@ clean:
 	$(RM) dep/* obj/*
 	$(RM) $(TARGET)
 
-test:
-	@echo "compile [test $(TEST)]"
-	@$(CXX) $(CXXFLAGS) -o test/$(TEST) test/$(TEST).cpp
+test: test/$(TEST)
 	@echo "run [test $(TEST)]"
 	@test/$(TEST)
 
@@ -72,6 +70,11 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo "compile '$(SRCDIR)/$*.c' to '$@'"
 	@$(CC)  $(DEPEND) $(CFLAGS)   -o $@ $(SRCDIR)/$*.c
+
+# test source
+test/%: test/%.cpp
+	@echo "compile 'test/$*.cpp' to '$@'"
+	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $<
 
 # Source Dependencies
 -include $(DEPS)
