@@ -64,17 +64,17 @@ $(TARGET): $(OBJS)
 
 # .cpp -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	@echo "compile '$(SRCDIR)/$*.cpp' to '$@'"
+	@echo "compile[ src] $*"
 	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $<
 
 # .c -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@echo "compile '$(SRCDIR)/$*.c' to '$@'"
+	@echo "compile[ src] $*"
 	@$(CC)  $(DEPEND) $(CFLAGS)   -o $@ $<
 
 # test source
 $(TESTEXE)/%: test/%.cpp
-	@echo "compile 'test/$*.cpp' to '$@'"
+	@echo "compile[test] $*"
 	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $<
 
 # Source Dependencies
