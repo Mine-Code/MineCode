@@ -70,6 +70,7 @@ info:
 $(TARGET): $(OBJS)
 	@echo "building $@"
 	@$(CXX) -o $@ $(LDFLAGS) $(OBJS)
+	@$(call executable,$@)
 
 # .cpp -> .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
@@ -85,6 +86,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 $(TESTEXE)/%: test/%.cpp
 	@echo "compile[test] $*"
 	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $<
+	@$(call executable,$@)
 
 # Source Dependencies
 -include $(DEPS)
