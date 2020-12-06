@@ -9,7 +9,7 @@ SRCDIR := source/src
 BUILD  := build
 OBJDIR := $(BUILD)/obj
 DEPDIR := $(BUILD)/dep
-
+TESTEXE:=$(BUILD)/test
 ## Files
 TARGET=MineCode
 
@@ -36,9 +36,9 @@ clean:
 	$(RM) dep/* obj/*
 	$(RM) $(TARGET)
 
-test: test/$(TEST)
+test: $(TESTEXE)/$(TEST)
 	@echo "run [test $(TEST)]"
-	@test/$(TEST)
+	@$(TESTEXE)/$(TEST)
 
 run: $(TARGET)
 	@./$(TARGET)
@@ -72,7 +72,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC)  $(DEPEND) $(CFLAGS)   -o $@ $(SRCDIR)/$*.c
 
 # test source
-test/%: test/%.cpp
+$(TESTEXE)/%: test/%.cpp
 	@echo "compile 'test/$*.cpp' to '$@'"
 	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $<
 
