@@ -10,6 +10,7 @@ BUILD  := build
 OBJDIR := $(BUILD)/obj
 DEPDIR := $(BUILD)/dep
 TESTEXE:=$(BUILD)/test
+
 ## Files
 TARGET=MineCode
 
