@@ -16,5 +16,5 @@ void parser::set(std::wstring src){
     string=src;
 }
 void parser::tokenize(){
-    
+    //TODO: tokenize for word,int
 }
