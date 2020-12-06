@@ -6,3 +6,7 @@ void parser::debug(){
         std::cout<<token.c_str()<<std::endl;
     }
 }
+
+void parser::set(std::wstring src){
+    string=src;
+}
