@@ -83,9 +83,9 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC)  $(DEPEND) $(CFLAGS)   -c -o $@ $<
 
 # test source
-$(TESTEXE)/%: test/%.cpp
+$(TESTEXE)/%: test/%.cpp $(OBJS)
 	@echo "compile[test] $*"
-	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $<
+	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $(filter-out %/main.o,$^)
 	@$(call executable,$@)
 
 # Source Dependencies
