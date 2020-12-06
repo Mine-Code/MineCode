@@ -38,7 +38,7 @@ clean:
 
 test:
 	@echo "compile [test $(TEST)]"
-	@$(CXX) $(INCLUDES) -o test/$(TEST) test/$(TEST).cpp
+	@$(CXX) $(CXXFLAGS) -o test/$(TEST) test/$(TEST).cpp
 	@echo "run [test $(TEST)]"
 	@test/$(TEST)
 
