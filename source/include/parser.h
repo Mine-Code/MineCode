@@ -12,6 +12,7 @@ private:
     std::vector<std::wstring> tokens;
 public:
     void tokenize();
+    void set(std::wstring);
     void debug();
 };
 
