@@ -28,14 +28,20 @@ OBJS := $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 DEPS := $(SRCS:$(SRCDIR)/%.cpp=$(DEPDIR)/%.d)
 
 ### Targets
-.PHONY: all clean run
+.PHONY: all clean run test
 all: $(TARGET)
 
 # PHONY Targets
 clean:
 	$(RM) dep/* obj/*
 	$(RM) $(TARGET)
-	
+
+test:
+	@echo "compile [test $(TEST)]"
+	@$(CXX) $(INCLUDES) -o test/$(TEST) test/$(TEST).cpp
+	@echo "run [test $(TEST)]"
+	@test/$(TEST)
+
 run: $(TARGET)
 	@./$(TARGET)
 
