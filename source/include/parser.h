@@ -9,6 +9,7 @@ class parser{
 private:
     std::string string;
     int index;
+    std::vector<std::string> tokens;
 public:
 
 };
