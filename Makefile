@@ -2,10 +2,10 @@
 # platform switcher
 ifeq ($(OS),Windows_NT)
 	FEXT := .exe
-	executable = ""
+	executable = 
 else
 	FEXT :=
-	executable = "chmod +x $1"
+	executable = chmod +x $1
 endif
 
 # Commands
