@@ -47,7 +47,7 @@ clean:
 	$(RM) $(TARGET)
 
 test: $(TESTEXE)/$(TEST)
-	@echo "run [test $(TEST)]"
+	@echo "run    [test] $(TEST)"
 	@./$<
 
 run: $(TARGET)
