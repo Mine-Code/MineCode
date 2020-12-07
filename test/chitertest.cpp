@@ -16,6 +16,8 @@ int main()
         << chariter.prev()
         << chariter.prev()
         << chariter.prev()
+        << chariter.prev()
+        << chariter.prev()
         << std::endl
         << chariter.peek()
         << chariter.peek()
