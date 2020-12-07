@@ -20,6 +20,8 @@ int main()
         << chariter.peek()
         << chariter.peek()
         << chariter.peek()
+        << std::endl
+        << chariter.hasData()
         << std::endl;
     //while(chariter.hasData()){
     //    std::wcout<<chariter.next()<<std::endl;
