@@ -26,3 +26,10 @@ wchar_t chariterator::prev(){
 wchar_t chariterator::peek(){
     return str[index];
 }
+
+bool chariterator::hasData(){
+    if(str.length() <= index){
+        return false;
+    }
+    return true;
+}
