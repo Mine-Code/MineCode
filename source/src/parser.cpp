@@ -19,7 +19,9 @@ void parser::set(std::wstring src){
 void parser::tokenize(){
     //TODO: tokenize for word,oct,dec by chariterator
     chariterator chiter(string);
+    wchar_t ch;
     while(chiter.hasData()){
-        chiter.next();
+        ch=chiter.next();
+
     }
 }
