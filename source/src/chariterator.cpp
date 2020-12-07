@@ -22,3 +22,7 @@ wchar_t chariterator::prev(){
     index--;
     return str[index];
 }
+
+wchar_t chariterator::peek(){
+    return str[index];
+}
