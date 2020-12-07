@@ -16,6 +16,10 @@ int main()
         << chariter.prev()
         << chariter.prev()
         << chariter.prev()
+        << std::endl
+        << chariter.peek()
+        << chariter.peek()
+        << chariter.peek()
         << std::endl;
     //while(chariter.hasData()){
     //    std::wcout<<chariter.next()<<std::endl;
