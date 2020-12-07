@@ -16,6 +16,7 @@ public:
     wchar_t prev();
 
     wchar_t peek();
+    wchar_t peek(size_t offset);
     bool hasData();
 };
 
