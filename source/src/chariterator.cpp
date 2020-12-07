@@ -6,12 +6,11 @@ chariterator::chariterator(std::wstring src)
 {}
 
 wchar_t chariterator::next(){
-    if(str.length() <= index+1){
+    if(str.length() <= index){
         std::cerr << "Out of size" << std::endl;;
         throw L"outofsize";
     }
-    index++;
-    return str[index];
+    return str[index++];
 }
 
 wchar_t chariterator::prev(){
@@ -19,8 +18,7 @@ wchar_t chariterator::prev(){
         std::cerr << "Out of size" << std::endl;;
         throw L"outofsize";
     }
-    index--;
-    return str[index];
+    return str[index--];
 }
 
 wchar_t chariterator::peek(){
