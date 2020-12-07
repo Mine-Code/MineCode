@@ -13,3 +13,12 @@ wchar_t chariterator::next(){
     index++;
     return str[index];
 }
+
+wchar_t chariterator::prev(){
+    if(index <= 0){
+        std::cerr << "Out of size" << std::endl;;
+        throw L"outofsize";
+    }
+    index--;
+    return str[index];
+}
