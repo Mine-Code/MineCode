@@ -22,6 +22,42 @@ void parser::tokenize(){
     wchar_t ch;
     while(chiter.hasData()){
         ch=chiter.next();
-
+        if(ch=='0'){
+            wchar_t type=chiter.peek();
+            std::wstring value;
+            switch (type)
+            {
+            case 'x':
+                //hex
+                ch=chiter.next(); // skip '0'
+                ch=chiter.next(); // skip 'x'
+                while(1){
+                    if(!chiter.hasData()){
+                        std::wcerr
+                            <<"Invalid Program!!!"<<std::endl
+                            <<chiter.index<<std::endl
+                            <<string.substr(chiter.index-10,20)<<std::endl
+                        ;
+                            
+                        throw "invalid program";
+                    }
+                    else if(
+                           ('0'<=ch&&ch<='9')
+                        || ('A'<=ch&&ch<='F')
+                        || ('a'<=ch&&ch<='f')
+                    ){
+                        value+=chiter.next();
+                    }else{
+                        break;
+                    }
+                }
+                std::wcout<<"0x"<<value<<std::endl;
+                break;
+            
+            default:
+                std::wcout<<type<<std::endl;
+                break;
+            }
+        }
     }
 }
