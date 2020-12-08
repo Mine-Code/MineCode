@@ -29,7 +29,7 @@ void parser::tokenize(){
             {
             case 'x':
                 //hex
-                chiter.next(); // skip '0'
+                chiter.next(); // skip 'x'
                 while(1){
                     ch=chiter.peek();
                     if(!chiter.hasData()){
