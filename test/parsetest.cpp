@@ -7,7 +7,7 @@ int main()
         L"func sendMessagesToPlayers()\n"
         "{\n"
         "  for player in ServerPlayer.List.name {\n"
-        "    flag = [[0x10000000] + 0o20] + 0x100;\n"
+        "    flag = [[0x10000000] + 0o20] + 0xff + 1;\n"
         "    [flag]++;\n"
         "    player.Chat << f\"{player.name}さん、こんにちは！\";\n"
         "  }\n"
