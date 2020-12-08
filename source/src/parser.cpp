@@ -54,6 +54,29 @@ void parser::tokenize(){
                 std::wcout<<"0x"<<value<<std::endl;
                 break;
             
+            case 'o':
+                //oct
+                chiter.next(); // skip 'o'
+                while(1){
+                    ch=chiter.peek();
+                    if(!chiter.hasData()){
+                        std::wcerr
+                            <<"Invalid Program!!!"<<std::endl
+                            <<chiter.index<<std::endl
+                            <<string.substr(chiter.index-10,20)<<std::endl
+                        ;
+                            
+                        throw "invalid program";
+                    }
+                    else if(('0'<=ch&&ch<='8')){
+                        value+=chiter.next();
+                    }else{
+                        break;
+                    }
+                }
+                std::wcout<<"0o"<<value<<std::endl;
+                break;
+
             default:
                 std::wcout<<type<<std::endl;
                 break;
