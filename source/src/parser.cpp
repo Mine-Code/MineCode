@@ -45,8 +45,13 @@ void parser::tokenize(){
                         || ('A'<=ch&&ch<='F')
                         || ('a'<=ch&&ch<='f')
                     ){
+                        auto tmp=std::tolower(chiter.next());
                         value<<=4;
-                        value+=(int)(chiter.next()-'0');
+                        if('0'<=ch&&ch<='9'){
+                            value+=(int)(tmp-'0');
+                        }else if('a'<=ch&&ch<='f'){
+                            value+=(int)(tmp-'a'+10);
+                        }
                     }else{
                         break;
                     }
