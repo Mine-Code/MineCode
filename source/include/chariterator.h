@@ -9,8 +9,8 @@ class chariterator
 {
 private:
     std::wstring str;
-    int index;
 public:
+    int index;
     chariterator(std::wstring);
     wchar_t next();
     wchar_t prev();
