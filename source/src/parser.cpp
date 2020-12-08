@@ -93,5 +93,8 @@ void parser::tokenize(){
                 break;
             }
         }
+        if('1'<=ch && ch<='9'){
+            //dec
+        }
     }
 }
