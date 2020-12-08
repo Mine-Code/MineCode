@@ -32,6 +32,7 @@ void parser::tokenize(){
                 ch=chiter.next(); // skip '0'
                 ch=chiter.next(); // skip 'x'
                 while(1){
+                    ch=chiter.peek();
                     if(!chiter.hasData()){
                         std::wcerr
                             <<"Invalid Program!!!"<<std::endl
