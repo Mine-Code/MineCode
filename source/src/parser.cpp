@@ -76,7 +76,13 @@ void parser::tokenize(){
                 break;
 
             default:
-                std::wcout<<type<<std::endl;
+                std::wcerr
+                    <<"Invalid Program!!!"<<std::endl
+                    <<chiter.index<<std::endl
+                    <<string.substr(chiter.index-10,20)<<std::endl
+                ;
+                    
+                throw "invalid program";
                 break;
             }
         }
