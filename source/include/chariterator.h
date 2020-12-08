@@ -10,7 +10,7 @@ class chariterator
 private:
     std::wstring str;
 public:
-    int index;
+    size_t index;
     chariterator(std::wstring);
     wchar_t next();
     wchar_t prev();
