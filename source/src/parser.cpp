@@ -24,7 +24,7 @@ void parser::tokenize(){
         ch=chiter.next();
         if(ch=='0'){
             wchar_t type=chiter.peek();
-            std::wstring value;
+            uint64_t value=0;
             switch (type)
             {
             case 'x': //hex
@@ -45,12 +45,13 @@ void parser::tokenize(){
                         || ('A'<=ch&&ch<='F')
                         || ('a'<=ch&&ch<='f')
                     ){
-                        value+=chiter.next();
+                        value<<=4;
+                        value+=(int)(chiter.next()-'0');
                     }else{
                         break;
                     }
                 }
-                std::wcout<<"0x"<<value<<std::endl;
+                std::wcout<<"0x"<<std::hex<<value<<std::endl;
                 break;
             
             case 'o': //oct
@@ -67,12 +68,13 @@ void parser::tokenize(){
                         throw "invalid program";
                     }
                     else if(('0'<=ch&&ch<='8')){
-                        value+=chiter.next();
+                        value<<=3;
+                        value+=chiter.next()-'0';
                     }else{
                         break;
                     }
                 }
-                std::wcout<<"0o"<<value<<std::endl;
+                std::wcout<<"0o"<<std::oct<<value<<std::endl;
                 break;
 
             default:
