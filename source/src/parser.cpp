@@ -17,7 +17,7 @@ void parser::set(std::wstring src){
     string=src;
 }
 void parser::tokenize(){
-    //TODO: tokenize for word,oct,dec by chariterator
+    //TODO: tokenize for dec by chariterator
     chariterator chiter(string);
     wchar_t ch;
     while(chiter.hasData()){
@@ -27,8 +27,7 @@ void parser::tokenize(){
             std::wstring value;
             switch (type)
             {
-            case 'x':
-                //hex
+            case 'x': //hex
                 chiter.next(); // skip 'x'
                 while(1){
                     ch=chiter.peek();
@@ -54,8 +53,7 @@ void parser::tokenize(){
                 std::wcout<<"0x"<<value<<std::endl;
                 break;
             
-            case 'o':
-                //oct
+            case 'o': //oct
                 chiter.next(); // skip 'o'
                 while(1){
                     ch=chiter.peek();
