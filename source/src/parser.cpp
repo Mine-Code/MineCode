@@ -30,7 +30,7 @@ void parser::tokenize(){
             case 'x': //hex
                 chiter.next(); // skip 'x'
                 while(1){
-                    ch=chiter.peek();
+                    ch=std::tolower(chiter.peek());
                     if(!chiter.hasData()){
                         std::wcerr
                             <<"Invalid Program!!!"<<std::endl
@@ -42,7 +42,6 @@ void parser::tokenize(){
                     }
                     else if(
                            ('0'<=ch&&ch<='9')
-                        || ('A'<=ch&&ch<='F')
                         || ('a'<=ch&&ch<='f')
                     ){
                         auto tmp=std::tolower(chiter.next());
