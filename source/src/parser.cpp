@@ -93,8 +93,29 @@ void parser::tokenize(){
                 break;
             }
         }
-        if('1'<=ch && ch<='9'){
-            //dec
+        else if(isdigit(ch)){
+            uint64_t value=(int)(ch-'0');
+            while(1){
+                ch=chiter.peek();
+                if(!chiter.hasData()){
+                    std::wcerr
+                        <<"Invalid Program!!!"<<std::endl
+                        <<chiter.index<<std::endl
+                        <<string.substr(chiter.index-10,20)<<std::endl
+                    ;
+                        
+                    throw "invalid program";
+                }
+                else if('0'<=ch&&ch<='9'){
+                    value*=10;
+                    value+=(int)(chiter.next()-'0');
+                }else{
+                    break;
+                }
+            }
+            std::wcout<<"0d"<<std::dec<<value<<std::endl;
+        }else{
+            //std::cout<<ch<<"";
         }
     }
 }
