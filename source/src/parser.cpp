@@ -1,6 +1,7 @@
 #include <parser.h>
 #include <iostream>
 #include <chariterator.h>
+#include <util.h>
 
 void parser::debug(){
     std::wcout<<"source"<<std::endl;
@@ -44,14 +45,14 @@ void parser::tokenize(){
                         error_program(chiter);
                     }
                     else if(
-                           ('0'<=ch&&ch<='9')
-                        || ('a'<=ch&&ch<='f')
+                           util::inRange<char>('0',ch,'9')
+                        || util::inRange<char>('a',ch,'f')
                     ){
                         value<<=4;
                         auto tmp=std::tolower(chiter.next());
-                        if('0'<=ch&&ch<='9'){
+                        if(util::inRange<char>('0',tmp,'9')){
                             value+=(int)(tmp-'0');
-                        }else if('a'<=ch&&ch<='f'){
+                        }else if(util::inRange<char>('a',tmp,'f')){
                             value+=(int)(tmp-'a'+10);
                         }
                     }else{
@@ -68,7 +69,7 @@ void parser::tokenize(){
                     if(!chiter.hasData()){
                         error_program(chiter);
                     }
-                    else if(('0'<=ch&&ch<='8')){
+                    else if(util::inRange<char>('0',ch,'8')){
                         value<<=3; // *8
                         value+=chiter.next()-'0';
                     }else{
@@ -102,7 +103,7 @@ void parser::tokenize(){
                         
                     throw "invalid program";
                 }
-                else if('0'<=ch&&ch<='9'){
+                else if(util::inRange<char>('0',ch,'9')){
                     value*=10;
                     value+=(int)(chiter.next()-'0');
                 }else{
