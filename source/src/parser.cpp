@@ -17,7 +17,6 @@ void parser::set(std::wstring src){
     string=src;
 }
 void parser::tokenize(){
-    //TODO: tokenize for dec by chariterator
     chariterator chiter(string);
     wchar_t ch;
     while(chiter.hasData()){
