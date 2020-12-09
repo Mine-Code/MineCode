@@ -19,6 +19,7 @@ void parser::set(std::wstring src){
 void parser::tokenize(){
     chariterator chiter(string);
     wchar_t ch;
+    std::ios::fmtflags bk = std::wcout.flags();
     while(chiter.hasData()){
         ch=chiter.next();
         if(ch=='0'){
@@ -117,4 +118,5 @@ void parser::tokenize(){
             //std::cout<<ch<<"";
         }
     }
+    std::wcout.flags(bk);
 }
