@@ -3,11 +3,11 @@
 #include <chariterator.h>
 
 void parser::debug(){
-    std::cout<<"source"<<std::endl;
-    std::cout<<"--------------------"<<std::endl;
+    std::wcout<<"source"<<std::endl;
+    std::wcout<<"--------------------"<<std::endl;
     std::wcout<<string<<std::endl;
-    std::cout<<"--------------------"<<std::endl;
-    std::cout<<"tokens"<<std::endl;
+    std::wcout<<"--------------------"<<std::endl;
+    std::wcout<<"tokens"<<std::endl;
     for(auto token:tokens){
         std::cout<<"  "<<token.c_str()<<std::endl;
     }
