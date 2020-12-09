@@ -72,7 +72,7 @@ void parser::tokenize(){
                         throw "invalid program";
                     }
                     else if(('0'<=ch&&ch<='8')){
-                        value<<=3;
+                        value<<=3; // *8
                         value+=chiter.next()-'0';
                     }else{
                         break;
