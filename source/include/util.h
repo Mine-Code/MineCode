@@ -4,7 +4,10 @@
 
 namespace util
 {
-    
+    template<typename T>
+    bool inRange(T min,T val,T max){
+        return min<=val && val<=max;
+    }
 } // namespace util
 
 
