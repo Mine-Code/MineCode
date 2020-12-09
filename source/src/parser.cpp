@@ -115,7 +115,6 @@ void parser::tokenize(){
             }
             std::wcout<<"0d"<<std::dec<<value<<std::endl;
         }else{
-            //std::cout<<ch<<"";
         }
     }
     std::wcout.flags(bk);
