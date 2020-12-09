@@ -5,11 +5,15 @@
 #include <string>
 #include <vector>
 
+class chariterator;
+
 class parser{
 private:
     std::wstring string;
     int index;
     std::vector<std::wstring> tokens;
+
+    void error_program(chariterator chiter);
 public:
     void tokenize();
     void set(std::wstring);

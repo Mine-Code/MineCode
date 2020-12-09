@@ -16,6 +16,15 @@ void parser::debug(){
 void parser::set(std::wstring src){
     string=src;
 }
+void parser::error_program(chariterator chiter){
+    std::wcerr
+        <<"Invalid Program!!!"<<std::endl
+        <<chiter.index<<std::endl
+        <<string.substr(chiter.index-10,20)<<std::endl
+    ;
+                            
+    throw "invalid program";
+}
 void parser::tokenize(){
     chariterator chiter(string);
     wchar_t ch;
@@ -32,13 +41,7 @@ void parser::tokenize(){
                 while(1){
                     ch=std::tolower(chiter.peek());
                     if(!chiter.hasData()){
-                        std::wcerr
-                            <<"Invalid Program!!!"<<std::endl
-                            <<chiter.index<<std::endl
-                            <<string.substr(chiter.index-10,20)<<std::endl
-                        ;
-                            
-                        throw "invalid program";
+                        error_program(chiter);
                     }
                     else if(
                            ('0'<=ch&&ch<='9')
@@ -63,13 +66,7 @@ void parser::tokenize(){
                 while(1){
                     ch=chiter.peek();
                     if(!chiter.hasData()){
-                        std::wcerr
-                            <<"Invalid Program!!!"<<std::endl
-                            <<chiter.index<<std::endl
-                            <<string.substr(chiter.index-10,20)<<std::endl
-                        ;
-                            
-                        throw "invalid program";
+                        error_program(chiter);
                     }
                     else if(('0'<=ch&&ch<='8')){
                         value<<=3; // *8
