@@ -9,7 +9,7 @@ void parser::debug(){
     std::wcout<<"--------------------"<<std::endl;
     std::wcout<<"tokens"<<std::endl;
     for(auto token:tokens){
-        std::cout<<"  "<<token.c_str()<<std::endl;
+        std::wcout<<"  "<<token.c_str()<<std::endl;
     }
 }
 
