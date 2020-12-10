@@ -26,9 +26,7 @@ namespace util
             || ch=='('|| ch==')'
             || ch=='['|| ch==']'
 
-            || ch=='+'|| ch=='-'
-            || ch=='*'|| ch=='/'
-            || ch=='%'
+            || isMathOp(ch)
             
             || ch=='|'|| ch=='^'
             || ch=='&'
