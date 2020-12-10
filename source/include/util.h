@@ -28,6 +28,14 @@ namespace util
     }
 
     template<typename T>
+    bool isCondOp(T ch){
+        return
+               ch=='<'|| ch=='>'
+            || ch=='='|| ch=='!'
+        ;
+    }
+
+    template<typename T>
     bool isIdentity(T ch){
         return
                ch=='{'|| ch=='}'
@@ -38,9 +46,7 @@ namespace util
             
             || isBitOp(ch)
 
-            || ch=='<'|| ch=='>'
-
-            || ch=='='
+            || isCondOp(ch)
             
             || ch==';'
             || ch=='.'
