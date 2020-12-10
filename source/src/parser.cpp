@@ -109,6 +109,8 @@ void parser::tokenize(){
                     if(!chiter.hasData()){
                         error_program(chiter);
                     }
+                    value+=ch;
+                    continue;
                 }
                 value+=ch;
                 if(ch==L'"'){
@@ -144,6 +146,8 @@ void parser::tokenize(){
                     if(!chiter.hasData()){
                         error_program(chiter);
                     }
+                    value+=ch;
+                    continue;
                 }
                 value+=ch;
                 if(ch==L'"'){
