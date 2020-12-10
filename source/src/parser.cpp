@@ -140,6 +140,12 @@ void parser::tokenize(){
                     tmp+=chiter.next();
                 }
             }
+            if(ch=='<' || ch=='>'){
+                if(chiter.peek()==ch){
+                    tmp+=ch;
+                    chiter.next();
+                }
+            }
             tokens.emplace_back(tmp);
         }else{
             std::wcout<<ch<<std::endl;
