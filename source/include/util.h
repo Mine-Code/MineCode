@@ -8,6 +8,29 @@ namespace util
     bool inRange(T min,T val,T max){
         return min<=val && val<=max;
     }
+
+    template<typename T>
+    bool isIdentity(T ch){
+        return
+               ch=='{'|| ch=='}'
+            || ch=='('|| ch==')'
+            || ch=='['|| ch==']'
+
+            || ch=='+'|| ch=='-'
+            || ch=='*'|| ch=='/'
+            || ch=='%'
+            
+            || ch=='|'|| ch=='^'
+            || ch=='&'
+
+            || ch=='<'|| ch=='>'
+
+            || ch=='='
+            
+            || ch==';'
+            || ch=='.'
+        ;
+    }
 } // namespace util
 
 
