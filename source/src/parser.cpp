@@ -59,7 +59,7 @@ void parser::tokenize(){
                         break;
                     }
                 }
-                std::wcout<<"0x"<<std::hex<<value<<std::endl;
+                tokens.emplace_back(std::to_wstring(value));
                 break;
             
             case 'o': //oct
@@ -76,7 +76,7 @@ void parser::tokenize(){
                         break;
                     }
                 }
-                std::wcout<<"0o"<<std::oct<<value<<std::endl;
+                tokens.emplace_back(std::to_wstring(value));
                 break;
 
             default:
@@ -98,7 +98,7 @@ void parser::tokenize(){
                     break;
                 }
             }
-            std::wcout<<"0d"<<std::dec<<value<<std::endl;
+            tokens.emplace_back(std::to_wstring(value));
         }else{
         }
     }
