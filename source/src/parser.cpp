@@ -95,7 +95,21 @@ void parser::tokenize(){
                 }
             }
             tokens.emplace_back(value);
-        }else{
+        }else if(iswalpha(ch)){
+            std::wstring value;
+            value+=ch;
+            while(1){
+                ch=chiter.peek();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }
+                else if(std::iswalpha(ch)){
+                    value+=chiter.next();
+                }else{
+                    break;
+                }
+            }
+            tokens.emplace_back(value);
         }
     }
     std::wcout.flags(bk);
