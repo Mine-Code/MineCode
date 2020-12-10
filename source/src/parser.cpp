@@ -128,6 +128,21 @@ void parser::tokenize(){
                 value+=ch;
             }
             tokens.emplace_back(value);
+        }else if(util::isIdentity(ch)){
+            std::wstring tmp;
+            tmp+=ch;
+            if(
+                  util::isBitOp(ch)
+                ||util::isCondOp(ch)
+                ||util::isMathOp(ch)
+            ){
+                if(chiter.peek(1)=='='){
+                    tmp+=chiter.next();
+                }
+            }
+            tokens.emplace_back(tmp);
+        }else{
+            std::wcout<<ch<<std::endl;
         }
     }
     std::wcout.flags(bk);
