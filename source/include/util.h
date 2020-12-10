@@ -9,6 +9,16 @@ namespace util
         return min<=val && val<=max;
     }
 
+    
+    template<typename T>
+    bool isMathOp(T ch){
+        return
+            || ch=='+'|| ch=='-'
+            || ch=='*'|| ch=='/'
+            || ch=='%'
+        ;
+    }
+
     template<typename T>
     bool isIdentity(T ch){
         return
