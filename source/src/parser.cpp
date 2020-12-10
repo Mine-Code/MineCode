@@ -80,13 +80,7 @@ void parser::tokenize(){
                 break;
 
             default:
-                std::wcerr
-                    <<"Invalid Program!!!"<<std::endl
-                    <<chiter.index<<std::endl
-                    <<string.substr(chiter.index-10,20)<<std::endl
-                ;
-                    
-                throw "invalid program";
+                error_program(chiter);
                 break;
             }
         }
@@ -95,13 +89,7 @@ void parser::tokenize(){
             while(1){
                 ch=chiter.peek();
                 if(!chiter.hasData()){
-                    std::wcerr
-                        <<"Invalid Program!!!"<<std::endl
-                        <<chiter.index<<std::endl
-                        <<string.substr(chiter.index-10,20)<<std::endl
-                    ;
-                        
-                    throw "invalid program";
+                    error_program(chiter);
                 }
                 else if(util::inRange<char>('0',ch,'9')){
                     value*=10;
