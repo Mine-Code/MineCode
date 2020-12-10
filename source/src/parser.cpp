@@ -110,6 +110,25 @@ void parser::tokenize(){
                 }
             }
             tokens.emplace_back(value);
+        }else if(ch == L'\"'){
+            std::wstring value;
+            while(1){
+                std::wcout<<value<<std::endl;
+                ch=chiter.next();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }else if(ch=='\\'){
+                    value+=ch;
+                    ch=chiter.next();
+                    if(!chiter.hasData()){
+                        error_program(chiter);
+                    }
+                }else if(ch==L'"'){
+                    break;
+                }
+                value+=ch;
+            }
+            tokens.emplace_back(value);
         }
     }
     std::wcout.flags(bk);
