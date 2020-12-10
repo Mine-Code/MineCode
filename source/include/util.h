@@ -13,7 +13,7 @@ namespace util
     template<typename T>
     bool isMathOp(T ch){
         return
-            || ch=='+'|| ch=='-'
+               ch=='+'|| ch=='-'
             || ch=='*'|| ch=='/'
             || ch=='%'
         ;
