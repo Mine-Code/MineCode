@@ -95,6 +95,25 @@ void parser::tokenize(){
                 }
             }
             tokens.emplace_back(value);
+        }else if(ch=='f' && chiter.hasData() && chiter.peek() =='\"'){
+            std::wstring value;
+            chiter.next();
+            while(1){
+                ch=chiter.next();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }else if(ch=='\\'){
+                    value+=ch;
+                    ch=chiter.next();
+                    if(!chiter.hasData()){
+                        error_program(chiter);
+                    }
+                }else if(ch==L'"'){
+                    break;
+                }
+                value+=ch;
+            }
+            tokens.emplace_back(value);
         }else if(iswalpha(ch)){
             std::wstring value;
             value+=ch;
@@ -148,7 +167,7 @@ void parser::tokenize(){
             }
             tokens.emplace_back(tmp);
         }else{
-            std::wcout<<ch<<std::endl;
+            //std::wcout<<ch<<std::endl;
         }
     }
     std::wcout.flags(bk);
