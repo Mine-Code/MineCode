@@ -113,7 +113,6 @@ void parser::tokenize(){
         }else if(ch == L'\"'){
             std::wstring value;
             while(1){
-                std::wcout<<value<<std::endl;
                 ch=chiter.next();
                 if(!chiter.hasData()){
                     error_program(chiter);
