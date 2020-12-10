@@ -97,7 +97,8 @@ void parser::tokenize(){
             tokens.emplace_back(value);
         }else if(ch=='f' && chiter.hasData() && chiter.peek() =='\"'){
             std::wstring value;
-            chiter.next();
+            value+=ch;
+            value+=chiter.next();
             while(1){
                 ch=chiter.next();
                 if(!chiter.hasData()){
@@ -108,10 +109,11 @@ void parser::tokenize(){
                     if(!chiter.hasData()){
                         error_program(chiter);
                     }
-                }else if(ch==L'"'){
-                    break;
                 }
                 value+=ch;
+                if(ch==L'"'){
+                    break;
+                }
             }
             tokens.emplace_back(value);
         }else if(iswalpha(ch)){
