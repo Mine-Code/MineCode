@@ -34,10 +34,11 @@ void parser::tokenize(){
         ch=chiter.next();
         if(ch=='0'){
             wchar_t type=chiter.peek();
-            uint64_t value=0;
+            std::wstring value;
             switch (type)
             {
             case 'x': //hex
+                value+=L"0x";
                 chiter.next(); // skip 'x'
                 while(1){
                     ch=std::tolower(chiter.peek());
@@ -48,21 +49,17 @@ void parser::tokenize(){
                            util::inRange<char>('0',ch,'9')
                         || util::inRange<char>('a',ch,'f')
                     ){
-                        value<<=4;
                         auto tmp=std::tolower(chiter.next());
-                        if(util::inRange<char>('0',tmp,'9')){
-                            value+=(int)(tmp-'0');
-                        }else if(util::inRange<char>('a',tmp,'f')){
-                            value+=(int)(tmp-'a'+10);
-                        }
+                        value+=tmp;
                     }else{
                         break;
                     }
                 }
-                tokens.emplace_back(std::to_wstring(value));
+                tokens.emplace_back(value);
                 break;
             
             case 'o': //oct
+                value+=L"0o";
                 chiter.next(); // skip 'o'
                 while(1){
                     ch=chiter.peek();
@@ -70,13 +67,12 @@ void parser::tokenize(){
                         error_program(chiter);
                     }
                     else if(util::inRange<char>('0',ch,'8')){
-                        value<<=3; // *8
-                        value+=chiter.next()-'0';
+                        value+=chiter.next();
                     }else{
                         break;
                     }
                 }
-                tokens.emplace_back(std::to_wstring(value));
+                tokens.emplace_back(value);
                 break;
 
             default:
@@ -85,20 +81,20 @@ void parser::tokenize(){
             }
         }
         else if(isdigit(ch)){
-            uint64_t value=(int)(ch-'0');
+            std::wstring value;
+            value+=ch;
             while(1){
                 ch=chiter.peek();
                 if(!chiter.hasData()){
                     error_program(chiter);
                 }
                 else if(util::inRange<char>('0',ch,'9')){
-                    value*=10;
-                    value+=(int)(chiter.next()-'0');
+                    ch+=chiter.next();
                 }else{
                     break;
                 }
             }
-            tokens.emplace_back(std::to_wstring(value));
+            tokens.emplace_back(value);
         }else{
         }
     }
