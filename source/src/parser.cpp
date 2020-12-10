@@ -133,6 +133,7 @@ void parser::tokenize(){
             tokens.emplace_back(value);
         }else if(ch == L'\"'){
             std::wstring value;
+            value+=ch;
             while(1){
                 ch=chiter.next();
                 if(!chiter.hasData()){
@@ -143,10 +144,11 @@ void parser::tokenize(){
                     if(!chiter.hasData()){
                         error_program(chiter);
                     }
-                }else if(ch==L'"'){
-                    break;
                 }
                 value+=ch;
+                if(ch==L'"'){
+                    break;
+                }
             }
             tokens.emplace_back(value);
         }else if(util::isIdentity(ch)){
