@@ -118,6 +118,12 @@ void parser::tokenize(){
                 }
             }
             tokens.emplace_back(value);
+        }else if((ch=='+'||ch=='-') && chiter.hasData() && chiter.peek() ==ch){
+            std::wstring value;
+            value+=ch;
+            value+=ch;
+            tokens.emplace_back(value);
+            chiter.next();
         }else if(iswalpha(ch)){
             std::wstring value;
             value+=ch;
