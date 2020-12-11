@@ -132,7 +132,7 @@ void parser::tokenize(){
                 if(!chiter.hasData()){
                     error_program(chiter);
                 }
-                else if(std::iswalpha(ch)){
+                else if(iswalpha(ch)){
                     value+=chiter.next();
                 }else{
                     break;
