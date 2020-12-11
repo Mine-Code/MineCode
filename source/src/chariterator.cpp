@@ -28,7 +28,7 @@ wchar_t chariterator::peek(){
 wchar_t chariterator::peek(size_t offset){
     if(index <= 0 || str.length() <= index){
         std::cerr << "Out of size" << std::endl;;
-        throw L"outofsize";
+        return EOF;
     }
     return str[index+offset];
 }
