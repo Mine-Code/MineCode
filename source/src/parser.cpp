@@ -95,23 +95,10 @@ void parser::tokenize(){
                 }
             }
             tokens.emplace_back(value);
-        }else if(iswalpha(ch)){
+        }else if(ch=='f' && chiter.hasData() && chiter.peek() =='\"'){
             std::wstring value;
             value+=ch;
-            while(1){
-                ch=chiter.peek();
-                if(!chiter.hasData()){
-                    error_program(chiter);
-                }
-                else if(std::iswalpha(ch)){
-                    value+=chiter.next();
-                }else{
-                    break;
-                }
-            }
-            tokens.emplace_back(value);
-        }else if(ch == L'\"'){
-            std::wstring value;
+            value+=chiter.next();
             while(1){
                 ch=chiter.next();
                 if(!chiter.hasData()){
@@ -122,10 +109,56 @@ void parser::tokenize(){
                     if(!chiter.hasData()){
                         error_program(chiter);
                     }
-                }else if(ch==L'"'){
-                    break;
+                    value+=ch;
+                    continue;
                 }
                 value+=ch;
+                if(ch==L'"'){
+                    break;
+                }
+            }
+            tokens.emplace_back(value);
+        }else if((ch=='+'||ch=='-') && chiter.hasData() && chiter.peek() ==ch){
+            std::wstring value;
+            value+=ch;
+            value+=ch;
+            tokens.emplace_back(value);
+            chiter.next();
+        }else if(iswalpha(ch)){
+            std::wstring value;
+            value+=ch;
+            while(1){
+                ch=chiter.peek();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }
+                else if(iswalpha(ch)){
+                    value+=chiter.next();
+                }else{
+                    break;
+                }
+            }
+            tokens.emplace_back(value);
+        }else if(ch == L'\"'){
+            std::wstring value;
+            value+=ch;
+            while(1){
+                ch=chiter.next();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }else if(ch=='\\'){
+                    value+=ch;
+                    ch=chiter.next();
+                    if(!chiter.hasData()){
+                        error_program(chiter);
+                    }
+                    value+=ch;
+                    continue;
+                }
+                value+=ch;
+                if(ch==L'"'){
+                    break;
+                }
             }
             tokens.emplace_back(value);
         }else if(util::isIdentity(ch)){
@@ -148,7 +181,7 @@ void parser::tokenize(){
             }
             tokens.emplace_back(tmp);
         }else{
-            std::wcout<<ch<<std::endl;
+            //std::wcout<<ch<<std::endl;
         }
     }
     std::wcout.flags(bk);
