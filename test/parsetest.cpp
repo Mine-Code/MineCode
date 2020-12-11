@@ -1,7 +1,19 @@
 #include <parser.h>
+#include <ios>
+#include <iostream>
+
 using namespace std::literals::string_literals;
 int main()
 {
+    std::ios_base::sync_with_stdio(false);
+	std::wcout.imbue(
+        std::locale(
+            std::locale::classic(),
+            std::locale(""),
+            std::locale::ctype
+        )
+    );
+
     parser prs;
     prs.set(
         L"func sendMessagesToPlayers()\n"
