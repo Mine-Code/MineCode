@@ -20,6 +20,10 @@ ptr = [[0x1E4A1220] + 0x12] + 0x144;
 - File an issue
 
 ## License
-Copyright (c) Yukikamome316 Corporation. All rights reserved.
+Copyright (c) MineCode Corporation. All rights reserved.
 
 Licensed under the [MIT](https://github.com/yukikamome316/MineCode/LICENSE) license.
+
+## Credit
+syoch
+yukikamome316
