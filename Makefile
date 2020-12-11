@@ -69,7 +69,7 @@ info:
 # Program Rule
 $(TARGET): $(OBJS)
 	@echo "building $@"
-	@$(CXX) -o $@ $(LDFLAGS) $(OBJS)
+	@$(CXX) -o $@$(FEXT) $(LDFLAGS) $(OBJS)
 	@$(call executable,$@)
 
 # .cpp -> .o
@@ -85,7 +85,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 # test source
 $(TESTEXE)/%: test/%.cpp $(OBJS)
 	@echo "compile[test] $*"
-	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@ $(filter-out %/main.o,$^)
+	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@$(FEXT) $(filter-out %/main.o,$^)
 	@$(call executable,$@)
 
 # Source Dependencies
