@@ -9,9 +9,9 @@ namespace assembly
 	class Assembly
 	{
 	public:
-		void startOfFunction(std::stringstream& st);
-		void endOfFunction(std::stringstream& st);
-		void callFunction(std::stringstream& st,int address);
+		void startOfFunction(std::wstringstream& st);
+		void endOfFunction(std::wstringstream& st);
+		void callFunction(std::wstringstream& st,int address);
 	};
 
 } // namespace assembly
