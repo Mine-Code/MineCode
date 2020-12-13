@@ -3,6 +3,7 @@
 #define PARSER_H
 
 #include <string>
+#include <sstream>
 #include <vector>
 
 class chariterator;
