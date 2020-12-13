@@ -2,6 +2,7 @@
 #include <iostream>
 #include <chariterator.h>
 #include <util.h>
+#include <tokenParser.h>
 
 void parser::debug(){
     std::wcout<<"source"<<std::endl;
