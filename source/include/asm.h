@@ -4,7 +4,14 @@
 
 namespace assembly
 {
-    
+	class Assembly
+	{
+	public:
+		std::stringstream startOfFunction();
+		std::stringstream endOfFunction();
+		std::stringstream callFunction(int address);
+	};
+
 } // namespace assembly
 
 
