@@ -5,14 +5,7 @@
 #include <parserWrap.h>
 
 void parser::debug(){
-    std::wcout<<"source"<<std::endl;
-    std::wcout<<"--------------------"<<std::endl;
-    std::wcout<<string<<std::endl;
-    std::wcout<<"--------------------"<<std::endl;
-    std::wcout<<"tokens"<<std::endl;
-    for(auto token:tokens){
-        std::wcout<<"  "<<token.c_str()<<std::endl;
-    }
+    
 }
 
 void parser::set(std::wstring src){
