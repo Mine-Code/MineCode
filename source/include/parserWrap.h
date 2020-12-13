@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 
-namespace tokenParser
+namespace parserWrap
 {
     
-} // namespace tokenParser
+} // namespace parserWrap
 
 
 #endif
