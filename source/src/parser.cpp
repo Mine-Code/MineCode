@@ -189,5 +189,7 @@ void parser::tokenize(){
 }
 
 void parser::parse(){
-
+    std::wstringstream st;
+    parserWrap::program(st,tokens);
+    // process 'st.str()'
 }
