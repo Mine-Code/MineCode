@@ -12,6 +12,7 @@ private:
     std::wstring string;
     int index;
     std::vector<std::wstring> tokens;
+    std::wstringstream assembly;
 
     void error_program(chariterator chiter);
 public:
