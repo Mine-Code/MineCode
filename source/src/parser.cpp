@@ -186,3 +186,7 @@ void parser::tokenize(){
     }
     std::wcout.flags(bk);
 }
+
+void parser::parse(){
+
+}
