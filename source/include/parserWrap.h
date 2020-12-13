@@ -7,7 +7,9 @@
 
 namespace parserWrap
 {
-    
+    typedef std::wstring tokenType;
+    typedef std::vector<tokenType> tokensType;
+    void program(std::wstringstream st,tokensType tokens);
 } // namespace parserWrap
 
 
