@@ -16,6 +16,7 @@ private:
     void error_program(chariterator chiter);
 public:
     void tokenize();
+    void parse();
     void set(std::wstring);
     void debug();
 };
