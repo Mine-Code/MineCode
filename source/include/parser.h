@@ -4,7 +4,7 @@
 
 namespace parser
 {
-    class abc_ast{
+    class astBase{
         
     };
 } // namespace parser
