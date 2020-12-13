@@ -2,14 +2,16 @@
 #ifndef ASM_H
 #define ASM_H
 
+#include <sstream>
+
 namespace assembly
 {
 	class Assembly
 	{
 	public:
-		std::stringstream startOfFunction();
-		std::stringstream endOfFunction();
-		std::stringstream callFunction(int address);
+		void startOfFunction(std::stringstream st);
+		void endOfFunction(std::stringstream st);
+		void callFunction(std::stringstream st,int address);
 	};
 
 } // namespace assembly
