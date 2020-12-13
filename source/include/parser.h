@@ -4,9 +4,6 @@
 
 namespace parser
 {
-    class astBase{
-        
-    };
 } // namespace parser
 
 
