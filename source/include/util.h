@@ -2,6 +2,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <vector>
 namespace util
 {
     template<typename T>
@@ -51,6 +52,11 @@ namespace util
             || ch==';'
             || ch=='.'
         ;
+    }
+
+    template<typename T,typename T2>
+    std::vector<T> convToVector(T2 str){
+        return std::vector<T>(str.begin(),str.end());
     }
 } // namespace util
 
