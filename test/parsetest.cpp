@@ -16,7 +16,8 @@ int main()
 
     parser prs;
     prs.set(
-        L"func sendMessagesToPlayers()\n"
+        L"#do once\n"
+        "func sendMessagesToPlayers()\n"
         "{\n"
         "  for player in ServerPlayer.List.name {\n"
         "    flag = [[0x10000000] + 0o20] + 0xff + 1;\n"
