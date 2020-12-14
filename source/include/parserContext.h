@@ -8,17 +8,20 @@
 
 namespace parserCtx
 {
+    using streamType = std::wstringstream;
+    using iterType   = iterator<std::wstring>;
+    using varsType   = std::unordered_map<std::string,varType>;
     enum varType{
         FLOAT,
         INT
     };
     struct parserContext{
         parserContext();
-        std::wstringstream stream;
-        iterator<std::wstring> iter;
-        std::unordered_map<std::string,varType> variables;
+        streamType stream;
+        iterType iter;
+        varsType variables;
     };
-    
+
 } // namespace parserCtx
 
 
