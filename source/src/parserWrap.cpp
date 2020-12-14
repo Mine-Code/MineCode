@@ -11,6 +11,7 @@ namespace parserWrap{
             assert(ctx.iter.next() == L"#"   );
             assert(ctx.iter.next() == L"do"  );
             assert(ctx.iter.next() == L"once");
+            // TODO: implement do once
         }
     }
 }
