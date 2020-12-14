@@ -3,6 +3,7 @@
 #include <typedIterator.hxx>
 #include <util.h>
 #include <parserWrap.h>
+#include <parserContext.h>
 
 void parser::debug(){
     
@@ -187,7 +188,11 @@ void parser::tokenize(){
 
 void parser::parse(){
     std::wstringstream st;
-    iterator<std::wstring> srcSt(tokens);
-    parserWrap::program(st,srcSt);
+
+    parserContext ctx;
+    ctx.iter=iterator<std::wstring>(tokens);
+    ctx.stream=st;
+    
+    parserWrap::program(ctx);
     // process 'st.str()'
 }
