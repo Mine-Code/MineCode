@@ -6,13 +6,11 @@
 #include <vector>
 #include <sstream>
 
-#include "typedIterator.hxx"
+class parserContext;
+
 namespace parserWrap
 {
-    using streamType = std::wstringstream;
-    using tokenType  = std::wstring;
-    using tokensType = iterator<std::wstring>;
-    void program(streamType& st,tokensType tokens);
+    void program(parserContext&);
 } // namespace parserWrap
 
 

@@ -1,11 +1,16 @@
 #include <parserWrap.h>
+
 #include <assert.h>
+
+#include <parserContext.h>
+
+
 namespace parserWrap{
-    void program(streamType& st,tokensType tokens){
-        if(tokens.peek()==L"#"){
-            assert(tokens.next() == L"#"   );
-            assert(tokens.next() == L"do"  );
-            assert(tokens.next() == L"once");
+    void program(parserContext& ctx){
+        if(ctx.iter.peek()==L"#"){
+            assert(ctx.iter.next() == L"#"   );
+            assert(ctx.iter.next() == L"do"  );
+            assert(ctx.iter.next() == L"once");
         }
     }
 }
