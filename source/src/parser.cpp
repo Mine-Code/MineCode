@@ -174,8 +174,13 @@ void parser::tokenize(){
                 }
             }
             tokens.emplace_back(tmp);
+        }else if(ch==L'\n' || ch==L' '){
+            // passing!
         }else{
-            //std::wcout<<ch<<std::endl;
+            std::wstring value;
+            value+=ch;
+            tokens.emplace_back(value);
+            chiter.next();
         }
     }
     std::wcout.flags(bk);
