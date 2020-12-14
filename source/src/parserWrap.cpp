@@ -6,7 +6,7 @@
 
 
 namespace parserWrap{
-    void program(parserContext& ctx){
+    void program(parserCtx::parserContext& ctx){
         if(ctx.iter.peek()==L"#"){
             assert(ctx.iter.next() == L"#"   );
             assert(ctx.iter.next() == L"do"  );
