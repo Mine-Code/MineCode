@@ -15,6 +15,7 @@ namespace parserCtx
 namespace parserWrap
 {
     void program(parserCtx::parserContext&);
+    void stmt(parserCtx::parserContext&);
 } // namespace parserWrap
 
 
