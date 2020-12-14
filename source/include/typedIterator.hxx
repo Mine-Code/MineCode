@@ -41,7 +41,7 @@ public:
         return array[index+offset];
     }
     bool hasData(){
-        if(array.length() <= index){
+        if(array.size() <= index){
             return false;
         }
         return true;
