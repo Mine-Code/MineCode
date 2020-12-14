@@ -1,16 +1,17 @@
 #pragma once
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef PARSCTX_H
+#define PARSCTX_H
 
 #include <unordered_map>
 #include <sstream>
 #include "typedIterator.hxx"
 
-class parserContext{
-    enum varType{
-        FLOAT,
-        INT
-    };
+enum varType{
+    FLOAT,
+    INT
+};
+struct parserContext{
+    
     std::wstringstream stream;
     iterator<std::wstring> iter;
     std::unordered_map<std::string,varType> variables;
