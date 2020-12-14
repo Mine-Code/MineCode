@@ -183,6 +183,7 @@ void parser::tokenize(){
 
 void parser::parse(){
     std::wstringstream st;
-    parserWrap::program(st,tokens);
+    iterator<std::wstring> srcSt(tokens);
+    parserWrap::program(st,srcSt);
     // process 'st.str()'
 }
