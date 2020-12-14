@@ -11,7 +11,7 @@ enum varType{
     INT
 };
 struct parserContext{
-    
+    parserContext();
     std::wstringstream stream;
     iterator<std::wstring> iter;
     std::unordered_map<std::string,varType> variables;
