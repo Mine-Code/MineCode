@@ -180,7 +180,6 @@ void parser::tokenize(){
             std::wstring value;
             value+=ch;
             tokens.emplace_back(value);
-            chiter.next();
         }
     }
     std::wcout.flags(bk);
