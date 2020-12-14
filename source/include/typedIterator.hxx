@@ -12,6 +12,11 @@ private:
     std::vector<T> array;
 public:
     size_t index;
+    iterator()
+        :array(), index(0)
+    {
+        array=std::vector<T>();
+    }
     iterator(std::vector<T> src)
         :array(src), index(0)
     {}
