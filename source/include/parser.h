@@ -14,6 +14,7 @@ class parserContext{
         INT
     };
     std::wstringstream stream;
+    iterator<std::wstring> iter;
     std::unordered_map<std::string,varType> variables;
 };
 
