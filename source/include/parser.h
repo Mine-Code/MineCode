@@ -5,8 +5,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-
-class chariterator;
+#include <typedIterator.hxx>
 
 class parser{
 private:
@@ -15,7 +14,7 @@ private:
     std::vector<std::wstring> tokens;
     std::wstringstream assembly;
 
-    void error_program(chariterator chiter);
+    void error_program(iterator<wchar_t> chiter);
 public:
     void tokenize();
     void parse();

@@ -1,6 +1,6 @@
 #include <parser.h>
 #include <iostream>
-#include <chariterator.h>
+#include <typedIterator.hxx>
 #include <util.h>
 #include <parserWrap.h>
 
@@ -11,7 +11,7 @@ void parser::debug(){
 void parser::set(std::wstring src){
     string=src;
 }
-void parser::error_program(chariterator chiter){
+void parser::error_program(iterator<wchar_t> chiter){
     std::wcerr
         <<"Invalid Program!!!"<<std::endl
         <<chiter.index<<std::endl
@@ -21,7 +21,7 @@ void parser::error_program(chariterator chiter){
     throw "invalid program";
 }
 void parser::tokenize(){
-    chariterator chiter(string);
+    iterator<wchar_t> chiter(string);
     wchar_t ch;
     std::ios::fmtflags bk = std::wcout.flags();
     while(chiter.hasData()){
