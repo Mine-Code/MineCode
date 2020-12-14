@@ -21,7 +21,7 @@ void parser::error_program(iterator<wchar_t> chiter){
     throw "invalid program";
 }
 void parser::tokenize(){
-    iterator<wchar_t> chiter(string);
+    iterator<wchar_t> chiter(util::convToVector<wchar_t>(string));
     wchar_t ch;
     std::ios::fmtflags bk = std::wcout.flags();
     while(chiter.hasData()){
