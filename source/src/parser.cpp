@@ -187,7 +187,7 @@ void parser::tokenize(){
 }
 
 void parser::parse(){
-    parserContext ctx;
+    parserCtx::parserContext ctx;
     ctx.iter=iterator<std::wstring>(tokens);
     ctx.stream=std::wstringstream();
     

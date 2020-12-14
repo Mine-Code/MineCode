@@ -6,11 +6,15 @@
 #include <vector>
 #include <sstream>
 
-class parserContext;
+namespace parserCtx
+{
+    class parserContext;
+} // namespace parserCtx
+
 
 namespace parserWrap
 {
-    void program(parserContext&);
+    void program(parserCtx::parserContext&);
 } // namespace parserWrap
 
 
