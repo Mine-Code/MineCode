@@ -6,15 +6,20 @@
 #include <sstream>
 #include "typedIterator.hxx"
 
-enum varType{
-    FLOAT,
-    INT
-};
-struct parserContext{
-    parserContext();
-    std::wstringstream stream;
-    iterator<std::wstring> iter;
-    std::unordered_map<std::string,varType> variables;
-};
+namespace parserCtx
+{
+    enum varType{
+        FLOAT,
+        INT
+    };
+    struct parserContext{
+        parserContext();
+        std::wstringstream stream;
+        iterator<std::wstring> iter;
+        std::unordered_map<std::string,varType> variables;
+    };
+    
+} // namespace parserCtx
+
 
 #endif
