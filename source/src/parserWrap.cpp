@@ -101,6 +101,5 @@ namespace parserWrap{
         std::wstring string;
         
         return string;
-        
     }
 }
