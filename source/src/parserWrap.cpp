@@ -142,4 +142,10 @@ namespace parserWrap{
         }
         return string;
     }
+    std::wstring ident(parserCtx::parserContext& ctx){
+        std::wstring text=ctx.iter.next();
+        // check word?
+        if(!isalpha(text[0]))throw "isn't ident";
+        return text;
+    }
 }
