@@ -27,7 +27,7 @@ namespace parserWrap{
         }else if(text==L"if"){
             // TODO:call 'if'
         }else if(text==L"func"){
-            // TODO:call 'func'
+            func(ctx);
         }else if(text==L"for"){
             // TODO:call 'for'
         }else{
