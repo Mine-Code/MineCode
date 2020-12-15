@@ -21,9 +21,7 @@ namespace parserWrap{
         // stmt Switcher
         std::wstring text=ctx.iter.peek();
         if(text==L"for"){
-            // TODO:call 'for'
-            std::wcerr<<"Error: not implemented for"<<std::endl;
-            std::terminate();
+            For(ctx);
         }else if(text==L"while"){
             // TODO:call 'while'
             std::wcerr<<"Error: not implemented while"<<std::endl;
@@ -71,5 +69,19 @@ namespace parserWrap{
             stmt(ctx);
         }
         assert(ctx.iter.next()==L"}");
+    }
+    void For(parserCtx::parserContext& ctx){
+        //"for"  , ident, "in", value|range, "{", {stmt}, "}"
+        assert(ctx.iter.next() == L"for");
+        std::wstring varname=ctx.iter.next();
+        assert(ctx.iter.next() == L"in");
+        std::wstring target=ctx.iter.next();
+        assert(ctx.iter.next() == L"{");
+        while(ctx.iter.hasData()){
+            if(ctx.iter.peek()==L"}")break;
+            stmt(ctx);
+        }
+        assert(ctx.iter.next() == L"}");
+
     }
 }
