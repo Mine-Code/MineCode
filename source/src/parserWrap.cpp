@@ -61,7 +61,11 @@ namespace parserWrap{
         assert(ctx.iter.next()==L"func");
         std::wstring functionName=ctx.iter.next();
         assert(ctx.iter.next()==L"(");
-        // TODO:read args ( arg, {','arg} )
+        std::wcout<<arg();
+        while(ctx.iter.peek() != L")"){
+            assert(ctx.iter.next()==L",");
+            std::wcout<<arg();
+        }
         assert(ctx.iter.next()==L")");
         assert(ctx.iter.next()==L"{");
         while(ctx.iter.hasData()){
