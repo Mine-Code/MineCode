@@ -20,6 +20,7 @@ namespace parserWrap
     void For(parserCtx::parserContext&);
     std::wstring arg(parserCtx::parserContext&);
     std::wstring value(parserCtx::parserContext&);
+    std::wstring attribute(parserCtx::parserContext&);
     std::wstring ptr(parserCtx::parserContext&);
 } // namespace parserWrap
 
