@@ -99,7 +99,7 @@ namespace parserWrap{
     std::wstring value(parserCtx::parserContext& ctx){
         std::wstring string;
         if(ctx.iter.peek()==L"["){
-            // ptr
+            return ptr(ctx);
         }else{
             //attribute or token
         }
