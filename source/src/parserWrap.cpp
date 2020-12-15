@@ -82,7 +82,7 @@ namespace parserWrap{
         assert(ctx.iter.next() == L"for");
         std::wstring varname=ctx.iter.next();
         assert(ctx.iter.next() == L"in");
-        std::wstring target=ctx.iter.next();
+        std::wstring target=value(ctx);
         assert(ctx.iter.next() == L"{");
         while(ctx.iter.hasData()){
             if(ctx.iter.peek()==L"}")break;
@@ -97,6 +97,6 @@ namespace parserWrap{
         return name+L":"+type;
     }
     std::wstring value(parserCtx::parserContext& ctx){
-        
+        // ptr or attribute or token
     }
 }
