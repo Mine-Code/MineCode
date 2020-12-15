@@ -24,6 +24,7 @@ namespace parserWrap
     std::wstring ptr(parserCtx::parserContext&);
     std::wstring editable(parserCtx::parserContext&);
     std::wstring ident(parserCtx::parserContext&);
+    std::wstring constant(parserCtx::parserContext&);
 } // namespace parserWrap
 
 
