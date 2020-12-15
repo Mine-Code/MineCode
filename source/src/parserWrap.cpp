@@ -60,6 +60,7 @@ namespace parserWrap{
     void func(parserCtx::parserContext& ctx){
         assert(ctx.iter.next()==L"func");
         std::wstring functionName=ctx.iter.next();
+        std::wcout<<"funcName:"<<functionName<<std::endl;
         assert(ctx.iter.next()==L"(");
         std::wcout<<arg(ctx)<<std::endl;
         while(ctx.iter.peek() != L")"){
