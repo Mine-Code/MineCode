@@ -105,4 +105,14 @@ namespace parserWrap{
         }
         return string;
     }
+    std::wstring ptr(parserCtx::parserContext& ctx){
+        assert(ctx.iter.next()==L"[");
+        std::wstring base=value(ctx);
+        std::wstring offs;
+        if(ctx.iter.peek()==L"+"){
+            ctx.iter.next();
+            offs=ctx.iter.next();
+        }
+        assert(ctx.iter.next()==L"]");
+    }
 }
