@@ -100,20 +100,10 @@ namespace parserWrap{
         std::wstring string;
         if(ctx.iter.peek()==L"["){
             return ptr(ctx);
+        }else if(ctx.iter.peek(1)==L"."){
+            return attribute(ctx);
         }else{
-            string+=ctx.iter.next();
-            if(ctx.iter.peek()==L"."){
-                //attribute
-                while (true)
-                {
-                    if(ctx.iter.peek()==L"."){
-                        ctx.iter.next();
-                    }else{
-                        break;
-                    }
-                    string+=L"."+ctx.iter.next();
-                }
-            }
+            return ctx.iter.next();
         }
         return string;
     }
