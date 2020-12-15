@@ -101,7 +101,13 @@ namespace parserWrap{
         if(ctx.iter.peek()==L"["){
             return ptr(ctx);
         }else{
-            //attribute or token
+            string+=ctx.iter.next();
+            if(ctx.iter.peek()==L"."){
+                //attribute
+                while(ctx.iter.next()==L"."){
+                    string+=L"."+ctx.iter.next();
+                }
+            }
         }
         return string;
     }
