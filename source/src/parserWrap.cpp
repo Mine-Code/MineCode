@@ -131,4 +131,15 @@ namespace parserWrap{
         }
         return string;
     }
+    std::wstring editable(parserCtx::parserContext& ctx){
+        std::wstring string;
+        if(ctx.iter.peek()==L"["){
+            return ptr(ctx);
+        }else if(ctx.iter.peek(1)==L"."){
+            return attribute(ctx);
+        }else{
+            return ident(ctx);
+        }
+        return string;
+    }
 }

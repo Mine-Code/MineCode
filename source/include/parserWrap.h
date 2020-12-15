@@ -22,6 +22,7 @@ namespace parserWrap
     std::wstring value(parserCtx::parserContext&);
     std::wstring attribute(parserCtx::parserContext&);
     std::wstring ptr(parserCtx::parserContext&);
+    std::wstring editable(parserCtx::parserContext&);
 } // namespace parserWrap
 
 
