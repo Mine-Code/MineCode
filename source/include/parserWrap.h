@@ -19,6 +19,7 @@ namespace parserWrap
     void func(parserCtx::parserContext&);
     void For(parserCtx::parserContext&);
     std::wstring arg(parserCtx::parserContext&);
+    std::wstring value(parserCtx::parserContext&);
 } // namespace parserWrap
 
 
