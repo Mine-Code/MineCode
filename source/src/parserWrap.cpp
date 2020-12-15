@@ -96,4 +96,7 @@ namespace parserWrap{
         std::wstring name=ctx.iter.next();
         return name+L":"+type;
     }
+    std::wstring value(parserCtx::parserContext& ctx){
+        
+    }
 }
