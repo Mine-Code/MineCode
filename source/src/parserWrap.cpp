@@ -47,4 +47,16 @@ namespace parserWrap{
             }
         }
     }
+    void func(parserCtx::parserContext& ctx){
+        assert(ctx.iter.next()==L"func");
+        assert(ctx.iter.next()==L"(");
+        // TODO:read args ( arg, {','arg} )
+        assert(ctx.iter.next()==L")");
+        assert(ctx.iter.next()==L"{");
+        while(ctx.iter.hasData()){
+            if(ctx.iter.peek()==L"}")break;
+            stmt(ctx);
+        }
+        assert(ctx.iter.next()==L"}");
+    }
 }
