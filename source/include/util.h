@@ -54,6 +54,30 @@ namespace util
         ;
     }
 
+    template<typename T>
+    bool isAssignOp(T str){
+        if(str.back() != '='){
+            return false;
+        }
+        if(str.size() == 2){
+            char start=str[0];
+            if(isMathOp(start)||isBitOp(start)){
+                return true;
+            }
+        }else if(str.size() == 3){
+            char start=str[0];
+            char second=str[1];
+            if(start!=second){
+                return false;
+            }
+            if(start=='<' || start=='>'){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     template<typename T,typename T2>
     std::vector<T> convToVector(T2 str){
         return std::vector<T>(str.begin(),str.end());
