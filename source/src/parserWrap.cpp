@@ -158,7 +158,7 @@ namespace parserWrap{
         // check integer?
         if(!isdigit(text[0]))throw "isn't integer (const)";
         // check str?
-        if(!text[0]==L'"')throw "isn't integer (const)";
+        if(text[0]!=L'"')throw "isn't integer (const)";
         return text;
     }
 }
