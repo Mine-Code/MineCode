@@ -88,9 +88,9 @@ namespace parserWrap{
         assert(ctx.iter.next() == L"}");
 
     }
-    void arg(parserCtx::parserContext& ctx){
+    std::wstring arg(parserCtx::parserContext& ctx){
         std::wstring type=ctx.iter.next();
         std::wstring name=ctx.iter.next();
-        std::wcout<<name<<":"<<type<<std::endl;
+        return name+L":"+type;
     }
 }
