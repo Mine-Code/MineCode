@@ -98,5 +98,9 @@ namespace parserWrap{
     }
     std::wstring value(parserCtx::parserContext& ctx){
         // ptr or attribute or token
+        std::wstring string;
+        
+        return string;
+        
     }
 }
