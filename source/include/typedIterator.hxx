@@ -41,7 +41,7 @@ public:
     T peek(size_t offset){
         if(index <= 0 || array.size() <= index){
             std::cerr << "Out of size" << std::endl;;
-            return EOF;
+            throw L"outofsize";
         }
         return array[index+offset];
     }
