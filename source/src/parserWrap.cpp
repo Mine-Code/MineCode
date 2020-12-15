@@ -148,4 +148,12 @@ namespace parserWrap{
         if(!isalpha(text[0]))throw "isn't ident";
         return text;
     }
+    std::wstring constant(parserCtx::parserContext& ctx){
+        std::wstring text=ctx.iter.next();
+        // check integer?
+        if(!isdigit(text[0]))throw "isn't integer (const)";
+        // check str?
+        if(!text[0]==L'"')throw "isn't integer (const)";
+        return text;
+    }
 }
