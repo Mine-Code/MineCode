@@ -14,17 +14,20 @@ namespace parserCtx
 
 namespace parserWrap
 {
+    std::wstring ident(parserCtx::parserContext&);
+
+    std::wstring arg(parserCtx::parserContext&);
+    std::wstring attribute(parserCtx::parserContext&);
+    std::wstring ptr(parserCtx::parserContext&);
+    
+    std::wstring editable(parserCtx::parserContext&);
+    std::wstring constant(parserCtx::parserContext&);
+    std::wstring value(parserCtx::parserContext&);
+    
     void program(parserCtx::parserContext&);
     void stmt(parserCtx::parserContext&);
     void func(parserCtx::parserContext&);
     void For(parserCtx::parserContext&);
-    std::wstring arg(parserCtx::parserContext&);
-    std::wstring value(parserCtx::parserContext&);
-    std::wstring attribute(parserCtx::parserContext&);
-    std::wstring ptr(parserCtx::parserContext&);
-    std::wstring editable(parserCtx::parserContext&);
-    std::wstring ident(parserCtx::parserContext&);
-    std::wstring constant(parserCtx::parserContext&);
 } // namespace parserWrap
 
 
