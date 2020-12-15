@@ -114,5 +114,6 @@ namespace parserWrap{
             offs=ctx.iter.next();
         }
         assert(ctx.iter.next()==L"]");
+        return L"ptr"+base+L" "+offs;
     }
 }
