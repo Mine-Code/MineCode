@@ -13,6 +13,9 @@ namespace parserWrap{
             assert(ctx.iter.next() == L"once");
             // TODO: implement do once
         }
+        while(ctx.iter.hasData()){
+            stmt(ctx);
+        }
     }
     void stmt(parserCtx::parserContext& ctx){
         // stmt Switcher
