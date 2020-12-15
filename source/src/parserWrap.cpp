@@ -98,12 +98,17 @@ namespace parserWrap{
     }
     std::wstring value(parserCtx::parserContext& ctx){
         std::wstring string;
+        wchar_t ch=ctx.iter.peek(1)[0];
         if(ctx.iter.peek()==L"["){
             return ptr(ctx);
         }else if(ctx.iter.peek(1)==L"."){
             return attribute(ctx);
-        }else{
+        }else if(ch==L'0'){
             return ctx.iter.next();
+        }else if(ch==L'"'){
+            return ctx.iter.next();
+        }else{
+            return ident(ctx);
         }
         return string;
     }
