@@ -161,4 +161,7 @@ namespace parserWrap{
         if(text[0]!=L'"')throw "isn't integer (const)";
         return text;
     }
+    void assign(parserCtx::parserContext& ctx){
+        
+    }
 }
