@@ -193,7 +193,8 @@ namespace parserCore{
         return text;
     }
     std::wstring term  (parserCtx::parserContext& ctx){
-        expo(ctx);
+        std::wstring tmp;
+        tmp+=expo(ctx);
         while(
             ctx.iter.hasData() &&
             (
@@ -208,8 +209,9 @@ namespace parserCore{
                 text == L"/" ||
                 text == L"%"
             );
-            expo(ctx);
+            tmp+=text+expo(ctx);
         }
+        return tmp;
     }
     std::wstring expr  (parserCtx::parserContext& ctx){
         std::wstring text=ctx.iter.next();
