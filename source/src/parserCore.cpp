@@ -209,6 +209,24 @@ namespace parserCore{
         }
     }
     std::wstring expr  (parserCtx::parserContext& ctx){
-
+        std::wstring text=ctx.iter.next();
+        if(text==L"+" || text==L"-"){
+            // TODO: process
+        }
+        term(ctx);
+        while(
+            ctx.iter.hasData() && (
+                ctx.iter.peek() == L"+" ||
+                ctx.iter.peek() == L"-" ||
+                util::isBitOp(ctx.iter.peek()[0])
+            )
+        ){
+            assert(
+                ctx.iter.peek() == L"+" ||
+                ctx.iter.peek() == L"-" ||
+                util::isBitOp(ctx.iter.peek()[0])
+            );
+            power(ctx);
+        }
     }
 }
