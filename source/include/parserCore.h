@@ -24,6 +24,11 @@ namespace parserCore
     std::wstring constant(parserCtx::parserContext&);
     std::wstring value(parserCtx::parserContext&);
     
+    std::wstring power (parserCtx::parserContext&);
+    std::wstring expo  (parserCtx::parserContext&);
+    std::wstring term  (parserCtx::parserContext&);
+    std::wstring expr  (parserCtx::parserContext&);
+
     void program(parserCtx::parserContext&);
     void stmt(parserCtx::parserContext&);
     void func(parserCtx::parserContext&);
