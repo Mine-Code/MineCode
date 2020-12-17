@@ -191,6 +191,6 @@ void parser::parse(){
     ctx.iter=iterator<std::wstring>(tokens);
     ctx.stream=std::wstringstream();
     
-    parserWrap::program(ctx);
+    parserCore::program(ctx);
     // process 'st.str()'
 }

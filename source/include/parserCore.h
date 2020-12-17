@@ -12,7 +12,7 @@ namespace parserCtx
 } // namespace parserCtx
 
 
-namespace parserWrap
+namespace parserCore
 {
     std::wstring ident(parserCtx::parserContext&);
 
