@@ -176,10 +176,11 @@ namespace parserCore{
         if(ctx.iter.peek()==L"("){
             // inner type
             ctx.iter.next();
-            expr(ctx);
+            std::wstring text=expr(ctx);
             assert(ctx.iter.next()==L")");
+            return text;
         }
-        value(ctx);
+        return value(ctx);
         
     }
     std::wstring expo  (parserCtx::parserContext& ctx){
