@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PARSCTX_H
-#define PARSCTX_H
+#ifndef PARSER_CONTEXT_H
+#define PARSER_CONTEXT_H
 
 #include <unordered_map>
 #include <sstream>
