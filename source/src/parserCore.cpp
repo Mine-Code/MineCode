@@ -39,9 +39,7 @@ namespace parserCore{
         }else{
             //put / assign
             assert(ctx.iter.hasData());
-            ctx.iter.next();
-            text=ctx.iter.peek();
-
+            text=ctx.iter.peek(1);
             if(text==L"<<"){
                 // TODO:call 'put'
                 std::wcerr<<"Error: not implemented put"<<std::endl;
