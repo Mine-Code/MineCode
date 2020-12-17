@@ -1,6 +1,6 @@
 #pragma once
-#ifndef TOKENPARS_H
-#define TOKENPARS_H
+#ifndef PARSER_CORE_H
+#define PARSER_CORE_H
 
 #include <string>
 #include <vector>
