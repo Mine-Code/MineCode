@@ -183,7 +183,11 @@ namespace parserCore{
         
     }
     std::wstring expo  (parserCtx::parserContext& ctx){
-
+        power(ctx);
+        while(ctx.iter.hasData() && ctx.iter.peek() == L"**"){
+            assert(ctx.iter.peek() == L"**");
+            power(ctx);
+        }
     }
     std::wstring term  (parserCtx::parserContext& ctx){
 
