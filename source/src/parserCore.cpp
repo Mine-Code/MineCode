@@ -168,7 +168,7 @@ namespace parserCore{
         }else if(op==L"--"){
             // TODO dec
         }else{
-            std::wstring value=expr();
+            std::wstring value=expr(ctx);
             std::wcout<<target<<op<<value<<std::endl;
         }
     }
