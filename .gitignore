@@ -4,6 +4,8 @@
 # binary
 MineCode
 build/test/*
+build/dep/Debug
+build/obj/Debug
 
 # https://github.com/github/gitignore/blob/master/C++.gitignore
 
@@ -39,4 +41,3 @@ build/test/*
 *.exe
 *.out
 *.app
-/Debug
