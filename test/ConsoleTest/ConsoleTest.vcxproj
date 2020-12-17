@@ -95,6 +95,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -143,7 +145,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\src\asm.cpp" />
+    <ClCompile Include="..\..\source\src\parserContext.cpp" />
+    <ClCompile Include="..\..\source\src\parserCore.cpp" />
+    <ClCompile Include="..\..\source\src\parserWrap.cpp" />
     <ClCompile Include="..\parsetest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\include\asm.h" />
+    <ClInclude Include="..\..\source\include\parserContext.h" />
+    <ClInclude Include="..\..\source\include\parserCore.h" />
+    <ClInclude Include="..\..\source\include\parserWrap.h" />
+    <ClInclude Include="..\..\source\include\typedIterator.hxx" />
+    <ClInclude Include="..\..\source\include\util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
