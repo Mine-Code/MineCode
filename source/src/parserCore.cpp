@@ -5,7 +5,7 @@
 #include <parserContext.h>
 #include <util.h>
 
-namespace parserWrap{
+namespace parserCore{
     void program(parserCtx::parserContext& ctx){
         if(ctx.iter.peek()==L"#"){
             assert(ctx.iter.next() == L"#"   );
