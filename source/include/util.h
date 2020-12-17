@@ -59,7 +59,12 @@ namespace util
         if(str.back() != '='){
             return false;
         }
-        if(str.size() == 2){
+        if(str.size()==1){
+            if(str[0]!='='){
+                return false;
+            }
+            return true;
+        }else if(str.size() == 2){
             char start=str[0];
             if(isMathOp(start)||isBitOp(start)){
                 return true;
