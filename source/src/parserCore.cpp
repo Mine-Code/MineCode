@@ -51,9 +51,7 @@ namespace parserCore{
                 || text==L"--"
                 || util::isAssignOp(text)
             ){
-                // TODO:call 'assign'
-                std::wcerr<<"Error: not implemented assign"<<std::endl;
-                std::terminate();
+                assign(ctx);
             }
         }
     }
