@@ -1,35 +1,25 @@
 #pragma once
-#ifndef TOKENPARS_H
-#define TOKENPARS_H
+#ifndef PARSER_H
+#define PARSER_H
 
 #include <string>
-#include <vector>
 #include <sstream>
+#include <vector>
+#include <typedIterator.hxx>
 
-namespace parserCtx
-{
-    class parserContext;
-} // namespace parserCtx
+class parser{
+private:
+    std::wstring string;
+    int index;
+    std::vector<std::wstring> tokens;
+    std::wstringstream assembly;
 
-
-namespace parserWrap
-{
-    std::wstring ident(parserCtx::parserContext&);
-
-    std::wstring arg(parserCtx::parserContext&);
-    std::wstring attribute(parserCtx::parserContext&);
-    std::wstring ptr(parserCtx::parserContext&);
-    
-    std::wstring editable(parserCtx::parserContext&);
-    std::wstring constant(parserCtx::parserContext&);
-    std::wstring value(parserCtx::parserContext&);
-    
-    void program(parserCtx::parserContext&);
-    void stmt(parserCtx::parserContext&);
-    void func(parserCtx::parserContext&);
-    void For(parserCtx::parserContext&);
-    void assign(parserCtx::parserContext&);
-} // namespace parserWrap
-
+    void error_program(iterator<wchar_t> chiter);
+public:
+    void tokenize();
+    void parse();
+    void set(std::wstring);
+    void debug();
+};
 
 #endif

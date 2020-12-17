@@ -1,167 +1,196 @@
 #include <parserWrap.h>
-
-#include <assert.h>
-
-#include <parserContext.h>
+#include <iostream>
+#include <typedIterator.hxx>
 #include <util.h>
+#include <parserCore.h>
+#include <parserContext.h>
 
-namespace parserWrap{
-    void program(parserCtx::parserContext& ctx){
-        if(ctx.iter.peek()==L"#"){
-            assert(ctx.iter.next() == L"#"   );
-            assert(ctx.iter.next() == L"do"  );
-            assert(ctx.iter.next() == L"once");
-            // TODO: implement do once
-        }
-        while(ctx.iter.hasData()){
-            stmt(ctx);
-        }
-    }
-    void stmt(parserCtx::parserContext& ctx){
-        // stmt Switcher
-        std::wstring text=ctx.iter.peek();
-        if(text==L"for"){
-            For(ctx);
-        }else if(text==L"while"){
-            // TODO:call 'while'
-            std::wcerr<<"Error: not implemented while"<<std::endl;
-            std::terminate();
-        }else if(text==L"if"){
-            // TODO:call 'if'
-            std::wcerr<<"Error: not implemented if"<<std::endl;
-            std::terminate();
-        }else if(text==L"func"){
-            func(ctx);
-        }else if(text==L"for"){
-            // TODO:call 'for'
-            std::wcerr<<"Error: not implemented for"<<std::endl;
-            std::terminate();
-        }else{
-            //put / assign
-            assert(ctx.iter.hasData());
-            ctx.iter.next();
-            text=ctx.iter.peek();
+void parser::debug(){
+    
+}
 
-            if(text==L"<<"){
-                // TODO:call 'put'
-                std::wcerr<<"Error: not implemented put"<<std::endl;
-                std::terminate();
-            }else if(
-                   text==L"++"
-                || text==L"--"
-                || util::isAssignOp(text)
-            ){
-                // TODO:call 'assign'
-                std::wcerr<<"Error: not implemented assign"<<std::endl;
-                std::terminate();
-            }
-        }
-    }
-    void func(parserCtx::parserContext& ctx){
-        assert(ctx.iter.next()==L"func");
-        std::wstring functionName=ctx.iter.next();
-        std::wcout<<"funcName:"<<functionName<<std::endl;
-        assert(ctx.iter.next()==L"(");
-        if(ctx.iter.peek() != L")"){
-            std::wcout<<arg(ctx)<<std::endl;
-        }
-        while(ctx.iter.peek() != L")"){
-            assert(ctx.iter.next()==L",");
-            std::wcout<<arg(ctx)<<std::endl;
-        }
-        assert(ctx.iter.next()==L")");
-        assert(ctx.iter.next()==L"{");
-        while(ctx.iter.hasData()){
-            if(ctx.iter.peek()==L"}")break;
-            stmt(ctx);
-        }
-        assert(ctx.iter.next()==L"}");
-    }
-    void For(parserCtx::parserContext& ctx){
-        //"for"  , ident, "in", value|range, "{", {stmt}, "}"
-        assert(ctx.iter.next() == L"for");
-        std::wstring varname=ctx.iter.next();
-        assert(ctx.iter.next() == L"in");
-        std::wstring target=value(ctx);
-        assert(ctx.iter.next() == L"{");
-        while(ctx.iter.hasData()){
-            if(ctx.iter.peek()==L"}")break;
-            stmt(ctx);
-        }
-        assert(ctx.iter.next() == L"}");
+void parser::set(std::wstring src){
+    string=src;
+}
+void parser::error_program(iterator<wchar_t> chiter){
+    std::wcerr
+        <<"Invalid Program!!!"<<std::endl
+        <<chiter.index<<std::endl
+        <<string.substr(chiter.index-10,20)<<std::endl
+    ;
+                            
+    throw "invalid program";
+}
+void parser::tokenize(){
+    iterator<wchar_t> chiter(util::convToVector<wchar_t>(string));
+    wchar_t ch;
+    std::ios::fmtflags bk = std::wcout.flags();
+    while(chiter.hasData()){
+        ch=chiter.next();
+        if(ch=='0'){
+            wchar_t type=chiter.peek();
+            std::wstring value;
+            switch (type)
+            {
+            case 'x': //hex
+                value+=L"0x";
+                chiter.next(); // skip 'x'
+                while(1){
+                    ch=std::tolower(chiter.peek());
+                    if(!chiter.hasData()){
+                        error_program(chiter);
+                    }
+                    else if(
+                           util::inRange<char>('0',ch,'9')
+                        || util::inRange<char>('a',ch,'f')
+                    ){
+                        auto tmp=std::tolower(chiter.next());
+                        value+=tmp;
+                    }else{
+                        break;
+                    }
+                }
+                tokens.emplace_back(value);
+                break;
+            
+            case 'o': //oct
+                value+=L"0o";
+                chiter.next(); // skip 'o'
+                while(1){
+                    ch=chiter.peek();
+                    if(!chiter.hasData()){
+                        error_program(chiter);
+                    }
+                    else if(util::inRange<char>('0',ch,'8')){
+                        value+=chiter.next();
+                    }else{
+                        break;
+                    }
+                }
+                tokens.emplace_back(value);
+                break;
 
-    }
-    std::wstring arg(parserCtx::parserContext& ctx){
-        std::wstring type=ctx.iter.next();
-        std::wstring name=ctx.iter.next();
-        return name+L":"+type;
-    }
-    std::wstring value(parserCtx::parserContext& ctx){
-        std::wstring string;
-        wchar_t ch=ctx.iter.peek(1)[0];
-        if(ctx.iter.peek()==L"["){
-            return ptr(ctx);
-        }else if(ctx.iter.peek(1)==L"."){
-            return attribute(ctx);
-        }else if(ch==L'0'){
-            return ctx.iter.next();
-        }else if(ch==L'"'){
-            return ctx.iter.next();
-        }else{
-            return ident(ctx);
-        }
-        return string;
-    }
-    std::wstring ptr(parserCtx::parserContext& ctx){
-        assert(ctx.iter.next()==L"[");
-        std::wstring base=value(ctx);
-        std::wstring offs;
-        if(ctx.iter.peek()==L"+"){
-            ctx.iter.next();
-            offs=ctx.iter.next();
-        }
-        assert(ctx.iter.next()==L"]");
-        return L"ptr"+base+L" "+offs;
-    }
-    std::wstring attribute(parserCtx::parserContext& ctx){
-        std::wstring string;
-        string+=ctx.iter.next();
-        while (true)
-        {
-            if(ctx.iter.peek()!=L"."){
+            default:
+                error_program(chiter);
                 break;
             }
-            ctx.iter.next();
-            string+=L"."+ctx.iter.next();
         }
-        return string;
-    }
-    std::wstring editable(parserCtx::parserContext& ctx){
-        std::wstring string;
-        if(ctx.iter.peek()==L"["){
-            return ptr(ctx);
-        }else if(ctx.iter.peek(1)==L"."){
-            return attribute(ctx);
+        else if(isdigit(ch)){
+            std::wstring value;
+            value+=ch;
+            while(1){
+                ch=chiter.peek();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }
+                else if(util::inRange<char>('0',ch,'9')){
+                    ch+=chiter.next();
+                }else{
+                    break;
+                }
+            }
+            tokens.emplace_back(value);
+        }else if(ch=='f' && chiter.hasData() && chiter.peek() =='\"'){
+            std::wstring value;
+            value+=ch;
+            value+=chiter.next();
+            while(1){
+                ch=chiter.next();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }else if(ch=='\\'){
+                    value+=ch;
+                    ch=chiter.next();
+                    if(!chiter.hasData()){
+                        error_program(chiter);
+                    }
+                    value+=ch;
+                    continue;
+                }
+                value+=ch;
+                if(ch==L'"'){
+                    break;
+                }
+            }
+            tokens.emplace_back(value);
+        }else if((ch=='+'||ch=='-') && chiter.hasData() && chiter.peek() ==ch){
+            std::wstring value;
+            value+=ch;
+            value+=ch;
+            tokens.emplace_back(value);
+            chiter.next();
+        }else if(iswalpha(ch)){
+            std::wstring value;
+            value+=ch;
+            while(1){
+                ch=chiter.peek();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }
+                else if(iswalpha(ch)){
+                    value+=chiter.next();
+                }else{
+                    break;
+                }
+            }
+            tokens.emplace_back(value);
+        }else if(ch == L'\"'){
+            std::wstring value;
+            value+=ch;
+            while(1){
+                ch=chiter.next();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }else if(ch=='\\'){
+                    value+=ch;
+                    ch=chiter.next();
+                    if(!chiter.hasData()){
+                        error_program(chiter);
+                    }
+                    value+=ch;
+                    continue;
+                }
+                value+=ch;
+                if(ch==L'"'){
+                    break;
+                }
+            }
+            tokens.emplace_back(value);
+        }else if(util::isIdentity(ch)){
+            std::wstring tmp;
+            tmp+=ch;
+            if(
+                  util::isBitOp(ch)
+                ||util::isCondOp(ch)
+                ||util::isMathOp(ch)
+            ){
+                if(chiter.peek(1)=='='){
+                    tmp+=chiter.next();
+                }
+            }
+            if(ch=='<' || ch=='>'){
+                if(chiter.peek()==ch){
+                    tmp+=ch;
+                    chiter.next();
+                }
+            }
+            tokens.emplace_back(tmp);
+        }else if(ch==L'\n' || ch==L' '){
+            // passing!
         }else{
-            return ident(ctx);
+            std::wstring value;
+            value+=ch;
+            tokens.emplace_back(value);
         }
-        return string;
     }
-    std::wstring ident(parserCtx::parserContext& ctx){
-        std::wstring text=ctx.iter.next();
-        // check word?
-        if(!isalpha(text[0]))throw "isn't ident";
-        return text;
-    }
-    std::wstring constant(parserCtx::parserContext& ctx){
-        std::wstring text=ctx.iter.next();
-        // check integer?
-        if(!isdigit(text[0]))throw "isn't integer (const)";
-        // check str?
-        if(text[0]!=L'"')throw "isn't integer (const)";
-        return text;
-    }
-    void assign(parserCtx::parserContext& ctx){
-        
-    }
+    std::wcout.flags(bk);
+}
+
+void parser::parse(){
+    parserCtx::parserContext ctx;
+    ctx.iter=iterator<std::wstring>(tokens);
+    ctx.stream=std::wstringstream();
+    
+    parserWrap::program(ctx);
+    // process 'st.str()'
 }
