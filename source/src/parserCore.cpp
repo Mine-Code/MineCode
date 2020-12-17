@@ -148,7 +148,10 @@ namespace parserCore{
     std::wstring ident(parserCtx::parserContext& ctx){
         std::wstring text=ctx.iter.next();
         // check word?
-        if(!isalpha(text[0]))throw "isn't ident";
+        if(!isalpha(text[0])){
+            std::wcout<<"isn't ident; "<<text<<std::endl;
+            throw "isn't ident";
+        }
         return text;
     }
     std::wstring constant(parserCtx::parserContext& ctx){
