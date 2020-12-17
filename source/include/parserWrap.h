@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef PARSER_WRAP_H
+#define PARSER_WRAP_H
 
 #include <string>
 #include <sstream>
