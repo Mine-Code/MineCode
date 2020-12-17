@@ -104,8 +104,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="source\include\asm.h" />
-    <ClInclude Include="source\include\parser.h" />
     <ClInclude Include="source\include\parserContext.h" />
+    <ClInclude Include="source\include\parserCore.h" />
     <ClInclude Include="source\include\parserWrap.h" />
     <ClInclude Include="source\include\typedIterator.hxx" />
     <ClInclude Include="source\include\util.h" />
@@ -113,8 +113,8 @@
   <ItemGroup>
     <ClCompile Include="source\src\asm.cpp" />
     <ClCompile Include="source\src\main.cpp" />
-    <ClCompile Include="source\src\parser.cpp" />
     <ClCompile Include="source\src\parserContext.cpp" />
+    <ClCompile Include="source\src\parserCore.cpp" />
     <ClCompile Include="source\src\parserWrap.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
