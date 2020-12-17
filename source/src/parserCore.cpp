@@ -161,6 +161,15 @@ namespace parserCore{
         return text;
     }
     void assign(parserCtx::parserContext& ctx){
-        
+        std::wstring target=editable(ctx);
+        std::wstring op=ctx.iter.next();
+        if(op==L"++"){
+            // TODO inc
+        }else if(op==L"--"){
+            // TODO dec
+        }else{
+            std::wstring value=expr();
+            std::wcout<<target<<op<<value<<std::endl;
+        }
     }
 }
