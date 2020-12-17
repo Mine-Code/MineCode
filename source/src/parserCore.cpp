@@ -190,7 +190,23 @@ namespace parserCore{
         }
     }
     std::wstring term  (parserCtx::parserContext& ctx){
-
+        expo(ctx);
+        while(
+            ctx.iter.hasData() &&
+            (
+                ctx.iter.peek() == L"*" ||
+                ctx.iter.peek() == L"/" ||
+                ctx.iter.peek() == L"%"
+            )
+        ){
+            auto text=ctx.iter.peek();
+            assert(
+                text == L"*" ||
+                text == L"/" ||
+                text == L"%"
+            );
+            expo(ctx);
+        }
     }
     std::wstring expr  (parserCtx::parserContext& ctx){
 
