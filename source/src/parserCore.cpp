@@ -173,7 +173,13 @@ namespace parserCore{
         }
     }
     std::wstring power (parserCtx::parserContext& ctx){
-    std::wstring power (parserCtx::parserContext&){
+        if(ctx.iter.peek()==L"("){
+            // inner type
+            ctx.iter.next();
+            expr(ctx);
+            assert(ctx.iter.next()==L")");
+        }
+        value(ctx);
         
     }
     std::wstring expo  (parserCtx::parserContext& ctx){
