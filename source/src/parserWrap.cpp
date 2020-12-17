@@ -5,14 +5,14 @@
 #include <parserCore.h>
 #include <parserContext.h>
 
-void parser::debug(){
+void parserWrap::debug(){
     
 }
 
-void parser::set(std::wstring src){
+void parserWrap::set(std::wstring src){
     string=src;
 }
-void parser::error_program(iterator<wchar_t> chiter){
+void parserWrap::error_program(iterator<wchar_t> chiter){
     std::wcerr
         <<"Invalid Program!!!"<<std::endl
         <<chiter.index<<std::endl
@@ -21,7 +21,7 @@ void parser::error_program(iterator<wchar_t> chiter){
                             
     throw "invalid program";
 }
-void parser::tokenize(){
+void parserWrap::tokenize(){
     iterator<wchar_t> chiter(util::convToVector<wchar_t>(string));
     wchar_t ch;
     std::ios::fmtflags bk = std::wcout.flags();
@@ -186,7 +186,7 @@ void parser::tokenize(){
     std::wcout.flags(bk);
 }
 
-void parser::parse(){
+void parserWrap::parse(){
     parserCtx::parserContext ctx;
     ctx.iter=iterator<std::wstring>(tokens);
     ctx.stream=std::wstringstream();

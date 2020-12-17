@@ -7,7 +7,7 @@
 #include <vector>
 #include <typedIterator.hxx>
 
-class parser{
+class parserWrap{
 private:
     std::wstring string;
     int index;
