@@ -172,16 +172,17 @@ namespace parserCore{
             std::wcout<<target<<op<<value<<std::endl;
         }
     }
+    std::wstring power (parserCtx::parserContext& ctx){
     std::wstring power (parserCtx::parserContext&){
         
     }
-    std::wstring expo  (parserCtx::parserContext&){
-        
+    std::wstring expo  (parserCtx::parserContext& ctx){
+
     }
-    std::wstring term  (parserCtx::parserContext&){
-        
+    std::wstring term  (parserCtx::parserContext& ctx){
+
     }
-    std::wstring expr  (parserCtx::parserContext&){
-        
+    std::wstring expr  (parserCtx::parserContext& ctx){
+
     }
 }
