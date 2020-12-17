@@ -14,7 +14,7 @@ int main()
         )
     );
 
-    parser prs;
+    parserWrap prs;
     prs.set(
         L"#do once\n"
         "func sendMessagesToPlayers()\n"
