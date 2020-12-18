@@ -46,9 +46,7 @@ namespace parserCore{
             ctx.iter.index=backup;
             // done skip and read
             if(text==L"<<"){
-                // TODO:call 'put'
-                std::wcerr<<"Error: not implemented put"<<std::endl;
-                std::terminate();
+                put(ctx);
             }else if(
                    text==L"++"
                 || text==L"--"
