@@ -19,19 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\src\asm.cpp" />
-    <ClCompile Include="..\source\src\parserContext.cpp" />
-    <ClCompile Include="..\source\src\parserCore.cpp" />
-    <ClCompile Include="..\source\src\parserWrap.cpp" />
-    <ClCompile Include="src\parsetest.cpp" />
+    <ClCompile Include="..\..\src\asm.cpp" />
+    <ClCompile Include="..\..\src\parserContext.cpp" />
+    <ClCompile Include="..\..\src\parserCore.cpp" />
+    <ClCompile Include="..\..\src\parserWrap.cpp" />
+    <ClCompile Include="parsetest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\include\asm.h" />
-    <ClInclude Include="..\source\include\parserContext.h" />
-    <ClInclude Include="..\source\include\parserCore.h" />
-    <ClInclude Include="..\source\include\parserWrap.h" />
-    <ClInclude Include="..\source\include\typedIterator.hxx" />
-    <ClInclude Include="..\source\include\util.h" />
+    <ClInclude Include="..\..\src\include\asm.h" />
+    <ClInclude Include="..\..\src\include\parserContext.h" />
+    <ClInclude Include="..\..\src\include\parserCore.h" />
+    <ClInclude Include="..\..\src\include\parserWrap.h" />
+    <ClInclude Include="..\..\src\include\typedIterator.hxx" />
+    <ClInclude Include="..\..\src\include\util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -106,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\source\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\src\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
