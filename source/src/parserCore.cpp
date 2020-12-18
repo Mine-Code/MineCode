@@ -93,7 +93,7 @@ namespace parserCore{
         return name+L":"+type;
     }
     std::wstring value(parserCtx::parserContext& ctx){
-        wchar_t ch=ctx.iter.peek(1)[0];
+        wchar_t ch=ctx.iter.peek()[0];
         if(ctx.iter.peek()==L"["){
             return ptr(ctx);
         }else if(ctx.iter.peek(1)==L"."){
