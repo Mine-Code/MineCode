@@ -13,7 +13,7 @@ CXX := g++
 CC  := gcc
 
 ## Directorys
-SRCDIR := source/src
+SRCDIR := src
 
 BUILD  := build
 OBJDIR := $(BUILD)/obj
@@ -25,7 +25,7 @@ TARGET=MineCode
 
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(@:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
-INCLUDES ?= -Isource/include
+INCLUDES ?= -Isrc/include
 COMPFLAGS?= -Wall -Wextra $(INCLUDES)
 
 LDFLAGS  ?=
