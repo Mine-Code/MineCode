@@ -26,8 +26,8 @@ Licensed under the [MIT](https://github.com/yukikamome316/MineCode/LICENSE) lice
 
 ## Credit
 <a href="https://github.com/yukikamome316">
-  <img align="left" src="https://github.com/yukikamome316.png" hspace="3"width=100, height=100/>
+  <img align="left" src="https://github.com/yukikamome316.png" hspace="2" width=100, height=100/>
 </a>
 <a href="https://github.com/syoch">
-  <img align="left" src="https://github.com/syoch.png" hspace="3" width=100, height=100/>
+  <img align="left" src="https://github.com/syoch.png" hspace="2" width=100, height=100/>
 </a>
