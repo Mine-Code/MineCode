@@ -90,6 +90,9 @@ namespace parserCore{
         assert(ctx.iter.next() == L"}");
 
     }
+    void put(parserCtx::parserContext& ctx){
+        
+    }
     std::wstring arg(parserCtx::parserContext& ctx){
         std::wstring type=ctx.iter.next();
         std::wstring name=ctx.iter.next();
