@@ -18,12 +18,28 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\src\asm.cpp" />
+    <ClCompile Include="..\source\src\parserContext.cpp" />
+    <ClCompile Include="..\source\src\parserCore.cpp" />
+    <ClCompile Include="..\source\src\parserWrap.cpp" />
+    <ClCompile Include="src\parsetest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\include\asm.h" />
+    <ClInclude Include="..\source\include\parserContext.h" />
+    <ClInclude Include="..\source\include\parserCore.h" />
+    <ClInclude Include="..\source\include\parserWrap.h" />
+    <ClInclude Include="..\source\include\typedIterator.hxx" />
+    <ClInclude Include="..\source\include\util.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{12706dcc-461d-4e95-90fa-5cb8343492c2}</ProjectGuid>
     <RootNamespace>ConsoleTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ParserTest</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -144,21 +160,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\source\src\asm.cpp" />
-    <ClCompile Include="..\..\source\src\parserContext.cpp" />
-    <ClCompile Include="..\..\source\src\parserCore.cpp" />
-    <ClCompile Include="..\..\source\src\parserWrap.cpp" />
-    <ClCompile Include="..\parsetest.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\source\include\asm.h" />
-    <ClInclude Include="..\..\source\include\parserContext.h" />
-    <ClInclude Include="..\..\source\include\parserCore.h" />
-    <ClInclude Include="..\..\source\include\parserWrap.h" />
-    <ClInclude Include="..\..\source\include\typedIterator.hxx" />
-    <ClInclude Include="..\..\source\include\util.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
