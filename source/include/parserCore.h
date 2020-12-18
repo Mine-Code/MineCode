@@ -33,6 +33,7 @@ namespace parserCore
     void stmt(parserCtx::parserContext&);
     void func(parserCtx::parserContext&);
     void For(parserCtx::parserContext&);
+    void put(parserCtx::parserContext&);
     void assign(parserCtx::parserContext&);
 } // namespace parserWrap
 
