@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build\test\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)build\test\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\test\$(Configuration)\AssemblyTest</OutDir>
+    <IntDir>$(SolutionDir)build\test\$(Configuration)\AssemblyTest</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

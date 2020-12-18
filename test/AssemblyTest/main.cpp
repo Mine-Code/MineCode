@@ -3,5 +3,9 @@
 
 int main()
 {
-    std::cout << "test" << std::endl;
+    std::wstringstream ss;
+    Assembly assembly;
+    assembly.startOfFunction(ss);
+    assembly.endOfFunction(ss);
+    std::wcout << ss.str() << std::endl;
 }

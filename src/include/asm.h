@@ -4,18 +4,13 @@
 
 #include <sstream>
 
-namespace assembly
-{
-    class Assembly {
-    public:
-        void startOfFunction(std::wstringstream& st);
-        void endOfFunction(std::wstringstream& st);
-        void callFunction(std::wstringstream& st, int address);
-
-        int stack_size = 76;
-    };
-
-} // namespace assembly
-
+class Assembly {
+private:
+    int stack_size = 76;
+public:
+    void startOfFunction(std::wstringstream& ss);
+    void endOfFunction(std::wstringstream& ss);
+    void callFunction(std::wstringstream& ss, int address);
+};
 
 #endif
