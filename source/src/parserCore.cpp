@@ -179,7 +179,7 @@ namespace parserCore{
             return text;
         }
         return value(ctx);
-        
+
     }
     std::wstring expo  (parserCtx::parserContext& ctx){
         std::wstring text;
@@ -213,7 +213,6 @@ namespace parserCore{
     }
     std::wstring expr  (parserCtx::parserContext& ctx){
         std::wstring tmp;
-
         std::wstring text=ctx.iter.next();
         if(text==L"+" || text==L"-"){
             // TODO: process
@@ -232,9 +231,10 @@ namespace parserCore{
                 ctx.iter.peek() == L"-" ||
                 util::isBitOp(ctx.iter.peek()[0])
             );
-            tmp+=ctx.iter.peek();
+            tmp+=ctx.iter.next();
             tmp+=power(ctx);
         }
+        abort();
         return tmp;
     }
 }
