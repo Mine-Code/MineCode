@@ -162,9 +162,9 @@ namespace parserCore{
         std::wstring target=editable(ctx);
         std::wstring op=ctx.iter.next();
         if(op==L"++"){
-            // TODO inc
+            std::wcout<<target<<"++"<<std::endl;
         }else if(op==L"--"){
-            // TODO dec
+            std::wcout<<target<<"--"<<std::endl;
         }else{
             std::wstring value=expr(ctx);
             std::wcout<<target<<op<<value<<std::endl;
@@ -234,7 +234,6 @@ namespace parserCore{
             tmp+=ctx.iter.next();
             tmp+=power(ctx);
         }
-        abort();
         return tmp;
     }
 }
