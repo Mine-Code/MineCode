@@ -6,12 +6,13 @@
 
 namespace assembly
 {
-	class Assembly
-	{
+	class Assembly {
 	public:
 		void startOfFunction(std::wstringstream& st);
 		void endOfFunction(std::wstringstream& st);
-		void callFunction(std::wstringstream& st,int address);
+		void callFunction(std::wstringstream& st, int address);
+
+		int stack_size = 76;
 	};
 
 } // namespace assembly
