@@ -91,7 +91,10 @@ namespace parserCore{
 
     }
     void put(parserCtx::parserContext& ctx){
-        
+        std::wstring target = value(ctx);
+        assert(ctx.iter.next()==L"<<");
+        std::wstring data=expr(ctx);
+        std::wcout<<data<<" To "<<target<<std::endl;
     }
     std::wstring arg(parserCtx::parserContext& ctx){
         std::wstring type=ctx.iter.next();
