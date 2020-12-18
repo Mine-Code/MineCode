@@ -83,7 +83,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC)  $(DEPEND) $(CFLAGS)   -c -o $@ $<
 
 # test source
-$(TESTEXE)/%: test/%.cpp $(OBJS)
+$(TESTEXE)/%: test/%/main.cpp $(OBJS)
 	@echo "compile[test] $*"
 	@$(CXX) $(DEPEND) $(CXXFLAGS) -o $@$(FEXT) $(filter-out %/main.o,$^)
 	@$(call executable,$@)
