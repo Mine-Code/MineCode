@@ -23,7 +23,7 @@
     <ClCompile Include="..\..\src\parserContext.cpp" />
     <ClCompile Include="..\..\src\parserCore.cpp" />
     <ClCompile Include="..\..\src\parserWrap.cpp" />
-    <ClCompile Include="parsetest.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\include\asm.h" />
