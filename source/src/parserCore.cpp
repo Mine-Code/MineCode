@@ -100,6 +100,8 @@ namespace parserCore{
             return attribute(ctx);
         }else if(ch==L'0'){
             return ctx.iter.next();
+        }else if(isdigit(ch)){
+            return ctx.iter.next();
         }else if(ch==L'"'){
             return ctx.iter.next();
         }else{
