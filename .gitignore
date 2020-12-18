@@ -1,9 +1,7 @@
 # IDE / Editor
 .vscode
 .vs
-MineCode.vcxproj.user
-test/AssemblyTest/AssemblyTest.vcxproj.user
-test/ParserTest/ParserTest.vcxproj.user
+*.user
 
 # binary
 MineCode
