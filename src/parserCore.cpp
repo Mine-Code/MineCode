@@ -124,7 +124,7 @@ namespace parserCore{
             offs=ctx.iter.next();
         }
         assert(ctx.iter.next()==L"]");
-        return L"ptr"+base+L" "+offs;
+        return L"ptr"+base+L" "+offs+L"<";
     }
     std::wstring attribute(parserCtx::parserContext& ctx){
         std::wstring string;
