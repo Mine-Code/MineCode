@@ -2,7 +2,8 @@
 
 parserCtx::parserContext::parserContext()
 {
-    Asm=new Assembly();
+    std::wstringstream st;
+    Asm=new Assembly(st);
     iter=iterType();
     variables=varsType();
 }
