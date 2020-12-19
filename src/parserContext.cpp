@@ -2,7 +2,7 @@
 
 parserCtx::parserContext::parserContext()
 {
-    stream=streamType();
+    Asm=new Assembly();
     iter=iterType();
     variables=varsType();
 }
