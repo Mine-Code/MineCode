@@ -67,7 +67,7 @@ void parserWrap::tokenize(){
                 if(!chiter.hasData()){
                     error_program(chiter);
                 }
-                else if(util::inRange<char>('0',ch,'9')){
+                else if(util::isDec(ch)){
                     ch+=chiter.next();
                 }else{
                     break;
@@ -152,8 +152,10 @@ void parserWrap::tokenize(){
             tokens.emplace_back(tmp);
         }else if(ch==L'\n' || ch==L' '){
             // passing!
-        }else if(ch==L'.'){
-            std::wcout<<ch<<std::endl;
+        }else if(ch==L'.' && nextch==L'.'){
+            chiter.next();
+            chiter.next();
+            tokens.emplace_back(L"...");
         }else{
             value+=ch;
             tokens.emplace_back(value);
