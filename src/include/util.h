@@ -56,6 +56,9 @@ namespace util
 
     template<typename T>
     bool isAssignOp(T str){
+        if(str==L"++" || str==L"--"){
+            return true;
+        }
         if(str.back() != '='){
             return false;
         }
