@@ -60,6 +60,10 @@ void parserWrap::tokenize(){
                 }
             }
             tokens.emplace_back(value);
+        }else if(ch==L'.' && nextch==L'.'){
+            chiter.next();
+            chiter.next();
+            tokens.emplace_back(L"...");
         }else if(isdigit(ch)){
             value+=ch;
             while(1){
@@ -152,10 +156,6 @@ void parserWrap::tokenize(){
             tokens.emplace_back(tmp);
         }else if(ch==L'\n' || ch==L' '){
             // passing!
-        }else if(ch==L'.' && nextch==L'.'){
-            chiter.next();
-            chiter.next();
-            tokens.emplace_back(L"...");
         }else{
             value+=ch;
             tokens.emplace_back(value);
