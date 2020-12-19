@@ -29,8 +29,8 @@ void Assembly::endOfFunction()
 void Assembly::callFunction(int address)
 {
     ss <<
-        "lis r12, " << ((uint16_t*)&address)[0] << "\n"
-        "ori r12, r12, " << ((uint16_t*)&address)[1] << "\n"
+        "lis r12, " << ((uint16_t*)&address)[1] << "\n"
+        "ori r12, r12, " << ((uint16_t*)&address)[0] << "\n"
         "mtctr r12 \n"
         "bctrl \n";
 }
