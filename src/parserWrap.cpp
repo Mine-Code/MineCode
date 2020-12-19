@@ -17,6 +17,8 @@ void parserWrap::error_program(iterator<wchar_t> chiter){
         <<"Invalid Program!!!"<<std::endl
         <<chiter.index<<std::endl
         <<string.substr(chiter.index-10,20)<<std::endl
+        <<"error on : "<<string.substr(chiter.index-1,3)<<std::endl
+        <<"           "<<" ~ "<<std::endl
     ;
                             
     throw "invalid program";
@@ -177,6 +179,8 @@ void parserWrap::tokenize(){
             tokens.emplace_back(tmp);
         }else if(ch==L'\n' || ch==L' '){
             // passing!
+        }else if(ch==L'.'){
+            std::wcout<<ch<<std::endl;    
         }else{
             std::wstring value;
             value+=ch;
