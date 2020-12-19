@@ -25,7 +25,7 @@ TARGET=MineCode
 
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(@:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
-INCLUDES ?= -Isrc/include
+INCLUDES ?= -Isrc/include -Ilib/json/include
 COMPFLAGS?= -Wall -Wextra $(INCLUDES)
 
 LDFLAGS  ?=
