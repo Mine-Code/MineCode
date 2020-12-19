@@ -248,7 +248,10 @@ namespace parserCore{
         return tmp;
     }
     std::wstring range  (parserCtx::parserContext& ctx){
-
+        std::wstring start=Int(ctx);
+        assert(ctx.iter.next()==L"...");
+        std::wstring end=Int(ctx);
+        return L"range"+start+L" "+end;
     }
     std::wstring Int  (parserCtx::parserContext& ctx){
         std::wstring text=ctx.iter.next();
