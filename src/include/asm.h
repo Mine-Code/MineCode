@@ -7,7 +7,7 @@
 class Assembly {
 public:
     int stack_size = 76;
-    std::wstringstream ss;
+    std::wstringstream& ss;
 
     Assembly(std::wstringstream& ss);
     void startOfFunction(std::wstringstream& ss);
