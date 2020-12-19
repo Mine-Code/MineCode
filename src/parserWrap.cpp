@@ -73,7 +73,9 @@ void parserWrap::tokenize(){
                 break;
 
             default:
-                error_program(chiter);
+                std::wstring value;
+                value+=ch;
+                tokens.emplace_back(value);
                 break;
             }
         }
@@ -180,7 +182,7 @@ void parserWrap::tokenize(){
         }else if(ch==L'\n' || ch==L' '){
             // passing!
         }else if(ch==L'.'){
-            std::wcout<<ch<<std::endl;    
+            std::wcout<<ch<<std::endl;
         }else{
             std::wstring value;
             value+=ch;
