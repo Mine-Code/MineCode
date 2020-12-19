@@ -247,4 +247,7 @@ namespace parserCore{
         }
         return tmp;
     }
+    std::wstring range  (parserCtx::parserContext& ctx){
+        
+    }
 }
