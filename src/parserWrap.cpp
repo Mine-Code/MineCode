@@ -38,8 +38,7 @@ void parserWrap::tokenize(){
                 ch=std::tolower(chiter.peek());
                 if(!chiter.hasData()){
                     error_program(chiter);
-                }
-                else if(util::isHex(ch)){
+                }else if(util::isHex(ch)){
                     auto tmp=std::tolower(chiter.next());
                     value+=tmp;
                 }else{
@@ -54,8 +53,7 @@ void parserWrap::tokenize(){
                 ch=chiter.peek();
                 if(!chiter.hasData()){
                     error_program(chiter);
-                }
-                else if(util::inRange<char>('0',ch,'8')){
+                }else if(util::inRange<char>('0',ch,'8')){
                     value+=chiter.next();
                 }else{
                     break;
@@ -109,8 +107,7 @@ void parserWrap::tokenize(){
                 ch=chiter.peek();
                 if(!chiter.hasData()){
                     error_program(chiter);
-                }
-                else if(iswalpha(ch)){
+                }else if(iswalpha(ch)){
                     value+=chiter.next();
                 }else{
                     break;
