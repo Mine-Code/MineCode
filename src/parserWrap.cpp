@@ -25,12 +25,13 @@ void parserWrap::error_program(iterator<wchar_t> chiter){
 }
 void parserWrap::tokenize(){
     iterator<wchar_t> chiter(util::convToVector<wchar_t>(string));
-    wchar_t ch;
+    wchar_t ch,nextch;
     std::ios::fmtflags bk = std::wcout.flags();
     while(chiter.hasData()){
         ch=chiter.next();
+        nextch=chiter.peek();
         if(ch=='0'){
-            wchar_t type=chiter.peek();
+            wchar_t type=nextch;
             std::wstring value;
             switch (type)
             {
