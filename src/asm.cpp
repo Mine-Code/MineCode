@@ -2,9 +2,9 @@
 #include <asm.h>
 
 
-Assembly::Assembly(std::wstringstream& ss)
+Assembly::Assembly(std::wstringstream& _ss)
+    : ss(_ss)
 {
-    this->ss = ss;
 }
 
 void Assembly::startOfFunction(std::wstringstream& ss)

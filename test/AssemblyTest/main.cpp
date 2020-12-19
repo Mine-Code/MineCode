@@ -4,7 +4,7 @@
 int main()
 {
     std::wstringstream ss;
-    Assembly assembly;
+    Assembly assembly(ss);
     assembly.startOfFunction(ss);
     assembly.callFunction(ss, 0x2420120);
     assembly.endOfFunction(ss);
