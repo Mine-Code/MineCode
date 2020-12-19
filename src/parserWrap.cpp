@@ -42,10 +42,7 @@ void parserWrap::tokenize(){
                     if(!chiter.hasData()){
                         error_program(chiter);
                     }
-                    else if(
-                           util::inRange<char>('0',ch,'9')
-                        || util::inRange<char>('a',ch,'f')
-                    ){
+                    else if(util::isHex(ch)){
                         auto tmp=std::tolower(chiter.next());
                         value+=tmp;
                     }else{
