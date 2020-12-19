@@ -106,7 +106,11 @@ namespace parserCore{
         }else if(ctx.iter.peek(1)==L"."){
             return attribute(ctx);
         }else if(isdigit(ch)){
-            return ctx.iter.next();
+            if(ctx.iter.peek(2)==L"..."){
+                return range(ctx);
+            }else{
+                return ctx.iter.next();
+            }
         }else if(ch==L'"'){
             return ctx.iter.next();
         }else{
