@@ -1,6 +1,12 @@
 #include <sstream>
 #include <asm.h>
 
+
+Assembly::Assembly(std::wstringstream& ss)
+{
+    this->ss = ss;
+}
+
 void Assembly::startOfFunction(std::wstringstream& ss)
 {
     ss <<
