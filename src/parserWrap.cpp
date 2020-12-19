@@ -31,9 +31,8 @@ void parserWrap::tokenize(){
         ch=chiter.next();
         nextch=chiter.peek();
         if(ch=='0'){
-            wchar_t type=nextch;
             std::wstring value;
-            switch (type)
+            switch (nextch)
             {
             case 'x': //hex
                 value+=L"0x";
