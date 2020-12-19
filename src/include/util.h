@@ -87,6 +87,12 @@ namespace util
     std::vector<T> convToVector(T2 str){
         return std::vector<T>(str.begin(),str.end());
     }
+
+    template<typename T>
+    bool isHex(T val){
+        return inRange<T>('0',val,'9')
+            || inRange<T>('a',val,'f');
+    }
 } // namespace util
 
 
