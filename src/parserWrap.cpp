@@ -31,52 +31,38 @@ void parserWrap::tokenize(){
         ch=chiter.next();
         nextch=chiter.peek();
         std::wstring value;
-        if(ch=='0' && (nextch == L'x' || nextch == L'o')){
-            switch (nextch)
-            {
-            case 'x': //hex
-                value+=L"0x";
-                chiter.next(); // skip 'x'
-                while(1){
-                    ch=std::tolower(chiter.peek());
-                    if(!chiter.hasData()){
-                        error_program(chiter);
-                    }
-                    else if(util::isHex(ch)){
-                        auto tmp=std::tolower(chiter.next());
-                        value+=tmp;
-                    }else{
-                        break;
-                    }
+        if(ch=='0' && nextch == L'x'){
+            value+=L"0x";
+            chiter.next(); // skip 'x'
+            while(1){
+                ch=std::tolower(chiter.peek());
+                if(!chiter.hasData()){
+                    error_program(chiter);
                 }
-                tokens.emplace_back(value);
-                break;
-            
-            case 'o': //oct
-                value+=L"0o";
-                chiter.next(); // skip 'o'
-                while(1){
-                    ch=chiter.peek();
-                    if(!chiter.hasData()){
-                        error_program(chiter);
-                    }
-                    else if(util::inRange<char>('0',ch,'8')){
-                        value+=chiter.next();
-                    }else{
-                        break;
-                    }
+                else if(util::isHex(ch)){
+                    auto tmp=std::tolower(chiter.next());
+                    value+=tmp;
+                }else{
+                    break;
                 }
-                tokens.emplace_back(value);
-                break;
-
-            default:
-                
-                value+=ch;
-                tokens.emplace_back(value);
-                break;
             }
-        }
-        else if(isdigit(ch)){
+            tokens.emplace_back(value);
+        }else if(ch=='0' && nextch == L'o'){
+            value+=L"0o";
+            chiter.next(); // skip 'o'
+            while(1){
+                ch=chiter.peek();
+                if(!chiter.hasData()){
+                    error_program(chiter);
+                }
+                else if(util::inRange<char>('0',ch,'8')){
+                    value+=chiter.next();
+                }else{
+                    break;
+                }
+            }
+            tokens.emplace_back(value);
+        }else if(isdigit(ch)){
             
             value+=ch;
             while(1){
