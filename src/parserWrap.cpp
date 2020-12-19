@@ -30,7 +30,7 @@ void parserWrap::tokenize(){
     while(chiter.hasData()){
         ch=chiter.next();
         nextch=chiter.peek();
-        if(ch=='0'){
+        if(ch=='0' && (nextch == L'x' || nextch == L'o')){
             std::wstring value;
             switch (nextch)
             {
