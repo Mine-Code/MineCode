@@ -138,11 +138,7 @@ void parserWrap::tokenize(){
         }else if(util::isIdentity(ch)){
             std::wstring tmp;
             tmp+=ch;
-            if(
-                  util::isBitOp(ch)
-                ||util::isCondOp(ch)
-                ||util::isMathOp(ch)
-            ){
+            if(util::isOp(ch)){
                 if(chiter.peek(1)=='='){
                     tmp+=chiter.next();
                 }
