@@ -5,8 +5,8 @@ int main()
 {
     std::wstringstream ss;
     Assembly assembly(ss);
-    assembly.startOfFunction(ss);
-    assembly.callFunction(ss, 0x2420120);
-    assembly.endOfFunction(ss);
+    assembly.startOfFunction();
+    assembly.callFunction(0x10000000);
+    assembly.endOfFunction();
     std::wcout << ss.str() << std::endl;
 }
