@@ -250,4 +250,7 @@ namespace parserCore{
     std::wstring range  (parserCtx::parserContext& ctx){
         
     }
+    std::wstring Int  (parserCtx::parserContext& ctx){
+        
+    }
 }
