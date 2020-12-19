@@ -97,7 +97,7 @@ namespace parserCore{
     std::wstring arg(parserCtx::parserContext& ctx){
         std::wstring type=ctx.iter.next();
         std::wstring name=ctx.iter.next();
-        return name+L":"+type;
+        return L"a("+name+L","+type+L")";
     }
     std::wstring value(parserCtx::parserContext& ctx){
         wchar_t ch=ctx.iter.peek()[0];
