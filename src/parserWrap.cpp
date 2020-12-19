@@ -30,8 +30,8 @@ void parserWrap::tokenize(){
     while(chiter.hasData()){
         ch=chiter.next();
         nextch=chiter.peek();
+        std::wstring value;
         if(ch=='0' && (nextch == L'x' || nextch == L'o')){
-            std::wstring value;
             switch (nextch)
             {
             case 'x': //hex
@@ -70,14 +70,14 @@ void parserWrap::tokenize(){
                 break;
 
             default:
-                std::wstring value;
+                
                 value+=ch;
                 tokens.emplace_back(value);
                 break;
             }
         }
         else if(isdigit(ch)){
-            std::wstring value;
+            
             value+=ch;
             while(1){
                 ch=chiter.peek();
@@ -92,7 +92,7 @@ void parserWrap::tokenize(){
             }
             tokens.emplace_back(value);
         }else if(ch=='f' && chiter.hasData() && chiter.peek() =='\"'){
-            std::wstring value;
+            
             value+=ch;
             value+=chiter.next();
             while(1){
@@ -115,13 +115,13 @@ void parserWrap::tokenize(){
             }
             tokens.emplace_back(value);
         }else if((ch=='+'||ch=='-') && chiter.hasData() && chiter.peek() ==ch){
-            std::wstring value;
+            
             value+=ch;
             value+=ch;
             tokens.emplace_back(value);
             chiter.next();
         }else if(iswalpha(ch)){
-            std::wstring value;
+            
             value+=ch;
             while(1){
                 ch=chiter.peek();
@@ -136,7 +136,7 @@ void parserWrap::tokenize(){
             }
             tokens.emplace_back(value);
         }else if(ch == L'\"'){
-            std::wstring value;
+            
             value+=ch;
             while(1){
                 ch=chiter.next();
@@ -181,7 +181,7 @@ void parserWrap::tokenize(){
         }else if(ch==L'.'){
             std::wcout<<ch<<std::endl;
         }else{
-            std::wstring value;
+            
             value+=ch;
             tokens.emplace_back(value);
         }
