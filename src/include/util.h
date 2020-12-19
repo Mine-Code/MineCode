@@ -96,6 +96,13 @@ namespace util
         return inRange<T>('0',val,'9')
             || inRange<T>('a',val,'f');
     }
+
+    template<typename T>
+    bool isOp(T val){
+        return isBitOp(val)
+            || isCondOp(val)
+            || isMathOp(val);
+    }
 } // namespace util
 
 
