@@ -63,7 +63,6 @@ void parserWrap::tokenize(){
             }
             tokens.emplace_back(value);
         }else if(isdigit(ch)){
-            
             value+=ch;
             while(1){
                 ch=chiter.peek();
@@ -78,7 +77,6 @@ void parserWrap::tokenize(){
             }
             tokens.emplace_back(value);
         }else if(ch=='f' && chiter.hasData() && chiter.peek() =='\"'){
-            
             value+=ch;
             value+=chiter.next();
             while(1){
@@ -101,13 +99,11 @@ void parserWrap::tokenize(){
             }
             tokens.emplace_back(value);
         }else if((ch=='+'||ch=='-') && chiter.hasData() && chiter.peek() ==ch){
-            
             value+=ch;
             value+=ch;
             tokens.emplace_back(value);
             chiter.next();
         }else if(iswalpha(ch)){
-            
             value+=ch;
             while(1){
                 ch=chiter.peek();
@@ -122,7 +118,6 @@ void parserWrap::tokenize(){
             }
             tokens.emplace_back(value);
         }else if(ch == L'\"'){
-            
             value+=ch;
             while(1){
                 ch=chiter.next();
@@ -167,7 +162,6 @@ void parserWrap::tokenize(){
         }else if(ch==L'.'){
             std::wcout<<ch<<std::endl;
         }else{
-            
             value+=ch;
             tokens.emplace_back(value);
         }
