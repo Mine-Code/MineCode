@@ -74,7 +74,7 @@ void parserWrap::tokenize(){
                 }
             }
             tokens.emplace_back(value);
-        }else if(ch=='f' && chiter.hasData() && chiter.peek() =='\"'){
+        }else if(ch=='f' && nextch =='\"'){
             value+=ch;
             value+=chiter.next();
             while(1){
@@ -96,7 +96,7 @@ void parserWrap::tokenize(){
                 }
             }
             tokens.emplace_back(value);
-        }else if((ch=='+'||ch=='-') && chiter.hasData() && chiter.peek() ==ch){
+        }else if((ch=='+'||ch=='-') && nextch==ch){
             value+=ch;
             value+=ch;
             tokens.emplace_back(value);
