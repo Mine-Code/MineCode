@@ -47,11 +47,7 @@ namespace parserCore{
             // done skip and read
             if(text==L"<<"){
                 put(ctx);
-            }else if(
-                   text==L"++"
-                || text==L"--"
-                || util::isAssignOp(text)
-            ){
+            }else if(util::isAssignOp(text)){
                 assign(ctx);
             }
         }
