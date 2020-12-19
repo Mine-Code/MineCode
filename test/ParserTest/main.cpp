@@ -16,12 +16,12 @@ int main()
 
     parserWrap prs;
     prs.set(
-        L"#do once\n"
-        "func sendMessagesToPlayers()\n"
-        "{\n"
-        "  for i in 0...5{"           "\n"
-        "    player.Chat << \"{i}\" " "\n"
-        "  }"                         "\n"
+        L"#do once"                      "\n"
+        "func sendMessagesToPlayers()"   "\n"
+        "{"                              "\n"
+        "  for i in 0...5{"              "\n"
+        "    player.Chat << \"{i}\" "    "\n"
+        "  }"                            "\n"
         "}"s
     );
     prs.tokenize();
