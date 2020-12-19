@@ -248,7 +248,7 @@ namespace parserCore{
         return tmp;
     }
     std::wstring range  (parserCtx::parserContext& ctx){
-        
+
     }
     std::wstring Int  (parserCtx::parserContext& ctx){
         std::wstring text=ctx.iter.next();
@@ -256,6 +256,6 @@ namespace parserCore{
             std::wcout<<"isn't int; "<<text<<std::endl;
             throw "isn't int";
         }
-        return text
+        return text;
     }
 }
