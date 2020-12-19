@@ -7,7 +7,7 @@ Assembly::Assembly(std::wstringstream& _ss)
 {
 }
 
-void Assembly::startOfFunction(std::wstringstream& ss)
+void Assembly::startOfFunction()
 {
     ss <<
         "stmw r13, " << "-" << stack_size << "(r1)\n"
@@ -16,7 +16,7 @@ void Assembly::startOfFunction(std::wstringstream& ss)
         "stw r0, " << stack_size + 4 << "(r1) \n";
 }
 
-void Assembly::endOfFunction(std::wstringstream& ss)
+void Assembly::endOfFunction()
 {
     ss <<
         "addi r1, r1, " << stack_size << "\n"
@@ -26,7 +26,7 @@ void Assembly::endOfFunction(std::wstringstream& ss)
         "blr \n";
 }
 
-void Assembly::callFunction(std::wstringstream& ss, int address)
+void Assembly::callFunction(int address)
 {
     ss <<
         "lis r12, " << ((uint16_t*)&address)[0] << "\n"
