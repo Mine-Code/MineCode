@@ -98,7 +98,7 @@ namespace util
 
     template<typename T>
     bool isHex(T val){
-        return inRange<T>('0',val,'9')
+        return isDec(val)
             || inRange<T>('a',val,'f');
     }
 
