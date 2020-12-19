@@ -19,7 +19,7 @@ int main()
         L"#do once\n"
         "func sendMessagesToPlayers()\n"
         "{\n"
-        "  for i in 0...5{"            "\n"
+        "  for i in 0...5{"           "\n"
         "    player.Chat << \"{i}\" " "\n"
         "  }"                         "\n"
         "}"s
