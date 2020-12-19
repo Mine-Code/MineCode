@@ -25,6 +25,6 @@ void Assembly::callFunction(std::wstringstream& ss, int address)
     ss <<
         "lis r12, " << ((uint16_t*)&address)[0] << "\n"
         "ori r12, r12, " << ((uint16_t*)&address)[1] << "\n"
-        "mtctr r12"
-        "bctrl";
+        "mtctr r12 \n"
+        "bctrl \n";
 }
