@@ -257,6 +257,6 @@ namespace parserCore{
             std::wcout<<"isn't int; "<<text<<std::endl;
             throw "isn't int";
         }
-        return text;
+        return L"i"+text+L"<";
     }
 }
