@@ -170,4 +170,5 @@ void parserWrap::parse(){
     
     parserCore::program(ctx);
     // process 'st.str()'
+    std::wcout<<ctx.Asm->ss.str()<<std::endl;
 }
