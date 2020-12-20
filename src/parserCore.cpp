@@ -73,7 +73,7 @@ namespace parserCore{
         // end: read arguments
         assert(ctx.iter.next()==L")");
         assert(ctx.iter.next()==L"{");
-        stmtProcessor::For(ctx);
+        stmtProcessor::Func(ctx);
         assert(ctx.iter.next()==L"}");
     }
     void For(parserCtx::parserContext& ctx){
