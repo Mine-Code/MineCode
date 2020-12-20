@@ -262,7 +262,7 @@ namespace parserCore{
         // convert start/end: wstr => int
         return std::make_pair(start,end);
     }
-    std::wstring Int  (parserCtx::parserContext& ctx){
+    int Int  (parserCtx::parserContext& ctx){
         std::wstring text=ctx.iter.next();
         if(!isdigit(text[0])){
             std::wcout<<"isn't int; "<<text<<std::endl;
