@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include <parserContext.h>
+#include <stmtProcessor.h>
 #include <util.h>
 
 namespace parserCore{
