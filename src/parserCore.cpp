@@ -57,6 +57,8 @@ namespace parserCore{
         std::wstring functionName=ctx.iter.next();
         std::wcout<<"funcName:"<<functionName<<std::endl;
         assert(ctx.iter.next()==L"(");
+
+        // read arguments
         if(ctx.iter.peek() != L")"){
             std::wcout<<"arg:"<<arg(ctx)<<std::endl;
         }
@@ -64,6 +66,7 @@ namespace parserCore{
             assert(ctx.iter.next()==L",");
             std::wcout<<"arg:"<<arg(ctx)<<std::endl;
         }
+        // end: read arguments
         assert(ctx.iter.next()==L")");
         assert(ctx.iter.next()==L"{");
         while(ctx.iter.hasData()){
