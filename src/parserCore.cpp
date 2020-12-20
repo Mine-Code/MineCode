@@ -83,20 +83,21 @@ namespace parserCore{
         std::wstring varname=ctx.iter.next();
         assert(ctx.iter.next() == L"in");
         if(ctx.iter.peek(1)==L"..."){
-            // ranged for
+            std::wstring target=value(ctx);
+            assert(ctx.iter.next() == L"{");
+
+            std::wcout<<"for "<<varname<<" in "<<target<<std::endl;
         }else{
-            // iterator for
-        }
-        std::wstring target=value(ctx);
-        assert(ctx.iter.next() == L"{");
+            std::wstring target=value(ctx);
+            assert(ctx.iter.next() == L"{");
 
-        std::wcout<<"for "<<varname<<" in "<<target<<std::endl;
+            std::wcout<<"for "<<varname<<" in "<<target<<std::endl;
+        }
         while(ctx.iter.hasData()){
-            if(ctx.iter.peek()==L"}")break;
-            stmt(ctx);
-        }
+                if(ctx.iter.peek()==L"}")break;
+                stmt(ctx);
+            }
         assert(ctx.iter.next() == L"}");
-
     }
     void put(parserCtx::parserContext& ctx){
         std::wstring target = value(ctx);
