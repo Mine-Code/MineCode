@@ -101,9 +101,10 @@ namespace parserCore{
         std::wcout<<data<<" To "<<target<<std::endl;
     }
     std::pair<std::wstring,std::wstring> arg(parserCtx::parserContext& ctx){
-        std::wstring type=ctx.iter.next();
-        std::wstring name=ctx.iter.next();
-        return std::make_pair(type,name);
+        return std::make_pair(
+            ctx.iter.next(), // type
+            ctx.iter.next()  // name
+        );
     }
     std::wstring value(parserCtx::parserContext& ctx){
         wchar_t ch=ctx.iter.peek()[0];
