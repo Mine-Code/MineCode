@@ -3,7 +3,10 @@
 #include <parserCore.h>
 
 void For    (parserCtx::parserContext ctx){
-
+    while(ctx.iter.hasData()){
+        if(ctx.iter.peek()==L"}")break;
+        parserCore::stmt(ctx);
+    }
 }
 
 void Forr   (parserCtx::parserContext ctx){
