@@ -2,33 +2,33 @@
 #include <parserContext.h>
 #include <parserCore.h>
 
-void For    (parserCtx::parserContext& ctx){
+void stmtProcessor::For    (parserCtx::parserContext& ctx){
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
 }
 
-void Forr   (parserCtx::parserContext& ctx){
+void stmtProcessor::Forr   (parserCtx::parserContext& ctx){
 
 }
 
-void While  (parserCtx::parserContext& ctx){
+void stmtProcessor::While  (parserCtx::parserContext& ctx){
 
 }
 
-void If     (parserCtx::parserContext& ctx){
+void stmtProcessor::If     (parserCtx::parserContext& ctx){
 
 }
 
-void Func   (parserCtx::parserContext& ctx){
+void stmtProcessor::Func   (parserCtx::parserContext& ctx){
 
 }
 
-void Put    (parserCtx::parserContext& ctx){
+void stmtProcessor::Put    (parserCtx::parserContext& ctx){
 
 }
 
-void Assign (parserCtx::parserContext& ctx){
+void stmtProcessor::Assign (parserCtx::parserContext& ctx){
 
 }
