@@ -63,11 +63,11 @@ namespace parserCore{
         // args=(type,name)
 
         if(ctx.iter.peek() != L")"){
-            std::wcout<<"arg:"<<arg(ctx)<<std::endl;
+            args.emplace_back(arg(ctx));
         }
         while(ctx.iter.peek() != L")"){
             assert(ctx.iter.next()==L",");
-            std::wcout<<"arg:"<<arg(ctx)<<std::endl;
+            args.emplace_back(arg(ctx));
         }
         // end: read arguments
         assert(ctx.iter.next()==L")");
