@@ -15,7 +15,8 @@ namespace parserCtx
 namespace parserCore
 {
     using Arg=std::pair<std::wstring,std::wstring>;
-    
+    using Range=std::pair<int,int>;
+
     std::wstring Int  (parserCtx::parserContext&);
     std::wstring ident(parserCtx::parserContext&);
 
