@@ -5,6 +5,10 @@ void For    (parserCtx::parserContext ctx){
 
 }
 
+void Forr   (parserCtx::parserContext ctx){
+
+}
+
 void While  (parserCtx::parserContext ctx){
 
 }
