@@ -60,7 +60,7 @@ namespace parserCore{
         assert(ctx.iter.next()==L"(");
 
         // read arguments
-        std::vector<std::pair<std::wstring,std::wstring>> args;
+        std::vector<Arg> args;
         // args=(type,name)
 
         if(ctx.iter.peek() != L")"){
@@ -103,7 +103,7 @@ namespace parserCore{
         std::wstring data=expr(ctx);
         std::wcout<<data<<" To "<<target<<std::endl;
     }
-    std::pair<std::wstring,std::wstring> arg(parserCtx::parserContext& ctx){
+    Arg arg(parserCtx::parserContext& ctx){
         return std::make_pair(
             ctx.iter.next(), // type
             ctx.iter.next()  // name

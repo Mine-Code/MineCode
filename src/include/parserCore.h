@@ -14,10 +14,12 @@ namespace parserCtx
 
 namespace parserCore
 {
+    using Arg=std::pair<std::wstring,std::wstring>;
+    
     std::wstring Int  (parserCtx::parserContext&);
     std::wstring ident(parserCtx::parserContext&);
 
-    std::pair<std::wstring,std::wstring> arg(parserCtx::parserContext&);
+    Arg arg(parserCtx::parserContext&);
     std::wstring attribute(parserCtx::parserContext&);
     std::wstring ptr(parserCtx::parserContext&);
     
