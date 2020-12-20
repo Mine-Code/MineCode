@@ -77,8 +77,6 @@ namespace parserCore{
         assert(ctx.iter.next()==L"}");
     }
     void For(parserCtx::parserContext& ctx){
-        bool isRanged=false;
-
         assert(ctx.iter.next() == L"for");
         std::wstring varname=ctx.iter.next();
         assert(ctx.iter.next() == L"in");
