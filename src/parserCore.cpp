@@ -59,6 +59,9 @@ namespace parserCore{
         assert(ctx.iter.next()==L"(");
 
         // read arguments
+        std::vector<std::pair<std::wstring,std::wstring>> args;
+        // args=(type,name)
+
         if(ctx.iter.peek() != L")"){
             std::wcout<<"arg:"<<arg(ctx)<<std::endl;
         }
