@@ -255,11 +255,12 @@ namespace parserCore{
         }
         return tmp;
     }
-    std::wstring range  (parserCtx::parserContext& ctx){
-        std::wstring start=Int(ctx);
+    Range range  (parserCtx::parserContext& ctx){
+        int start=Int(ctx);
         assert(ctx.iter.next()==L"...");
-        std::wstring end=Int(ctx);
-        return L"r"+start+L","+end+L"<";
+        int end=Int(ctx);
+        // convert start/end: wstr => int
+        return std::make_pair(start,end);
     }
     std::wstring Int  (parserCtx::parserContext& ctx){
         std::wstring text=ctx.iter.next();
