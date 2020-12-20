@@ -17,9 +17,11 @@ int main()
     parserWrap prs;
     prs.set(
         L"#do once"                      "\n"
-        "func sendMessagesToPlayers()"   "\n"
-        "{"                              "\n"
-        "  for i in 0...5{"              "\n"
+        "func test(){"                   "\n"
+        "  if 0o20==0x10{"               "\n"
+        "    player.Chat << \"^^\" "     "\n"
+        "  }"                            "\n"
+        "  for i in 0...0x10{"           "\n"
         "    player.Chat << \"{i}\" "    "\n"
         "  }"                            "\n"
         "}"s
