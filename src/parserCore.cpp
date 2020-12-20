@@ -268,6 +268,15 @@ namespace parserCore{
             std::wcout<<"isn't int; "<<text<<std::endl;
             throw "isn't int";
         }
-        return L"i"+text+L"<";
+        // convert test<wstr> to value<int>
+        int value=0;
+        if(text[0]==L'0' && (text[1]==L'x' || text[1]==L'o') ){
+            // hex or oct
+            // TODO: read by hex/oct
+        }else{
+            // dec
+            // TODO: read by dec
+        }
+        return value;
     }
 }
