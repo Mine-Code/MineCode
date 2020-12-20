@@ -9,13 +9,15 @@ namespace parserCtx
 
 namespace stmtProcessor
 {
-    void For    (parserCtx::parserContext& ctx);
-    void Forr   (parserCtx::parserContext& ctx);
-    void While  (parserCtx::parserContext& ctx);
-    void If     (parserCtx::parserContext& ctx);
-    void Func   (parserCtx::parserContext& ctx);
-    void Put    (parserCtx::parserContext& ctx);
-    void Assign (parserCtx::parserContext& ctx);
+    using Context = parserCtx::parserContext;
+
+    void For    (Context& ctx);
+    void Forr   (Context& ctx);
+    void While  (Context& ctx);
+    void If     (Context& ctx);
+    void Func   (Context& ctx);
+    void Put    (Context& ctx);
+    void Assign (Context& ctx);
 } // namespace stmtProcessor
 
 
