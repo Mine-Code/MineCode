@@ -277,7 +277,6 @@ namespace parserCore{
                 // TODO: read by oct
             }
         }else{
-            // dec
             // TODO: read by dec
         }
         return value;
