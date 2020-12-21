@@ -193,7 +193,6 @@ namespace parserCore{
             assert(ctx.iter.next()==L")");
             return text;
         }
-        std::wcout<<"A"<<std::endl;
         return value(ctx);
 
     }
