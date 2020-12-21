@@ -283,7 +283,7 @@ namespace parserCore{
                 }
             }
         }else{
-            for(auto ch: text.substr(2)){
+            for(auto ch: text){
                 value*=10;
                 value+=ch-'0';
             }
