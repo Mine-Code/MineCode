@@ -278,7 +278,7 @@ namespace parserCore{
                     if(util::inRange(L'0',ch,L'9')){
                         value+=ch-'0';
                     }else{
-                        value+=tolower(ch)-'0';
+                        value+=tolower(ch)-'a';
                     }
                 }
             }else if(text[1]==L'o'){
