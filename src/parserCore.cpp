@@ -271,12 +271,14 @@ namespace parserCore{
         // convert test<wstr> to value<int>
         int value=0;
         if(text[0]==L'0' && (text[1]==L'x' || text[1]==L'o') ){
+            size_t length=text.length()-2;
             if(text[1]==L'x'){
                 // TODO: read by hex
             }else if(text[1]==L'o'){
                 // TODO: read by oct
             }
         }else{
+            size_t length=text.length();
             // TODO: read by dec
         }
         return value;
