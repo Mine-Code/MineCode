@@ -291,7 +291,6 @@ namespace parserCore{
         return value;
     }
     void If(parserCtx::parserContext& ctx){
-        //if      = "if"   , cond, "{", {stmt}, "}";
         assert(ctx.iter.next()==L"if");
         std::wstring value1= expr(ctx);
         std::wstring op    = ctx.iter.next();
