@@ -84,7 +84,7 @@ namespace parserCore{
             Range target=range(ctx);
             assert(ctx.iter.next() == L"{");
 
-            std::wcout<<"for "<<varname<<" in "<<target<<std::endl;
+            std::wcout<<"for "<<varname<<" in "<<target.first<<"to"<<target.second<<std::endl;
         }else{
             std::wstring target=value(ctx);
             assert(ctx.iter.next() == L"{");
