@@ -111,9 +111,7 @@ namespace parserCore{
     }
     std::wstring value(parserCtx::parserContext& ctx){
         wchar_t ch=ctx.iter.peek()[0];
-        if(ctx.iter.peek(1)==L"..."){
-            return range(ctx);
-        }else if(ctx.iter.peek()==L"["){
+        if(ctx.iter.peek()==L"["){
             return ptr(ctx);
         }else if(ctx.iter.peek(1)==L"."){
             return attribute(ctx);
