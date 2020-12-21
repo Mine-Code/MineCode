@@ -28,9 +28,7 @@ namespace parserCore{
             std::wcerr<<"Error: not implemented while"<<std::endl;
             std::terminate();
         }else if(text==L"if"){
-            // TODO:call 'if'
-            std::wcerr<<"Error: not implemented if"<<std::endl;
-            std::terminate();
+            If(ctx);
         }else if(text==L"func"){
             func(ctx);
         }else if(text==L"for"){
@@ -195,6 +193,7 @@ namespace parserCore{
             assert(ctx.iter.next()==L")");
             return text;
         }
+        std::wcout<<"A"<<std::endl;
         return value(ctx);
 
     }
