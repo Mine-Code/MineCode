@@ -289,7 +289,10 @@ namespace parserCore{
             }
         }else{
             size_t length=text.length();
-            // TODO: read by dec
+            for(auto ch: text.substr(2)){
+                value*=10;
+                value+=ch-'0';
+            }
         }
         return value;
     }
