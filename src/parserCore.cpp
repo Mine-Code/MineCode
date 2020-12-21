@@ -282,7 +282,10 @@ namespace parserCore{
                     }
                 }
             }else if(text[1]==L'o'){
-                // TODO: read by oct
+                for(auto ch: text.substr(2)){
+                    value*=8;
+                    value+=ch-'0';
+                }
             }
         }else{
             size_t length=text.length();
