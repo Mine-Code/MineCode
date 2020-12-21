@@ -293,6 +293,17 @@ namespace parserCore{
         return value;
     }
     void If(parserCtx::parserContext& ctx){
-
+        //if      = "if"   , cond, "{", {stmt}, "}";
+        assert(ctx.iter.next()==L"if");
+        std::wstring value1= expr(ctx);
+        std::wstring op    = ctx.iter.next();
+        std::wstring value2= expr(ctx);
+        if(!( util::isCondOp(op[0]) && op[1]==L'=' && op.length()==2 )){
+            std::wcerr<<"This is not conditional operator "<<op<<std::endl;
+            std::terminate();
+        }
+        assert(ctx.iter.next() == L"{");
+        stmtProcessor::If(ctx);
+        assert(ctx.iter.next() == L"}");
     }
 }
