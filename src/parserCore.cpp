@@ -271,7 +271,6 @@ namespace parserCore{
         // convert test<wstr> to value<int>
         int value=0;
         if(text[0]==L'0' && (text[1]==L'x' || text[1]==L'o') ){
-            size_t length=text.length()-2;
             if(text[1]==L'x'){
                 for(auto ch: text.substr(2)){
                     value*=0x10;
@@ -288,7 +287,6 @@ namespace parserCore{
                 }
             }
         }else{
-            size_t length=text.length();
             for(auto ch: text.substr(2)){
                 value*=10;
                 value+=ch-'0';
