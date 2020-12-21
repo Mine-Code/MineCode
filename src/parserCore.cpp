@@ -273,7 +273,14 @@ namespace parserCore{
         if(text[0]==L'0' && (text[1]==L'x' || text[1]==L'o') ){
             size_t length=text.length()-2;
             if(text[1]==L'x'){
-                // TODO: read by hex
+                for(auto ch: text.substr(2)){
+                    value*=0x10;
+                    if(util::inRange(L'0',ch,L'9')){
+                        value+=ch-'0';
+                    }else{
+                        value+=tolower(ch)-'0';
+                    }
+                }
             }else if(text[1]==L'o'){
                 // TODO: read by oct
             }
