@@ -23,11 +23,7 @@ void Assembly::endOfFunction()
         "lmw r13, " << "-" << stack_size << "(r1) \n"
         "lwz r0, " << stack_size + 4 << "(r1) \n"
         "mtlr r0 \n"
-        "blr \n"
-
-        "add:\n"
-        "add r3, r3, r4\n"
-        "blr\n";
+        "blr \n";
 }
 
 void Assembly::callFunction(int address)
@@ -47,16 +43,28 @@ void Assembly::add(int value, int src, int dest)
     if (high != 0) {
         ss <<
             "lis r3, " << high << "\n"
-            "ori r3, r3, " << low << "\n"
-            "mr r4, r" << src << "\n"
-            "bl add\n"
-            "mr r" << dest << ", r3\n";
+            "ori r3, r3, " << low << "\n" //r3 = value
+            "add r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 + r(src)
     } else if (low != 0) {
         ss <<
             "li r3, " << low << "\n"
-            "mr r4, r" << src << "\n"
-            "bl add\n"
-            "mr r" << dest << ", r3\n";
+            "add r" << dest << ", r3" << ", r" << src << "\n";
     }
-} 
+}
+void Assembly::mul(int value, int src, int dest)
+{
+    int high = ((uint16_t*)&value)[1];
+    int low = ((uint16_t*)&value)[0];
+
+    if (high != 0) {
+        ss <<
+            "lis r3, " << high << "\n"
+            "ori r3, r3, " << low << "\n" //r3 = value
+            "mullw r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 * r(src)
+    } else if (low != 0) {
+        ss <<
+            "li r3, " << low << "\n"
+            "mullw r" << dest << ", r3" << ", r" << src << "\n";
+    }
+}
 
