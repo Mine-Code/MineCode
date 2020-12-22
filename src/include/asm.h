@@ -14,6 +14,7 @@ public:
     void endOfFunction();
     void callFunction(int address);
     void add(int value, int src = 13, int dest = 13);
+    void mul(int value, int src = 13, int dest = 13);
 };
 
 #endif
