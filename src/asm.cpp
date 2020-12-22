@@ -20,7 +20,7 @@ void Assembly::endOfFunction()
 {
     ss <<
         "addi r1, r1, " << stack_size << "\n"
-        "lmw r13, " << " - " << stack_size << "(r1) \n"
+        "lmw r13, " << "-" << stack_size << "(r1) \n"
         "lwz r0, " << stack_size + 4 << "(r1) \n"
         "mtlr r0 \n"
         "blr \n";
