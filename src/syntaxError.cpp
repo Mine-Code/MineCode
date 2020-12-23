@@ -9,6 +9,8 @@ void synErr::ReportError(Context& ctx,errorType type,std::wstring exMsg){
         strType=L"syntax";
     }else if(type==TOKENIZE){
         strType=L"tokenize";
+    }else if(type==PROCESS){
+        strType=L"process";
     }
 
     std::wcout
