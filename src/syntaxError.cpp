@@ -17,7 +17,7 @@ void synErr::ReportError(Context& ctx,errorType type,std::wstring exMsg){
         << "-------Error--------"               <<std::endl
         << "| type:"<<strType                   <<std::endl;
     if(exMsg!=L"")std::wcout
-        << "|  msg:"<<exMsg                     <<std::endl;
+        << "| msg :"<<exMsg                     <<std::endl;
     std::wcout
         << "| Debug Informations"               <<std::endl
         << "|  peek(-1):"<<ctx.iter.peek(-1)    <<std::endl
