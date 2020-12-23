@@ -10,20 +10,33 @@ Assembly::Assembly(std::wstringstream& _ss)
 void Assembly::startOfFunction()
 {
     ss <<
-        "stmw r13, " << "-" << stack_size << "(r1)\n"
-        "subi r1, r1, " << stack_size << "\n"
-        "mflr r0 \n"
-        "stw r0, " << stack_size + 4 << "(r1) \n";
+        "stwu r1, -" << stack_size << "(r1)\n"
+        "mflr r0\n"
+        "stw r0, " << stack_size + 4 << "(r1)\n"
+        "stw r13, " << stack_size - 4 << "(r1)\n";
 }
 
 void Assembly::endOfFunction()
 {
     ss <<
+        "lwz r0, " << stack_size + 4 << "(r1)\n"
+        "lwz r13, " << stack_size - 4 << "(r1)\n"
+        "mtlr r0\n"
         "addi r1, r1, " << stack_size << "\n"
-        "lmw r13, " << "-" << stack_size << "(r1) \n"
-        "lwz r0, " << stack_size + 4 << "(r1) \n"
-        "mtlr r0 \n"
-        "blr \n";
+        "blr";
+}
+
+void Assembly::writeResister(int value, int dest)
+{
+    ss <<
+        "lis r" << dest << ", " << ((uint16_t*)&value)[1] << "\n"
+        "ori r" << dest << ", r" << dest << ", " << ((uint16_t*)&value)[0] << "\n";
+}
+
+void Assembly::moveResister(int src, int dest)
+{
+    ss <<
+        "mr r" << dest << ", r" << src << "\n";
 }
 
 void Assembly::callFunction(int address)
@@ -35,28 +48,39 @@ void Assembly::callFunction(int address)
         "bctrl \n";
 }
 
-void Assembly::peek(int address, int dest)
+void Assembly::peek(int address, bool is_ptr, int offset, int src, int dest)
 {
-    ss <<
-        "lis r12, " << ((uint16_t*)&address)[1] << "\n"
-        "ori r12, r12, " << ((uint16_t*)&address)[0] << "\n"
-        "lwz r" << dest << ", 0(r12)\n";
-}
-
-void Assembly::poke(int address, int src)
-{
-    int high = ((uint16_t*)&address)[1];
-    int low = ((uint16_t*)&address)[0];
-
-    if (low != 0) {
+    if (is_ptr == false) {
         ss <<
-            "lis r12, " << high << "\n"
-            "ori r12, r12, " << low << "\n"
-            "stw r" << src << ", 0(r12)\n";
+            "lis r12, " << ((uint16_t*)&address)[1] << "\n"
+            "ori r12, r12, " << ((uint16_t*)&address)[0] << "\n"
+            "lwz r" << dest << ", " << offset << "(r12)\n";
     } else {
         ss <<
-            "lis r12, " << high << "\n"
-            "stw r" << src << ", 0(r12)\n";
+            "mr r12, r" << src << "\n"
+            "lwz r" << dest << ", " << offset << "(r12)\n";
+    }
+}
+
+void Assembly::poke(int address, bool is_immediate, int offset, int dest, int src)
+{
+    if (is_immediate) {
+        int high = ((uint16_t*)&address)[1];
+        int low = ((uint16_t*)&address)[0];
+
+        if (low != 0) {
+            ss <<
+                "lis r12, " << high << "\n"
+                "ori r12, r12, " << low << "\n"
+                "stw r" << src << ", " << offset << "(r12)\n";
+        } else {
+            ss <<
+                "lis r12, " << high << "\n"
+                "stw r" << src << ", " << offset << "(r12)\n";
+        }
+    } else {
+        ss <<
+            "stw r" << src << ", " << offset << "(r" << dest << ")\n";
     }
 
     
