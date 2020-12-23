@@ -10,20 +10,20 @@ Assembly::Assembly(std::wstringstream& _ss)
 void Assembly::startOfFunction()
 {
     ss <<
-        "stmw r13, " << "-" << stack_size << "(r1)\n"
-        "subi r1, r1, " << stack_size << "\n"
-        "mflr r0 \n"
-        "stw r0, " << stack_size + 4 << "(r1) \n";
+        "stwu r1, -" << stack_size << "(r1)\n"
+        "mflr r0\n"
+        "stw r0, " << stack_size + 4 << "(r1)\n"
+        "stw r13, " << stack_size - 4 << "(r1)\n";
 }
 
 void Assembly::endOfFunction()
 {
     ss <<
+        "lwz r0, " << stack_size + 4 << "(r1)\n"
+        "lwz r13, " << stack_size - 4 << "(r1)\n"
+        "mtlr r0\n"
         "addi r1, r1, " << stack_size << "\n"
-        "lmw r13, " << "-" << stack_size << "(r1) \n"
-        "lwz r0, " << stack_size + 4 << "(r1) \n"
-        "mtlr r0 \n"
-        "blr \n";
+        "blr";
 }
 
 void Assembly::callFunction(int address)
