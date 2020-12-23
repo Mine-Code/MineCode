@@ -24,12 +24,14 @@
     <ClCompile Include="src\parserContext.cpp" />
     <ClCompile Include="src\parserCore.cpp" />
     <ClCompile Include="src\parserWrap.cpp" />
+    <ClCompile Include="src\stmtProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\asm.h" />
     <ClInclude Include="src\include\parserContext.h" />
     <ClInclude Include="src\include\parserCore.h" />
     <ClInclude Include="src\include\parserWrap.h" />
+    <ClInclude Include="src\include\stmtProcessor.h" />
     <ClInclude Include="src\include\typedIterator.hxx" />
     <ClInclude Include="src\include\util.h" />
   </ItemGroup>
