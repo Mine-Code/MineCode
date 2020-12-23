@@ -28,9 +28,17 @@ void Assembly::endOfFunction()
 
 void Assembly::writeResister(int value, int dest)
 {
-    ss <<
-        "lis r" << dest << ", " << ((uint16_t*)&value)[1] << "\n"
-        "ori r" << dest << ", r" << dest << ", " << ((uint16_t*)&value)[0] << "\n";
+    int high = ((uint16_t*)&value)[1];
+    int low = ((uint16_t*)&value)[0];
+
+    if (high != 0) {
+        ss <<
+            "lis r" << dest << ", " << ((uint16_t*)&value)[1] << "\n"
+            "ori r" << dest << ", r" << dest << ", " << ((uint16_t*)&value)[0] << "\n";
+    } else {
+        ss <<
+            "li r" << dest << ", " << ((uint16_t*)&value)[0] << "\n";
+    }
 }
 
 void Assembly::moveResister(int src, int dest)
@@ -134,4 +142,26 @@ void Assembly::div(int value, int src, int dest)
             "li r3, " << low << "\n"
             "divw r" << dest << ", r3" << ", r" << src << "\n";
     }
+}
+
+void Assembly::startOfLoop(int count)
+{
+    loop_count = count;
+    loop_flag = 0;
+
+    ss <<
+        "stw r14, " << stack_size - 8 << "(r1)\n"
+        "li r14, 0\n"
+        "loop_" << make_loop_ctr << ":\n";
+}
+
+void Assembly::endOfLoop()
+{
+    ss <<
+        "addi r14, r14, 1\n"
+        "cmplwi r14, " << loop_count << "\n"
+        "blt loop_" << make_loop_ctr << "\n"
+        "lwz r14, " << stack_size - 8 << "(r1)\n";
+
+    make_loop_ctr++;
 }
