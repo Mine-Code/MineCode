@@ -123,9 +123,10 @@ namespace parserCore{
     }
     std::wstring ptr(parserCtx::parserContext& ctx){
         assert(ctx.iter.next()==L"[");
+        bool isImmutable=isdigit(ctx.iter.peek()[0]);
         std::wstring base=value(ctx);
         std::wstring offs;
-        if(ctx.iter.peek()==L"+"){
+        while(ctx.iter.peek()==L"+"){
             ctx.iter.next();
             offs=ctx.iter.next();
         }
