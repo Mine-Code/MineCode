@@ -11,7 +11,10 @@ namespace parserCtx
 
 namespace synErr
 {
-    
+    enum{
+        SYNTAX,
+        TOKENIZE
+    } errorType;
 } // namespace synErr
 
 
