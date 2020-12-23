@@ -13,7 +13,8 @@ namespace synErr
 {
     enum errorType{
         SYNTAX,
-        TOKENIZE
+        TOKENIZE,
+        PROCESS
     };
     using Context=parserCtx::parserContext&;
     void ReportError(Context,errorType,std::wstring);
