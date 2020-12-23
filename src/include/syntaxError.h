@@ -4,4 +4,10 @@
 
 #include <iostream>
 
+namespace synErr
+{
+    
+} // namespace synErr
+
+
 #endif
