@@ -26,3 +26,6 @@ void synErr::ReportError(Context& ctx,errorType type,std::wstring exMsg){
         << "--------------------"<<std::endl;
     
 }
+void syntaxError  (Context ctx,errorType t,std::wstring ex) {ReportError(ctx,SYNTAX,ex);}
+void tokenizeError(Context ctx,errorType t,std::wstring ex) {ReportError(ctx,TOKENIZE,ex);}
+void processError (Context ctx,errorType t,std::wstring ex) {ReportError(ctx,PROCESS,ex);}
