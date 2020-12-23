@@ -48,42 +48,42 @@ void Assembly::callFunction(int address)
         "bctrl \n";
 }
 
-void Assembly::peek(int address, bool is_ptr, int offset, int src, int dest)
+void Assembly::peek(int offset, int dest, int src)
 {
-    if (is_ptr == false) {
-        ss <<
-            "lis r12, " << ((uint16_t*)&address)[1] << "\n"
-            "ori r12, r12, " << ((uint16_t*)&address)[0] << "\n"
-            "lwz r" << dest << ", " << offset << "(r12)\n";
-    } else {
-        ss <<
-            "mr r12, r" << src << "\n"
-            "lwz r" << dest << ", " << offset << "(r12)\n";
-    }
+    ss <<
+        "mr r12, r" << src << "\n"
+        "lwz r" << dest << ", " << offset << "(r12)\n";
 }
 
-void Assembly::poke(int address, bool is_immediate, int offset, int dest, int src)
+void Assembly::peek_i(int address, int offset, int dest)
 {
-    if (is_immediate) {
-        int high = ((uint16_t*)&address)[1];
-        int low = ((uint16_t*)&address)[0];
+    ss <<
+        "lis r12, " << ((uint16_t*)&address)[1] << "\n"
+        "ori r12, r12, " << ((uint16_t*)&address)[0] << "\n"
+        "lwz r" << dest << ", " << offset << "(r12)\n";
+}
 
-        if (low != 0) {
-            ss <<
-                "lis r12, " << high << "\n"
-                "ori r12, r12, " << low << "\n"
-                "stw r" << src << ", " << offset << "(r12)\n";
-        } else {
-            ss <<
-                "lis r12, " << high << "\n"
-                "stw r" << src << ", " << offset << "(r12)\n";
-        }
+void Assembly::poke(int offset, int dest, int src)
+{
+    ss <<
+        "stw r" << src << ", " << offset << "(r" << dest << ")\n";
+}
+
+void Assembly::poke_i(int address, int src, int offset)
+{
+    int high = ((uint16_t*)&address)[1];
+    int low = ((uint16_t*)&address)[0];
+
+    if (low != 0) {
+        ss <<
+            "lis r12, " << high << "\n"
+            "ori r12, r12, " << low << "\n"
+            "stw r" << src << ", " << offset << "(r12)\n";
     } else {
         ss <<
-            "stw r" << src << ", " << offset << "(r" << dest << ")\n";
+            "lis r12, " << high << "\n"
+            "stw r" << src << ", " << offset << "(r12)\n";
     }
-
-    
 }
 
 void Assembly::add(int value, int src, int dest)
