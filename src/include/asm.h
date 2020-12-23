@@ -6,7 +6,7 @@
 
 class Assembly {
 public:
-    int stack_size = 76;
+    int stack_size = 0x20;
     std::wstringstream& ss;
 
     Assembly(std::wstringstream& ss);
