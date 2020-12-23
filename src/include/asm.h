@@ -13,7 +13,7 @@ public:
     void startOfFunction();
     void endOfFunction();
 
-    void writeResister(int value, int dest);
+    void writeRegister(int value, int dest);
     void moveResister(int src, int dest);
 
     void callFunction(int address);
