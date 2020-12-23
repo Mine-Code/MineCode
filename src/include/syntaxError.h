@@ -4,6 +4,11 @@
 
 #include <iostream>
 
+namespace parserCtx
+{
+    class parserContext;
+} // namespace parserCtx
+
 namespace synErr
 {
     
