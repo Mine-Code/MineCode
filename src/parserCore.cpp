@@ -5,6 +5,7 @@
 #include <parserContext.h>
 #include <stmtProcessor.h>
 #include <util.h>
+#include <syntaxError.h>
 
 namespace parserCore{
     void program(parserCtx::parserContext& ctx){
