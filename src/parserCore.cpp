@@ -200,7 +200,7 @@ namespace parserCore{
         std::wstring text;
         text+=power(ctx);
         while(ctx.iter.hasData() && ctx.iter.peek() == L"**"){
-            assert(ctx.iter.peek() == L"**");
+            assert(ctx.iter.next() == L"**");
             text+=L" pow "+power(ctx);
         }
         return text;
@@ -216,7 +216,7 @@ namespace parserCore{
                 ctx.iter.peek() == L"%"
             )
         ){
-            auto text=ctx.iter.peek();
+            auto text=ctx.iter.next();
             assert(
                 text == L"*" ||
                 text == L"/" ||
@@ -241,13 +241,13 @@ namespace parserCore{
                 util::isBitOp(ctx.iter.peek()[0])
             )
         ){
+            auto text=ctx.iter.next();
             assert(
-                ctx.iter.peek() == L"+" ||
-                ctx.iter.peek() == L"-" ||
-                util::isBitOp(ctx.iter.peek()[0])
+                text == L"+" ||
+                text == L"-" ||
+                util::isBitOp(text[0])
             );
-            tmp+=ctx.iter.next();
-            tmp+=power(ctx);
+            tmp+=text+power(ctx);
         }
         return tmp;
     }
