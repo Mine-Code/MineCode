@@ -7,11 +7,21 @@ int main()
     Assembly assembly(ss);
     assembly.startOfFunction();
 
-    //FreeFly [[0x109CD8E4] + 0x34] + 0x70C = 0x01000100
-    assembly.peek_i(0x109CD8E4);
-    assembly.peek(0x34, 12);
-    assembly.writeResister(0x01000101, 13);
-    assembly.poke(0x70C);
+    //[0x10000000] = 2**10
+    assembly.writeResister(1, 13);
+    assembly.startOfLoop(10);
+    assembly.mul(2);
+    assembly.endOfLoop();
+    assembly.writeResister(0x10000000, 12);
+    assembly.poke();
+
+    //[0x10000004] = 3**10
+    assembly.writeResister(1, 13);
+    assembly.startOfLoop(10);
+    assembly.mul(3);
+    assembly.endOfLoop();
+    assembly.writeResister(0x10000004, 12);
+    assembly.poke();
 
     assembly.endOfFunction();
     std::wcout << ss.str() << std::endl;

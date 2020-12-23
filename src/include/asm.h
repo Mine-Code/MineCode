@@ -20,12 +20,18 @@ public:
 
     void peek(int offset, int dest = 13, int src = 13);
     void peek_i(int address, int offset = 0, int dest = 13);
-    void poke(int offset, int dest = 12, int src = 13);
+    void poke(int offset = 0, int dest = 12, int src = 13);
     void poke_i(int address, int value, int offset = 0);
 
     void add(int value, int src = 13, int dest = 13);
     void mul(int value, int src = 13, int dest = 13);
     void div(int value, int src = 13, int dest = 13);
+
+    int make_loop_ctr = 0;
+    int loop_flag = 0;
+    int loop_count = 0;
+    void startOfLoop(int count);
+    void endOfLoop();
 };
 
 #endif
