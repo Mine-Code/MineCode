@@ -15,6 +15,7 @@ namespace synErr
         SYNTAX,
         TOKENIZE
     } errorType;
+    using Context=parserCtx::parserContext;
 } // namespace synErr
 
 
