@@ -26,16 +26,14 @@ namespace parserCore{
             For(ctx);
         }else if(text==L"while"){
             // TODO:call 'while'
-            std::wcerr<<"Error: not implemented while"<<std::endl;
-            std::terminate();
+            synErr::ReportError(ctx,synErr::errorType::PROCESS,L"Error: not implemented while");
         }else if(text==L"if"){
             If(ctx);
         }else if(text==L"func"){
             func(ctx);
         }else if(text==L"for"){
             // TODO:call 'for'
-            std::wcerr<<"Error: not implemented for"<<std::endl;
-            std::terminate();
+            synErr::ReportError(ctx,synErr::errorType::PROCESS,L"Error: not implemented while");
         }else{
             //put / assign
             assert(ctx.iter.hasData());
@@ -162,17 +160,15 @@ namespace parserCore{
         std::wstring text=ctx.iter.next();
         // check word?
         if(!isalpha(text[0])){
-            std::wcout<<"isn't ident; "<<text<<std::endl;
-            throw "isn't ident";
+            synErr::ReportError(ctx,synErr::errorType::PROCESS,L"isn't ident");
         }
         return text;
     }
     std::wstring constant(parserCtx::parserContext& ctx){
         std::wstring text=ctx.iter.next();
         // check integer?
-        if(!isdigit(text[0]))throw "isn't integer (const)";
-        // check str?
-        if(text[0]!=L'"')throw "isn't integer (const)";
+        if(!isdigit(text[0]) || text[0]!=L'"')
+            synErr::ReportError(ctx,synErr::errorType::PROCESS,L"isn't constant integer");
         return text;
     }
     void assign(parserCtx::parserContext& ctx){
@@ -263,8 +259,7 @@ namespace parserCore{
     int Int  (parserCtx::parserContext& ctx){
         std::wstring text=ctx.iter.next();
         if(!isdigit(text[0])){
-            std::wcout<<"isn't int; "<<text<<std::endl;
-            throw "isn't int";
+            synErr::ReportError(ctx,synErr::errorType::SYNTAX,L"is not integer");
         }
         // convert test<wstr> to value<int>
         int value=0;
@@ -298,8 +293,7 @@ namespace parserCore{
         std::wstring op    = ctx.iter.next();
         std::wstring value2= expr(ctx);
         if(!( util::isCondOp(op[0]) && op[1]==L'=' && op.length()==2 )){
-            std::wcerr<<"This is not conditional operator "<<op<<std::endl;
-            std::terminate();
+            synErr::ReportError(ctx,synErr::errorType::SYNTAX,L"is not conditional operator");
         }
         assert(ctx.iter.next() == L"{");
         stmtProcessor::If(ctx);
