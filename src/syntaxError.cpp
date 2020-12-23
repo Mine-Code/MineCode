@@ -25,6 +25,7 @@ void synErr::ReportError(Context& ctx,errorType type,std::wstring exMsg){
         << "|  peek(+1):"<<ctx.iter.peek(+1)<<std::endl
         << "--------------------"<<std::endl;
     
+    throw exMsg;
 }
 void synErr::syntaxError  (Context ctx,std::wstring ex) {ReportError(ctx,SYNTAX,ex);}
 void synErr::tokenizeError(Context ctx,std::wstring ex) {ReportError(ctx,TOKENIZE,ex);}
