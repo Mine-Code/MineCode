@@ -16,7 +16,7 @@ namespace synErr
         TOKENIZE
     };
     using Context=parserCtx::parserContext;
-    void ReportError(Context,errorType);
+    void ReportError(Context,errorType,std::wstring);
 } // namespace synErr
 
 
