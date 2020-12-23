@@ -11,10 +11,10 @@ namespace parserCtx
 
 namespace synErr
 {
-    enum{
+    enum errorType{
         SYNTAX,
         TOKENIZE
-    } errorType;
+    };
     using Context=parserCtx::parserContext;
 } // namespace synErr
 
