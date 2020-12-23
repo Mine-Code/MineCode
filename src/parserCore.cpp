@@ -28,14 +28,14 @@ namespace parserCore{
             For(ctx);
         }else if(text==L"while"){
             // TODO:call 'while'
-            ReportError(ctx,PROCESS,L"Error: not implemented while");
+            processError(ctx,L"Error: not implemented while");
         }else if(text==L"if"){
             If(ctx);
         }else if(text==L"func"){
             func(ctx);
         }else if(text==L"for"){
             // TODO:call 'for'
-            ReportError(ctx,PROCESS,L"Error: not implemented while");
+            processError(ctx,L"Error: not implemented while");
         }else{
             //put / assign
             assert(ctx.iter.hasData());
@@ -162,7 +162,7 @@ namespace parserCore{
         std::wstring text=ctx.iter.next();
         // check word?
         if(!isalpha(text[0])){
-            ReportError(ctx,PROCESS,L"isn't ident");
+            processError(ctx,L"isn't ident");
         }
         return text;
     }
@@ -170,7 +170,7 @@ namespace parserCore{
         std::wstring text=ctx.iter.next();
         // check integer?
         if(!isdigit(text[0]) || text[0]!=L'"')
-            ReportError(ctx,PROCESS,L"isn't constant integer");
+            processError(ctx,L"isn't constant integer");
         return text;
     }
     void assign(parserCtx::parserContext& ctx){
@@ -261,7 +261,7 @@ namespace parserCore{
     int Int  (parserCtx::parserContext& ctx){
         std::wstring text=ctx.iter.next();
         if(!isdigit(text[0])){
-            ReportError(ctx,SYNTAX,L"is not integer");
+            syntaxError(ctx,L"is not integer");
         }
         // convert test<wstr> to value<int>
         int value=0;
@@ -295,7 +295,7 @@ namespace parserCore{
         std::wstring op    = ctx.iter.next();
         std::wstring value2= expr(ctx);
         if(!( util::isCondOp(op[0]) && op[1]==L'=' && op.length()==2 )){
-            ReportError(ctx,SYNTAX,L"is not conditional operator");
+            syntaxError(ctx,L"is not conditional operator");
         }
         assert(ctx.iter.next() == L"{");
         stmtProcessor::If(ctx);
