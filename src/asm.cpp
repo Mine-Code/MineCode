@@ -26,7 +26,7 @@ void Assembly::endOfFunction()
         "blr";
 }
 
-void Assembly::writeResister(int value, int dest)
+void Assembly::writeRegister(int value, int dest)
 {
     int high = ((uint16_t*)&value)[1];
     int low = ((uint16_t*)&value)[0];
