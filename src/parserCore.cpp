@@ -231,6 +231,7 @@ namespace parserCore{
         std::wstring text=ctx.iter.peek();
         if(text==L"+" || text==L"-"){
             // TODO: process
+            ctx.iter.next(); // remove +/-
             tmp+=text;
         }
         tmp+=term(ctx);
