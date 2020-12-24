@@ -49,9 +49,8 @@ void Assembly::moveResister(int src, int dest)
 
 void Assembly::callFunction(int address)
 {
+    writeRegister(address, 12);
     ss <<
-        "lis r12, " << ((uint16_t*)&address)[1] << "\n"
-        "ori r12, r12, " << ((uint16_t*)&address)[0] << "\n"
         "mtctr r12 \n"
         "bctrl \n";
 }
@@ -65,9 +64,8 @@ void Assembly::peek(int offset, int dest, int src)
 
 void Assembly::peek_i(int address, int offset, int dest)
 {
+    writeRegister(address, 12);
     ss <<
-        "lis r12, " << ((uint16_t*)&address)[1] << "\n"
-        "ori r12, r12, " << ((uint16_t*)&address)[0] << "\n"
         "lwz r" << dest << ", " << offset << "(r12)\n";
 }
 
@@ -79,69 +77,61 @@ void Assembly::poke(int offset, int dest, int src)
 
 void Assembly::poke_i(int address, int src, int offset)
 {
-    int high = ((uint16_t*)&address)[1];
-    int low = ((uint16_t*)&address)[0];
-
-    if (low != 0) {
-        ss <<
-            "lis r12, " << high << "\n"
-            "ori r12, r12, " << low << "\n"
-            "stw r" << src << ", " << offset << "(r12)\n";
-    } else {
-        ss <<
-            "lis r12, " << high << "\n"
-            "stw r" << src << ", " << offset << "(r12)\n";
-    }
+    writeRegister(address, 12);
+    ss <<
+        "stw r" << src << ", " << offset << "(r12)\n";
 }
 
 void Assembly::add(int value, int src, int dest)
 {
-    int high = ((uint16_t*)&value)[1];
-    int low = ((uint16_t*)&value)[0];
-
-    if (high != 0) {
-        ss <<
-            "lis r3, " << high << "\n"
-            "ori r3, r3, " << low << "\n" //r3 = value
-            "add r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 + r(src)
-    } else if (low != 0) {
-        ss <<
-            "li r3, " << low << "\n"
-            "add r" << dest << ", r3" << ", r" << src << "\n";
-    }
+    writeRegister(value, 3);
+    ss <<
+        "add r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 + r(src)
 }
 void Assembly::mul(int value, int src, int dest)
 {
-    int high = ((uint16_t*)&value)[1];
-    int low = ((uint16_t*)&value)[0];
-
-    if (high != 0) {
-        ss <<
-            "lis r3, " << high << "\n"
-            "ori r3, r3, " << low << "\n" //r3 = value
-            "mullw r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 * r(src)
-    } else if (low != 0) {
-        ss <<
-            "li r3, " << low << "\n"
-            "mullw r" << dest << ", r3" << ", r" << src << "\n";
-    }
+    writeRegister(value, 3);
+    ss <<
+        "mullw r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 + r(src)
 }
 
 void Assembly::div(int value, int src, int dest)
 {
-    int high = ((uint16_t*)&value)[1];
-    int low = ((uint16_t*)&value)[0];
+    writeRegister(value, 3);
+    ss <<
+        "divw r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 + r(src)
+}
 
-    if (high != 0) {
-        ss <<
-            "lis r3, " << high << "\n"
-            "ori r3, r3, " << low << "\n" //r3 = value
-            "divw r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 * r(src)
-    } else if (low != 0) {
-        ss <<
-            "li r3, " << low << "\n"
-            "divw r" << dest << ", r3" << ", r" << src << "\n";
-    }
+void Assembly::OR(int src_1, int dest, int src_2)
+{
+    ss <<
+        "or r" << dest << ", r" << src_1 << ", r" << src_2 << "\n";
+}
+
+void Assembly::XOR(int src_1, int dest, int src_2)
+{
+    ss <<
+        "xor r" << dest << ", r" << src_1 << ", r" << src_2 << "\n";
+}
+
+void Assembly::AND(int src_1, int dest, int src_2)
+{
+    ss <<
+        "and r" << dest << ", r" << src_1 << ", r" << src_2 << "\n";
+}
+
+void Assembly::rightShift(int bit, int src, int dest)
+{
+    writeRegister(bit, 3);
+    ss <<
+        "srw r" << dest << ", r" << src << ", r3\n";
+}
+
+void Assembly::leftShift(int bit, int src, int dest)
+{
+    writeRegister(bit, 3);
+    ss <<
+        "slw r" << dest << ", r" << src << ", r3\n";
 }
 
 void Assembly::startOfLoop(int count)
