@@ -191,7 +191,7 @@ namespace parserCore{
             ctx.iter.next();
             std::wstring text=expr(ctx);
             assert(ctx.iter.next()==L")");
-            return text;
+            return L"("+text+L")";
         }
         return value(ctx);
 
