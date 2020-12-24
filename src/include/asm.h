@@ -27,6 +27,12 @@ public:
     void mul(int value, int src = 13, int dest = 13);
     void div(int value, int src = 13, int dest = 13);
 
+    void OR(int src_1, int dest, int src_2);
+    void XOR(int src_1, int dest, int src_2);
+    void AND(int src_1, int dest, int src_2);
+    void rightShift(int bit, int src, int dest);
+    void leftShift(int bit, int src, int dest);
+    
     int make_loop_ctr = 0;
     int loop_flag = 0;
     int loop_count = 0;
