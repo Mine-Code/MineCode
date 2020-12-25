@@ -250,7 +250,7 @@ namespace parserCore{
                 text == L"-" ||
                 util::isBitOp(text[0])
             );
-            tmp+=text+power(ctx);
+            tmp+=text+term(ctx);
         }
         return tmp;
     }
