@@ -3,8 +3,10 @@
 DEBUG := 0
 ifeq ($(DEBUG),1)
 	DBG_OPT_COMPILE := -g -Og -rdynamic
+	DBG_OPT_COMMON  := -D _GLIBCXX_DEBUG -D _GLIBCXX_DEBUG_PEDANTIC
 else
 	DBG_OPT_COMPILE := 
+	DBG_OPT_COMMON  := 
 endif
 # platform switcher
 ifeq ($(OS),Windows_NT)
@@ -35,9 +37,9 @@ DEPEND   ?= -MMD -MP -MF $(@:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
 INCLUDES ?= -Isrc/include -Ilib/json/include
 COMPFLAGS?= -Wall -Wextra $(INCLUDES) $(DBG_OPT_COMPILE)
 
-LDFLAGS  ?=
-CXXFLAGS ?= $(COMPFLAGS) -std=gnu++17
-CFLAGS   ?= $(COMPFLAGS) -std=gnu11
+LDFLAGS  ?= $(DBG_OPT_COMMON)
+CXXFLAGS ?= $(DBG_OPT_COMMON) $(COMPFLAGS) -std=gnu++17
+CFLAGS   ?= $(DBG_OPT_COMMON) $(COMPFLAGS) -std=gnu11
 
 ## File list
 SRCS := $(wildcard $(SRCDIR)/*.cpp)
