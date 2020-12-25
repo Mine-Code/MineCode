@@ -189,9 +189,7 @@ namespace parserCore{
         if(ctx.iter.peek()==L"("){
             // inner type
             ctx.iter.next();
-            std::wcout<<"<"<<ctx.iter.peek(-1)<<ctx.iter.peek(0)<<ctx.iter.peek(1)<<std::endl;
             std::wstring text=expr(ctx);
-            std::wcout<<">"<<ctx.iter.peek(-1)<<ctx.iter.peek(0)<<ctx.iter.peek(1)<<std::endl;
             assert(ctx.iter.next()==L")");
             return L"("+text+L")";
         }
