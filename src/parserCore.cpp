@@ -112,14 +112,14 @@ namespace parserCore{
         wchar_t ch=ctx.iter.peek()[0];
         if(ctx.iter.peek()==L"["){
             return ptr(ctx);
+        }else if(isalpha(ch)){
+            return ident(ctx);
         }else if(ctx.iter.peek(1)==L"."){
             return attribute(ctx);
         }else if(isdigit(ch)){
             return ctx.iter.next();
         }else if(ch==L'"'){
             return ctx.iter.next();
-        }else{
-            return ident(ctx);
         }
     }
     std::wstring ptr(parserCtx::parserContext& ctx){
@@ -189,7 +189,9 @@ namespace parserCore{
         if(ctx.iter.peek()==L"("){
             // inner type
             ctx.iter.next();
+            std::wcout<<"<"<<ctx.iter.peek(-1)<<ctx.iter.peek(0)<<ctx.iter.peek(1)<<std::endl;
             std::wstring text=expr(ctx);
+            std::wcout<<">"<<ctx.iter.peek(-1)<<ctx.iter.peek(0)<<ctx.iter.peek(1)<<std::endl;
             assert(ctx.iter.next()==L")");
             return L"("+text+L")";
         }
