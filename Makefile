@@ -33,7 +33,7 @@ TARGET=MineCode
 ## Arguments
 DEPEND   ?= -MMD -MP -MF $(@:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
 INCLUDES ?= -Isrc/include -Ilib/json/include
-COMPFLAGS?= -Wall -Wextra $(INCLUDES)
+COMPFLAGS?= -Wall -Wextra $(INCLUDES) $(DBG_OPT_COMPILE)
 
 LDFLAGS  ?=
 CXXFLAGS ?= $(COMPFLAGS) -std=gnu++17
