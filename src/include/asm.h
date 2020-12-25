@@ -38,6 +38,11 @@ public:
     int loop_count = 0;
     void startOfLoop(int count);
     void endOfLoop();
+
+    int make_if_ctr = 0;
+    void startOfIf(int src_1, std::string mode, int src_2 = 13);
+    void startOfIf(std::string mode, int cond = 0);
+    void endOfIf();
 };
 
 #endif
