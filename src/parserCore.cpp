@@ -228,6 +228,7 @@ namespace parserCore{
     }
     std::wstring expr  (parserCtx::parserContext& ctx){
         std::wstring tmp;
+
         std::wstring text=ctx.iter.peek();
         if(text==L"+" || text==L"-"){
             // TODO: process
@@ -235,6 +236,7 @@ namespace parserCore{
             tmp+=text;
         }
         tmp+=term(ctx);
+        
         while(
             ctx.iter.hasData() && (
                 ctx.iter.peek() == L"+" ||
