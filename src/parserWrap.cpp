@@ -72,7 +72,7 @@ void parserWrap::tokenize(){
                     error_program(chiter);
                 }
                 else if(util::isDec(ch)){
-                    ch+=chiter.next();
+                    value+=chiter.next();
                 }else{
                     break;
                 }
