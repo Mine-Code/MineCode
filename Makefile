@@ -1,4 +1,11 @@
 
+# Debug switcher
+DEBUG := 0
+ifeq ($(DEBUG),1)
+	DBG_OPT_COMPILE := -g -Og -rdynamic
+else
+	DBG_OPT_COMPILE := 
+endif
 # platform switcher
 ifeq ($(OS),Windows_NT)
 	FEXT := .exe
