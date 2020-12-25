@@ -1,4 +1,5 @@
 #include <sstream>
+#include <cassert>
 #include <asm.h>
 
 
@@ -28,6 +29,8 @@ void Assembly::endOfFunction()
 
 void Assembly::writeRegister(int value, int dest)
 {
+    assert((unsigned int)value < 0xFFFFFFFF);
+
     int high = ((uint16_t*)&value)[1];
     int low = ((uint16_t*)&value)[0];
 
@@ -140,18 +143,49 @@ void Assembly::startOfLoop(int count)
     loop_flag = 0;
 
     ss <<
-        "stw r14, " << stack_size - 8 << "(r1)\n"
-        "li r14, 0\n"
+        "stw r" << make_loop_ctr + 14 << ", " << stack_size - 4 * (make_loop_ctr + 2) << "(r1)\n"
+        "li r" << make_loop_ctr + 14 << ", 0\n"
         "loop_" << make_loop_ctr << ":\n";
+    make_loop_ctr++;
 }
 
 void Assembly::endOfLoop()
 {
+    int flag_register = make_loop_ctr + 13;
     ss <<
-        "addi r14, r14, 1\n"
-        "cmplwi r14, " << loop_count << "\n"
-        "blt loop_" << make_loop_ctr << "\n"
-        "lwz r14, " << stack_size - 8 << "(r1)\n";
+        "addi r" << flag_register << ", r" << flag_register << ", 1\n"
+        "cmplwi r" << flag_register << ", " << loop_count << "\n"
+        "blt loop_" << make_loop_ctr - 1 << "\n"
+        "lwz r" << flag_register << ", " << stack_size - 4 * (make_loop_ctr + 1) << "(r1)\n";
+    make_loop_ctr--;
+}
 
-    make_loop_ctr++;
+void Assembly::startOfIf(int src_1, std::string mode, int src_2)
+{
+    ss <<
+        "cmplw r" << src_1 << ", r" << src_2 << "\n";
+    if (mode == "==") {
+        ss << "beq if_" << make_if_ctr << "\n";
+    } else if (mode == "!=") {
+        ss << "beq if_" << make_if_ctr << "\n";
+    } else if (mode == "<") {
+        ss << "blt if_" << make_if_ctr << "\n";
+    } else if (mode == "<=") {
+        ss << "ble if_" << make_if_ctr << "\n";
+    } else if (mode == ">") {
+        ss << "bgt if_" << make_if_ctr << "\n";
+    } else if (mode == ">=") {
+        ss << "bge if_" << make_if_ctr << "\n";
+    }
+    ss <<
+        "b " << "endif_" << make_if_ctr << ":\n"
+        "if_" << make_if_ctr << ":\n";
+    make_if_ctr++;
+}
+
+void Assembly::endOfIf()
+{
+    ss <<
+        "endif_" << make_if_ctr - 1 << ":\n";
+    make_if_ctr--;
 }
