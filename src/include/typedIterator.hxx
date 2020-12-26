@@ -34,7 +34,12 @@ public:
         }
         return array[index--];
     }
-
+    T peekSafe(){
+        if(index <= 0 || array.size() <= index){
+            return T();
+        }
+        return array[index];
+    }
     T peek(){
         if(index <= 0 || array.size() <= index){
             return T();
