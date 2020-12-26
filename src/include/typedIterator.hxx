@@ -28,20 +28,20 @@ public:
         return array[index++];
     }
     T prev(){
-        if(index <= 0){
+        if(index < 0){
             std::cerr << "Out of size" << std::endl;;
             throw L"outofsize";
         }
         return array[index--];
     }
     T peekSafe(){
-        if(index <= 0 || array.size() <= index){
+        if(index < 0 || array.size() <= index){
             return T();
         }
         return array[index];
     }
     T peek(size_t offset=0){
-        if(index <= 0 || array.size() <= index){
+        if(index < 0 || array.size() <= index){
             std::cerr << "Out of size" << std::endl;;
             throw L"outofsize";
         }
