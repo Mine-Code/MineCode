@@ -235,8 +235,7 @@ namespace parserCore{
         std::wstring first;
         std::wstring text=ctx.iter.peek();
         if(text==L"+" || text==L"-"){
-            ctx.iter.next(); // remove +/-
-            first+=text;
+            first=ctx.iter.next();
         }
         first+=term(ctx);
 
