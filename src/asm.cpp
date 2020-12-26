@@ -29,7 +29,7 @@ void Assembly::endOfFunction()
 
 void Assembly::writeRegister(int value, int dest)
 {
-    assert((unsigned int)value < 0xFFFFFFFF);
+    assert((unsigned int)value <= 0xFFFFFFFF);
 
     int high = ((uint16_t*)&value)[1];
     int low = ((uint16_t*)&value)[0];
