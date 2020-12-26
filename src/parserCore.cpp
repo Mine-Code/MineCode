@@ -232,13 +232,15 @@ namespace parserCore{
     std::wstring expr  (parserCtx::parserContext& ctx){
         std::wstring tmp;
 
+        std::wstring first;
         std::wstring text=ctx.iter.peek();
         if(text==L"+" || text==L"-"){
-            // TODO: process
             ctx.iter.next(); // remove +/-
-            tmp+=text;
+            first+=text;
         }
-        tmp+=term(ctx);
+        first+=term(ctx);
+
+        tmp+=first;
         
         while(
             ctx.iter.hasData() && (
