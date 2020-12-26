@@ -77,6 +77,9 @@ void parserWrap::tokenize(){
                 }
             }
             tokens.emplace_back(value);
+        }else if(ch==L'=' && nextch==L'='){
+            chiter.next(); //skip one equal
+            tokens.emplace_back(L"==");
         }else if(ch==L'='){
             value+=ch;
             tokens.emplace_back(value);
