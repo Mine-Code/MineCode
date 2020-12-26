@@ -50,6 +50,18 @@ void Assembly::moveResister(int src, int dest)
         "mr r" << dest << ", r" << src << "\n";
 }
 
+void Assembly::push(int offset, int src)
+{
+    ss <<
+        "stw r" << src << ", " << offset << "(r1)";
+}
+
+void Assembly::pop(int offset, int dest)
+{
+    ss <<
+        "lwz r" << dest << ", " << offset << "(r1)";
+}
+
 void Assembly::callFunction(int address)
 {
     writeRegister(address, 12);

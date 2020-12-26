@@ -16,6 +16,9 @@ public:
     void writeRegister(int value, int dest);
     void moveResister(int src, int dest);
 
+    void push(int offset, int src = 13);
+    void pop(int offset, int dest = 13);
+
     void callFunction(int address);
 
     void peek(int offset, int dest = 13, int src = 13);
