@@ -40,14 +40,7 @@ public:
         }
         return array[index];
     }
-    T peek(){
-        if(index <= 0 || array.size() <= index){
-            std::cerr << "Out of size" << std::endl;;
-            throw L"outofsize";
-        }
-        return array[index];
-    };
-    T peek(size_t offset){
+    T peek(size_t offset=0){
         if(index <= 0 || array.size() <= index){
             std::cerr << "Out of size" << std::endl;;
             throw L"outofsize";
