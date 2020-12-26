@@ -42,7 +42,7 @@ namespace parserCore{
             // skip one 'value' and read one
             auto backup=ctx.iter.index;
             value(ctx);
-            text=ctx.iter.peek(0);
+            text=ctx.iter.peek();
             ctx.iter.index=backup;
             // done skip and read
             if(text==L"<<"){
