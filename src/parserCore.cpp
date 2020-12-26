@@ -77,15 +77,18 @@ namespace parserCore{
     }
     void For(parserCtx::parserContext& ctx){
         assert(ctx.iter.next() == L"for");
+        assert(ctx.iter.next() == L"(");
         std::wstring varname=ctx.iter.next();
         assert(ctx.iter.next() == L"in");
         if(ctx.iter.peek(1)==L"..."){
             Range target=range(ctx);
+            assert(ctx.iter.next() == L")");
             assert(ctx.iter.next() == L"{");
 
             std::wcout<<"for "<<varname<<" in "<<target.first<<"to"<<target.second<<std::endl;
         }else{
             std::wstring target=value(ctx);
+            assert(ctx.iter.next() == L")");
             assert(ctx.iter.next() == L"{");
 
             std::wcout<<"for "<<varname<<" in "<<target<<std::endl;
@@ -294,6 +297,7 @@ namespace parserCore{
     }
     void If(parserCtx::parserContext& ctx){
         assert(ctx.iter.next()==L"if");
+        assert(ctx.iter.next() == L"(");
         std::wstring value1= expr(ctx);
         std::wstring op    = ctx.iter.next();
         std::wstring value2= expr(ctx);
@@ -301,6 +305,7 @@ namespace parserCore{
             syntaxError(ctx,L"is not conditional operator");
         }
         std::wcout<<"if "<<value1<<op<<value2<<std::endl;
+        assert(ctx.iter.next() == L")");
         assert(ctx.iter.next() == L"{");
         stmtProcessor::If(ctx);
         assert(ctx.iter.next() == L"}");

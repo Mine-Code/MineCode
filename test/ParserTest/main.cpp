@@ -19,10 +19,10 @@ int main()
         L"#do once"                      "\n"
         "func test(){"                   "\n"
         "  n = (2*(100+20)+3*(1+2))/20+1" "\n" 
-        "  if 0o20==0x10{"               "\n"
+        "  if(0o20==0x10){"               "\n"
         "    player.Chat << \"^^\" "     "\n"
         "  }"                            "\n"
-        "  for i in 0...0x10{"           "\n"
+        "  for(i in 0...0x10){"           "\n"
         "    player.Chat << \"{i}\" "    "\n"
         "  }"                            "\n"
         "}"s
