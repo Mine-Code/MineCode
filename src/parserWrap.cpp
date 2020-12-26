@@ -26,7 +26,6 @@ void parserWrap::error_program(iterator<wchar_t> chiter){
 void parserWrap::tokenize(){
     iterator<wchar_t> chiter(util::convToVector<wchar_t>(string));
     wchar_t ch,nextch;
-    std::ios::fmtflags bk = std::wcout.flags();
     while(chiter.hasData()){
         ch=chiter.next();
         nextch=chiter.peekSafe();
@@ -168,7 +167,6 @@ void parserWrap::tokenize(){
             tokens.emplace_back(value);
         }
     }
-    std::wcout.flags(bk);
 }
 
 void parserWrap::parse(){
