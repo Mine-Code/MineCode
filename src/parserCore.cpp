@@ -300,6 +300,7 @@ namespace parserCore{
         if(!( util::isCondOp(op[0]) && op[1]==L'=' && op.length()==2 )){
             syntaxError(ctx,L"is not conditional operator");
         }
+        std::wcout<<"if "<<value1<<op<<value2<<std::endl;
         assert(ctx.iter.next() == L"{");
         stmtProcessor::If(ctx);
         assert(ctx.iter.next() == L"}");
