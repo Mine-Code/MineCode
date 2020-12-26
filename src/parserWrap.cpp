@@ -80,6 +80,10 @@ void parserWrap::tokenize(){
         }else if(ch==L'='){
             value+=ch;
             tokens.emplace_back(value);
+        }else if(util::isCondOp(ch)){
+            value+=ch;
+            value+=chiter.next();
+            tokens.emplace_back(value);
         }else if(ch=='f' && nextch =='\"'){
             value+=ch;
             value+=chiter.next();
@@ -107,10 +111,6 @@ void parserWrap::tokenize(){
             value+=ch;
             tokens.emplace_back(value);
             chiter.next();
-        }else if(util::isCondOp(ch)){
-            value+=ch;
-            value+=chiter.next();
-            tokens.emplace_back(value);
         }else if(iswalpha(ch)){
             value+=ch;
             while(1){
