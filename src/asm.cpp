@@ -59,7 +59,7 @@ void Assembly::push(int offset, int src)
 void Assembly::pop(int offset, int dest)
 {
     ss <<
-        "stw r" << dest << ", " << offset << "(r1)";
+        "lwz r" << dest << ", " << offset << "(r1)";
 }
 
 void Assembly::callFunction(int address)
