@@ -115,10 +115,10 @@ namespace parserCore{
         wchar_t ch=ctx.iter.peek()[0];
         if(ctx.iter.peek()==L"["){
             return ptr(ctx);
-        }else if(isalpha(ch)){
-            return ident(ctx);
         }else if(ctx.iter.peek(1)==L"."){
             return attribute(ctx);
+        }else if(isalpha(ch)){
+            return ident(ctx);
         }else if(ch==L'"'){
             return ctx.iter.next();
         }else if(isdigit(ch)){
