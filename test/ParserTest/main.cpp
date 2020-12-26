@@ -18,7 +18,7 @@ int main()
     prs.set(
         L"#do once"                      "\n"
         "func test(){"                   "\n"
-        "  a = 2;"
+        "  a = 2"                         "\n"
         "  n = (a*(100+a*10)+3*(1+a))/20+a" "\n" 
         "  if(0o20==0x10){"               "\n"
         "    player.Chat << \"^^\" "     "\n"
