@@ -29,7 +29,7 @@ void parserWrap::tokenize(){
     std::ios::fmtflags bk = std::wcout.flags();
     while(chiter.hasData()){
         ch=chiter.next();
-        nextch=chiter.peek();
+        nextch=chiter.peekSafe();
         std::wstring value;
         if(ch=='0' && nextch == L'x'){
             value+=L"0x";
