@@ -32,9 +32,6 @@ namespace parserCore{
             If(ctx);
         }else if(text==L"func"){
             func(ctx);
-        }else if(text==L"for"){
-            // TODO:call 'for'
-            processError(ctx,L"Error: not implemented while");
         }else{
             //put / assign
             assert(ctx.iter.hasData());
