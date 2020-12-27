@@ -313,8 +313,10 @@ namespace parserCore{
     std::wstring cond_inner  (parserCtx::parserContext& ctx){
         std::wstring text;
         if(util::isCondOpFull(ctx.iter.peekSafe(1))){
-            // is double conditional
-            // TODO:implement
+            std::wstring value1=expr(ctx);
+            std::wstring op    =ctx.iter.next();
+            std::wstring value2=expr(ctx);
+            return value1+op+value2;
         }else{
             // is single value 
             // TODO: implement
