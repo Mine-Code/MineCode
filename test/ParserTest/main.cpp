@@ -26,6 +26,9 @@ int main()
         "  for(i in 0...0x10){"             "\n"
         "    player.Chat << \"{i}\" "       "\n"
         "  }"                               "\n"
+        "  while(a<=10){"                   "\n"
+        "    player.Chat << \"(^^)v\""      "\n"
+        "  }"                               "\n"
         "}"s
     );
     prs.tokenize();
