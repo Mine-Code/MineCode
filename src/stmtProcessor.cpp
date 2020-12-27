@@ -14,7 +14,7 @@ void stmtProcessor::For    (
     }
 }
 
-void stmtProcessor::Forr   (parserCtx::parserContext& ctx){
+void stmtProcessor::Forr   (parserCtx::parserContext& ctx,int start,int end){
 
 }
 
