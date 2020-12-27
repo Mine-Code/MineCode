@@ -37,6 +37,15 @@ namespace util
     }
 
     template<typename T>
+    bool isCondOpFull(T str){
+        return
+               str==L"<"  || str==">" 
+            || str==L"<=" || str==">=" 
+            || str==L"==" || str=="!=";
+        ;
+    }
+
+    template<typename T>
     bool isIdentity(T ch){
         return
                ch=='{'|| ch=='}'
