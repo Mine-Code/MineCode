@@ -265,7 +265,13 @@ namespace parserCore{
                 ret+=part;
             }
         }
-        return std::to_wstring(imm)+L"+"+ret;
+        std::wstring immStr;
+        if(imm==0){
+            immStr=L"";
+        }else{
+            immStr=std::to_wstring(imm);
+        }
+        return immStr+ret;
     }
     Range range  (parserCtx::parserContext& ctx){
         int start=Int(ctx);
