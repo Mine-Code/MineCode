@@ -7,12 +7,15 @@ namespace util
         //preprocessing _text
         std::wstring text;
         int sign;
-        if(_text[0]=='+' || _text[0]=='-'){
+        if(_text[0]=='+'){
             text=_text.substr(1);
             sign=+1;
+        }else if(_text[0]=='-'){
+            text=_text.substr(1);
+            sign=-1;
         }else{
             text=_text;
-            sign=-1;
+            sign=+1;
         }
         int value=0;
         if(text[0]==L'0' && (text[1]==L'x' || text[1]==L'o') ){
