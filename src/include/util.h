@@ -136,6 +136,8 @@ namespace util
         for(auto ch: text){
             if(ch=='+' || ch=='-'){
                 termCounter+=1;
+            }else if(!isdigit(ch)){
+                return false;
             }
         }
         return termCounter==1;
