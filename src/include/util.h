@@ -5,6 +5,8 @@
 #include <vector>
 namespace util
 {
+    int _toInt(std::wstring);
+    
     template<typename T>
     bool inRange(T min,T val,T max){
         return min<=val && val<=max;
@@ -125,6 +127,7 @@ namespace util
     int toInt(T _text){
         return _toInt(std::wstring(_text));
     }
+
 } // namespace util
 
 
