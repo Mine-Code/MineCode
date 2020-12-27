@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 namespace util
 {
@@ -145,17 +146,13 @@ namespace util
 
     template<typename T>
     bool isSingle(T text){
-        bool flag;
-        if(text[0]=='+' || text[0] == '-')flag=true;
+        int counter=0;
         for(auto ch: text){
             if(ch=='+' || ch=='-'){
-                if(flag){
-                    return false;
-                }
-                flag=true;
+                counter+=1;
             }
         }
-        return true;
+        return counter==0;
     }
 } // namespace util
 
