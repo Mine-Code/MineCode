@@ -270,7 +270,13 @@ namespace parserCore{
         }
         std::wstring immStr = imm==0 ? L"" : std::to_wstring(imm);
         if(ret[0]=='+') ret=ret.substr(1);
-        ret=immStr+ret;
+        if(!ret.empty() && !immStr.empty()){
+            ret=immStr+L"+"+ret;
+        }else if(!ret.empty()){
+            ret=ret;
+        }else if(!immStr.empty()){
+            ret=immStr;
+        }
         return ret;
     }
     Range range  (parserCtx::parserContext& ctx){
