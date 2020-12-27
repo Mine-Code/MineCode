@@ -265,12 +265,7 @@ namespace parserCore{
                 ret+=part;
             }
         }
-        std::wstring immStr;
-        if(imm==0){
-            immStr=L"";
-        }else{
-            immStr=std::to_wstring(imm);
-        }
+        std::wstring immStr = imm==0 ? L"" : std::to_wstring(imm);
 
         ret=immStr+ret;
         if(ret[0]=='+'){
