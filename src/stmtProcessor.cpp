@@ -7,7 +7,7 @@ void stmtProcessor::For    (
     std::wstring target,
     std::wstring iter
 ){
-    std::wcout<<target<<iter<<std::endl;
+    std::wcout<<"for iterator "<<target<<" in "<<iter<<std::endl;
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
