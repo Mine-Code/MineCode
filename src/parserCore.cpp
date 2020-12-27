@@ -27,8 +27,7 @@ namespace parserCore{
         if(text==L"for"){
             For(ctx);
         }else if(text==L"while"){
-            // TODO:call 'while'
-            processError(ctx,L"Error: not implemented while");
+            While(ctx);
         }else if(text==L"if"){
             If(ctx);
         }else if(text==L"func"){
