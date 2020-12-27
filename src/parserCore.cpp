@@ -335,4 +335,7 @@ namespace parserCore{
         }
         return text;
     }
+    void While(parserCtx::parserContext& ctx){
+        
+    }
 }
