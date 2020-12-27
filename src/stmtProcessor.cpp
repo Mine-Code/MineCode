@@ -15,7 +15,11 @@ void stmtProcessor::For    (
 }
 
 void stmtProcessor::Forr   (parserCtx::parserContext& ctx,int start,int end){
-
+    std::wcout<<"for range "<<start<<"to"<<end<<std::endl;
+    while(ctx.iter.hasData()){
+        if(ctx.iter.peek()==L"}")break;
+        parserCore::stmt(ctx);
+    }
 }
 
 void stmtProcessor::While  (parserCtx::parserContext& ctx){
