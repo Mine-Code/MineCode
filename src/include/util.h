@@ -130,6 +130,16 @@ namespace util
         return _toInt(std::wstring(_text));
     }
 
+    template<typename T>
+    bool isimm(T text){
+        int termCounter = 0;
+        for(auto ch: text){
+            if(ch=='+' || ch=='-'){
+                termCounter+=1;
+            }
+        }
+        return termCounter==1;
+    }
 } // namespace util
 
 
