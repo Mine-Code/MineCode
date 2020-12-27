@@ -230,6 +230,7 @@ namespace parserCore{
         return tmp;
     }
     std::wstring expr  (parserCtx::parserContext& ctx){
+        // TODO: calculate (optimaizition)
         std::wstring tmp;
 
         std::wstring first;
