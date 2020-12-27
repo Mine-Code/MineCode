@@ -34,11 +34,11 @@ public:
         }
         return array[index--];
     }
-    T peekSafe(){
-        if(index < 0 || array.size() <= index){
+    T peekSafe(size_t offset=0){
+        if(index+offset < 0 || array.size() <= index+offset){
             return T();
         }
-        return array[index];
+        return array[index+offset];
     }
     T peek(size_t offset=0){
         if(index < 0 || array.size() <= index){
