@@ -22,7 +22,7 @@ namespace util
             if(text[1]==L'x'){
                 for(auto ch: text.substr(2)){
                     value*=0x10;
-                    if(util::inRange(L'0',ch,L'9')){
+                    if(util::isDec(ch)){
                         value+=ch-'0';
                     }else{
                         value+=tolower(ch)-'a';
