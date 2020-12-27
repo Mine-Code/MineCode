@@ -73,18 +73,15 @@ namespace parserCore{
     }
     void For(parserCtx::parserContext& ctx){
         assert(ctx.iter.next() == L"for");
-        assert(ctx.iter.next() == L"(");
         std::wstring varname=ctx.iter.next();
         assert(ctx.iter.next() == L"in");
         if(ctx.iter.peek(1)==L"..."){
             Range target=range(ctx);
-            assert(ctx.iter.next() == L")");
             assert(ctx.iter.next() == L"{");
 
             stmtProcessor::Forr(ctx,target.first,target.second);
         }else{
             std::wstring target=value(ctx);
-            assert(ctx.iter.next() == L")");
             assert(ctx.iter.next() == L"{");
 
             stmtProcessor::For(ctx,varname,target);
@@ -296,10 +293,8 @@ namespace parserCore{
     }
     void If(parserCtx::parserContext& ctx){
         assert(ctx.iter.next()==L"if");
-        assert(ctx.iter.next() == L"(");
         std::wstring conditional = cond(ctx);
         std::wcout<<"if "<<conditional<<std::endl;
-        assert(ctx.iter.next() == L")");
         assert(ctx.iter.next() == L"{");
         stmtProcessor::If(ctx);
         assert(ctx.iter.next() == L"}");
@@ -334,10 +329,8 @@ namespace parserCore{
     }
     void While(parserCtx::parserContext& ctx){
         assert(ctx.iter.next()==L"while");
-        assert(ctx.iter.next() == L"(");
         std::wstring conditional = cond(ctx);
         std::wcout<<"while "<<conditional<<std::endl;
-        assert(ctx.iter.next() == L")");
         assert(ctx.iter.next() == L"{");
         stmtProcessor::While(ctx);
         assert(ctx.iter.next() == L"}");
