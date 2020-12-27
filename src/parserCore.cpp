@@ -227,7 +227,7 @@ namespace parserCore{
     }
     std::wstring expr  (parserCtx::parserContext& ctx){
         // TODO: calculate (optimaizition)
-        std::wstring tmp;
+        std::vector<std::wstring> parts;
 
         std::wstring first;
         std::wstring text=ctx.iter.peek();
@@ -236,7 +236,7 @@ namespace parserCore{
         }
         first+=term(ctx);
 
-        tmp+=first;
+        parts.emplace_back(first);
         
         while(
             ctx.iter.hasData() && (
@@ -251,9 +251,14 @@ namespace parserCore{
                 text == L"-" ||
                 util::isBitOp(text[0])
             );
-            tmp+=text+term(ctx);
+            parts.emplace_back(text+term(ctx));
         }
-        return tmp;
+
+        std::wstring ret;
+        for(auto part:parts){
+            ret+=part;
+        }
+        return ret;
     }
     Range range  (parserCtx::parserContext& ctx){
         int start=Int(ctx);
