@@ -308,6 +308,18 @@ namespace parserCore{
     }
     std::wstring cond  (parserCtx::parserContext& ctx){
         std::wstring text;
+        text+=cond_inner(ctx);
+        while(
+            ctx.iter.hasData() &&
+            (
+                ctx.iter.peek() == L"&&" ||
+                ctx.iter.peek() == L"||"
+            )
+        ){
+            auto text=ctx.iter.next();
+            assert(text == L"&&" ||text == L"||");
+            text+=text+cond_inner(ctx);
+        }
         return text;
     }
     std::wstring cond_inner  (parserCtx::parserContext& ctx){
