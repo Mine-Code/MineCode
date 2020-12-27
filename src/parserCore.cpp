@@ -259,7 +259,7 @@ namespace parserCore{
         std::wstring ret;
         int imm=0;
         for(auto part:parts){
-            if(isdigit(part[1])){
+            if(util::isimm(part)){
                 imm+=util::toInt(part);
             }else{
                 ret+=part;
