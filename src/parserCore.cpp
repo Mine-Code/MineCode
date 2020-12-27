@@ -190,7 +190,11 @@ namespace parserCore{
             ctx.iter.next();
             std::wstring text=expr(ctx);
             assert(ctx.iter.next()==L")");
-            return L"("+text+L")";
+            if(util::isSingle(text)){
+                return text;
+            }else{
+                return L"("+text+L")";
+            }
         }
         return value(ctx);
 
