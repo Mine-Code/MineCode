@@ -233,6 +233,8 @@ namespace parserCore{
         std::wstring text=ctx.iter.peek();
         if(text==L"+" || text==L"-"){
             first=ctx.iter.next();
+        }else{
+            first=L"+";
         }
         first+=term(ctx);
 
