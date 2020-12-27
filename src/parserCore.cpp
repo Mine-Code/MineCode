@@ -271,7 +271,12 @@ namespace parserCore{
         }else{
             immStr=std::to_wstring(imm);
         }
-        return immStr+ret;
+
+        ret=immStr+ret;
+        if(ret[0]=='+'){
+            return ret.substr(1);
+        }
+        return ret;
     }
     Range range  (parserCtx::parserContext& ctx){
         int start=Int(ctx);
