@@ -142,6 +142,21 @@ namespace util
         }
         return termCounter==1;
     }
+
+    template<typename T>
+    bool isSingle(T text){
+        bool flag;
+        if(text[0]=='+' || text[0] == '-')flag=true;
+        for(auto ch: text){
+            if(ch=='+' || ch=='-'){
+                if(flag){
+                    return false;
+                }
+                flag=true;
+            }
+        }
+        return true;
+    }
 } // namespace util
 
 
