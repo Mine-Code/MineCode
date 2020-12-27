@@ -306,11 +306,11 @@ namespace parserCore{
         stmtProcessor::If(ctx);
         assert(ctx.iter.next() == L"}");
     }
-    std::wstring cond  (parserCtx::parserContext&){
+    std::wstring cond  (parserCtx::parserContext& ctx){
         std::wstring text;
         return text;
     }
-    std::wstring cond_inner  (parserCtx::parserContext&){
+    std::wstring cond_inner  (parserCtx::parserContext& ctx){
         std::wstring text;
         return text;
     }
