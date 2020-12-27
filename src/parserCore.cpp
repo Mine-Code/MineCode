@@ -336,6 +336,13 @@ namespace parserCore{
         return text;
     }
     void While(parserCtx::parserContext& ctx){
-        
+        assert(ctx.iter.next()==L"while");
+        assert(ctx.iter.next() == L"(");
+        std::wstring conditional = cond(ctx);
+        std::wcout<<"while "<<conditional<<std::endl;
+        assert(ctx.iter.next() == L")");
+        assert(ctx.iter.next() == L"{");
+        stmtProcessor::While(ctx);
+        assert(ctx.iter.next() == L"}");
     }
 }
