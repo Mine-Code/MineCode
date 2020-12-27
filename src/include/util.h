@@ -3,6 +3,8 @@
 #define UTIL_H
 
 #include <vector>
+#include <string>
+
 namespace util
 {
     int _toInt(std::wstring);
