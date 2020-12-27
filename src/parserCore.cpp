@@ -318,8 +318,7 @@ namespace parserCore{
             std::wstring value2=expr(ctx);
             return value1+op+value2;
         }else{
-            // is single value 
-            // TODO: implement
+            return value(ctx);
         }
         return text;
     }
