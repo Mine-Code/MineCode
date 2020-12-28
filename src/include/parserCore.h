@@ -36,8 +36,8 @@ namespace parserCore
         cond();
         ~cond();
         
-        cond* first;
-        std::vector<std::pair<Type,cond>> conds;
+        condChild first;
+        std::vector<std::pair<Type,condChild>> conds;
     };
 
     using Arg=std::pair<std::wstring,std::wstring>;

@@ -11,7 +11,7 @@ using namespace synErr;
 
 namespace parserCore{
     cond::cond()
-        : conds( std::vector<std::pair<Type,cond>>() )
+        : conds( std::vector<std::pair<Type,condChild>>() )
     {
         
     }
