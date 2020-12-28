@@ -23,6 +23,33 @@ namespace parserTypes
         varsType variables;
     };
 
+    struct condChild{
+        enum Type{
+            SINGLE, // var (to val1)
+
+            EQU, // ==
+            NEQ, // !=
+            LT,  // < 
+            GT,  // > 
+            GE,  // <=
+            LE   // >=
+        };
+        std::wstring val1;
+        Type op;
+        std::wstring val2;
+    };
+    struct cond
+    {
+        enum Type{
+            AND,
+            OR
+        };
+
+        cond();
+        
+        condChild first;
+        std::vector<std::pair<Type,condChild>> conds;
+    };
 } // namespace parserCtx
 
 
