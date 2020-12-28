@@ -34,11 +34,7 @@ namespace parserCore
             LE   // >=
         };
 
-        cond(
-            Super,Type,
-            cond* = nullptr,cond* = nullptr,
-            std::wstring =L"",std::wstring =L""
-        );
+        cond(Super,Type);
 
         Super supertype;
         Type type;

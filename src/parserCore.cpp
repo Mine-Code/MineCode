@@ -10,11 +10,7 @@
 using namespace synErr;
 
 namespace parserCore{
-    cond::cond(
-            Super _supertype,Type _type,
-            cond *_cond1,cond *_cond2,
-            std::wstring _val1,std::wstring _val2
-    )
+    cond::cond(Super _supertype,Type _type)
         : supertype(_supertype)
         , type(_type)
         , conds( std::vector<cond*>() )
