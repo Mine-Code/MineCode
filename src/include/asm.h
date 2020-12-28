@@ -16,7 +16,8 @@ public:
     void writeRegister(int value, int dest);
     void moveResister(int src, int dest);
 
-    void push(int offset, int src = 13);
+    int stack_offset = 8;
+    int push(int src = 13);
     void pop(int offset, int dest = 13);
 
     void callFunction(int address);

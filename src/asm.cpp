@@ -50,16 +50,20 @@ void Assembly::moveResister(int src, int dest)
         "mr r" << dest << ", r" << src << "\n";
 }
 
-void Assembly::push(int offset, int src)
+int Assembly::push(int src)
 {
     ss <<
-        "stw r" << src << ", " << offset << "(r1)";
+        "stw r" << src << ", " << stack_size - stack_offset << "(r1)\n";
+    stack_offset += 4;
+    return stack_size - stack_offset + 4;
 }
+
+
 
 void Assembly::pop(int offset, int dest)
 {
     ss <<
-        "lwz r" << dest << ", " << offset << "(r1)";
+        "lwz r" << dest << ", " << offset << "(r1)\n";
 }
 
 void Assembly::callFunction(int address)
