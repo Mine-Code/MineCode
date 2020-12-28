@@ -300,7 +300,6 @@ namespace parserCore{
     void If(parserCtx::parserContext& ctx){
         assert(ctx.iter.next()==L"if");
         struct cond conditional = cond(ctx);
-        std::wcout<<"if "<<conditional<<std::endl;
         assert(ctx.iter.next() == L"{");
         stmtProcessor::If(ctx);
         assert(ctx.iter.next() == L"}");
@@ -359,7 +358,6 @@ namespace parserCore{
     void While(parserCtx::parserContext& ctx){
         assert(ctx.iter.next()==L"while");
         struct cond conditional = cond(ctx);
-        std::wcout<<"while "<<conditional<<std::endl;
         assert(ctx.iter.next() == L"{");
         stmtProcessor::While(ctx);
         assert(ctx.iter.next() == L"}");
