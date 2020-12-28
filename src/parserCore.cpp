@@ -2,7 +2,7 @@
 
 #include <assert.h>
 
-#include <parserContext.h>
+#include <parserTypes.h>
 #include <stmtProcessor.h>
 #include <util.h>
 #include <syntaxError.h>

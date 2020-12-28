@@ -1,5 +1,5 @@
 #include <syntaxError.h>
-#include <parserContext.h>
+#include <parserTypes.h>
 
 using namespace synErr;
 
