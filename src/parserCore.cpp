@@ -118,6 +118,9 @@ namespace parserCore{
             return ctx.iter.next();
         }else if(isdigit(ch)){
             return ctx.iter.next();
+        }else{
+            syntaxError(ctx,L"is not value type");
+            throw ""; // do not call this
         }
     }
     std::wstring ptr(Context& ctx){
