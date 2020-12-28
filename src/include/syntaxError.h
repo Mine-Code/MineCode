@@ -4,10 +4,10 @@
 
 #include <iostream>
 
-namespace parserCtx
+namespace parserTypes
 {
     class parserContext;
-} // namespace parserCtx
+} // namespace parserTypes
 
 namespace synErr
 {
@@ -16,7 +16,7 @@ namespace synErr
         TOKENIZE,
         PROCESS
     };
-    using Context=parserCtx::parserContext&;
+    using Context=parserTypes::parserContext&;
     void ReportError(Context,errorType,std::wstring);
 
     void syntaxError(Context,std::wstring);

@@ -6,7 +6,7 @@
 #include <sstream>
 #include "typedIterator.hxx"
 #include "asm.h"
-namespace parserCtx
+namespace parserTypes
 {
     enum varType{
         FLOAT,
