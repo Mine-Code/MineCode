@@ -9,6 +9,7 @@
 
 using namespace synErr;
 using namespace parserTypes;
+using namespace util;
 namespace parserCore{
     
 
@@ -45,7 +46,7 @@ namespace parserCore{
             // done skip and read
             if(text==L"<<"){
                 put(ctx);
-            }else if(util::isAssignOp(text)){
+            }else if(isAssignOp(text)){
                 assign(ctx);
             }
         }
@@ -192,7 +193,7 @@ namespace parserCore{
             ctx.iter.next();
             std::wstring text=expr(ctx);
             assert(ctx.iter.next()==L")");
-            if(util::isSingle(text)){
+            if(isSingle(text)){
                 return text;
             }else{
                 return L"("+text+L")";
@@ -236,11 +237,11 @@ namespace parserCore{
         int numer=1;
         int denom=1;
         for(auto part:parts){
-            if(util::isInt(part.substr(1)) && (part[0]=='/' || part[0]=='*')){
+            if(isInt(part.substr(1)) && (part[0]=='/' || part[0]=='*')){
                 if(part[0]=='*'){
-                    numer*=util::toInt(part.substr(1));
+                    numer*=toInt(part.substr(1));
                 }else if(part[0]=='/'){
-                    denom*=util::toInt(part.substr(1));
+                    denom*=toInt(part.substr(1));
                 }
             }else{
                 others+=part;
@@ -284,14 +285,14 @@ namespace parserCore{
             ctx.iter.hasData() && (
                 ctx.iter.peek() == L"+" ||
                 ctx.iter.peek() == L"-" ||
-                util::isBitOp(ctx.iter.peek()[0])
+                isBitOp(ctx.iter.peek()[0])
             )
         ){
             auto text=ctx.iter.next();
             assert(
                 text == L"+" ||
                 text == L"-" ||
-                util::isBitOp(text[0])
+                isBitOp(text[0])
             );
             parts.emplace_back(text+term(ctx));
         }
@@ -299,8 +300,8 @@ namespace parserCore{
         std::wstring ret;
         int imm=0;
         for(auto part:parts){
-            if(util::isimm(part)){
-                imm+=util::toInt(part);
+            if(isimm(part)){
+                imm+=toInt(part);
             }else{
                 ret+=part;
             }
@@ -329,7 +330,7 @@ namespace parserCore{
             syntaxError(ctx,L"is not integer");
         }
         // convert test<wstr> to value<int>
-        return util::toInt(text);
+        return toInt(text);
     }
     void If(Context& ctx){
         assert(ctx.iter.next()==L"if");
@@ -366,7 +367,7 @@ namespace parserCore{
     struct condChild cond_inner  (Context& ctx){
         struct condChild cond;
         std::wstring text;
-        if(util::isCondOpFull(ctx.iter.peekSafe(1))){
+        if(isCondOpFull(ctx.iter.peekSafe(1))){
             cond.val1=expr(ctx);
             std::wstring op=ctx.iter.next();
             if(op == L"<"){
