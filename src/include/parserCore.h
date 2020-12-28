@@ -43,8 +43,8 @@ namespace parserCore
         Super supertype;
         Type type;
 
-        cond *cond1,*cond2;
-        std::wstring val1,val2;
+        std::vector<cond*> conds;
+        std::vector<std::wstring> vals;
     };
 
     using Arg=std::pair<std::wstring,std::wstring>;

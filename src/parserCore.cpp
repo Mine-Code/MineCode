@@ -17,10 +17,8 @@ namespace parserCore{
     )
         : supertype(_supertype)
         , type(_type)
-        , cond1(_cond1)
-        , cond2(_cond2)
-        , val1(_val1)
-        , val2(_val2)
+        , conds( std::vector<cond*>() )
+        , vals ( std::vector<std::wstring>() )
     {
         
     }
