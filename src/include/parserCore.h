@@ -14,6 +14,39 @@ namespace parserCtx
 
 namespace parserCore
 {
+    struct cond
+    {
+        enum Super{
+            CHILD,
+            PARENT
+        };
+        enum Type{
+            // PARENT
+            AND,
+            OR,
+
+            // CHILD
+            EQU, // ==
+            NEQ, // !=
+            LT,  // < 
+            GT,  // > 
+            GE,  // <=
+            LE   // >=
+        };
+
+        cond(
+            Super,Type,
+            cond* = nullptr,cond* = nullptr,
+            std::wstring =L"",std::wstring =L""
+        );
+
+        Super supertype;
+        Type type;
+
+        cond *cond1,*cond2;
+        std::wstring val1,val2;
+    };
+
     using Arg=std::pair<std::wstring,std::wstring>;
     using Range=std::pair<int,int>;
 

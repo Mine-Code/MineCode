@@ -10,6 +10,21 @@
 using namespace synErr;
 
 namespace parserCore{
+    cond::cond(
+            Super _supertype,Type _type,
+            cond *_cond1,cond *_cond2,
+            std::wstring _val1,std::wstring _val2
+    )
+        : supertype(_supertype)
+        , type(_type)
+        , cond1(_cond1)
+        , cond2(_cond2)
+        , val1(_val1)
+        , val2(_val2)
+    {
+        
+    }
+
     void program(parserCtx::parserContext& ctx){
         if(ctx.iter.peek()==L"#"){
             assert(ctx.iter.next() == L"#"   );
