@@ -322,7 +322,7 @@ namespace parserCore{
         }
         return text;
     }
-    condChild cond_inner  (parserCtx::parserContext& ctx){
+    struct condChild cond_inner  (parserCtx::parserContext& ctx){
         struct condChild cond;
         std::wstring text;
         if(util::isCondOpFull(ctx.iter.peekSafe(1))){
