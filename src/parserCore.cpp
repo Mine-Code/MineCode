@@ -326,12 +326,25 @@ namespace parserCore{
         struct condChild cond;
         std::wstring text;
         if(util::isCondOpFull(ctx.iter.peekSafe(1))){
-            std::wstring value1=expr(ctx);
-            std::wstring op    =ctx.iter.next();
-            std::wstring value2=expr(ctx);
-            return value1+op+value2;
+            cond.val1=expr(ctx);
+            std::wstring op=ctx.iter.next();
+            if(op == L"<"){
+                cond.op=condChild::LT;
+            }else if(op == L">"){
+                cond.op=condChild::GT;
+            }else if(op == L"<="){
+                cond.op=condChild::LE;
+            }else if(op == L">="){
+                cond.op=condChild::GE;
+            }else if(op == L"=="){
+                cond.op=condChild::EQU;
+            }else if(op == L"!="){
+                cond.op=condChild::NEQ;
+            }
+            cond.val2=expr(ctx);
         }else{
-            return value(ctx);
+            cond.op=condChild::SINGLE;
+            cond.val1=value(ctx);
         }
         return cond;
     }
