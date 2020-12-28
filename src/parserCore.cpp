@@ -10,18 +10,10 @@
 using namespace synErr;
 
 namespace parserCore{
-    cond::cond(Super _supertype,Type _type)
-        : supertype(_supertype)
-        , type(_type)
-        , conds( std::vector<cond*>() )
-        , vals ( std::vector<std::wstring>() )
+    cond::cond()
+        : conds( std::vector<std::pair<Type,cond>>() )
     {
         
-    }
-    cond::~cond(){
-        for(cond* cond:conds){
-            delete cond;
-        }
     }
 
     void program(parserCtx::parserContext& ctx){
@@ -314,6 +306,7 @@ namespace parserCore{
         assert(ctx.iter.next() == L"}");
     }
     std::wstring cond  (parserCtx::parserContext& ctx){
+        struct cond conditional(cond::PARENT,cond::OR);
         std::wstring text;
         text+=cond_inner(ctx);
         while(
