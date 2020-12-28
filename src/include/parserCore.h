@@ -61,7 +61,7 @@ namespace parserCore
     std::wstring term  (parserCtx::parserContext&);
     std::wstring expr  (parserCtx::parserContext&);
 
-    std::wstring cond  (parserCtx::parserContext&);
+    struct cond cond  (parserCtx::parserContext&);
     struct condChild cond_inner  (parserCtx::parserContext&);
 
     Range range  (parserCtx::parserContext&);
