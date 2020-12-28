@@ -16,32 +16,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\parserContext.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\parserCore.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\parserTypes.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\parserWrap.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\asm.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\stmtProcessor.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\syntaxError.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asm.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\include\parserCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\include\parserWrap.h">
+    <ClInclude Include="src\include\syntaxError.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\include\typedIterator.hxx">
@@ -53,13 +53,16 @@
     <ClInclude Include="src\include\asm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\parserContext.h">
+    <ClInclude Include="src\include\parserCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\parserTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\parserWrap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\include\stmtProcessor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\include\syntaxError.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
