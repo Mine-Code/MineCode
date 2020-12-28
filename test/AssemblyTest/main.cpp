@@ -7,7 +7,7 @@ int main()
     Assembly assembly(ss);
     assembly.startOfFunction();
 
-    assembly.writeRegister(13, 1);
+    assembly.writeRegister(1, 13);
     assembly.startOfLoop(5);
     assembly.startOfLoop(5);
     assembly.mul(2);
