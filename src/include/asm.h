@@ -39,7 +39,7 @@ public:
     int make_loop_ctr = 0;
     int loop_flag = 0;
     int loop_count = 0;
-    void startOfLoop(int count);
+    void startOfLoop(int count, int init = 0);
     void endOfLoop();
 
     int make_if_ctr = 0;

@@ -149,14 +149,14 @@ void Assembly::leftShift(int bit, int src, int dest)
         "slw r" << dest << ", r" << src << ", r3\n";
 }
 
-void Assembly::startOfLoop(int count)
+void Assembly::startOfLoop(int count, int init)
 {
     loop_count = count;
     loop_flag = 0;
 
     ss <<
         "stw r" << make_loop_ctr + 14 << ", " << stack_size - 4 * (make_loop_ctr + 2) << "(r1)\n"
-        "li r" << make_loop_ctr + 14 << ", 0\n"
+        "li r" << make_loop_ctr + 14 << ", " << init << "\n"
         "loop_" << make_loop_ctr << ":\n";
     make_loop_ctr++;
 }
