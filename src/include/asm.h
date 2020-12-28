@@ -3,6 +3,7 @@
 #define ASM_H
 
 #include <sstream>
+#include <vector>
 
 class Assembly {
 public:
@@ -40,6 +41,7 @@ public:
     int make_loop_ctr = 0;
     int loop_flag = 0;
     int loop_count = 0;
+    std::vector<int> loop_offset;
     void startOfLoop(int count, int init = 0);
     void endOfLoop();
 
