@@ -154,6 +154,16 @@ namespace util
         }
         return counter==0;
     }
+    
+    template<typename T>
+    bool isInt(T text){
+        for(auto ch: text){
+            if(!isdigit(ch)){
+                return false;
+            }
+        }
+        return true;
+    }
 } // namespace util
 
 
