@@ -34,7 +34,6 @@ namespace parserCore
         };
 
         cond();
-        ~cond();
         
         condChild first;
         std::vector<std::pair<Type,condChild>> conds;
