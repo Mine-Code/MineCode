@@ -125,7 +125,7 @@ namespace parserCore{
     }
     std::wstring ptr(Context& ctx){
         assert(ctx.iter.next()==L"[");
-        bool isImmutable=isdigit(ctx.iter.peek()[0]);
+        [[maybe_unused]] bool isImmutable=isdigit(ctx.iter.peek()[0]);
         std::wstring base=value(ctx);
         std::wstring offs;
         while(ctx.iter.peek()==L"+"){
