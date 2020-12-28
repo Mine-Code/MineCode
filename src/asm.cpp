@@ -159,20 +159,23 @@ void Assembly::startOfLoop(int count, int init)
     loop_flag = 0;
 
     ss <<
-        "stw r" << make_loop_ctr + 14 << ", " << stack_size - 4 * (make_loop_ctr + 2) << "(r1)\n"
-        "li r" << make_loop_ctr + 14 << ", " << init << "\n"
+        "li r3, " << init << "\n";
+    int offset = push(3);
+    ss <<
         "loop_" << make_loop_ctr << ":\n";
+    loop_offset.emplace_back(offset);
     make_loop_ctr++;
 }
 
 void Assembly::endOfLoop()
 {
-    int flag_register = make_loop_ctr + 13;
+    int offset = loop_offset[make_loop_ctr - 1];
+    pop(offset, 3);
     ss <<
-        "addi r" << flag_register << ", r" << flag_register << ", 1\n"
-        "cmplwi r" << flag_register << ", " << loop_count << "\n"
-        "blt loop_" << make_loop_ctr - 1 << "\n"
-        "lwz r" << flag_register << ", " << stack_size - 4 * (make_loop_ctr + 1) << "(r1)\n";
+        "addi r3, r3, 1\n"
+        "cmplwi r3, " << loop_count << "\n"
+        "stw r3, " << offset << "(r1)\n"
+        "blt loop_" << make_loop_ctr - 1 << "\n";
     make_loop_ctr--;
 }
 
