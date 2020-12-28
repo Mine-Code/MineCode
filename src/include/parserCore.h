@@ -35,6 +35,7 @@ namespace parserCore
         };
 
         cond(Super,Type);
+        ~cond();
 
         Super supertype;
         Type type;
