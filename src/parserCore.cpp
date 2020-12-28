@@ -18,6 +18,11 @@ namespace parserCore{
     {
         
     }
+    cond::~cond(){
+        for(cond* cond:conds){
+            delete cond;
+        }
+    }
 
     void program(parserCtx::parserContext& ctx){
         if(ctx.iter.peek()==L"#"){
