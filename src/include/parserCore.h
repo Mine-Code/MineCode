@@ -42,7 +42,7 @@ namespace parserCore
     Range range  (Context&);
 
     void program(Context&);
-    void stmt(Context&);
+    void stmt(parserTypes::parserContext&);
     void func(Context&);
     void If(Context&);
     void For(Context&);
