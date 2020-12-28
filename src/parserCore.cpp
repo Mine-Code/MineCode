@@ -1,6 +1,7 @@
 #include <parserCore.h>
 
 #include <assert.h>
+#include <numeric>
 
 #include <parserTypes.h>
 #include <stmtProcessor.h>
@@ -250,6 +251,13 @@ namespace parserCore{
         if(!others.empty()){
             others=others.substr(1);
         }
+
+        // reduction of fraction
+
+        int gcd=std::gcd(numer,denom);
+        numer/=gcd;
+        denom/=gcd;
+        // end: reduction of fraction
 
         std::wstring ret;
         if(numer==1 && others.empty()){
