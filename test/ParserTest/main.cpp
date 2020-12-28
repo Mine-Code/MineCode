@@ -16,7 +16,8 @@ int main()
 
     parserWrap prs;
     prs.set(
-        L"#do once"                         "\n"
+        L""
+        "#do once"                          "\n"
         "func test(){"                      "\n"
         "  a = 2"                           "\n"
         "  n = (a*(100+a*10)+3*(1+5))/20+a" "\n" 
