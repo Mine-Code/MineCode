@@ -24,6 +24,7 @@ namespace parserCore
             LE   // >=
         };
         std::wstring val1;
+        Type op;
         std::wstring val2;
     };
     struct cond
