@@ -6,10 +6,10 @@
 #include <vector>
 #include <sstream>
 
-namespace parserCtx
+namespace parserTypes
 {
     class parserContext;
-} // namespace parserCtx
+} // namespace parserTypes
 
 
 namespace parserCore
@@ -41,39 +41,38 @@ namespace parserCore
         condChild first;
         std::vector<std::pair<Type,condChild>> conds;
     };
-
     using Arg=std::pair<std::wstring,std::wstring>;
     using Range=std::pair<int,int>;
 
-    int Int  (parserCtx::parserContext&);
-    std::wstring ident(parserCtx::parserContext&);
+    int Int  (parserTypes::parserContext&);
+    std::wstring ident(parserTypes::parserContext&);
 
-    Arg arg(parserCtx::parserContext&);
-    std::wstring attribute(parserCtx::parserContext&);
-    std::wstring ptr(parserCtx::parserContext&);
+    Arg arg(parserTypes::parserContext&);
+    std::wstring attribute(parserTypes::parserContext&);
+    std::wstring ptr(parserTypes::parserContext&);
     
-    std::wstring editable(parserCtx::parserContext&);
-    std::wstring constant(parserCtx::parserContext&);
-    std::wstring value(parserCtx::parserContext&);
+    std::wstring editable(parserTypes::parserContext&);
+    std::wstring constant(parserTypes::parserContext&);
+    std::wstring value(parserTypes::parserContext&);
     
-    std::wstring power (parserCtx::parserContext&);
-    std::wstring expo  (parserCtx::parserContext&);
-    std::wstring term  (parserCtx::parserContext&);
-    std::wstring expr  (parserCtx::parserContext&);
+    std::wstring power (parserTypes::parserContext&);
+    std::wstring expo  (parserTypes::parserContext&);
+    std::wstring term  (parserTypes::parserContext&);
+    std::wstring expr  (parserTypes::parserContext&);
 
-    struct cond cond  (parserCtx::parserContext&);
-    struct condChild cond_inner  (parserCtx::parserContext&);
+    struct cond cond  (parserTypes::parserContext&);
+    struct condChild cond_inner  (parserTypes::parserContext&);
 
-    Range range  (parserCtx::parserContext&);
+    Range range  (parserTypes::parserContext&);
 
-    void program(parserCtx::parserContext&);
-    void stmt(parserCtx::parserContext&);
-    void func(parserCtx::parserContext&);
-    void If(parserCtx::parserContext&);
-    void For(parserCtx::parserContext&);
-    void While(parserCtx::parserContext&);
-    void put(parserCtx::parserContext&);
-    void assign(parserCtx::parserContext&);
+    void program(parserTypes::parserContext&);
+    void stmt(parserTypes::parserContext&);
+    void func(parserTypes::parserContext&);
+    void If(parserTypes::parserContext&);
+    void For(parserTypes::parserContext&);
+    void While(parserTypes::parserContext&);
+    void put(parserTypes::parserContext&);
+    void assign(parserTypes::parserContext&);
 } // namespace parserWrap
 
 

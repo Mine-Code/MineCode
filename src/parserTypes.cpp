@@ -1,6 +1,6 @@
 #include <parserTypes.h>
 
-parserCtx::parserContext::parserContext()
+parserTypes::parserContext::parserContext()
 {
     stream=streamType();
     Asm=new Assembly(stream);

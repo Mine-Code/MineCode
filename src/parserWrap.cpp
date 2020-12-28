@@ -173,7 +173,7 @@ void parserWrap::tokenize(){
 }
 
 void parserWrap::parse(){
-    parserCtx::parserContext ctx;
+    parserTypes::parserContext ctx;
     ctx.iter=iterator<std::wstring>(tokens);
     
     parserCore::program(ctx);
