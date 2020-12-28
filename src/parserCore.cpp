@@ -306,7 +306,7 @@ namespace parserCore{
         assert(ctx.iter.next() == L"}");
     }
     std::wstring cond  (parserCtx::parserContext& ctx){
-        struct cond conditional(cond::PARENT,cond::OR);
+        struct cond conditional();
         std::wstring text;
         text+=cond_inner(ctx);
         while(
