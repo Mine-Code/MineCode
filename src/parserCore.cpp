@@ -322,7 +322,8 @@ namespace parserCore{
         }
         return text;
     }
-    std::wstring cond_inner  (parserCtx::parserContext& ctx){
+    condChild cond_inner  (parserCtx::parserContext& ctx){
+        struct condChild cond;
         std::wstring text;
         if(util::isCondOpFull(ctx.iter.peekSafe(1))){
             std::wstring value1=expr(ctx);
@@ -332,7 +333,7 @@ namespace parserCore{
         }else{
             return value(ctx);
         }
-        return text;
+        return cond;
     }
     void While(parserCtx::parserContext& ctx){
         assert(ctx.iter.next()==L"while");
