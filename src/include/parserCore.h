@@ -8,39 +8,14 @@
 
 namespace parserTypes
 {
+    class condChild;
+    class cond;
     class parserContext;
 } // namespace parserTypes
 
 
 namespace parserCore
 {
-    struct condChild{
-        enum Type{
-            SINGLE, // var (to val1)
-
-            EQU, // ==
-            NEQ, // !=
-            LT,  // < 
-            GT,  // > 
-            GE,  // <=
-            LE   // >=
-        };
-        std::wstring val1;
-        Type op;
-        std::wstring val2;
-    };
-    struct cond
-    {
-        enum Type{
-            AND,
-            OR
-        };
-
-        cond();
-        
-        condChild first;
-        std::vector<std::pair<Type,condChild>> conds;
-    };
     using Arg=std::pair<std::wstring,std::wstring>;
     using Range=std::pair<int,int>;
 

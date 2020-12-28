@@ -7,3 +7,8 @@ parserTypes::parserContext::parserContext()
     iter=iterType();
     variables=varsType();
 }
+parserTypes::cond::cond()
+    : conds( std::vector<std::pair<Type,condChild>>() )
+{
+    
+}

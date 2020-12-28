@@ -10,11 +10,7 @@
 using namespace synErr;
 
 namespace parserCore{
-    cond::cond()
-        : conds( std::vector<std::pair<Type,condChild>>() )
-    {
-        
-    }
+    
 
     void program(parserTypes::parserContext& ctx){
         if(ctx.iter.peek()==L"#"){
