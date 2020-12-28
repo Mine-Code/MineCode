@@ -18,36 +18,37 @@ namespace parserCore
 {
     using Arg=std::pair<std::wstring,std::wstring>;
     using Range=std::pair<int,int>;
+    using Context=parserTypes::parserContext;
 
-    int Int  (parserTypes::parserContext&);
-    std::wstring ident(parserTypes::parserContext&);
+    int Int  (Context&);
+    std::wstring ident(Context&);
 
-    Arg arg(parserTypes::parserContext&);
-    std::wstring attribute(parserTypes::parserContext&);
-    std::wstring ptr(parserTypes::parserContext&);
+    Arg arg(Context&);
+    std::wstring attribute(Context&);
+    std::wstring ptr(Context&);
     
-    std::wstring editable(parserTypes::parserContext&);
-    std::wstring constant(parserTypes::parserContext&);
-    std::wstring value(parserTypes::parserContext&);
+    std::wstring editable(Context&);
+    std::wstring constant(Context&);
+    std::wstring value(Context&);
     
-    std::wstring power (parserTypes::parserContext&);
-    std::wstring expo  (parserTypes::parserContext&);
-    std::wstring term  (parserTypes::parserContext&);
-    std::wstring expr  (parserTypes::parserContext&);
+    std::wstring power (Context&);
+    std::wstring expo  (Context&);
+    std::wstring term  (Context&);
+    std::wstring expr  (Context&);
 
-    struct cond cond  (parserTypes::parserContext&);
-    struct condChild cond_inner  (parserTypes::parserContext&);
+    struct cond cond  (Context&);
+    struct condChild cond_inner  (Context&);
 
-    Range range  (parserTypes::parserContext&);
+    Range range  (Context&);
 
-    void program(parserTypes::parserContext&);
-    void stmt(parserTypes::parserContext&);
-    void func(parserTypes::parserContext&);
-    void If(parserTypes::parserContext&);
-    void For(parserTypes::parserContext&);
-    void While(parserTypes::parserContext&);
-    void put(parserTypes::parserContext&);
-    void assign(parserTypes::parserContext&);
+    void program(Context&);
+    void stmt(Context&);
+    void func(Context&);
+    void If(Context&);
+    void For(Context&);
+    void While(Context&);
+    void put(Context&);
+    void assign(Context&);
 } // namespace parserWrap
 
 
