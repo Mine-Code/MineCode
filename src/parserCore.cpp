@@ -211,8 +211,10 @@ namespace parserCore{
         return text;
     }
     std::wstring term  (Context& ctx){
+        std::vector<std::wstring> parts;
+
         std::wstring tmp;
-        tmp+=expo(ctx);
+        parts.emplace_back(L"*"+expo(ctx));
         while(
             ctx.iter.hasData() &&
             (
@@ -227,9 +229,42 @@ namespace parserCore{
                 text == L"/" ||
                 text == L"%"
             );
-            tmp+=text+expo(ctx);
+            parts.emplace_back(text+expo(ctx));
         }
-        return tmp;
+        
+        std::wstring others;
+        int numer=1;
+        int denom=1;
+        for(auto part:parts){
+            if(util::isInt(part.substr(1)) && (part[0]=='/' || part[0]=='*')){
+                if(part[0]=='*'){
+                    numer*=util::toInt(part.substr(1));
+                }else if(part[0]=='/'){
+                    denom*=util::toInt(part.substr(1));
+                }
+            }else{
+                others+=part;
+            }
+        }
+        if(!others.empty()){
+            others=others.substr(1);
+        }
+
+        std::wstring ret;
+        if(numer==1 && others.empty()){
+            ret=L"1";
+        }else if(numer==1 && !others.empty()){
+            ret=others;
+        }else if(numer!=1){
+            ret=std::to_wstring(numer);
+            if(!others.empty()){
+                ret+=others;
+            }
+        }
+        if(denom!=1){
+            ret+=L"/"+std::to_wstring(denom);
+        }
+        return ret;
     }
     std::wstring expr  (Context& ctx){
         std::vector<std::wstring> parts;
