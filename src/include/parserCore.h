@@ -16,6 +16,8 @@ namespace parserCore
 {
     struct condChild{
         enum Type{
+            SINGLE, // var
+            
             EQU, // ==
             NEQ, // !=
             LT,  // < 
