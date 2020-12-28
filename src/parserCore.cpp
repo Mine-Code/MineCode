@@ -258,7 +258,7 @@ namespace parserCore{
         }else if(numer!=1){
             ret=std::to_wstring(numer);
             if(!others.empty()){
-                ret+=others;
+                ret+=L"*"+others;
             }
         }
         if(denom!=1){
