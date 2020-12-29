@@ -50,13 +50,13 @@ namespace parserTypes
         condChild first;
         std::vector<std::pair<Type,condChild>> conds;
     };
-    struct FuncCall
+    struct ExecFunc
     {
         enum CallType{
             ADDRESS,
             Name
         };
-        FuncCall();
+        ExecFunc();
 
         std::wstring funcId;
 

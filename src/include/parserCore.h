@@ -11,6 +11,7 @@ namespace parserTypes
     class condChild;
     class cond;
     class parserContext;
+    class ExecFunc;
 } // namespace parserTypes
 
 
