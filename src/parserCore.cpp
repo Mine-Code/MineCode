@@ -413,16 +413,16 @@ namespace parserCore{
 
             assert(ctx.iter.next()==L"func");
             assert(ctx.iter.next()==L"[");
-            expr(ctx);
+            ret.funcId=expr(ctx);
             assert(ctx.iter.next()==L"]");
         }else{
             // name based call
             ret.type=ExecFunc::Name;
 
             if(ctx.iter.peekSafe(1)==L"."){
-                attribute(ctx);
+                ret.funcId=attribute(ctx);
             }else{
-                ident(ctx);
+                ret.funcId=ident(ctx);
             }
         }
     }
