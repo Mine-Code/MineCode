@@ -216,7 +216,7 @@ namespace parserCore{
         return value(ctx);
 
     }
-    std::wstring expo  (Context& ctx){
+    struct expo expo  (Context& ctx){
         std::wstring text;
         text+=power(ctx);
         while(ctx.iter.hasData() && ctx.iter.peek() == L"**"){
@@ -225,7 +225,7 @@ namespace parserCore{
         }
         return text;
     }
-    std::wstring term  (Context& ctx){
+    struct term term  (Context& ctx){
         std::vector<std::wstring> parts;
 
         std::wstring tmp;
@@ -288,7 +288,7 @@ namespace parserCore{
         }
         return ret;
     }
-    std::wstring expr  (Context& ctx){
+    struct expr expr  (Context& ctx){
         std::vector<std::wstring> parts;
 
         std::wstring first;
