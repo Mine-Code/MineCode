@@ -434,5 +434,6 @@ namespace parserCore{
             ret.args.emplace_back(ctx.iter.next());
         }
         assert(ctx.iter.next()==L")");
+        return ret;
     }
 }
