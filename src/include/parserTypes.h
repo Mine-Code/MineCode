@@ -63,7 +63,7 @@ namespace parserTypes
         CallType type;
     };
     struct expr{
-        
+        std::vector<std::wstring> parts;
     };
 } // namespace parserCtx
 
