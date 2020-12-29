@@ -27,5 +27,11 @@ parserTypes::power::power()
     , expr(nullptr)
     , func(nullptr)
 {
-    
+
+}
+
+parserTypes::power::~power()
+{
+    if(expr)delete expr;
+    if(func)delete func;
 }
