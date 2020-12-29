@@ -406,6 +406,10 @@ namespace parserCore{
         assert(ctx.iter.next() == L"}");
     }
     void funcCall(Context& ctx){
-        
+        if(ctx.iter.peek()==L"func"){
+            // address based call
+        }else{
+            // name based call
+        }
     }
 }
