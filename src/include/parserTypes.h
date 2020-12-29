@@ -62,6 +62,9 @@ namespace parserTypes
         std::wstring funcId;
         CallType type;
     };
+    struct expr{
+        
+    }
 } // namespace parserCtx
 
 
