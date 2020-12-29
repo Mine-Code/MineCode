@@ -63,10 +63,10 @@ namespace parserTypes
         CallType type;
     };
     struct expr{
-        std::vector<std::wstring> parts;
+        std::vector<struct term> parts;
     };
     struct term{
-        std::vector<std::wstring> parts;
+        std::vector<struct term> parts;
     };
     struct expo{
         std::vector<std::wstring> parts;
