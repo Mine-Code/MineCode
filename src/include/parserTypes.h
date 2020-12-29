@@ -58,8 +58,8 @@ namespace parserTypes
         };
         FuncCall();
 
-        std::wstring funcname;
-        uint32_t funcaddr;
+        std::wstring funcId;
+
         std::vector<std::wstring> args;
     };
 } // namespace parserCtx
