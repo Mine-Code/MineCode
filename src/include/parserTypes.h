@@ -58,9 +58,9 @@ namespace parserTypes
         };
         ExecFunc();
 
+        std::vector<std::wstring> args;
         std::wstring funcId;
         CallType type;
-        std::vector<std::wstring> args;
     };
 } // namespace parserCtx
 
