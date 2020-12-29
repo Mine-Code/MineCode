@@ -406,6 +406,7 @@ namespace parserCore{
         assert(ctx.iter.next() == L"}");
     }
     struct ExecFunc funcCall(Context& ctx){
+        struct ExecFunc ret;
         if(ctx.iter.peek()==L"func"){
             // address based call
             assert(ctx.iter.next()==L"func");
