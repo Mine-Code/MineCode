@@ -200,6 +200,17 @@ namespace parserCore{
                 return L"("+text+L")";
             }
         }
+        if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
+            struct ExecFunc execfunc=funcCall(ctx);
+            std::wstring str;
+            str+=execfunc.funcId;
+            str+=L"(";
+            for(auto arg:execfunc.args){
+                str+=arg;
+            }
+            str+=L")";
+            return str;
+        }
         return value(ctx);
 
     }
