@@ -425,5 +425,14 @@ namespace parserCore{
                 ret.funcId=ident(ctx);
             }
         }
+        assert(ctx.iter.next()==L"(");
+        if(ctx.iter.peek() != L")"){
+            ret.args.emplace_back(ctx.iter.next());
+        }
+        while(ctx.iter.peek() != L")"){
+            assert(ctx.iter.next()==L",");
+            ret.args.emplace_back(ctx.iter.next());
+        }
+        assert(ctx.iter.next()==L")");
     }
 }
