@@ -409,12 +409,16 @@ namespace parserCore{
         struct ExecFunc ret;
         if(ctx.iter.peek()==L"func"){
             // address based call
+            ret.type=ExecFunc::ADDRESS;
+
             assert(ctx.iter.next()==L"func");
             assert(ctx.iter.next()==L"[");
             expr(ctx);
             assert(ctx.iter.next()==L"]");
         }else{
             // name based call
+            ret.type=ExecFunc::Name;
+
             if(ctx.iter.peekSafe(1)==L"."){
                 attribute(ctx);
             }else{
