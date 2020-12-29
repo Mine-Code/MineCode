@@ -414,6 +414,11 @@ namespace parserCore{
             assert(ctx.iter.next()==L"]");
         }else{
             // name based call
+            if(ctx.iter.peekSafe(1)==L"."){
+                attribute(ctx);
+            }else{
+                ident(ctx);
+            }
         }
     }
 }
