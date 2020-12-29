@@ -53,3 +53,7 @@ void stmtProcessor::Put    (parserTypes::parserContext& ctx){
 void stmtProcessor::Assign (parserTypes::parserContext& ctx){
 
 }
+
+void stmtProcessor::executeFunction (Context& ctx,parserTypes::ExecFunc execfunc){
+    
+}
