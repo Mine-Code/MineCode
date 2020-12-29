@@ -71,6 +71,22 @@ namespace parserTypes
     struct expo{
         std::vector<std::wstring> parts;
     };
+    struct power{
+        enum Type{
+            IMM,
+            EXPR,
+            FUNCCALL
+        };
+
+        power();
+        ~power();
+
+        Type type;
+
+        int imm;
+        struct expr* expr;
+        struct ExecFunc* func;
+    };
 } // namespace parserCtx
 
 
