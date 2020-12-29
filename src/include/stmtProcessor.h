@@ -21,6 +21,7 @@ namespace stmtProcessor
     void Func   (Context& ctx);
     void Put    (Context& ctx);
     void Assign (Context& ctx);
+    void executeFunction (Context& ctx,parserTypes::ExecFunc);
 } // namespace stmtProcessor
 
 
