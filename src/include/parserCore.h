@@ -12,6 +12,10 @@ namespace parserTypes
     class cond;
     class parserContext;
     class ExecFunc;
+
+    class expo;
+    class term;
+    class expr;
 } // namespace parserTypes
 
 
