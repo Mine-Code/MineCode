@@ -49,6 +49,7 @@ namespace parserCore
     void While(Context&);
     void put(Context&);
     void assign(Context&);
+    void funcCall(Context&);
 } // namespace parserWrap
 
 

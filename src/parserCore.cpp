@@ -405,4 +405,7 @@ namespace parserCore{
         stmtProcessor::While(ctx);
         assert(ctx.iter.next() == L"}");
     }
+    void funcCall(Context& ctx){
+        
+    }
 }
