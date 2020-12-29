@@ -50,6 +50,18 @@ namespace parserTypes
         condChild first;
         std::vector<std::pair<Type,condChild>> conds;
     };
+    struct FuncCall
+    {
+        enum CallType{
+            ADDRESS,
+            Name
+        };
+        FuncCall();
+
+        std::wstring funcname;
+        uint32_t funcaddr;
+        std::vector<std::wstring> args;
+    };
 } // namespace parserCtx
 
 
