@@ -65,6 +65,9 @@ namespace parserTypes
     struct expr{
         std::vector<std::wstring> parts;
     };
+    struct term{
+        std::vector<std::wstring> parts;
+    };
 } // namespace parserCtx
 
 
