@@ -16,6 +16,7 @@ parserTypes::cond::cond()
 parserTypes::ExecFunc::ExecFunc()
     : args( std::vector<std::wstring>() )
     , funcId( L"0x00000000" )
+    , type( ADDRESS )
 {
 
 }
