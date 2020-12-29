@@ -15,11 +15,12 @@ void stmtProcessor::For    (
 }
 
 void stmtProcessor::Forr   (parserTypes::parserContext& ctx,int start,int end){
-    std::wcout<<"for range "<<start<<"to"<<end<<std::endl;
+    ctx.Asm->startOfLoop(end-start,start);
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
+    ctx.Asm->endOfLoop();
 }
 
 void stmtProcessor::While  (parserTypes::parserContext& ctx){
