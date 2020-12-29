@@ -408,6 +408,10 @@ namespace parserCore{
     void funcCall(Context& ctx){
         if(ctx.iter.peek()==L"func"){
             // address based call
+            assert(ctx.iter.next()==L"func");
+            assert(ctx.iter.next()==L"[");
+            expr(ctx);
+            assert(ctx.iter.next()==L"]");
         }else{
             // name based call
         }
