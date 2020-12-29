@@ -13,6 +13,7 @@ namespace parserTypes
     class parserContext;
     class ExecFunc;
 
+    class power;
     class expo;
     class term;
     class expr;
