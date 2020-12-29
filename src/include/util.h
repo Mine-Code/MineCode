@@ -168,8 +168,8 @@ namespace util
     template<typename T>
     bool isFunccall(T text, T next){
         return \
-            text == T("func") || 
-            next == T("(");
+            text == L"func" || 
+            next == L"(";
     }
 } // namespace util
 
