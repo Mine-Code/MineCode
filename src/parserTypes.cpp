@@ -12,3 +12,10 @@ parserTypes::cond::cond()
 {
     
 }
+
+parserTypes::FuncCall::FuncCall()
+    : args( std::vector<std::wstring>() )
+    , funcId( L"0x00000000" )
+{
+
+}
