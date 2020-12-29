@@ -36,7 +36,7 @@ namespace parserCore
     std::wstring constant(Context&);
     std::wstring value(Context&);
     
-    std::wstring power (Context&);
+    struct parserTypes::power power (Context&);
     struct parserTypes::expo expo  (Context&);
     struct parserTypes::term term  (Context&);
     struct parserTypes::expr expr  (Context&);

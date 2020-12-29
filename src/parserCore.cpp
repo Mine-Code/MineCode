@@ -190,7 +190,7 @@ namespace parserCore{
             std::wcout<<target<<op<<value<<std::endl;
         }
     }
-    std::wstring power (Context& ctx){
+    struct parserTypes::power power (Context& ctx){
         if(ctx.iter.peek()==L"("){
             // inner type
             ctx.iter.next();
