@@ -217,13 +217,13 @@ namespace parserCore{
 
     }
     struct expo expo  (Context& ctx){
-        std::wstring text;
-        text+=power(ctx);
+        struct expo val;
+        val.parts.emplace_back(power(ctx));
         while(ctx.iter.hasData() && ctx.iter.peek() == L"**"){
             assert(ctx.iter.next() == L"**");
-            text+=L" pow "+power(ctx);
+            val.parts.emplace_back(power(ctx));
         }
-        return text;
+        return val;
     }
     struct term term  (Context& ctx){
         std::vector<std::wstring> parts;
