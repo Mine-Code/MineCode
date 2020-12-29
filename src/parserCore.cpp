@@ -37,7 +37,7 @@ namespace parserCore{
         }else if(text==L"func"){
             func(ctx);
         }else if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
-            stmtProcessor::executeFunction(funcCall(ctx));
+            stmtProcessor::executeFunction(ctx,funcCall(ctx));
         }else{
             //put / assign
             assert(ctx.iter.hasData());
