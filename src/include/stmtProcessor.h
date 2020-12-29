@@ -7,6 +7,7 @@
 namespace parserTypes
 {
     class parserContext;
+    class ExecFunc;
 } // namespace parserTypes
 
 namespace stmtProcessor
