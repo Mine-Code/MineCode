@@ -405,7 +405,7 @@ namespace parserCore{
         stmtProcessor::While(ctx);
         assert(ctx.iter.next() == L"}");
     }
-    void funcCall(Context& ctx){
+    struct ExecFunc funcCall(Context& ctx){
         if(ctx.iter.peek()==L"func"){
             // address based call
             assert(ctx.iter.next()==L"func");

@@ -50,7 +50,7 @@ namespace parserCore
     void While(Context&);
     void put(Context&);
     void assign(Context&);
-    void funcCall(Context&);
+    struct parserTypes::ExecFunc funcCall(Context&);
 } // namespace parserWrap
 
 
