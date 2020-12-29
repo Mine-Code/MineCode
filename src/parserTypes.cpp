@@ -20,3 +20,12 @@ parserTypes::ExecFunc::ExecFunc()
 {
 
 }
+
+parserTypes::power::power()
+    : type(power::IMM)
+    , imm(0)
+    , expr(nullptr)
+    , func(nullptr)
+{
+    
+}
