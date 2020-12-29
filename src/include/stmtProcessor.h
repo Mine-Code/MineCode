@@ -14,13 +14,13 @@ namespace stmtProcessor
     using Context = parserTypes::parserContext;
     using String = std::wstring;
 
-    void For    (parserTypes::parserContext& ctx,String,String);
-    void Forr   (parserTypes::parserContext& ctx,int,int);
-    void While  (parserTypes::parserContext& ctx);
-    void If     (parserTypes::parserContext& ctx);
-    void Func   (parserTypes::parserContext& ctx);
-    void Put    (parserTypes::parserContext& ctx);
-    void Assign (parserTypes::parserContext& ctx);
+    void For    (Context& ctx,String,String);
+    void Forr   (Context& ctx,int,int);
+    void While  (Context& ctx);
+    void If     (Context& ctx);
+    void Func   (Context& ctx);
+    void Put    (Context& ctx);
+    void Assign (Context& ctx);
 } // namespace stmtProcessor
 
 
