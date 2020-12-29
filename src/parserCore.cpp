@@ -190,7 +190,7 @@ namespace parserCore{
             std::wcout<<target<<op<<value<<std::endl;
         }
     }
-    struct parserTypes::power power (Context& ctx){
+    struct power power (Context& ctx){
         if(ctx.iter.peek()==L"("){
             // inner type
             ctx.iter.next();
@@ -226,6 +226,8 @@ namespace parserCore{
         return val;
     }
     struct term term  (Context& ctx){
+        struct expo val;
+
         std::vector<std::wstring> parts;
 
         std::wstring tmp;
