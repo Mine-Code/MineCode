@@ -42,7 +42,6 @@ namespace parserTypes
         };
 
         power();
-        ~power();
 
         Type type;
 

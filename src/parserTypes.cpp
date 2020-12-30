@@ -27,7 +27,3 @@ parserTypes::power::power()
 {
 
 }
-
-parserTypes::power::~power()
-{
-}
