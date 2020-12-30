@@ -355,7 +355,7 @@ namespace parserCore{
             cond.val2=expr(ctx);
         }else{
             cond.op=condChild::SINGLE;
-            cond.val1=value(ctx);
+            cond.single=value(ctx);
         }
         return cond;
     }
