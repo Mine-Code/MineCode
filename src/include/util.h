@@ -171,6 +171,17 @@ namespace util
             text == L"func" || 
             next == L"(";
     }
+
+    template<typename T>
+    bool isVariable(T text){
+        int counter=0;
+        for(auto ch: text){
+            if(ch=='+' || ch=='-' || ch=='*' || ch=='/'){
+                counter+=1;
+            }
+        }
+        return counter==0;
+    }
 } // namespace util
 
 
