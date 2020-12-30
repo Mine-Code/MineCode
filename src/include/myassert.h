@@ -5,6 +5,6 @@
 #include <string>
 
 #define assert(cond,msg)\
-    if(!(cond))syntaxError(ctx,msg)
+void assert_fail(char*,char*,int,std::string);
 
 #endif
