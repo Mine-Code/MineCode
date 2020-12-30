@@ -31,6 +31,6 @@ void synErr::ReportError(Context ctx,errorType type,std::wstring exMsg,std::wstr
     
     throw exMsg;
 }
-void synErr::syntaxError  (Context ctx,std::wstring ex,std::wstring fname,std::wstring funcname,int line) {ReportError(ctx,SYNTAX,ex,fname,funcname,line);}
-void synErr::tokenizeError(Context ctx,std::wstring ex,std::wstring fname,std::wstring funcname,int line) {ReportError(ctx,TOKENIZE,ex,fname,funcname,line);}
-void synErr::processError (Context ctx,std::wstring ex,std::wstring fname,std::wstring funcname,int line) {ReportError(ctx,PROCESS,ex,fname,funcname,line);}
+void synErr::syntaxError  (Context ctx,std::wstring ex,const char* fname,const char* funcname,int line) {ReportError(ctx,SYNTAX,ex,fname,funcname,line);}
+void synErr::tokenizeError(Context ctx,std::wstring ex,const char* fname,const char* funcname,int line) {ReportError(ctx,TOKENIZE,ex,fname,funcname,line);}
+void synErr::processError (Context ctx,std::wstring ex,const char* fname,const char* funcname,int line) {ReportError(ctx,PROCESS,ex,fname,funcname,line);}
