@@ -50,6 +50,8 @@ namespace parserTypes
         condChild first;
         std::vector<std::pair<Type,condChild>> conds;
     };
+
+    struct expr; // forward declare
     struct ExecFunc
     {
         enum CallType{
