@@ -3,7 +3,7 @@
 
 using namespace synErr;
 
-void synErr::ReportError(Context ctx,errorType type,std::wstring exMsg,std::wstring fname,std::wstring funcname,int line){
+void synErr::ReportError(Context ctx,errorType type,std::wstring exMsg,const char* fname,const char* funcname,int line){
     std::wstring strType;
     if(type==SYNTAX){
         strType=L"syntax";
