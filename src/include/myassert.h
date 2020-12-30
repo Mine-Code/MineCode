@@ -7,6 +7,6 @@
 #define assert(cond,msg)\
     if(!(cond))assert_fail(__FILE__,__func__,__LINE__,msg)
 
-void assert_fail(char*,char*,int,std::string);
+void assert_fail(const char*,const char*,int,wchar_t*);
 
 #endif
