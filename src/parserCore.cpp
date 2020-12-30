@@ -209,7 +209,7 @@ namespace parserCore{
             ret.var=ctx.iter.next();
         }else{
             ret.type=power::EXPR;
-            ret.expr=&expr(ctx);
+            ret.expr=expr(ctx);
         }
         return ret;
 
