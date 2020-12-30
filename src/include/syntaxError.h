@@ -17,7 +17,7 @@ namespace synErr
         PROCESS
     };
     using Context=parserTypes::parserContext&;
-    void ReportError(Context,errorType,std::wstring);
+    void ReportError(Context,errorType,std::wstring,std::wstring,std::wstring,int);
 
     void syntaxError(Context,std::wstring);
     void tokenizeError(Context,std::wstring);
