@@ -426,7 +426,7 @@ namespace parserCore{
 
             assert(ctx.iter.next()==L"func");
             assert(ctx.iter.next()==L"[");
-            ret.funcId=expr(ctx);
+            ret.funcAddr=expr(ctx);
             assert(ctx.iter.next()==L"]");
         }else{
             // name based call
