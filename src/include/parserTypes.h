@@ -30,7 +30,7 @@ namespace parserTypes
         std::vector<struct expo> parts;
     };
     struct expo{
-        std::vector<std::wstring> parts;
+        std::vector<struct power> parts;
     };
 
     struct power{
