@@ -51,20 +51,6 @@ namespace parserTypes
         std::vector<std::pair<Type,condChild>> conds;
     };
 
-    struct expr; // forward declare
-    struct ExecFunc
-    {
-        enum CallType{
-            ADDRESS,
-            Name
-        };
-        ExecFunc();
-
-        std::vector<std::wstring> args;
-        std::wstring funcId;
-        struct expr funcAddr;
-        CallType type;
-    };
     struct expr{
         std::vector<struct term> parts;
     };
@@ -74,6 +60,8 @@ namespace parserTypes
     struct expo{
         std::vector<std::wstring> parts;
     };
+
+
     struct power{
         enum Type{
             IMM,
@@ -91,6 +79,20 @@ namespace parserTypes
         struct expr* expr;
         struct ExecFunc* func;
         std::wstring var;
+    };
+
+    struct ExecFunc
+    {
+        enum CallType{
+            ADDRESS,
+            Name
+        };
+        ExecFunc();
+
+        std::vector<std::wstring> args;
+        std::wstring funcId;
+        struct expr funcAddr;
+        CallType type;
     };
 } // namespace parserCtx
 
