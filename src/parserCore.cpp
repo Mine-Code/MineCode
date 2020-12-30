@@ -55,10 +55,10 @@ namespace parserCore{
         }
     }
     void func(Context& ctx){
-        assert(ctx.iter.next()==L"func", L"excepted 'func'");
+        assertChar("func");
         std::wstring functionName=ctx.iter.next();
         std::wcout<<"funcName:"<<functionName<<std::endl;
-        assert(ctx.iter.next()==L"(", L"excepted '('");
+        assertChar("(");
 
         // read arguments
         std::vector<Arg> args;
@@ -68,27 +68,27 @@ namespace parserCore{
             args.emplace_back(arg(ctx));
         }
         while(ctx.iter.peek() != L")"){
-            assert(ctx.iter.next()==L",",L"excepted ','");
+            assertChar(",");
             args.emplace_back(arg(ctx));
         }
         // end: read arguments
-        assert(ctx.iter.next()==L")",L"excepted ')'");
-        assert(ctx.iter.next()==L"{",L"excepted '{'");
+        assertChar(")");
+        assertChar("{");
         stmtProcessor::Func(ctx);
-        assert(ctx.iter.next()==L"}",L"excepted '}'");
+        assertChar("}");
     }
     void For(Context& ctx){
-        assert(ctx.iter.next() == L"for",L"excepted 'for'");
+        assertChar("for");
         std::wstring varname=ctx.iter.next();
-        assert(ctx.iter.next() == L"in",L"excepted 'in'");
+        assertChar("in");
         if(ctx.iter.peek(1)==L"..."){
             Range target=range(ctx);
-            assert(ctx.iter.next() == L"{",L"excepted '{'");
+            assertChar("{");
 
             stmtProcessor::Forr(ctx,target.first,target.second);
         }else{
             std::wstring target=value(ctx);
-            assert(ctx.iter.next() == L"{",L"excepted '{'");
+            assertChar("{");
 
             stmtProcessor::For(ctx,varname,target);
         }
@@ -96,11 +96,11 @@ namespace parserCore{
                 if(ctx.iter.peek()==L"}")break;
                 stmt(ctx);
             }
-        assert(ctx.iter.next() == L"}",L"excepted '}'");
+        assertChar("}");
     }
     void put(Context& ctx){
         std::wstring target = value(ctx);
-        assert(ctx.iter.next()==L"<<",L"excepted '<<'");
+        assertChar("<<");
         expr(ctx);
         std::wcout<<"Data write To "<<target<<std::endl;
     }
@@ -128,7 +128,7 @@ namespace parserCore{
         }
     }
     std::wstring ptr(Context& ctx){
-        assert(ctx.iter.next()==L"[",L"excepted '['");
+        assertChar("[");
         [[maybe_unused]] bool isImmutable=isdigit(ctx.iter.peek()[0]);
         std::wstring base=value(ctx);
         std::wstring offs;
@@ -136,7 +136,7 @@ namespace parserCore{
             ctx.iter.next();
             offs=ctx.iter.next();
         }
-        assert(ctx.iter.next()==L"]",L"excepted ']'");
+        assertChar("]");
         return L"ptr"+base+L" "+offs+L"<";
     }
     std::wstring attribute(Context& ctx){
@@ -197,7 +197,7 @@ namespace parserCore{
             // inner type
             ctx.iter.next();
             auto inner = power(ctx);
-            assert(ctx.iter.next()==L")",L"excepted ')'");
+            assertChar(")");
             return inner;
         }else if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
             ret.type=power::FUNCCALL;
@@ -220,7 +220,7 @@ namespace parserCore{
         struct expo val;
         val.parts.emplace_back(power(ctx));
         while(ctx.iter.hasData() && ctx.iter.peek() == L"**"){
-            assert(ctx.iter.next() == L"**",L"excepted '**'");
+            assertChar("**");
             val.parts.emplace_back(power(ctx));
         }
         return val;
@@ -302,7 +302,7 @@ namespace parserCore{
     }
     Range range  (Context& ctx){
         int start=Int(ctx);
-        assert(ctx.iter.next()==L"...",L"excepted '...'");
+        assertChar("...");
         int end=Int(ctx);
         // convert start/end: wstr => int
         return std::make_pair(start,end);
@@ -318,9 +318,9 @@ namespace parserCore{
     void If(Context& ctx){
         assert(ctx.iter.next()==L"if",L"excepted 'if'");
         struct cond conditional = cond(ctx);
-        assert(ctx.iter.next() == L"{",L"excepted '{'");
+        assertChar(");");
         stmtProcessor::If(ctx);
-        assert(ctx.iter.next() == L"}",L"excepted '}'");
+        assertChar("}");
     }
     struct cond cond  (Context& ctx){
         struct cond conditional;
@@ -375,11 +375,11 @@ namespace parserCore{
         return cond;
     }
     void While(Context& ctx){
-        assert(ctx.iter.next()==L"while",L"excepted 'while'");
+        assertChar("while");
         struct cond conditional = cond(ctx);
-        assert(ctx.iter.next() == L"{",L"excepted '{'");
+        assertChar("{");
         stmtProcessor::While(ctx);
-        assert(ctx.iter.next() == L"}",L"excepted '}'");
+        assertChar("}");
     }
     struct ExecFunc funcCall(Context& ctx){
         struct ExecFunc ret;
@@ -388,9 +388,9 @@ namespace parserCore{
             ret.type=ExecFunc::ADDRESS;
 
             assert(ctx.iter.next()==L"func",L"excepted 'func'");
-            assert(ctx.iter.next()==L"[",L"excepted '['");
+            assertChar("[");
             ret.funcAddr=expr(ctx);
-            assert(ctx.iter.next()==L"]",L"excepted ']'");
+            assertChar("]");
         }else{
             // name based call
             ret.type=ExecFunc::Name;
@@ -401,15 +401,15 @@ namespace parserCore{
                 ret.funcId=ident(ctx);
             }
         }
-        assert(ctx.iter.next()==L"(",L"excepted '('");
+        assertChar("(");
         if(ctx.iter.peek() != L")"){
             ret.args.emplace_back(ctx.iter.next());
         }
         while(ctx.iter.peek() != L")"){
-            assert(ctx.iter.next()==L",",L"excepted ','");
+            assertChar(",");
             ret.args.emplace_back(ctx.iter.next());
         }
-        assert(ctx.iter.next()==L")",L"excepted ')'");
+        assertChar(")");
         return ret;
     }
 }
