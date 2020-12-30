@@ -55,7 +55,7 @@ namespace parserTypes
         std::vector<struct term> parts;
     };
     struct term{
-        std::vector<struct term> parts;
+        std::vector<struct expo> parts;
     };
     struct expo{
         std::vector<std::wstring> parts;
