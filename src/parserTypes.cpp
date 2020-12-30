@@ -25,5 +25,4 @@ parserTypes::power::power()
     : type(power::IMM)
     , imm(0)
 {
-
 }
