@@ -101,8 +101,8 @@ namespace parserCore{
     void put(Context& ctx){
         std::wstring target = value(ctx);
         assert(ctx.iter.next()==L"<<");
-        std::wstring data=expr(ctx);
-        std::wcout<<data<<" To "<<target<<std::endl;
+        expr(ctx);
+        std::wcout<<"Data write To "<<target<<std::endl;
     }
     Arg arg(Context& ctx){
         return std::make_pair(
