@@ -63,6 +63,8 @@ namespace parserTypes
             GE,  // <=
             LE   // >=
         };
+        std::wstring single;
+
         expr val1;
         Type op;
         expr val2;
