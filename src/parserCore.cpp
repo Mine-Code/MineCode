@@ -8,7 +8,7 @@
 #include <syntaxError.h>
 
 #define assert(cond,msg)\
-    syntaxError(ctx,msg)
+    if(!(cond))syntaxError(ctx,msg)
 
 using namespace synErr;
 using namespace parserTypes;
