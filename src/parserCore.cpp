@@ -200,7 +200,8 @@ namespace parserCore{
             assert(ctx.iter.next()==L")");
         }else if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
             ret.type=power::FUNCCALL;
-            ret.func=&funcCall(ctx);
+            struct ExecFunc func=funcCall(ctx);
+            ret.func=&func;
         }else if(isInt(ctx.iter.peek())){
             ret.type=power::IMM;
             ret.imm=Int(ctx);
@@ -255,8 +256,12 @@ namespace parserCore{
             ctx.iter.next(); // read
         }else if(text==L"-"){
             ctx.iter.next(); // read
+            struct power pow;
+            pow.type=power::IMM;
+            pow.imm=-1;
+
             struct expo tmp;
-            tmp.parts.emplace_back(L"-1");
+            tmp.parts.emplace_back(pow);
 
             part.parts.emplace_back(tmp);
         }
@@ -278,8 +283,14 @@ namespace parserCore{
 
             part=term(ctx);
             if(text==L"-"){
+                ctx.iter.next(); // read
+                struct power pow;
+                pow.type=power::IMM;
+                pow.imm=-1;
+    
                 struct expo tmp;
-                tmp.parts.emplace_back(L"-1");
+                tmp.parts.emplace_back(pow);
+    
                 part.parts.emplace_back(tmp);
             }
             ret.parts.emplace_back(part);
