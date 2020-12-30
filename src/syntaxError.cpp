@@ -13,6 +13,13 @@ void synErr::ReportError(Context ctx,errorType type,std::wstring exMsg,const cha
         strType=L"process";
     }
 
+    std::wstring prev=ctx.iter.peekSafe(-1);
+    std::wstring curr=ctx.iter.peekSafe( 0);
+    std::wstring next=ctx.iter.peekSafe( 1);
+    std::wstring pos=prev+curr+next;
+    
+    std::wstring offset=std::wstring(prev.length(),L' ');
+    std::wstring uline =std::wstring(curr.length(),L'^');
     std::wcout
         << "-------Error--------"               <<std::endl
         << "| type:"<<strType                   <<std::endl;
@@ -22,10 +29,10 @@ void synErr::ReportError(Context ctx,errorType type,std::wstring exMsg,const cha
         << "| Where?"                           <<std::endl
         << "|  func: "<<funcname                <<std::endl
         << "|  copyable: "<<fname<<":"<<line    <<std::endl
-        << "| Debug Informations"               <<std::endl
-        << "|  peek(-1):"<<ctx.iter.peekSafe(-1)<<std::endl
-        << "|  peek( 0):"<<ctx.iter.peekSafe( 0)<<std::endl
-        << "|  peek(+1):"<<ctx.iter.peekSafe(+1)<<std::endl
+        << "| Pos Informations"                 <<std::endl
+        << "| "<<pos                            <<std::endl
+        << "| "<<offset<<uline                  <<std::endl;
+    std::wcout
         << "--------------------"               <<std::endl;
     
     throw exMsg;
