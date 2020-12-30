@@ -20,9 +20,9 @@ void synErr::ReportError(Context& ctx,errorType type,std::wstring exMsg){
         << "| msg :"<<exMsg                     <<std::endl;
     std::wcout
         << "| Debug Informations"               <<std::endl
-        << "|  peek(-1):"<<ctx.iter.peek(-1)    <<std::endl
-        << "|  peek( 0):"<<ctx.iter.peek( 0)    <<std::endl
-        << "|  peek(+1):"<<ctx.iter.peek(+1)    <<std::endl
+        << "|  peek(-1):"<<ctx.iter.peekSafe(-1)<<std::endl
+        << "|  peek( 0):"<<ctx.iter.peekSafe( 0)<<std::endl
+        << "|  peek(+1):"<<ctx.iter.peekSafe(+1)<<std::endl
         << "--------------------"               <<std::endl;
     
     throw exMsg;
