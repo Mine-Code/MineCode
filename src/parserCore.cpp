@@ -191,29 +191,27 @@ namespace parserCore{
         }
     }
     struct power power (Context& ctx){
+        struct power ret;
         if(ctx.iter.peek()==L"("){
+            ret.type=power::EXPR;
             // inner type
             ctx.iter.next();
-            std::wstring text=expr(ctx);
+            return power(ctx);
             assert(ctx.iter.next()==L")");
-            if(isSingle(text)){
-                return text;
-            }else{
-                return L"("+text+L")";
-            }
+        }else if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
+            ret.type=power::FUNCCALL;
+            ret.func=&funcCall(ctx);
+        }else if(isInt(ctx.iter.peek())){
+            ret.type=power::IMM;
+            ret.imm=Int(ctx);
+        }else if(isSingle(ctx.iter.peek())){
+            ret.type=power::VAR;
+            ret.var=ctx.iter.next();
+        }else{
+            ret.type=power::EXPR;
+            ret.expr=&expr(ctx);
         }
-        if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
-            struct ExecFunc execfunc=funcCall(ctx);
-            std::wstring str;
-            str+=execfunc.funcId;
-            str+=L"(";
-            for(auto arg:execfunc.args){
-                str+=arg;
-            }
-            str+=L")";
-            return str;
-        }
-        return value(ctx);
+        return ret;
 
     }
     struct expo expo  (Context& ctx){
