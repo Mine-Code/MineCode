@@ -187,7 +187,7 @@ namespace parserCore{
             std::wcout<<target<<"--"<<std::endl;
         }else{
             expr(ctx);
-            std::wcout<<target<<"edit by "<<op<<std::endl;
+            std::wcout<<target<<" edit by ["<<op<<"]"<<std::endl;
         }
     }
     struct power power (Context& ctx){
