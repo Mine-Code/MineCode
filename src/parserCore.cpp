@@ -123,7 +123,7 @@ namespace parserCore{
         }else if(isdigit(ch)){
             return ctx.iter.next();
         }else{
-            syntaxError(ctx,L"is not value type");
+            syntaxError(ctx,L"is not value type ");
             throw ""; // do not call this
         }
     }
@@ -196,8 +196,9 @@ namespace parserCore{
             ret.type=power::EXPR;
             // inner type
             ctx.iter.next();
-            return power(ctx);
+            auto inner = power(ctx);
             assert(ctx.iter.next()==L")");
+            return inner;
         }else if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
             ret.type=power::FUNCCALL;
             struct ExecFunc func=funcCall(ctx);
@@ -287,10 +288,10 @@ namespace parserCore{
                 struct power pow;
                 pow.type=power::IMM;
                 pow.imm=-1;
-    
+
                 struct expo tmp;
                 tmp.parts.emplace_back(pow);
-    
+
                 part.parts.emplace_back(tmp);
             }
             ret.parts.emplace_back(part);
