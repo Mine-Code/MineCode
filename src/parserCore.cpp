@@ -6,9 +6,7 @@
 #include <stmtProcessor.h>
 #include <util.h>
 #include <syntaxError.h>
-
-#define assert(cond,msg)\
-    if(!(cond))syntaxError(ctx,msg)
+#include <myassert.h>
 
 using namespace synErr;
 using namespace parserTypes;
