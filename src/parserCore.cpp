@@ -224,12 +224,9 @@ namespace parserCore{
         return val;
     }
     struct term term  (Context& ctx){
-        struct expo val;
+        struct expo ret;
 
-        std::vector<std::wstring> parts;
-
-        std::wstring tmp;
-        parts.emplace_back(L"*"+expo(ctx));
+        ret.parts.emplace_back(expo(ctx));
         while(
             ctx.iter.hasData() &&
             (
@@ -244,47 +241,7 @@ namespace parserCore{
                 text == L"/" ||
                 text == L"%"
             );
-            parts.emplace_back(text+expo(ctx));
-        }
-        
-        std::wstring others;
-        int numer=1;
-        int denom=1;
-        for(auto part:parts){
-            if(isInt(part.substr(1)) && (part[0]=='/' || part[0]=='*')){
-                if(part[0]=='*'){
-                    numer*=toInt(part.substr(1));
-                }else if(part[0]=='/'){
-                    denom*=toInt(part.substr(1));
-                }
-            }else{
-                others+=part;
-            }
-        }
-        if(!others.empty()){
-            others=others.substr(1);
-        }
-
-        // reduction of fraction
-
-        int gcd=std::gcd(numer,denom);
-        numer/=gcd;
-        denom/=gcd;
-        // end: reduction of fraction
-
-        std::wstring ret;
-        if(numer==1 && others.empty()){
-            ret=L"1";
-        }else if(numer==1 && !others.empty()){
-            ret=others;
-        }else if(numer!=1){
-            ret=std::to_wstring(numer);
-            if(!others.empty()){
-                ret+=L"*"+others;
-            }
-        }
-        if(denom!=1){
-            ret+=L"/"+std::to_wstring(denom);
+            ret.parts.emplace_back(expo(ctx));
         }
         return ret;
     }
