@@ -123,7 +123,7 @@ namespace parserCore{
         }else if(isdigit(ch)){
             return ctx.iter.next();
         }else{
-            syntaxError(ctx,L"is not value type ");
+            syntaxError(ctx,L"is not value type ",__FILE__,__func__,__LINE__);
             throw ""; // do not call this
         }
     }
@@ -167,7 +167,7 @@ namespace parserCore{
         std::wstring text=ctx.iter.next();
         // check word?
         if(!isalpha(text[0])){
-            processError(ctx,L"isn't ident");
+            processError(ctx,L"isn't ident",__FILE__,__func__,__LINE__);
         }
         return text;
     }
@@ -175,7 +175,7 @@ namespace parserCore{
         std::wstring text=ctx.iter.next();
         // check integer?
         if(!isdigit(text[0]) || text[0]!=L'"')
-            processError(ctx,L"isn't constant integer");
+            processError(ctx,L"isn't constant integer",__FILE__,__func__,__LINE__);
         return text;
     }
     void assign(Context& ctx){
@@ -310,7 +310,7 @@ namespace parserCore{
     int Int  (Context& ctx){
         std::wstring text=ctx.iter.next();
         if(!isdigit(text[0])){
-            syntaxError(ctx,L"is not integer");
+            syntaxError(ctx,L"is not integer",__FILE__,__func__,__LINE__);
         }
         // convert test<wstr> to value<int>
         return toInt(text);
