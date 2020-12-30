@@ -47,7 +47,7 @@ namespace parserTypes
         Type type;
 
         int imm;
-        struct expr* expr;
+        struct expr expr;
         struct ExecFunc* func;
         std::wstring var;
     };
