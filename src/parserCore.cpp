@@ -224,7 +224,7 @@ namespace parserCore{
         return val;
     }
     struct term term  (Context& ctx){
-        struct expo ret;
+        struct term ret;
 
         ret.parts.emplace_back(expo(ctx));
         while(
