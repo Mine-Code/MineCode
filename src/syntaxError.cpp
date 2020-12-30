@@ -19,6 +19,10 @@ void synErr::ReportError(Context ctx,errorType type,std::wstring exMsg,std::wstr
     if(exMsg!=L"")std::wcout
         << "| msg :"<<exMsg                     <<std::endl;
     std::wcout
+        << "| Where?"                           <<std::endl
+        << "|  file: "<<fname                   <<std::endl
+        << "|  func: "<<funcname                <<std::endl
+        << "|  line: "<<line                    <<std::endl
         << "| Debug Informations"               <<std::endl
         << "|  peek(-1):"<<ctx.iter.peekSafe(-1)<<std::endl
         << "|  peek( 0):"<<ctx.iter.peekSafe( 0)<<std::endl
