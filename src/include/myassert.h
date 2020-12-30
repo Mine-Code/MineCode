@@ -7,10 +7,14 @@ namespace parserTypes
 {
     class parserContext;
 } // namespace parserTypes
-
+#ifdef __USE_GNU
+#    define __func_get __PRETTY_FUNCTION__
+#else
+#   define __func_get __FUNCTION__
+#endif
 
 #define assert(cond,msg)\
-    if(!(cond))assert_fail(__FILE__,__func__,__LINE__,ctx,msg)
+    if(!(cond))assert_fail(__FILE__,__func_get,__LINE__,ctx,msg)
 
 #define assertChar(ch) assert(ctx.iter.next()==L##ch,L"excepted '" ch "'");
 
