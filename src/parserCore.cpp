@@ -246,18 +246,21 @@ namespace parserCore{
         return ret;
     }
     struct expr expr  (Context& ctx){
-        std::vector<std::wstring> parts;
-
-        std::wstring first;
+        struct expr ret;
+        struct term part;
         std::wstring text=ctx.iter.peek();
-        if(text==L"+" || text==L"-"){
-            first=ctx.iter.next();
-        }else{
-            first=L"+";
-        }
-        first+=term(ctx);
+        
+        part=term(ctx);
+        if(text==L"+"){
+            ctx.iter.next(); // read
+        }else if(text==L"-"){
+            ctx.iter.next(); // read
+            struct expo tmp;
+            tmp.parts.emplace_back(L"-1");
 
-        parts.emplace_back(first);
+            part.parts.emplace_back(tmp);
+        }
+        ret.parts.emplace_back(part);
         
         while(
             ctx.iter.hasData() && (
@@ -272,26 +275,14 @@ namespace parserCore{
                 text == L"-" ||
                 isBitOp(text[0])
             );
-            parts.emplace_back(text+term(ctx));
-        }
 
-        std::wstring ret;
-        int imm=0;
-        for(auto part:parts){
-            if(isimm(part)){
-                imm+=toInt(part);
-            }else{
-                ret+=part;
+            part=term(ctx);
+            if(text==L"-"){
+                struct expo tmp;
+                tmp.parts.emplace_back(L"-1");
+                part.parts.emplace_back(tmp);
             }
-        }
-        std::wstring immStr = imm==0 ? L"" : std::to_wstring(imm);
-        if(ret[0]=='+') ret=ret.substr(1);
-        if(!ret.empty() && !immStr.empty()){
-            ret=immStr+L"+"+ret;
-        }else if(!ret.empty()){
-            ret=ret;
-        }else if(!immStr.empty()){
-            ret=immStr;
+            ret.parts.emplace_back(part);
         }
         return ret;
     }
