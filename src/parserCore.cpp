@@ -186,8 +186,8 @@ namespace parserCore{
         }else if(op==L"--"){
             std::wcout<<target<<"--"<<std::endl;
         }else{
-            std::wstring value=expr(ctx);
-            std::wcout<<target<<op<<value<<std::endl;
+            expr(ctx);
+            std::wcout<<target<<"edit by "<<op<<std::endl;
         }
     }
     struct power power (Context& ctx){
