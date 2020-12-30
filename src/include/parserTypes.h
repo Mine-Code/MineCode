@@ -23,6 +23,35 @@ namespace parserTypes
         varsType variables;
     };
 
+    struct expr{
+        std::vector<struct term> parts;
+    };
+    struct term{
+        std::vector<struct expo> parts;
+    };
+    struct expo{
+        std::vector<std::wstring> parts;
+    };
+
+    struct power{
+        enum Type{
+            IMM,
+            EXPR,
+            FUNCCALL,
+            VAR
+        };
+
+        power();
+        ~power();
+
+        Type type;
+
+        int imm;
+        struct expr* expr;
+        struct ExecFunc* func;
+        std::wstring var;
+    };
+    
     struct condChild{
         enum Type{
             SINGLE, // var (to val1)
@@ -50,37 +79,7 @@ namespace parserTypes
         condChild first;
         std::vector<std::pair<Type,condChild>> conds;
     };
-
-    struct expr{
-        std::vector<struct term> parts;
-    };
-    struct term{
-        std::vector<struct expo> parts;
-    };
-    struct expo{
-        std::vector<std::wstring> parts;
-    };
-
-
-    struct power{
-        enum Type{
-            IMM,
-            EXPR,
-            FUNCCALL,
-            VAR
-        };
-
-        power();
-        ~power();
-
-        Type type;
-
-        int imm;
-        struct expr* expr;
-        struct ExecFunc* func;
-        std::wstring var;
-    };
-
+    
     struct ExecFunc
     {
         enum CallType{
