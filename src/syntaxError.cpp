@@ -23,6 +23,7 @@ void synErr::ReportError(Context ctx,errorType type,std::wstring exMsg,const cha
         << "|  file: "<<fname                   <<std::endl
         << "|  func: "<<funcname                <<std::endl
         << "|  line: "<<line                    <<std::endl
+        << "|  copyable: "<<fname<<":"<<line    <<std::endl
         << "| Debug Informations"               <<std::endl
         << "|  peek(-1):"<<ctx.iter.peekSafe(-1)<<std::endl
         << "|  peek( 0):"<<ctx.iter.peekSafe( 0)<<std::endl
