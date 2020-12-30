@@ -75,7 +75,8 @@ namespace parserTypes
         enum Type{
             IMM,
             EXPR,
-            FUNCCALL
+            FUNCCALL,
+            VAR
         };
 
         power();
@@ -86,6 +87,7 @@ namespace parserTypes
         int imm;
         struct expr* expr;
         struct ExecFunc* func;
+        std::wstring var;
     };
 } // namespace parserCtx
 
