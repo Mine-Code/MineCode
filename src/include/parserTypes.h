@@ -63,9 +63,9 @@ namespace parserTypes
             GE,  // <=
             LE   // >=
         };
-        std::wstring val1;
+        expr val1;
         Type op;
-        std::wstring val2;
+        expr val2;
     };
     struct cond
     {
@@ -79,7 +79,7 @@ namespace parserTypes
         condChild first;
         std::vector<std::pair<Type,condChild>> conds;
     };
-    
+
     struct ExecFunc
     {
         enum CallType{
