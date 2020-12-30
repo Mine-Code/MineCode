@@ -60,6 +60,7 @@ namespace parserTypes
 
         std::vector<std::wstring> args;
         std::wstring funcId;
+        struct expr funcAddr;
         CallType type;
     };
     struct expr{
