@@ -315,9 +315,11 @@ namespace parserCore{
         return toInt(text);
     }
     void If(Context& ctx){
-        assert(ctx.iter.next()==L"if",L"excepted 'if'");
+        assertChar("if");
+        assertChar("(");
         struct cond conditional = cond(ctx);
-        assertChar(");");
+        assertChar(")");
+        assertChar("{");
         stmtProcessor::If(ctx);
         assertChar("}");
     }
