@@ -196,9 +196,8 @@ namespace parserCore{
             ret.type=power::EXPR;
             // inner type
             ctx.iter.next();
-            auto inner = power(ctx);
+            ret.expr=expr(ctx);
             assertChar(")");
-            return inner;
         }else if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
             ret.type=power::FUNCCALL;
             struct ExecFunc func=funcCall(ctx);
