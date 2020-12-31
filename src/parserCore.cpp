@@ -316,9 +316,7 @@ namespace parserCore{
     }
     void If(Context& ctx){
         assertChar("if");
-        assertChar("(");
         struct cond conditional = cond(ctx);
-        assertChar(")");
         assertChar("{");
         stmtProcessor::If(ctx);
         assertChar("}");
