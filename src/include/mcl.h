@@ -18,6 +18,6 @@ public:
     mcl(std::wstring name);
 };
 
-void operator<<(parserTypes::parserContext&, mcl&);
+void operator<<(parserTypes::parserContext&, mcl);
 
 #endif
