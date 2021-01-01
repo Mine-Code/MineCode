@@ -1,6 +1,7 @@
 #include <mcl.h>
 
 #include <fstream>
+#include <locale>
 
 #include <parserTypes.h>
 
