@@ -9,6 +9,6 @@ mcl::mcl(std::wstring name){
     file >> raw;
 }
 
-void operator<<(parserTypes::parserContext& ctx, mcl& pl){
+void operator<<(parserTypes::parserContext& ctx, mcl pl){
     
 }
