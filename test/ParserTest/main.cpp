@@ -1,4 +1,5 @@
 #include <parserWrap.h>
+#include <mcl.h>
 #include <ios>
 #include <iostream>
 
@@ -15,6 +16,7 @@ int main()
     );
 
     parserWrap prs;
+    prs.ctx<<mcl(L"minecraft");
     prs.set(
         L""
         "#do once"                          "\n"
