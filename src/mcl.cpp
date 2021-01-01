@@ -6,7 +6,11 @@
 
 using namespace std::literals::string_literals;
 mcl::mcl(std::wstring name){
-    std::ifstream file("file.json");
+    std::wstring path;
+    path+=L"mcls/";
+    path+=name;
+    path+=L".json";
+    std::ifstream file(std::string(path));
     file >> raw;
 }
 
