@@ -14,10 +14,11 @@ private:
     int index;
     std::vector<std::wstring> tokens;
     std::wstringstream assembly;
-    parserTypes::parserContext ctx;
 
     void error_program(iterator<wchar_t> chiter);
 public:
+    parserTypes::parserContext ctx;
+    
     void tokenize();
     void parse();
     void set(std::wstring);
