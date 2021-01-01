@@ -21,6 +21,7 @@ namespace parserTypes
         streamType stream;
         iterType iter;
         varsType variables;
+        std::unordered_map<std::string,std::string> puts;
     };
 
     struct expr{
