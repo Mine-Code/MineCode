@@ -5,12 +5,13 @@
         "Local":{
             "Console":{
                 "type":"MineCode",
-                "proc":"player_ptr = [0x109CD8E4] + 0x34\ngui_ptr = [player_ptr + 0x8B4] + 0x144\nfunc[0x0313873C]([player_ptr], \"test\", [player_ptr + 0x960], false, false, false, false)"
+                "proc":"func[0x0313873C]([player_ptr], \"test\", [player_ptr + 0x960], false, false, false, false)"
             }
         }
     },
     "pointers":{
-
+        "player_ptr":"[0x109CD8E4] + 0x34",
+        "gui_ptr":"[player_ptr + 0x8B4] + 0x144"
     },
     "functions":{
         
