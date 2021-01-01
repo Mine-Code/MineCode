@@ -15,7 +15,7 @@ class mcl{
 private:
     json raw;
 public:
-    mcl(std::wstring name);
+    mcl(std::string name);
 };
 
 void operator<<(parserTypes::parserContext&, mcl);
