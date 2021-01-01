@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <typedIterator.hxx>
+#include <parserTypes.h>
 
 class parserWrap{
 private:
@@ -13,6 +14,7 @@ private:
     int index;
     std::vector<std::wstring> tokens;
     std::wstringstream assembly;
+    parserTypes::parserContext ctx;
 
     void error_program(iterator<wchar_t> chiter);
 public:
