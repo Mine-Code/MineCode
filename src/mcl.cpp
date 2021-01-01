@@ -12,6 +12,7 @@ mcl::mcl(std::string name){
     path+=".json";
     std::ifstream jsonin;
     jsonin.open(path);
+    jsonin >> raw;
 }
 
 void operator<<(parserTypes::parserContext& ctx, mcl pl){
