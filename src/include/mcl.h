@@ -12,9 +12,8 @@ namespace parserTypes
 } // namespace parserTypes
 
 class mcl{
-private:
-    json raw;
 public:
+    json raw;
     mcl(std::string name);
 };
 
