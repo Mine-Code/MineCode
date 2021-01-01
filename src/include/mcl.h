@@ -6,6 +6,11 @@
 #include <../../lib/json/single_include/nlohmann/json.hpp>
 using json = nlohmann::json;
 
+namespace parserTypes
+{
+    class parserContext;
+} // namespace parserTypes
+
 class mcl{
 private:
     json raw;
