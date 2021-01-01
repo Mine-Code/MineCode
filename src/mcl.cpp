@@ -5,11 +5,11 @@
 #include <parserTypes.h>
 
 using namespace std::literals::string_literals;
-mcl::mcl(std::wstring name){
-    std::wstring path;
-    path+=L"mcls/";
+mcl::mcl(std::string name){
+    std::string path;
+    path+="mcls/";
     path+=name;
-    path+=L".json";
+    path+=".json";
     std::ifstream file(std::string(path));
     file >> raw;
 }
