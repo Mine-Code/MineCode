@@ -16,5 +16,8 @@ mcl::mcl(std::string name){
 }
 
 void operator<<(parserTypes::parserContext& ctx, mcl pl){
+    json j=pl.raw;
     
+    // load put
+    json puts=j["put"];
 }
