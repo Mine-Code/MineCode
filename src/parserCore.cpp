@@ -34,10 +34,10 @@ namespace parserCore{
             While(ctx);
         }else if(text==L"if"){
             If(ctx);
-        }else if(text==L"func"){
-            func(ctx);
         }else if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
             stmtProcessor::executeFunction(ctx,funcCall(ctx));
+        }else if(text==L"func"){
+            func(ctx);
         }else{
             //put / assign
             assert(ctx.iter.hasData(),L"does not have data in iterator");
