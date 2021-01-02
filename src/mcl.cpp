@@ -24,6 +24,10 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     json puts=j["put"];
 }
 
+bool isShallow(json src){
+    
+}
+
 std::unordered_map<std::wstring,json> convertTree2Single(json src){
     json dest;
 
