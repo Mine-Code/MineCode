@@ -25,7 +25,12 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
 }
 
 bool isShallow(json src){
-    
+    for(auto [key,val]:src.items()){
+        if(val.is_object()){
+            return false;
+        }
+    }
+    return true;
 }
 
 std::unordered_map<std::wstring,json> convertTree2Single(json src){
