@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <locale>
+#include <unordered_map>
 
 #include <parserTypes.h>
 
@@ -23,7 +24,7 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     json puts=j["put"];
 }
 
-json convertTree2Single(json src){
+std::unordered_map<std::wstring,json> convertTree2Single(json src){
     json dest;
 
 
