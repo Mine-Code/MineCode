@@ -36,5 +36,8 @@ bool isShallow(json src){
 json convertTree2Single(json src){
     json dest;
     if(isShallow(src))return src;
+    else{
+        
+    }
     return dest;
 }
