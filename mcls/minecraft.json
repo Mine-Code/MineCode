@@ -6,6 +6,16 @@
             "Console":{
                 "type":"MineCode",
                 "proc":"func[0x0313873C]([gui_ptr], \"test\", [player_ptr + 0x960], false, false, false, false)"
+            },
+            "test":{
+                "type":"MineCode",
+                "proc":"b=1"
+            }
+        },
+        "test":{
+            "hoge":{
+                "type":"MineCode",
+                "proc":"a=1"
             }
         }
     },
