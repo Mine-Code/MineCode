@@ -33,7 +33,7 @@ bool isShallow(json src){
     return true;
 }
 
-std::unordered_map<std::wstring,json> convertTree2Single(json src){
+json convertTree2Single(json src){
     json dest;
 
 
