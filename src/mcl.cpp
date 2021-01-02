@@ -37,7 +37,9 @@ json convertTree2Single(json src){
     json dest;
     if(isShallow(src))return src;
     else{
-        
+        for(auto [key,val]: src.items()){
+            
+        }
     }
     return dest;
 }
