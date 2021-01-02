@@ -22,3 +22,10 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     // load put
     json puts=j["put"];
 }
+
+json convertTree2Single(json src){
+    json dest;
+
+
+    return dest
+}
