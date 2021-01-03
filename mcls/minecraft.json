@@ -17,6 +17,10 @@
                 "type":"MineCode",
                 "proc":"a=1"
             }
+        },
+        "hoge.test.hoge":{
+            "type":"MineCode",
+            "proc":"b=5"
         }
     },
     "pointers":{
