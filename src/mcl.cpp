@@ -25,6 +25,7 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     
     // load put
     json puts=convertTree2Single(j["put"]);
+    parserTypes::parserContext compiler;
     for(auto [key,val]: puts.items()){
         
     }
