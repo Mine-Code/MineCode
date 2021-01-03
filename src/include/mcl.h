@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <../../lib/json/single_include/nlohmann/json.hpp>
 
 namespace parserTypes
 {
