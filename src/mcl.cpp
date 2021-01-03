@@ -25,6 +25,9 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     
     // load put
     json puts=convertTree2Single(j["put"]);
+    for(auto [key,val]: puts.items()){
+        
+    }
 }
 
 bool isShallow(json src){
