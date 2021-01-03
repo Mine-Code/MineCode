@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include <parserTypes.h>
+#include <../../lib/json/single_include/nlohmann/json.hpp>
 
 using namespace std::literals::string_literals;
 using json = nlohmann::json;
@@ -26,9 +27,7 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     
     // load put
     json puts=convertTree2Single(j["put"]);
-    for(auto [key,val]: puts.items()){
-        
-    }
+    std::cout<<puts.dump(2)<<std::endl;
 }
 
 bool isShallow(json src){
@@ -44,6 +43,7 @@ json convertTree2Single(json src){
     json dest;
     if(isShallow(src))return src;
     else{
+        std::wcout<<"A"<<std::endl;
         for(auto [key,val]: src.items()){
             json tmp = convertTree2Single(val);
             for (auto [cKey,cVal]: tmp.items())
