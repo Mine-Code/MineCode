@@ -5,7 +5,6 @@
 #include <unordered_map>
 
 #include <parserTypes.h>
-#include <../../lib/json/single_include/nlohmann/json.hpp>
 
 using namespace std::literals::string_literals;
 using json = nlohmann::json;
