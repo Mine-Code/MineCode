@@ -7,6 +7,7 @@
 #include <parserTypes.h>
 
 using namespace std::literals::string_literals;
+using json = nlohmann::json;
 
 json convertTree2Single(json);
 
