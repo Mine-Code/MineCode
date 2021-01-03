@@ -38,6 +38,11 @@ json convertTree2Single(json src){
     if(isShallow(src))return src;
     else{
         for(auto [key,val]: src.items()){
+            json tmp = convertTree2Single(val);
+            for (auto [cKey,cVal]: tmp.items())
+            {
+                dest[key+"."+cKey]=cVal;
+            }
             
         }
     }
