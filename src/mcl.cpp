@@ -8,7 +8,7 @@
 
 using namespace std::literals::string_literals;
 
-
+json convertTree2Single(json);
 
 mcl::mcl(std::string name){
     std::string path;
