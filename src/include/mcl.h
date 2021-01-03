@@ -4,7 +4,6 @@
 
 #include <string>
 #include <../../lib/json/single_include/nlohmann/json.hpp>
-using json = nlohmann::json;
 
 namespace parserTypes
 {
