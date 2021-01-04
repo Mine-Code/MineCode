@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include <parserTypes.h>
+#include <parserWrap.h>
 
 using namespace std::literals::string_literals;
 using json = nlohmann::json;
@@ -31,6 +32,7 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
 
     // compile puts
     parserTypes::parserContext compile;
+    
 }
 
 bool isShallow(json src){
