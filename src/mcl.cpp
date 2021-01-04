@@ -35,7 +35,6 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     for(auto [name,val]: puts.items()){
 
     }
-    std::exit(0);
 }
 
 bool isShallow(json src){
