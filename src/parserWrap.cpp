@@ -174,8 +174,6 @@ void parserWrap::tokenize(){
 
 std::wstring parserWrap::compile(){
     ctx.iter=iterator<std::wstring>(tokens);
-    
     parserCore::program(ctx);
-    // process 'st.str()'
     return ctx.Asm->ss.str();
 }
