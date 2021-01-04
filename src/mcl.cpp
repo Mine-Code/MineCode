@@ -28,6 +28,9 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     json puts=convertTree2Single(j["put"]);
     json pointers=convertTree2Single(j["pointers"]);
     json functions=convertTree2Single(j["functions"]);
+
+    // compile puts
+    parserTypes::parserContext compile;
 }
 
 bool isShallow(json src){
