@@ -31,7 +31,7 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     json functions=convertTree2Single(j["functions"]);
 
     // compile puts
-    parserTypes::parserContext compile;
+    parserWrap compile;
     
 }
 
