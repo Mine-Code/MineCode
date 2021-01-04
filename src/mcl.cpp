@@ -32,7 +32,9 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
 
     // compile puts
     parserWrap compile;
-    
+    for(auto [name,val]: puts.items()){
+        
+    }
 }
 
 bool isShallow(json src){
