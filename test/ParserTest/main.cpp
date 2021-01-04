@@ -35,7 +35,7 @@ int main()
         "}"s
     );
     prs.tokenize();
-    prs.compile();
+    std::wcout<<prs.compile()<<std::endl; // show compiled code
     prs.debug();
     return 0;
 }
