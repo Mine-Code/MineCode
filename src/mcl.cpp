@@ -24,9 +24,10 @@ mcl::mcl(std::string name){
 void operator<<(parserTypes::parserContext& ctx, mcl pl){
     json j=pl.raw;
     
-    // load put
+    // load datas
     json puts=convertTree2Single(j["put"]);
-    std::cout<<puts.dump(2)<<std::endl;
+    json pointers=convertTree2Single(j["pointers"]);
+    json functions=convertTree2Single(j["functions"]);
 }
 
 bool isShallow(json src){
