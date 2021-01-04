@@ -20,7 +20,7 @@ public:
     parserTypes::parserContext ctx;
     
     void tokenize();
-    void parse();
+    std::wstring parse();
     void set(std::wstring);
     void debug();
 };
