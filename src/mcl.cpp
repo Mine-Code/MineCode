@@ -40,9 +40,9 @@ bool isShallow(json src){
 
 json convertTree2Single(json src){
     json dest;
-    if(isShallow(src))return src;
-    else{
-        std::wcout<<"A"<<std::endl;
+    if(isShallow(src)){
+        return src;
+    }else{
         for(auto [key,val]: src.items()){
             json tmp = convertTree2Single(val);
             for (auto [cKey,cVal]: tmp.items())
