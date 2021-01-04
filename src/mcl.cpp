@@ -31,7 +31,7 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
 
 bool isShallow(json src){
     for(auto [key,val]:src.items()){
-        if(val.size()==1){
+        if(val.is_object()){
             return false;
         }
     }
