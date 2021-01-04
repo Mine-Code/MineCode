@@ -24,13 +24,13 @@ int main()
         "  a = 2"                           "\n"
         "  n = (a*(100+a*10)+3*(1+5))/20+a" "\n" 
         "  if 0o20==0x10{"                  "\n"
-        "    Local.Console << \"^^\" "        "\n"
+        "    Local.Console << \"^^\" "      "\n"
         "  }"                               "\n"
         "  for i in 0...0x10{"              "\n"
-        "    Local.Console << \"{i}\" "       "\n"
+        "    Local.Console << \"{i}\" "     "\n"
         "  }"                               "\n"
         "  while a<=10{"                    "\n"
-        "    Local.Console << \"(^^)v\""      "\n"
+        "    Local.Console << \"(^^)v\""    "\n"
         "  }"                               "\n"
         "}"s
     );
