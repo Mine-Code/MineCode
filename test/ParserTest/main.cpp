@@ -35,7 +35,7 @@ int main()
         "}"s
     );
     prs.tokenize();
-    prs.parse();
+    prs.compile();
     prs.debug();
     return 0;
 }
