@@ -33,7 +33,10 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     // compile puts
     parserWrap compile;
     for(auto [name,val]: puts.items()){
-
+        compile.set(val);
+        compile.tokenize();
+        auto compiled=compile.compile();
+        ctx.puts[name]=compiled;
     }
 }
 
