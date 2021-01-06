@@ -2,6 +2,8 @@
 .vscode
 .vs
 *.user
+!.vscode/extensions.json
+!.vscode/settings.json
 
 # binary
 MineCode
