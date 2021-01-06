@@ -101,7 +101,7 @@ namespace parserCore{
     void put(Context& ctx){
         std::wstring target = value(ctx);
         assertChar("<<");
-        expr(ctx);
+        struct expr val=expr(ctx);
         std::wcout<<"Data write To "<<target<<std::endl;
     }
     Arg arg(Context& ctx){
