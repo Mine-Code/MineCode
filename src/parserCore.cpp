@@ -205,7 +205,7 @@ namespace parserCore{
         }else if(isInt(ctx.iter.peek())){
             ret.type=power::IMM;
             ret.imm=Int(ctx);
-        }else if(isSingle(ctx.iter.peek())){
+        }else if(isSingle(ctx.iter.peek()) || ctx.iter.peek()!=L"["){
             ret.type=power::VAR;
             ret.var=ctx.iter.next();
         }else{
