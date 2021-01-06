@@ -1,42 +1,4 @@
 {
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-
-        "**/.gitignore": true,
-        "**/.gitmodules": true,
-        "**/.github":true,
-        "**/LICENSE": true,
-        "**/README.md": true,
-
-        "build":true,
-        "autotool":true,
-        "MineCode*":true,
-        "Makefile":true,
-
-        "**/*.vc*":true,
-
-        "src/include/stmtProcessor.h":true,
-        "src/**/typedIterator.*":true,
-        "src/**/syntaxError.*":true,
-        "src/**/parserTypes.*":true,
-        "src/**/parserWrap.*":true,
-        "src/**/myassert.*":true,
-        "src/include/parserCore.*":true,
-        "src/**/util.*":true,
-        "src/asm.cpp":true,
-        "src/main.cpp":true,
-
-        "test/src":true,
-        "test/AssemblyTest":true,
-        "test":true,
-        
-        "lib":true,
-        "docs":true
-    },
     "saveAndRun": {
         "commands": [
             {
