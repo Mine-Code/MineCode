@@ -35,10 +35,10 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     parserWrap compile;
     auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
     for(auto [name,obj]: puts.items()){
-        //compile.set(val);
-        //compile.tokenize();
-        //auto compiled=compile.compile();
-        //ctx.puts[name]=compiled;
+        compile.set(converter.from_bytes(obj["proc"].get<std::string>()));
+        compile.tokenize();
+        auto compiled=compile.compile();
+        ctx.puts[name]=converter.to_bytes(compiled);
     }
 }
 
