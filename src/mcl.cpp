@@ -1,5 +1,6 @@
 #include <mcl.h>
 
+#include <codecvt>
 #include <fstream>
 #include <locale>
 #include <unordered_map>
@@ -32,11 +33,13 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
 
     // compile puts
     parserWrap compile;
+    auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
     for(auto [name,val]: puts.items()){
-        compile.set(val);
-        compile.tokenize();
-        auto compiled=compile.compile();
-        ctx.puts[name]=compiled;
+        
+        //compile.set(val);
+        //compile.tokenize();
+        //auto compiled=compile.compile();
+        //ctx.puts[name]=compiled;
     }
 }
 
