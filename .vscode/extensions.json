@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "wk-j.save-and-run",
+
+        "ms-vscode.cpptools",
+
+    ],
+    "unwantedRecommendations": [
+        "Gruntfuggly.todo-tree",
+        "austin.code-gnu-global",
+        "eamodio.gitlens"
+
+    ]
+}
