@@ -39,7 +39,8 @@ namespace parserTypes
             IMM,
             EXPR,
             FUNCCALL,
-            VAR
+            VAR,
+            PTR
         };
 
         power();
@@ -50,6 +51,7 @@ namespace parserTypes
         struct expr expr;
         struct ExecFunc* func;
         std::wstring var;
+        std::wstring ptr;
     };
     
     struct condChild{
