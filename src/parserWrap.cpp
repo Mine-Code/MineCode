@@ -114,13 +114,13 @@ void parserWrap::tokenize(){
             value+=ch;
             tokens.emplace_back(value);
             chiter.next();
-        }else if(iswalpha(ch)){
+        }else if(util::isIdent(ch)){
             value+=ch;
             while(1){
                 ch=chiter.peek();
                 if(!chiter.hasData()){
                     error_program(chiter);
-                }else if(iswalpha(ch)){
+                }else if(util::isIdent(ch)){
                     value+=chiter.next();
                 }else{
                     break;
