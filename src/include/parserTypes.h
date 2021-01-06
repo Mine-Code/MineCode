@@ -90,7 +90,7 @@ namespace parserTypes
         };
         ExecFunc();
 
-        std::vector<std::wstring> args;
+        std::vector<expr> args;
         std::wstring funcId;
         struct expr funcAddr;
         CallType type;
