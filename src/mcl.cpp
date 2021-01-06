@@ -34,8 +34,7 @@ void operator<<(parserTypes::parserContext& ctx, mcl pl){
     // compile puts
     parserWrap compile;
     auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
-    for(auto [name,val]: puts.items()){
-        
+    for(auto [name,obj]: puts.items()){
         //compile.set(val);
         //compile.tokenize();
         //auto compiled=compile.compile();
