@@ -182,6 +182,14 @@ namespace util
         }
         return counter==0;
     }
+
+    template<typename T>
+    bool isIdent(T ch){
+        return
+               isalpha(ch) || 
+               ch=='_'
+        ;
+    }
 } // namespace util
 
 
