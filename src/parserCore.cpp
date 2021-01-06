@@ -208,6 +208,9 @@ namespace parserCore{
         }else if(isSingle(ctx.iter.peek()) || ctx.iter.peek()!=L"["){
             ret.type=power::VAR;
             ret.var=ctx.iter.next();
+        }else if(ctx.iter.peek()==L"["){
+            ret.type=power::PTR;
+            ret.ptr=ptr(ctx);
         }else{
             ret.type=power::EXPR;
             ret.expr=expr(ctx);
@@ -402,8 +405,10 @@ namespace parserCore{
         }
         assertChar("(");
         if(ctx.iter.peek() != L")"){
+            std::wcout<<ctx.iter.peekSafe(-1)<<ctx.iter.peekSafe(0)<<ctx.iter.peekSafe(1)<<std::endl;
             ret.args.emplace_back(expr(ctx));
         }
+        std::wcout<<ctx.iter.peekSafe(-1)<<ctx.iter.peekSafe(0)<<ctx.iter.peekSafe(1)<<std::endl;
         while(ctx.iter.peek() != L")"){
             assertChar(",");
             ret.args.emplace_back(expr(ctx));
