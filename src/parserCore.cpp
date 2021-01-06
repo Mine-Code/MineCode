@@ -407,8 +407,8 @@ namespace parserCore{
         if(ctx.iter.peek() != L")"){
             std::wcout<<ctx.iter.peekSafe(-1)<<ctx.iter.peekSafe(0)<<ctx.iter.peekSafe(1)<<std::endl;
             ret.args.emplace_back(expr(ctx));
+            std::wcout<<ctx.iter.peekSafe(-1)<<ctx.iter.peekSafe(0)<<ctx.iter.peekSafe(1)<<std::endl;
         }
-        std::wcout<<ctx.iter.peekSafe(-1)<<ctx.iter.peekSafe(0)<<ctx.iter.peekSafe(1)<<std::endl;
         while(ctx.iter.peek() != L")"){
             assertChar(",");
             ret.args.emplace_back(expr(ctx));
