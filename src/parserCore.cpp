@@ -402,11 +402,11 @@ namespace parserCore{
         }
         assertChar("(");
         if(ctx.iter.peek() != L")"){
-            ret.args.emplace_back(ctx.iter.next());
+            ret.args.emplace_back(expr(ctx));
         }
         while(ctx.iter.peek() != L")"){
             assertChar(",");
-            ret.args.emplace_back(ctx.iter.next());
+            ret.args.emplace_back(expr(ctx));
         }
         assertChar(")");
         return ret;
