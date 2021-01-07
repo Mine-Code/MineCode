@@ -2,6 +2,7 @@
 #include <parserTypes.h>
 #include <parserCore.h>
 #include <util.h>
+#include <syntaxError.h>
 
 void stmtProcessor::For    (
     Context& ctx,
