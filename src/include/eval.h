@@ -2,7 +2,11 @@
 #ifndef EVAL_H
 #define EVAL_H
 
-#include <parserTypes.h>
+namespace parserTypes{
+    class expr;
+    class expo;
+    class power;
+};
 
 namespace eval
 {
