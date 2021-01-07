@@ -13,16 +13,6 @@ using json = nlohmann::json;
 
 json convertTree2Single(json);
 
-mcl::mcl(std::string name){
-    std::string path;
-    path+="mcls/";
-    path+=name;
-    path+=".json";
-    std::ifstream jsonin;
-    jsonin.open(path);
-    jsonin >> raw;
-}
-
 void operator<<(parserTypes::parserContext& ctx, std::string name){
     json j;
     std::ifstream jsonin;
