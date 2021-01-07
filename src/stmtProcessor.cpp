@@ -60,6 +60,7 @@ void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,str
         // check: is [op==equal and not have element]
         if(op==L"="){
             // make variable
+            parserTypes::varType var;
         }
         processError(ctx,target+L" is not found",__FILE__,__func__,__LINE__);
     }
