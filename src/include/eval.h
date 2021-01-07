@@ -4,4 +4,10 @@
 
 #include <parserTypes.h>
 
+namespace eval
+{
+    
+} // namespace eval
+
+
 #endif
