@@ -3,7 +3,7 @@
 #include <parserCore.h>
 
 void stmtProcessor::For    (
-    parserTypes::parserContext& ctx,
+    Context& ctx,
     std::wstring target,
     std::wstring iter
 ){
@@ -14,7 +14,7 @@ void stmtProcessor::For    (
     }
 }
 
-void stmtProcessor::Forr   (parserTypes::parserContext& ctx,int start,int end){
+void stmtProcessor::Forr   (Context& ctx,int start,int end){
     ctx.Asm->startOfLoop(end-start,start);
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
@@ -23,21 +23,21 @@ void stmtProcessor::Forr   (parserTypes::parserContext& ctx,int start,int end){
     ctx.Asm->endOfLoop();
 }
 
-void stmtProcessor::While  (parserTypes::parserContext& ctx){
+void stmtProcessor::While  (Context& ctx){
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
 }
 
-void stmtProcessor::If     (parserTypes::parserContext& ctx){
+void stmtProcessor::If     (Context& ctx){
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
 }
 
-void stmtProcessor::Func   (parserTypes::parserContext& ctx){
+void stmtProcessor::Func   (Context& ctx){
     ctx.Asm->startOfFunction();
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
@@ -46,11 +46,11 @@ void stmtProcessor::Func   (parserTypes::parserContext& ctx){
     ctx.Asm->endOfFunction();
 }
 
-void stmtProcessor::Put    (parserTypes::parserContext& ctx){
+void stmtProcessor::Put    (Context& ctx){
 
 }
 
-void stmtProcessor::Assign (parserTypes::parserContext& ctx,std::wstring target,std::wstring op,struct expr& value){
+void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,struct expr& value){
 
 }
 
