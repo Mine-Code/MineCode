@@ -1,6 +1,8 @@
 #include <parserCore.h>
 
 #include <numeric>
+#include <locale>
+#include <codecvt>
 
 #include <parserTypes.h>
 #include <stmtProcessor.h>
