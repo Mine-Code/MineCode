@@ -186,14 +186,10 @@ namespace parserCore{
         std::wstring target=editable(ctx);
         std::wstring op=ctx.iter.next();
         struct expr value;
-        if(op==L"++"){
-            ctx.stream<<"# "<<target<<"++"<<std::endl;
-        }else if(op==L"--"){
-            ctx.stream<<"# "<<target<<"--"<<std::endl;
-        }else{
-            expr(ctx);
-            ctx.stream<<"# "<<target<<" edit by ["<<op<<"]"<<std::endl;
+        if(not (op==L"++" or op==L"--") ){
+            value=expr(ctx);
         }
+        ctx.stream<<"# "<<target<<" "<<op<<std::endl;
     }
     struct power power (Context& ctx){
         struct power ret;
