@@ -50,7 +50,7 @@ void stmtProcessor::Put    (parserTypes::parserContext& ctx){
 
 }
 
-void stmtProcessor::Assign (parserTypes::parserContext& ctx,std::wstring target,std::wstring op,struct parserTypes::expr& value){
+void stmtProcessor::Assign (parserTypes::parserContext& ctx,std::wstring target,std::wstring op,struct expr& value){
 
 }
 
