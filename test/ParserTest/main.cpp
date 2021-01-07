@@ -16,7 +16,7 @@ int main()
     );
 
     parserWrap prs;
-    prs.ctx<<mcl("minecraft");
+    prs.ctx<<"minecraft";
     prs.set(
         L""
         "#do once"                          "\n"
