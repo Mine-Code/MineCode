@@ -189,7 +189,7 @@ namespace parserCore{
         if(not (op==L"++" or op==L"--") ){
             value=expr(ctx);
         }
-        ctx.stream<<"# "<<target<<" "<<op<<std::endl;
+        stmtProcessor::Assign(ctx,target,op,value);
     }
     struct power power (Context& ctx){
         struct power ret;
