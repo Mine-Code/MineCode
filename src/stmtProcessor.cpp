@@ -81,6 +81,6 @@ void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,str
     }
 }
 
-void stmtProcessor::executeFunction (Context&,parserTypes::ExecFunc){
+void stmtProcessor::executeFunction (Context&,parserTypes::ExecFunc call){
     
 }
