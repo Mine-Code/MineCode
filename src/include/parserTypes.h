@@ -30,15 +30,15 @@ namespace parserTypes
 
     struct expr{
         std::vector<struct term> parts;
-        inline bool isSingle();
+        bool isSingle();
     };
     struct term{
         std::vector<struct expo> parts;
-        inline bool isSingle();
+        bool isSingle();
     };
     struct expo{
         std::vector<struct power> parts;
-        inline bool isSingle();
+        bool isSingle();
     };
 
     struct power{
