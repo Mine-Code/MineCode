@@ -1,5 +1,7 @@
 #include <eval.h>
 
+#include <parserTypes.h>
+
 using namespace parserTypes;
 
 void eval::Expr (expr  val,int dest=13){
