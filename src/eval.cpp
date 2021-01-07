@@ -4,6 +4,13 @@
 
 using namespace parserTypes;
 
+expr& optimize(expr& val){
+    int immutable=0;
+    for(auto part:val.parts){
+        
+    }
+}
+
 void eval::Expr (expr  val,int dest=13){
 
 }
