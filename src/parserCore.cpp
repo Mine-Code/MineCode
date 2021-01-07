@@ -107,6 +107,7 @@ namespace parserCore{
         assertChar("<<");
         struct expr val=expr(ctx);
         assert(ctx.puts.count(target)==1,L"Puts Not found");
+        ctx.stream<<converter.from_bytes(ctx.puts[target]);
     }
     Arg arg(Context& ctx){
         return std::make_pair(
