@@ -10,6 +10,7 @@ expr& optimize(expr& val){
         if(part.isSingle()){
             // single pattern
             if(part.parts[0].isSingle()){
+                power elem=part.parts[0].parts[0];
             }
         }
     }
