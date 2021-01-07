@@ -3,6 +3,7 @@
 #include <parserCore.h>
 #include <util.h>
 #include <syntaxError.h>
+#include <eval.h>
 
 using namespace synErr;
 
@@ -61,6 +62,7 @@ void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,str
         if(op==L"="){
             // make variable
             parserTypes::varType var;
+            // TODO: processing var
         }
         processError(ctx,target+L" is not found",__FILE__,__func__,__LINE__);
     }
