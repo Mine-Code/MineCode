@@ -41,6 +41,7 @@ namespace parserTypes
     struct power{
         enum Type{
             IMM,
+            FLT,
             EXPR,
             FUNCCALL,
             VAR,
@@ -52,6 +53,7 @@ namespace parserTypes
         Type type;
 
         int imm;
+        float flt;
         struct expr expr;
         struct ExecFunc* func;
         std::wstring var;
