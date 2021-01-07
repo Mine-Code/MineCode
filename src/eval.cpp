@@ -21,6 +21,8 @@ term& optimize(term& val){
 
 expr& optimize(expr& val){
     int immutable_mul=0;
+    int immutable_div=0;
+    int immutable_mod=0;
     expr newExpr;
     for(auto part:val.parts){
         if(part.isSingle() && part.parts_mul[0].isSingle() && part.parts_mul[0].parts[0].type==power::IMM){
