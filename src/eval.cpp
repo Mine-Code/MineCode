@@ -16,7 +16,17 @@ expr& optimize(expr& val){
         }
     }
     if(immutable!=0){
-        // has immutable
+        power value;
+        value.type=power::IMM;
+        value.imm=immutable;
+
+        expo exponent;
+        exponent.parts.emplace_back(value);
+
+        term Term;
+        Term.parts.emplace_back(exponent);
+
+        val.parts.emplace_back(Term);
     }
     return val;
 }
