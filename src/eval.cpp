@@ -7,12 +7,10 @@ using namespace parserTypes;
 expr& optimize(expr& val){
     int immutable=0;
     for(auto part:val.parts){
-        if(part.isSingle() && part.parts[0].isSingle()){
+        if(part.isSingle() && part.parts[0].isSingle() && part.parts[0].parts[0].type==power::IMM){
             // single pattern
             power elem=part.parts[0].parts[0];
-            if(elem.type==power::IMM){
-                immutable+=elem.imm;
-            }
+            immutable+=elem.imm;
         }
     }
     return val;
