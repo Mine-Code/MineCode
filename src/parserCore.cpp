@@ -59,7 +59,7 @@ namespace parserCore{
     void func(Context& ctx){
         assertChar("func");
         std::wstring functionName=ctx.iter.next();
-        std::wcout<<"funcName:"<<functionName<<std::endl;
+        ctx.stream<<"# "<<"funcName:"<<functionName<<std::endl;
         assertChar("(");
 
         // read arguments
@@ -187,12 +187,12 @@ namespace parserCore{
         std::wstring target=editable(ctx);
         std::wstring op=ctx.iter.next();
         if(op==L"++"){
-            std::wcout<<target<<"++"<<std::endl;
+            ctx.stream<<"# "<<target<<"++"<<std::endl;
         }else if(op==L"--"){
-            std::wcout<<target<<"--"<<std::endl;
+            ctx.stream<<"# "<<target<<"--"<<std::endl;
         }else{
             expr(ctx);
-            std::wcout<<target<<" edit by ["<<op<<"]"<<std::endl;
+            ctx.stream<<"# "<<target<<" edit by ["<<op<<"]"<<std::endl;
         }
     }
     struct power power (Context& ctx){
