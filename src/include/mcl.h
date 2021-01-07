@@ -16,7 +16,6 @@ namespace parserTypes
 class mcl{
     using json=nlohmann::basic_json<>;
 public:
-    json raw;
     mcl(std::string name);
 };
 
