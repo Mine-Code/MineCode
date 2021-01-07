@@ -4,6 +4,8 @@
 #include <util.h>
 #include <syntaxError.h>
 
+using namespace synErr;
+
 void stmtProcessor::For    (
     Context& ctx,
     std::wstring target,
