@@ -8,9 +8,13 @@
 #include "asm.h"
 namespace parserTypes
 {
-    enum varType{
-        FLOAT,
-        INT
+    struct varType{
+        enum Type{
+            FLOAT,
+            INT
+        };
+        Type type=INT;
+        size_t offset=0;
     };
     using streamType = std::wstringstream;
     using iterType   = iterator<std::wstring>;
