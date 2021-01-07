@@ -24,7 +24,10 @@ mcl::mcl(std::string name){
 }
 
 void operator<<(parserTypes::parserContext& ctx, std::string name){
-    json j=pl.raw;
+    json j;
+    std::ifstream jsonin;
+    jsonin.open("mcls/"+name+".json");
+    jsonin >> j;
     
     // load datas
     json puts=convertTree2Single(j["put"]);
