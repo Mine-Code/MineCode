@@ -18,6 +18,7 @@ namespace parserCore{
 
     void program(Context& ctx){
         if(ctx.iter.peek()==L"#"){
+            ctx.stream<<"# do once"<<std::endl;
             assert(ctx.iter.next() == L"#"   , L"mismatch preprecessor operation");
             assert(ctx.iter.next() == L"do"  , L"mismatch preprecessor operation");
             assert(ctx.iter.next() == L"once", L"mismatch preprecessor operation");
