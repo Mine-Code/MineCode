@@ -107,7 +107,9 @@ namespace parserCore{
         assertChar("<<");
         struct expr val=expr(ctx);
         assert(ctx.puts.count(target)==1,L"Puts Not found");
+        ctx.stream<<"# start put "<<str2wstr(target)<<std::endl;
         ctx.stream<<converter.from_bytes(ctx.puts[target]);
+        ctx.stream<<"# end   put "<<str2wstr(target)<<std::endl;
     }
     Arg arg(Context& ctx){
         return std::make_pair(
@@ -325,9 +327,11 @@ namespace parserCore{
     void If(Context& ctx){
         assertChar("if");
         struct cond conditional = cond(ctx);
+        ctx.stream<<"# if"<<std::endl;
         assertChar("{");
         stmtProcessor::If(ctx);
         assertChar("}");
+        ctx.stream<<"# fi"<<std::endl;
     }
     struct cond cond  (Context& ctx){
         struct cond conditional;
