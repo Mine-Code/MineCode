@@ -81,7 +81,7 @@ void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,str
     }
 }
 
-void stmtProcessor::executeFunction (Context&,parserTypes::ExecFunc call){
+void stmtProcessor::executeFunction (Context& ctx,parserTypes::ExecFunc call){
     if(call.type==parserTypes::ExecFunc::ADDRESS){
         // address based
     }else if(call.type==parserTypes::ExecFunc::Name){
