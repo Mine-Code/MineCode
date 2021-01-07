@@ -25,7 +25,6 @@ expr& optimize(expr& val){
     for(auto part:val.parts){
         
         if(part.isSingle() && part.parts_mul[0].isSingle() && part.parts_mul[0].parts[0].type==power::IMM){
-            // single pattern
             immutable+=part.parts_mul[0].parts[0].imm;
         }else{
             newExpr.parts.emplace_back(part);
