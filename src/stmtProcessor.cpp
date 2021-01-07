@@ -51,8 +51,11 @@ void stmtProcessor::Put    (Context& ctx){
 }
 
 void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,struct expr& value){
-    if(op==L"++" or op==L"--"){
-        //inc / dec
+    if(op==L"++"){
+        //inc
+    }
+    if(op==L"--"){
+        //dec
     }
 }
 
