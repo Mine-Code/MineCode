@@ -19,6 +19,6 @@ public:
     mcl(std::string name);
 };
 
-void operator<<(parserTypes::parserContext&, mcl);
+void operator<<(parserTypes::parserContext&, std::string);
 
 #endif
