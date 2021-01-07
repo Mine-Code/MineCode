@@ -42,4 +42,10 @@ namespace util
         }
         return value*sign;
     }
+    std::string wstr2str(std::wstring str){
+        
+    }
+    std::wstring str2wstr(std::string str){
+        
+    }
 } // namespace util
