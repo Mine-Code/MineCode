@@ -85,22 +85,17 @@ namespace parserCore{
         assertChar("in");
         ctx.stream<<"# for ";
         if(ctx.iter.peek(1)==L"..."){
-            ctx.stream<<" range";
+            ctx.stream<<" range"<<std::endl;
             Range target=range(ctx);
             assertChar("{");
             stmtProcessor::Forr(ctx,target.first,target.second);
         }else{
-            ctx.stream<<" iter ";
+            ctx.stream<<" iter "<<std::endl;
             std::wstring target=value(ctx);
             assertChar("{");
 
             stmtProcessor::For(ctx,varname,target);
         }
-        ctx.stream<<std::endl;
-        while(ctx.iter.hasData()){
-                if(ctx.iter.peek()==L"}")break;
-                stmt(ctx);
-            }
         assertChar("}");
     }
     void put(Context& ctx){
