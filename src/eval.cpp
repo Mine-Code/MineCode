@@ -15,6 +15,9 @@ expr& optimize(expr& val){
             newExpr.parts.emplace_back(part);
         }
     }
+    if(immutable!=0){
+        // has immutable
+    }
     return val;
 }
 
