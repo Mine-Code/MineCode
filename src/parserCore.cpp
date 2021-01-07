@@ -106,7 +106,7 @@ namespace parserCore{
         std::string target = converter.to_bytes(value(ctx));
         assertChar("<<");
         struct expr val=expr(ctx);
-        std::wcout<<"Data write To "<<target<<std::endl;
+        assert(ctx.puts.count(target)==1,L"Puts Not found");
     }
     Arg arg(Context& ctx){
         return std::make_pair(
