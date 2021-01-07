@@ -59,6 +59,7 @@ void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,str
     if(ctx.variables.count(util::wstr2str(target))==0){
         processError(ctx,target+L" is not found",__FILE__,__func__,__LINE__);
     }
+    ctx.Asm->pop(ctx.variables[util::wstr2str(target)].offset);//load value
     if(op==L"++"){
         //inc
     }
