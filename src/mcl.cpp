@@ -4,6 +4,7 @@
 #include <fstream>
 #include <locale>
 #include <unordered_map>
+#include <../../lib/json/single_include/nlohmann/json.hpp>
 
 #include <parserTypes.h>
 #include <parserWrap.h>
