@@ -103,7 +103,7 @@ namespace parserCore{
     void put(Context& ctx){
         auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
 
-        std::wstring target = value(ctx);
+        std::string target = converter.to_bytes(value(ctx));
         assertChar("<<");
         struct expr val=expr(ctx);
         std::wcout<<"Data write To "<<target<<std::endl;
