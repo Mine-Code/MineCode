@@ -1,6 +1,7 @@
 #include <stmtProcessor.h>
 #include <parserTypes.h>
 #include <parserCore.h>
+#include <util.h>
 
 void stmtProcessor::For    (
     Context& ctx,
