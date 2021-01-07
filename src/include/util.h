@@ -190,6 +190,14 @@ namespace util
                ch=='_'
         ;
     }
+
+    std::string wstr2str(std::wstring str){
+        return "";
+    }
+    
+    std::wstring str2wstr(std::string str){
+        return L"";
+    }
 } // namespace util
 
 
