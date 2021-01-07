@@ -39,7 +39,7 @@ expr& optimize(expr& val){
         exponent.parts.emplace_back(value);
 
         term Term;
-        Term.parts.emplace_back(exponent);
+        Term.parts_mul.emplace_back(exponent);
 
         val.parts.emplace_back(Term);
     }
