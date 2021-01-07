@@ -21,6 +21,9 @@ void eval::Expr (expr,int){
 void eval::Expo (expo,int){
 
 }
+void eval::Term (term,int){
+
+}
 void eval::Power(power,int){
 
 }
