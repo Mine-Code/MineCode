@@ -9,8 +9,7 @@ expr& optimize(expr& val){
     for(auto part:val.parts){
         if(part.isSingle() && part.parts[0].isSingle() && part.parts[0].parts[0].type==power::IMM){
             // single pattern
-            power elem=part.parts[0].parts[0];
-            immutable+=elem.imm;
+            immutable+=part.parts[0].parts[0].imm;
         }
     }
     return val;
