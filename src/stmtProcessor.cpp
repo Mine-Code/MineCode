@@ -61,10 +61,10 @@ void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,str
     }
     ctx.Asm->pop(ctx.variables[util::wstr2str(target)].offset);//load value
     if(op==L"++"){
-        //inc
+        ctx.Asm->add(1);
     }
     if(op==L"--"){
-        //dec
+        ctx.Asm->add(-1);
     }
 }
 
