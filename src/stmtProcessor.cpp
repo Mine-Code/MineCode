@@ -65,7 +65,8 @@ void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,str
             eval::Expr(val,13);
 
             var.offset=ctx.Asm->push();
-            
+
+            ctx.variables[util::wstr2str(target)]=var;
         }else{
             processError(ctx,target+L" is not found",__FILE__,__func__,__LINE__);
         }
