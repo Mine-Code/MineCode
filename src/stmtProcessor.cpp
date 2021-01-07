@@ -57,6 +57,7 @@ void stmtProcessor::Put    (Context& ctx){
 void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,struct parserTypes::expr& value){
     // check: is avail variable of target
     if(ctx.variables.count(util::wstr2str(target))==0){
+        // check: is [op==equal and not have element]
         processError(ctx,target+L" is not found",__FILE__,__func__,__LINE__);
     }
     ctx.Asm->pop(ctx.variables[util::wstr2str(target)].offset);//load value
