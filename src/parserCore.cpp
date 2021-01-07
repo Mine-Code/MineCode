@@ -384,11 +384,11 @@ namespace parserCore{
     void While(Context& ctx){
         assertChar("while");
         struct cond conditional = cond(ctx);
-        ctx.stream<<"# while {";
+        ctx.stream<<"# while {"<<std::endl;
         assertChar("{");
         stmtProcessor::While(ctx);
         assertChar("}");
-        ctx.stream<<"# }";
+        ctx.stream<<"# }"<<std::endl;
     }
     struct ExecFunc funcCall(Context& ctx){
         struct ExecFunc ret;
