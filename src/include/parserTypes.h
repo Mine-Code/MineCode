@@ -18,7 +18,7 @@ namespace parserTypes
     };
     using streamType = std::wstringstream;
     using iterType   = iterator<std::wstring>;
-    using varsType   = std::unordered_map<std::string,varType>;
+    using varsType   = std::unordered_map<std::string,struct varType>;
     struct parserContext{
         parserContext();
         Assembly* Asm;
