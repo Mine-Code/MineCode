@@ -46,9 +46,9 @@ namespace util
         return value*sign;
     }
     std::string wstr2str(std::wstring str){
-        
+        return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(str);
     }
     std::wstring str2wstr(std::string str){
-        
+        return std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(str);
     }
 } // namespace util
