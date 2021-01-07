@@ -23,7 +23,7 @@ mcl::mcl(std::string name){
     jsonin >> raw;
 }
 
-void operator<<(parserTypes::parserContext& ctx, mcl pl){
+void operator<<(parserTypes::parserContext& ctx, std::string name){
     json j=pl.raw;
     
     // load datas
