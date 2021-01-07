@@ -101,6 +101,8 @@ namespace parserCore{
         assertChar("}");
     }
     void put(Context& ctx){
+        auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
+
         std::wstring target = value(ctx);
         assertChar("<<");
         struct expr val=expr(ctx);
