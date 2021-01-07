@@ -9,6 +9,7 @@ expr& optimize(expr& val){
     for(auto part:val.parts){
 
     }
+    return val;
 }
 
 void eval::Expr (expr,int){
