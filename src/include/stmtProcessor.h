@@ -21,7 +21,7 @@ namespace stmtProcessor
     void If     (Context& ctx);
     void Func   (Context& ctx);
     void Put    (Context& ctx);
-    void Assign (Context& ctx);
+    void Assign (Context& ctx,std::wstring target,std::wstring op,struct expr value=expr());
     void executeFunction (Context& ctx,parserTypes::ExecFunc);
 } // namespace stmtProcessor
 
