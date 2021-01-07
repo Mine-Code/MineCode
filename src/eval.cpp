@@ -11,6 +11,9 @@ expr& optimize(expr& val){
             // single pattern
             if(part.parts[0].isSingle()){
                 power elem=part.parts[0].parts[0];
+                if(elem.type==power::IMM){
+                    immutable+=elem.imm;
+                }
             }
         }
     }
