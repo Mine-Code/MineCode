@@ -55,9 +55,10 @@ void stmtProcessor::Put    (Context&){
 
 }
 
-void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,struct parserTypes::expr& val){
+void stmtProcessor::Assign (Context& ctx,std::wstring _target,std::wstring op,struct parserTypes::expr& val){
+    std::string target=util::wstr2str(_target);
     // check: is avail variable of target
-    if(ctx.variables.count(util::wstr2str(target))==0){
+    if(ctx.variables.count(target)==0){
         // check: is [op==equal and not have element]
         if(op==L"="){
             // make variable
@@ -66,12 +67,12 @@ void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,str
 
             var.offset=ctx.Asm->push();
 
-            ctx.variables[util::wstr2str(target)]=var;
+            ctx.variables[target]=var;
         }else{
-            processError(ctx,target+L" is not found",__FILE__,__func__,__LINE__);
+            processError(ctx,_target+L" is not found",__FILE__,__func__,__LINE__);
         }
     }
-    ctx.Asm->pop(ctx.variables[util::wstr2str(target)].offset);//load value
+    ctx.Asm->pop(ctx.variables[target].offset);//load value
     if(op==L"++"){
         ctx.Asm->add(1);
     }else if(op==L"--"){
