@@ -55,7 +55,7 @@ void stmtProcessor::Put    (Context&){
 
 }
 
-void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,struct parserTypes::expr&){
+void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,struct parserTypes::expr& val-){
     // check: is avail variable of target
     if(ctx.variables.count(util::wstr2str(target))==0){
         // check: is [op==equal and not have element]
