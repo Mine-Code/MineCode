@@ -5,19 +5,11 @@
 #include <string>
 #include <map>
 #include <vector>
-#include <../../lib/json/single_include/nlohmann/json.hpp>
 
 namespace parserTypes
 {
     class parserContext;
 } // namespace parserTypes
-
-
-class mcl{
-    using json=nlohmann::basic_json<>;
-public:
-    mcl(std::string name);
-};
 
 void operator<<(parserTypes::parserContext&, std::string);
 
