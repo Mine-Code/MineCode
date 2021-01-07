@@ -51,11 +51,11 @@ void stmtProcessor::Func   (Context& ctx){
     ctx.Asm->endOfFunction();
 }
 
-void stmtProcessor::Put    (Context& ctx){
+void stmtProcessor::Put    (Context&){
 
 }
 
-void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,struct parserTypes::expr& value){
+void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,struct parserTypes::expr&){
     // check: is avail variable of target
     if(ctx.variables.count(util::wstr2str(target))==0){
         // check: is [op==equal and not have element]
@@ -75,6 +75,6 @@ void stmtProcessor::Assign (Context& ctx,std::wstring target,std::wstring op,str
     }
 }
 
-void stmtProcessor::executeFunction (Context& ctx,parserTypes::ExecFunc execfunc){
+void stmtProcessor::executeFunction (Context&,parserTypes::ExecFunc){
     
 }
