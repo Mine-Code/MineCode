@@ -390,9 +390,7 @@ namespace parserCore{
     }
     struct ExecFunc funcCall(Context& ctx){
         struct ExecFunc ret;
-        ctx.stream<<"# funcCall ";
         if(ctx.iter.peek()==L"func"){
-            ctx.stream<<"address base ";
             // address based call
             ret.type=ExecFunc::ADDRESS;
 
@@ -401,7 +399,6 @@ namespace parserCore{
             ret.funcAddr=expr(ctx);
             assertChar("]");
         }else{
-            ctx.stream<<"name base ";
             // name based call
             ret.type=ExecFunc::Name;
 
@@ -414,14 +411,11 @@ namespace parserCore{
         assertChar("(");
         if(ctx.iter.peek() != L")"){
             ret.args.emplace_back(expr(ctx));
-            ctx.stream<<"arg ";
         }
         while(ctx.iter.peek() != L")"){
             assertChar(",");
-            ctx.stream<<"arg ";
             ret.args.emplace_back(expr(ctx));
         }
-        ctx.stream<<std::endl;
         assertChar(")");
         return ret;
     }
