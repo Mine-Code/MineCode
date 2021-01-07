@@ -11,12 +11,12 @@ expr& optimize(expr& val){
     }
 }
 
-void eval::Expr (expr  val,int dest){
+void eval::Expr (expr,int){
 
 }
-void eval::Expo (expo  val,int dest){
+void eval::Expo (expo,int){
 
 }
-void eval::Power(power val,int dest){
+void eval::Power(power,int){
 
 }
