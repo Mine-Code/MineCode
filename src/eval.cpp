@@ -20,19 +20,19 @@ term& optimize(term& val){
 }
 
 expr& optimize(expr& val){
-    int immutable=0;
+    int immutable_mul=0;
     expr newExpr;
     for(auto part:val.parts){
         if(part.isSingle() && part.parts_mul[0].isSingle() && part.parts_mul[0].parts[0].type==power::IMM){
-            immutable+=part.parts_mul[0].parts[0].imm;
+            immutable_mul+=part.parts_mul[0].parts[0].imm;
         }else{
             newExpr.parts.emplace_back(part);
         }
     }
-    if(immutable!=0){
+    if(immutable_mul!=0){
         power value;
         value.type=power::IMM;
-        value.imm=immutable;
+        value.imm=immutable_mul;
 
         expo exponent;
         exponent.parts.emplace_back(value);
