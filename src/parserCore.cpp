@@ -418,12 +418,7 @@ namespace parserCore{
         }else{
             // name based call
             ret.type=ExecFunc::Name;
-
-            if(ctx.iter.peekSafe(1)==L"."){
-                ret.funcId=attribute(ctx);
-            }else{
-                ret.funcId=ident(ctx);
-            }
+            ret.funcId=ident(ctx);
         }
         assertChar("(");
         if(ctx.iter.peek() != L")"){
