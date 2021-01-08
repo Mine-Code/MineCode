@@ -43,6 +43,8 @@ expr& optimize(expr& val){
 
         val.parts.emplace_back(Term);
     }
+
+    val.parts = newExpr.parts; // copy new expr (stack safe)
     return val;
 }
 
