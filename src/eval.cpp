@@ -26,20 +26,11 @@ expr& optimize(expr& val){
     expr newExpr;
     for(auto part:val.parts){
         if(part.isSingle()){
-            if(
-                part.parts_mul[0].isSingle() &&
-                part.parts_mul[0].parts[0].type==power::IMM
-            ){
+            if(part.parts_mul[0].isSingle() &&part.parts_mul[0].parts[0].type==power::IMM){
                 immutable_mul+=part.parts_mul[0].parts[0].imm;
-            }else if(
-                part.parts_div[0].isSingle() &&
-                part.parts_div[0].parts[0].type==power::IMM
-            ){
+            }else if(part.parts_div[0].isSingle() &&part.parts_div[0].parts[0].type==power::IMM){
                 immutable_div+=part.parts_div[0].parts[0].imm;
-            }else if(
-                part.parts_mod[0].isSingle() &&
-                part.parts_mod[0].parts[0].type==power::IMM
-            ){
+            }else if(part.parts_mod[0].isSingle() &&part.parts_mod[0].parts[0].type==power::IMM){
                 immutable_mod+=part.parts_mod[0].parts[0].imm;
             }else{
                 newExpr.parts.emplace_back(part);
