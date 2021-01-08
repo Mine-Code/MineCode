@@ -86,7 +86,8 @@ void eval::Power(parserContext& ctx,power obj,int dest){
         synErr::processError(ctx,L"Float isn't supported...",__FILE__,__func__,__LINE__);
         break;
     case power::FUNCCALL:
-        synErr::processError(ctx,L"FuncCall isn't supported...",__FILE__,__func__,__LINE__);
+        stmtProcessor::executeFunction(ctx,*obj.func);
+        ctx.Asm->moveResister(3,dest);
         break;
     default:
         synErr::processError(ctx,
