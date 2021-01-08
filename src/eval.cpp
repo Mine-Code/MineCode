@@ -20,30 +20,20 @@ term& optimize(term& val){
 }
 
 expr& optimize(expr& val){
-    int immutable_mul=0;
-    int immutable_div=0;
-    int immutable_mod=0;
+    int immutable=0;
     expr newExpr;
     for(auto part:val.parts){
-        if(part.isSingle()){
-            if(part.parts_mul[0].isSingle() &&part.parts_mul[0].parts[0].type==power::IMM){
-                immutable_mul+=part.parts_mul[0].parts[0].imm;
-            }else if(part.parts_div[0].isSingle() &&part.parts_div[0].parts[0].type==power::IMM){
-                immutable_div+=part.parts_div[0].parts[0].imm;
-            }else if(part.parts_mod[0].isSingle() &&part.parts_mod[0].parts[0].type==power::IMM){
-                immutable_mod+=part.parts_mod[0].parts[0].imm;
-            }else{
-                newExpr.parts.emplace_back(part);
-            }
+        if(part.isSingle() && part.parts_mul[0].isSingle() && part.parts_mul[0].parts[0].type==power::IMM){
+            immutable+=part.parts_mul[0].parts[0].imm;
         }
         else{
             newExpr.parts.emplace_back(part);
         }
     }
-    if(immutable_mul!=0){
+    if(immutable!=0){
         power value;
         value.type=power::IMM;
-        value.imm=immutable_mul;
+        value.imm=immutable;
 
         expo exponent;
         exponent.parts.emplace_back(value);
