@@ -120,9 +120,6 @@ namespace parserCore{
         if(ctx.iter.peek()==L"["){
             ret.type=value::PTR;
             ret.pointer=ptr(ctx);
-        }else if(ctx.iter.peek(1)==L"."){
-            ret.type=value::IDENT;
-            ret.ident=attribute(ctx);
         }else if(isalpha(ch)){
             ret.type=value::IDENT;
             ret.ident=ident(ctx);
@@ -155,29 +152,16 @@ namespace parserCore{
         assertChar("]");
         return ret;
     }
-    std::wstring attribute(Context& ctx){
-        std::wstring string;
-        string+=ctx.iter.next();
-        while (true)
-        {
-            if(ctx.iter.peek()!=L"."){
-                break;
-            }
-            ctx.iter.next();
-            string+=L"."+ctx.iter.next();
-        }
-        return string;
-    }
     struct value editable(Context& ctx){
-        std::wstring string;
+        struct value ret;
         if(ctx.iter.peek()==L"["){
-            return ptr(ctx);
-        }else if(ctx.iter.peek(1)==L"."){
-            return attribute(ctx);
+            ret.type=value::PTR;
+            ret.pointer=ptr(ctx);
         }else{
-            return ident(ctx);
+            ret.type=value::IDENT;
+            ret.ident=ident(ctx);
         }
-        return string;
+        return ret;
     }
     std::wstring ident(Context& ctx){
         std::wstring text=ctx.iter.next();
@@ -185,17 +169,32 @@ namespace parserCore{
         if(!isalpha(text[0])){
             processError(ctx,L"isn't ident",__FILE__,__func__,__LINE__);
         }
+        // read under the `.`
+        while (ctx.iter.peek()==L".")
+        {
+            ctx.iter.next();
+            text+=L"."+ctx.iter.next();
+        }
         return text;
     }
     struct value constant(Context& ctx){
+        struct value ret;
         std::wstring text=ctx.iter.next();
         // check integer?
         if(!isdigit(text[0]) || text[0]!=L'"')
             processError(ctx,L"isn't constant integer",__FILE__,__func__,__LINE__);
-        return text;
+
+        if(isdigit(text[0])){
+            ret.type=value::IMM;
+            ret.imm=util::toInt(text);
+        }else if(text[0]=='"'){
+            ret.type=value::STR;
+            ret.str=text;
+        }
+        return ret;
     }
     void assign(Context& ctx){
-        std::wstring target=editable(ctx);
+        struct value target=editable(ctx);
         std::wstring op=ctx.iter.next();
         struct expr value;
         if(not (op==L"++" or op==L"--") ){
@@ -419,12 +418,7 @@ namespace parserCore{
         }else{
             // name based call
             ret.type=ExecFunc::Name;
-
-            if(ctx.iter.peekSafe(1)==L"."){
-                ret.funcId=attribute(ctx);
-            }else{
-                ret.funcId=ident(ctx);
-            }
+            ret.funcId=ident(ctx);
         }
         assertChar("(");
         if(ctx.iter.peek() != L")"){
