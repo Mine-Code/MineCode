@@ -168,7 +168,7 @@ namespace parserCore{
         }
         return string;
     }
-    std::wstring editable(Context& ctx){
+    struct value editable(Context& ctx){
         std::wstring string;
         if(ctx.iter.peek()==L"["){
             return ptr(ctx);
@@ -187,7 +187,7 @@ namespace parserCore{
         }
         return text;
     }
-    std::wstring constant(Context& ctx){
+    struct value constant(Context& ctx){
         std::wstring text=ctx.iter.next();
         // check integer?
         if(!isdigit(text[0]) || text[0]!=L'"')
