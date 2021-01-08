@@ -13,6 +13,8 @@ namespace parserTypes
     class parserContext;
     class ExecFunc;
 
+    class value;
+
     class power;
     class expo;
     class term;
@@ -35,7 +37,7 @@ namespace parserCore
     
     std::wstring editable(Context&);
     std::wstring constant(Context&);
-    std::wstring value(Context&);
+    struct parserTypes::value value(Context&);
     
     struct parserTypes::power power (Context&);
     struct parserTypes::expo expo  (Context&);
