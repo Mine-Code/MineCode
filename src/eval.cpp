@@ -2,6 +2,7 @@
 
 #include <parserTypes.h>
 #include <syntaxError.h>
+#include <stmtProcessor.h>
 
 using namespace parserTypes;
 
