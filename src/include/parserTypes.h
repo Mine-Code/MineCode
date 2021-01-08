@@ -127,6 +127,20 @@ namespace parserTypes
         ptrBase base;
         std::vector<int> offsets;
     };
+
+    struct value{
+        enum Type{
+            PTR,
+            IDENT,
+            STR,
+            IMM
+        };
+
+        ptr          pointer;
+        std::wstring ident  ;
+        std::wstring str    ;
+        int          imm    ;
+    };
 } // namespace parserCtx
 
 
