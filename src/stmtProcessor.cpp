@@ -44,10 +44,12 @@ void stmtProcessor::If     (Context& ctx){
 
 void stmtProcessor::Func   (Context& ctx){
     ctx.Asm->startOfFunction();
+    int r14 = ctx.Asm->push(14);
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
+    ctx.Asm->pop(r14,14);
     ctx.Asm->endOfFunction();
 }
 
