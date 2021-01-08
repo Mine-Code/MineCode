@@ -113,13 +113,14 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     int offset=0;
     for(auto val:obj.offsets)offset+=val;
     // get value
+    std::string key;
     switch (obj.base.type)
     {
     case ptrBase::IMM:
         ctx.Asm->peek_i(obj.base.imm,offset,dest);
         break;
     case ptrBase::IDENT:
-        std::string key = util::wstr2str(obj.base.ident);
+        key = util::wstr2str(obj.base.ident);
         break;
     default:
         break;
