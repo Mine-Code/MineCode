@@ -108,20 +108,6 @@ namespace parserTypes
         struct expr funcAddr;
         CallType type;
     };
-
-    struct ptr;
-    struct ptrBase{
-        enum Type{
-            IMM,
-            PTR,
-            IDENT
-        };
-        Type type;
-
-        int imm;
-        ptr* pointer;
-        std::wstring ident;
-    };
     
     class value;
     struct ptr{
