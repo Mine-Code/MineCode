@@ -125,6 +125,7 @@ namespace parserTypes
     
     class value;
     struct ptr{
+        ptr(value);
         value &base;
         std::vector<int> offsets;
     };
