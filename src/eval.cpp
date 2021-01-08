@@ -108,5 +108,9 @@ void eval::Power(parserContext& ctx,power obj,int dest){
 }
 void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     int offs=ctx.Asm->stack_offset;
+    // calculate offset
+    
+    // get value
+    
     ctx.Asm->stack_offset=offs;
 }
