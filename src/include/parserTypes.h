@@ -109,7 +109,7 @@ namespace parserTypes
         CallType type;
     };
 
-    struct Ptr{
+    struct ptr{
         struct{
             enum Type{
                 IMM,
@@ -119,7 +119,7 @@ namespace parserTypes
             Type type;
 
             int imm;
-            Ptr* ptr;
+            ptr* pointer;
             std::wstring ident;
         } base;
         std::vector<int> offsets;
