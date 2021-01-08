@@ -75,6 +75,14 @@ void eval::Term (parserContext& ctx,term,int){
 }
 void eval::Power(parserContext& ctx,power obj,int dest){
     int offs=ctx.Asm->stack_offset;
-
+    switch (obj.type)
+    {
+    case power::EXPR:
+        Expr(ctx,obj.expr,dest);
+        break;
+    
+    default:
+        break;
+    }
     ctx.Asm->stack_offset=offs;
 }
