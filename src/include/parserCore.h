@@ -36,8 +36,8 @@ namespace parserCore
     std::wstring attribute(Context&);
     struct parserTypes::ptr ptr(Context&);
     
-    std::wstring editable(Context&);
-    std::wstring constant(Context&);
+    struct parserTypes::value editable(Context&);
+    struct parserTypes::value constant(Context&);
     struct parserTypes::value value(Context&);
     
     struct parserTypes::power power (Context&);
