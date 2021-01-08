@@ -139,16 +139,17 @@ namespace parserCore{
         return ret;
     }
     struct ptr ptr(Context& ctx){
+        struct ptr ret;
         assertChar("[");
         [[maybe_unused]] bool isImmutable=isdigit(ctx.iter.peek()[0]);
-        std::wstring base=value(ctx);
+        ret.base=value(ctx);
         std::wstring offs;
         while(ctx.iter.peek()==L"+"){
             ctx.iter.next();
-            offs=ctx.iter.next();
+            ret.offsets.emplace_back(util::toInt(ctx.iter.next()));
         }
         assertChar("]");
-        return L"ptr"+base+L" "+offs+L"<";
+        return ret;
     }
     std::wstring attribute(Context& ctx){
         std::wstring string;
