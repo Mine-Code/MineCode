@@ -16,6 +16,11 @@ term& optimize(term& val){
             newTerm.parts_mul.emplace_back(part);
         }
     }
+
+    val.parts_mul=newTerm.parts_mul;
+    val.parts_div=newTerm.parts_div;
+    val.parts_mod=newTerm.parts_mod;
+    
     return val;
 }
 
