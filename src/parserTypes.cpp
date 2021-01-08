@@ -30,4 +30,10 @@ parserTypes::power::power()
 
 bool parserTypes::expr::isSingle(){return parts.size()==1;}
 bool parserTypes::expo::isSingle(){return parts.size()==1;}
-bool parserTypes::term::isSingle(){return parts.size()==1;}
+bool parserTypes::term::isSingle(){
+    return \
+        parts_mul.size()==1 && parts_div.size()==0 && parts_mod.size()==0 ||
+        parts_mul.size()==0 && parts_div.size()==1 && parts_mod.size()==0 ||
+        parts_mul.size()==0 && parts_div.size()==0 && parts_mod.size()==1
+    ;
+}
