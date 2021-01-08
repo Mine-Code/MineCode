@@ -121,6 +121,10 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
         break;
     case ptrBase::IDENT:
         key = util::wstr2str(obj.base.ident);
+        if(ctx.variables.count(key)==0){
+            // doesn't have key
+            synErr::processError(ctx,obj.base.ident+L" is not found!",__FILE__,__func__,__LINE__);
+        }
         break;
     default:
         break;
