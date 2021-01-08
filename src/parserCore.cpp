@@ -115,6 +115,7 @@ namespace parserCore{
         );
     }
     struct value value(Context& ctx){
+        struct value ret;
         wchar_t ch=ctx.iter.peek()[0];
         if(ctx.iter.peek()==L"["){
             return ptr(ctx);
