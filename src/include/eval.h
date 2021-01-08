@@ -9,6 +9,8 @@ namespace parserTypes{
     class expo;
     class term;
     class power;
+
+    class Ptr;
 };
 
 namespace eval
