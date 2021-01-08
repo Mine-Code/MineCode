@@ -92,6 +92,9 @@ void eval::Power(parserContext& ctx,power obj,int dest){
     case power::IMM:
         ctx.Asm->writeRegister(obj.imm,dest);
         break;
+    case power::PTR:
+        synErr::processError(ctx,L"Pointer isn't supported...",__FILE__,__func__,__LINE__);
+        break;
     default:
         synErr::processError(ctx,
             L"unknown type error ["
