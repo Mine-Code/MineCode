@@ -57,7 +57,7 @@ void stmtProcessor::Put    (Context&){
 
 }
 
-void stmtProcessor::Assign (Context& ctx,std::wstring _target,std::wstring op,struct parserTypes::expr& val){
+void stmtProcessor::Assign (Context& ctx,parserTypes::value _target,std::wstring op,struct parserTypes::expr& val){
     std::string target=util::wstr2str(_target);
     // check: is avail variable of target
     if(ctx.variables.count(target)==0){

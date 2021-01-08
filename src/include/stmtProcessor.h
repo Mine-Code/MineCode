@@ -22,7 +22,7 @@ namespace stmtProcessor
     void If     (Context& ctx);
     void Func   (Context& ctx);
     void Put    (Context& ctx);
-    void Assign (Context& ctx,std::wstring target,std::wstring op,struct parserTypes::expr& value);
+    void Assign (Context& ctx,parserTypes::value target,std::wstring op,struct parserTypes::expr& value);
     void executeFunction (Context& ctx,parserTypes::ExecFunc);
 } // namespace stmtProcessor
 
