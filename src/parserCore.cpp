@@ -169,15 +169,18 @@ namespace parserCore{
         return string;
     }
     struct value editable(Context& ctx){
-        std::wstring string;
+        struct value ret;
         if(ctx.iter.peek()==L"["){
-            return ptr(ctx);
+            ret.type=value::PTR;
+            ret.pointer=ptr(ctx);
         }else if(ctx.iter.peek(1)==L"."){
-            return attribute(ctx);
+            ret.type=value::IDENT;
+            ret.ident=attribute(ctx);
         }else{
-            return ident(ctx);
+            ret.type=value::IDENT;
+            ret.ident=ident(ctx);
         }
-        return string;
+        return ret;
     }
     std::wstring ident(Context& ctx){
         std::wstring text=ctx.iter.next();
