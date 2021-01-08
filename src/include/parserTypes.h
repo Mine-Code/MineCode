@@ -122,9 +122,10 @@ namespace parserTypes
         ptr* pointer;
         std::wstring ident;
     };
-
+    
+    class value;
     struct ptr{
-        ptrBase base;
+        value &base;
         std::vector<int> offsets;
     };
 
@@ -136,7 +137,7 @@ namespace parserTypes
             IMM
         };
         Type type;
-        
+
         ptr          pointer;
         std::wstring ident  ;
         std::wstring str    ;
