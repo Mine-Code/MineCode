@@ -10,7 +10,7 @@ namespace parserTypes{
     class term;
     class power;
 
-    class Ptr;
+    class ptr;
 };
 
 namespace eval
@@ -20,6 +20,7 @@ namespace eval
     void Expo (parserContext& ctx,expo  val,int dest=13);
     void Term (parserContext& ctx,term  val,int dest=13);
     void Power(parserContext& ctx,power val,int dest=13);
+    void Ptr  (parserContext& ctx,ptr   val,int dest=13);
 } // namespace eval
 
 
