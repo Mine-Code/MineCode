@@ -27,6 +27,27 @@ namespace parserTypes
         varsType variables;
         std::unordered_map<std::string,std::string> puts;
     };
+    
+    class value;
+    struct ptr{
+        value *base;
+        std::vector<int> offsets;
+    };
+
+    struct value{
+        enum Type{
+            PTR,
+            IDENT,
+            STR,
+            IMM
+        };
+        Type type;
+
+        ptr          pointer;
+        std::wstring ident  ;
+        std::wstring str    ;
+        int          imm    ;
+    };
 
     struct expr{
         std::vector<struct term> parts;
@@ -62,7 +83,7 @@ namespace parserTypes
         struct expr expr;
         struct ExecFunc* func;
         std::wstring var;
-        std::wstring ptr;
+        struct ptr ptr;
     };
     
     struct condChild{
@@ -76,7 +97,7 @@ namespace parserTypes
             GE,  // <=
             LE   // >=
         };
-        std::wstring single;
+        struct value single;
 
         expr val1;
         Type op;
@@ -107,41 +128,6 @@ namespace parserTypes
         std::wstring funcId;
         struct expr funcAddr;
         CallType type;
-    };
-
-    struct ptr;
-    struct ptrBase{
-        enum Type{
-            IMM,
-            PTR,
-            IDENT
-        };
-        Type type;
-
-        int imm;
-        ptr* pointer;
-        std::wstring ident;
-    };
-    
-    class value;
-    struct ptr{
-        value *base;
-        std::vector<int> offsets;
-    };
-
-    struct value{
-        enum Type{
-            PTR,
-            IDENT,
-            STR,
-            IMM
-        };
-        Type type;
-
-        ptr          pointer;
-        std::wstring ident  ;
-        std::wstring str    ;
-        int          imm    ;
     };
 } // namespace parserCtx
 
