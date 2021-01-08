@@ -89,6 +89,9 @@ void eval::Power(parserContext& ctx,power obj,int dest){
         stmtProcessor::executeFunction(ctx,*obj.func);
         ctx.Asm->moveResister(3,dest);
         break;
+    case power::IMM:
+        ctx.Asm->writeRegister(obj.imm,dest);
+        break;
     default:
         synErr::processError(ctx,
             L"unknown type error ["
