@@ -120,9 +120,6 @@ namespace parserCore{
         if(ctx.iter.peek()==L"["){
             ret.type=value::PTR;
             ret.pointer=ptr(ctx);
-        }else if(ctx.iter.peek(1)==L"."){
-            ret.type=value::IDENT;
-            ret.ident=attribute(ctx);
         }else if(isalpha(ch)){
             ret.type=value::IDENT;
             ret.ident=ident(ctx);
@@ -155,27 +152,11 @@ namespace parserCore{
         assertChar("]");
         return ret;
     }
-    std::wstring attribute(Context& ctx){
-        std::wstring string;
-        string+=ctx.iter.next();
-        while (true)
-        {
-            if(ctx.iter.peek()!=L"."){
-                break;
-            }
-            ctx.iter.next();
-            string+=L"."+ctx.iter.next();
-        }
-        return string;
-    }
     struct value editable(Context& ctx){
         struct value ret;
         if(ctx.iter.peek()==L"["){
             ret.type=value::PTR;
             ret.pointer=ptr(ctx);
-        }else if(ctx.iter.peek(1)==L"."){
-            ret.type=value::IDENT;
-            ret.ident=attribute(ctx);
         }else{
             ret.type=value::IDENT;
             ret.ident=ident(ctx);
@@ -187,6 +168,12 @@ namespace parserCore{
         // check word?
         if(!isalpha(text[0])){
             processError(ctx,L"isn't ident",__FILE__,__func__,__LINE__);
+        }
+        // read under the `.`
+        while (ctx.iter.peek()==L".")
+        {
+            ctx.iter.next();
+            text+=L"."+ctx.iter.next();
         }
         return text;
     }
