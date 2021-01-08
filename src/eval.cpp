@@ -84,6 +84,7 @@ void eval::Power(parserContext& ctx,power obj,int dest){
     case power::FLT:
         synErr::processError(ctx,L"Float isn't supported...",__FILE__,__func__,__LINE__);
     default:
+        synErr::processError(ctx,L"unknown type error",__FILE__,__func__,__LINE__);
         break;
     }
     ctx.Asm->stack_offset=offs;
