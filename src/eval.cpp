@@ -20,14 +20,15 @@ term& optimize(term& val){
     val.parts_mul=newTerm.parts_mul;
     val.parts_div=newTerm.parts_div;
     val.parts_mod=newTerm.parts_mod;
-    
+
     return val;
 }
 
 expr& optimize(expr& val){
     int immutable=0;
     expr newExpr;
-    for(auto part:val.parts){
+    for(auto _part:val.parts){
+        auto part=optimize(_part);
         if(part.isSingle() && part.parts_mul[0].isSingle() && part.parts_mul[0].parts[0].type==power::IMM){
             immutable+=part.parts_mul[0].parts[0].imm;
         }
