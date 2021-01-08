@@ -112,6 +112,14 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     int offset=0;
     for(auto val:obj.offsets)offset+=val;
     // get value
-
+    switch (obj.base.type)
+    {
+    case ptrBase::IMM:
+        ctx.Asm->peek_i(obj.base.imm,offset,dest);
+        break;
+    
+    default:
+        break;
+    }
     ctx.Asm->stack_offset=offs;
 }
