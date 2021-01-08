@@ -27,11 +27,6 @@ parserTypes::power::power()
 {
 }
 
-parserTypes::ptr::ptr(parserTypes::value val)
-    : base(val)
-{
-}
-
 bool parserTypes::expr::isSingle(){return parts.size()==1;}
 bool parserTypes::expo::isSingle(){return parts.size()==1;}
 bool parserTypes::term::isSingle(){
