@@ -102,7 +102,7 @@ namespace parserCore{
     void put(Context& ctx){
         auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
 
-        std::string target = converter.to_bytes(value(ctx));
+        std::string target = converter.to_bytes(ident(ctx));
         assertChar("<<");
         struct expr val=expr(ctx);
         assert(ctx.puts.count(target)==1,L"Puts Not found");
