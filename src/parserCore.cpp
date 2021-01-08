@@ -274,7 +274,7 @@ namespace parserCore{
             struct expo tmp;
             tmp.parts.emplace_back(pow);
 
-            part.parts.emplace_back(tmp);
+            part.parts_mul.emplace_back(tmp);
         }
         ret.parts.emplace_back(part);
         
@@ -303,7 +303,7 @@ namespace parserCore{
                 struct expo tmp;
                 tmp.parts.emplace_back(pow);
 
-                part.parts.emplace_back(tmp);
+                part.parts_mul.emplace_back(tmp);
             }
             ret.parts.emplace_back(part);
         }
