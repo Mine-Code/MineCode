@@ -125,6 +125,8 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
             // doesn't have key
             synErr::processError(ctx,obj.base.ident+L" is not found!",__FILE__,__func__,__LINE__);
         }
+        ctx.Asm->pop(ctx.variables[key].offset,14);
+        ctx.Asm->peek(offset,dest,14);
         break;
     default:
         break;
