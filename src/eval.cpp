@@ -118,7 +118,9 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     case ptrBase::IMM:
         ctx.Asm->peek_i(obj.base.imm,offset,dest);
         break;
-    
+    case ptrBase::IDENT:
+        std::string key = util::wstr2str(obj.base.ident);
+        break;
     default:
         break;
     }
