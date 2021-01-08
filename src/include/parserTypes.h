@@ -109,19 +109,22 @@ namespace parserTypes
         CallType type;
     };
 
-    struct ptr{
-        struct{
-            enum Type{
-                IMM,
-                PTR,
-                IDENT
-            };
-            Type type;
+    struct ptr;
+    struct ptrBase{
+        enum Type{
+            IMM,
+            PTR,
+            IDENT
+        };
+        Type type;
 
-            int imm;
-            ptr* pointer;
-            std::wstring ident;
-        } base;
+        int imm;
+        ptr* pointer;
+        std::wstring ident;
+    };
+
+    struct ptr{
+        ptrBase base;
         std::vector<int> offsets;
     };
 } // namespace parserCtx
