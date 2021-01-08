@@ -128,6 +128,9 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
         ctx.Asm->pop(ctx.variables[key].offset,14);
         ctx.Asm->peek(offset,dest,14);
         break;
+    case ptrBase::PTR:
+        Ptr(ctx,*obj.base.pointer,14);
+        ctx.Asm->peek(offset,dest,14);
     default:
         break;
     }
