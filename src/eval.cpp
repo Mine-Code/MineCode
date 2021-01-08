@@ -56,15 +56,15 @@ expr& optimize(expr& val){
     return val;
 }
 
-void eval::Expr (expr,int){
+void eval::Expr (parserContext&,expr,int){
 
 }
-void eval::Expo (expo,int){
+void eval::Expo (parserContext&,expo,int){
 
 }
-void eval::Term (term,int){
+void eval::Term (parserContext&,term,int){
 
 }
-void eval::Power(power,int){
+void eval::Power(parserContext&,power,int){
 
 }
