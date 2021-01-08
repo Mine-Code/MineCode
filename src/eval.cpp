@@ -84,6 +84,7 @@ void eval::Power(parserContext& ctx,power obj,int dest){
         break;
     case power::FLT:
         synErr::processError(ctx,L"Float isn't supported...",__FILE__,__func__,__LINE__);
+        break;
     default:
         synErr::processError(ctx,
             L"unknown type error ["
