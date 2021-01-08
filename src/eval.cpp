@@ -57,14 +57,22 @@ expr& optimize(expr& val){
 }
 
 void eval::Expr (parserContext& ctx,expr,int){
+    int offs=ctx.Asm->stack_offset;
 
+    ctx.Asm->stack_offset=offs;
 }
 void eval::Expo (parserContext& ctx,expo,int){
+    int offs=ctx.Asm->stack_offset;
 
+    ctx.Asm->stack_offset=offs;
 }
 void eval::Term (parserContext& ctx,term,int){
+    int offs=ctx.Asm->stack_offset;
 
+    ctx.Asm->stack_offset=offs;
 }
 void eval::Power(parserContext& ctx,power,int){
+    int offs=ctx.Asm->stack_offset;
 
+    ctx.Asm->stack_offset=offs;
 }
