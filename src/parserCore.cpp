@@ -142,7 +142,11 @@ namespace parserCore{
         struct ptr ret;
         assertChar("[");
         [[maybe_unused]] bool isImmutable=isdigit(ctx.iter.peek()[0]);
-        ret.base=value(ctx);
+        {
+            struct value *tmp=new struct value;
+            *tmp=value(ctx);
+            ret.base=tmp;
+        }
         std::wstring offs;
         while(ctx.iter.peek()==L"+"){
             ctx.iter.next();
