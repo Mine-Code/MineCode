@@ -114,7 +114,7 @@ namespace parserCore{
             ctx.iter.next()  // name
         );
     }
-    std::wstring value(Context& ctx){
+    struct parserTypes::value value(Context& ctx){
         wchar_t ch=ctx.iter.peek()[0];
         if(ctx.iter.peek()==L"["){
             return ptr(ctx);
