@@ -81,7 +81,8 @@ void eval::Power(parserContext& ctx,power obj,int dest){
     case power::EXPR:
         Expr(ctx,obj.expr,dest);
         break;
-    
+    case power::FLT:
+        synErr::processError(ctx,L"Float isn't supported...",__FILE__,__func__,__LINE__);
     default:
         break;
     }
