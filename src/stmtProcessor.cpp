@@ -58,23 +58,27 @@ void stmtProcessor::Put    (Context&){
 }
 
 void stmtProcessor::Assign (Context& ctx,parserTypes::value _target,std::wstring op,struct parserTypes::expr& val){
-    std::string target=util::wstr2str(_target);
-    // check: is avail variable of target
-    if(ctx.variables.count(target)==0){
-        // check: is [op==equal and not have element]
-        if(op==L"="){
-            // make variable
-            parserTypes::varType var;
-            eval::Expr(ctx,val,13);
+    if(_target.type==parserTypes::value::IDENT){
+        std::string target=util::wstr2str(_target.ident);
+        // check: is avail variable of target
+        if(ctx.variables.count(target)==0){
+            // check: is [op==equal and not have element]
+            if(op==L"="){
+                // make variable
+                parserTypes::varType var;
+                eval::Expr(ctx,val,13);
 
-            var.offset=ctx.Asm->push();
+                var.offset=ctx.Asm->push();
 
-            ctx.variables[target]=var;
-        }else{
-            processError(ctx,_target+L" is not found",__FILE__,__func__,__LINE__);
+                ctx.variables[target]=var;
+            }else{
+                processError(ctx,_target.ident+L" is not found",__FILE__,__func__,__LINE__);
+            }
         }
+        ctx.Asm->pop(ctx.variables[target].offset);//load value
+    }else{
+        processError(ctx,_target.type+L" is not implemented...",__FILE__,__func__,__LINE__);
     }
-    ctx.Asm->pop(ctx.variables[target].offset);//load value
     if(op==L"++"){
         ctx.Asm->add(1);
     }else if(op==L"--"){
