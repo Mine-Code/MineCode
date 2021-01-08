@@ -33,7 +33,6 @@ namespace parserCore
     std::wstring ident(Context&);
 
     Arg arg(Context&);
-    std::wstring attribute(Context&);
     struct parserTypes::ptr ptr(Context&);
     
     struct parserTypes::value editable(Context&);
