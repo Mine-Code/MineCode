@@ -1,6 +1,7 @@
 #include <eval.h>
 
 #include <parserTypes.h>
+#include <syntaxError.h>
 
 using namespace parserTypes;
 
