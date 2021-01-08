@@ -118,19 +118,25 @@ namespace parserCore{
         struct value ret;
         wchar_t ch=ctx.iter.peek()[0];
         if(ctx.iter.peek()==L"["){
-            return ptr(ctx);
+            ret.type=value::PTR;
+            ret.pointer=ptr(ctx);
         }else if(ctx.iter.peek(1)==L"."){
-            return attribute(ctx);
+            ret.type=value::IDENT;
+            ret.ident=attribute(ctx);
         }else if(isalpha(ch)){
-            return ident(ctx);
+            ret.type=value::IDENT;
+            ret.ident=ident(ctx);
         }else if(ch==L'"'){
-            return ctx.iter.next();
+            ret.type=value::STR;
+            ret.str=ctx.iter.next();
         }else if(isdigit(ch)){
-            return ctx.iter.next();
+            ret.type=value::IMM;
+            ret.imm=util::toInt(ctx.iter.next());
         }else{
             syntaxError(ctx,L"is not value type ",__FILE__,__func__,__LINE__);
             throw ""; // do not call this
         }
+        return ret;
     }
     std::wstring ptr(Context& ctx){
         assertChar("[");
