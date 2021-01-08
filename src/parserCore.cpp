@@ -92,7 +92,7 @@ namespace parserCore{
             stmtProcessor::Forr(ctx,target.first,target.second);
         }else{
             ctx.stream<<" iter "<<std::endl;
-            std::wstring target=value(ctx);
+            std::wstring target=ident(ctx);
             assertChar("{");
 
             stmtProcessor::For(ctx,varname,target);
