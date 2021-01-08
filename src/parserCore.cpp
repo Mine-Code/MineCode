@@ -207,7 +207,7 @@ namespace parserCore{
         return ret;
     }
     void assign(Context& ctx){
-        std::wstring target=editable(ctx);
+        struct value target=editable(ctx);
         std::wstring op=ctx.iter.next();
         struct expr value;
         if(not (op==L"++" or op==L"--") ){
