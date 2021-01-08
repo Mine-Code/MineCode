@@ -191,11 +191,20 @@ namespace parserCore{
         return text;
     }
     struct value constant(Context& ctx){
+        struct value ret;
         std::wstring text=ctx.iter.next();
         // check integer?
         if(!isdigit(text[0]) || text[0]!=L'"')
             processError(ctx,L"isn't constant integer",__FILE__,__func__,__LINE__);
-        return text;
+
+        if(isdigit(text[0])){
+            ret.type=value::IMM;
+            ret.imm=util::toInt(text);
+        }else if(text[0]=='"'){
+            ret.type=value::STR;
+            ret.str=text;
+        }
+        return ret;
     }
     void assign(Context& ctx){
         std::wstring target=editable(ctx);
