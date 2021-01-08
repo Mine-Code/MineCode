@@ -13,6 +13,7 @@ expo& optimize(expo& val){
 
 term& optimize(term& val){
     int immutable_mul=0;
+    int immutable_div=0;
     term newTerm;
     // process of mul
     for(auto part:val.parts_mul){
@@ -23,7 +24,16 @@ term& optimize(term& val){
             newTerm.parts_mul.emplace_back(part);
         }
     }
-
+    // process of div
+    for(auto part:val.parts_div){
+        if(part.isSingle() && part.parts[0].type==power::IMM){
+            // single pattern
+            immutable_div*=part.parts[0].imm;
+        }else{
+            newTerm.parts_div.emplace_back(part);
+        }
+    }
+    
     val.parts_mul=newTerm.parts_mul;
     val.parts_div=newTerm.parts_div;
     val.parts_mod=newTerm.parts_mod;
@@ -73,7 +83,7 @@ void eval::Expo (parserContext& ctx,expo,int){
 }
 void eval::Term (parserContext& ctx,term obj,int dest){
     int offs=ctx.Asm->stack_offset;
-
+    obj.
     ctx.Asm->stack_offset=offs;
 }
 void eval::Power(parserContext& ctx,power obj,int dest){
