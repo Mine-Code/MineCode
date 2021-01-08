@@ -73,7 +73,7 @@ void eval::Term (parserContext& ctx,term,int){
 
     ctx.Asm->stack_offset=offs;
 }
-void eval::Power(parserContext& ctx,power obj,int){
+void eval::Power(parserContext& ctx,power obj,int dest){
     int offs=ctx.Asm->stack_offset;
 
     ctx.Asm->stack_offset=offs;
