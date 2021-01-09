@@ -100,7 +100,14 @@ void eval::Expr (parserContext& ctx,expr,int){
 }
 void eval::Expo (parserContext& ctx,expo obj,int dest){
     int offs=ctx.Asm->stack_offset;
+    std::vector<int> stackOffsets;
 
+    // write all
+    for(auto elem : obj.parts){
+        Power(ctx,elem,dest);
+        stackOffsets.emplace_back(ctx.Asm->push(dest));
+    }
+    // TODO: add all stackOffsets
     ctx.Asm->stack_offset=offs;
 }
 void eval::Term (parserContext& ctx,term obj,int dest){
