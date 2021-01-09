@@ -4,5 +4,12 @@
 #include <vector>
 #include <string>
 
+class optimizer{
+private:
+    std::vector<std::wstring> codes;
+public:
+    optimizer();
+    std::vector<std::wstring> get();
+};
 
 #endif
