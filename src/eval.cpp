@@ -93,7 +93,7 @@ expr& optimize(expr& val){
     return val;
 }
 
-void eval::Expr (parserContext& ctx,expr,int){
+void eval::Expr (parserContext& ctx,expr obj,int dest){
     int offs=ctx.Asm->stack_offset;
     // TODO: add all stackOffsets
     ctx.Asm->stack_offset=offs;
