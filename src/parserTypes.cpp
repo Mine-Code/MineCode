@@ -29,6 +29,4 @@ parserTypes::power::power()
 
 bool parserTypes::expr::isSingle(){return parts.size()==1;}
 bool parserTypes::expo::isSingle(){return parts.size()==1;}
-bool parserTypes::term::isSingle(){
-    return parts.size()==1;
-}
+bool parserTypes::term::isSingle(){return parts.size()==1;}
