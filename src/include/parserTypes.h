@@ -54,9 +54,7 @@ namespace parserTypes
         bool isSingle();
     };
     struct term{
-        std::vector<struct expo> parts_mul;
-        std::vector<struct expo> parts_div;
-        std::vector<struct expo> parts_mod;
+        std::vector<struct expo> parts;
         bool isSingle();
     };
     struct expo{
