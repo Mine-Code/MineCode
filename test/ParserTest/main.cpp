@@ -35,7 +35,8 @@ int main()
         "}"s
     );
     prs.tokenize();
-    std::wcout<<prs.compile()<<std::endl; // show compiled code
+    auto compiled=prs.compile();
+    std::wcout<<compiled<<std::endl; // show compiled code
     prs.debug();
     return 0;
 }
