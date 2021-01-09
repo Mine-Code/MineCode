@@ -98,7 +98,7 @@ void eval::Expr (parserContext& ctx,expr,int){
 
     ctx.Asm->stack_offset=offs;
 }
-void eval::Expo (parserContext& ctx,expo,int){
+void eval::Expo (parserContext& ctx,expo obj,int dest){
     int offs=ctx.Asm->stack_offset;
 
     ctx.Asm->stack_offset=offs;
