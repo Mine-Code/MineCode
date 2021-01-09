@@ -14,9 +14,9 @@ term& optimize(term& val){
     term newTerm;
     // process of mul
     for(auto part:val.parts){
-        if(part.isSingle() && part.parts[0].type==power::IMM){
+        if(part.value.isSingle() && part.value.parts[0].type==power::IMM){
             // single pattern
-            immutable_mul*=part.parts[0].imm;
+            immutable_mul*=part.value.parts[0].imm;
         }else{
             newTerm.parts.emplace_back(part);
         }
@@ -85,7 +85,7 @@ void eval::Term (parserContext& ctx,term obj,int dest){
     std::vector<int> stackOffsetsDiv;
     std::vector<int> stackOffsetsMod;
 
-    // write mul[s]
+    // write all
     for(expo elem : obj.parts){
         Expo(ctx,elem,dest);
         stackOffsetsMul.emplace_back(ctx.Asm->push(dest));
