@@ -121,13 +121,17 @@ void eval::Expr (parserContext& ctx,expr obj,int dest){
 void eval::Expo (parserContext& ctx,expo obj,int dest){
     int offs=ctx.Asm->stack_offset;
     std::vector<int> stackOffsets;
-
-    // write all
-    for(auto elem : obj.parts){
-        Power(ctx,elem,dest);
-        stackOffsets.emplace_back(ctx.Asm->push(dest));
+    
+    if(obj.isSingle()){
+        Power(ctx,obj.parts[0],dest);
+    }else{
+        // write all
+        for(auto elem : obj.parts){
+            Power(ctx,elem,dest);
+            stackOffsets.emplace_back(ctx.Asm->push(dest));
+        }
+        // TODO: power all stackOffsets
     }
-    // TODO: power all stackOffsets
     ctx.Asm->stack_offset=offs;
 }
 void eval::Term (parserContext& ctx,term obj,int dest){
