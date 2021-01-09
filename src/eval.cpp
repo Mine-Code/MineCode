@@ -95,7 +95,7 @@ expr& optimize(expr& val){
 
 void eval::Expr (parserContext& ctx,expr,int){
     int offs=ctx.Asm->stack_offset;
-
+    // TODO: add all stackOffsets
     ctx.Asm->stack_offset=offs;
 }
 void eval::Expo (parserContext& ctx,expo obj,int dest){
@@ -107,7 +107,7 @@ void eval::Expo (parserContext& ctx,expo obj,int dest){
         Power(ctx,elem,dest);
         stackOffsets.emplace_back(ctx.Asm->push(dest));
     }
-    // TODO: add all stackOffsets
+    // TODO: power all stackOffsets
     ctx.Asm->stack_offset=offs;
 }
 void eval::Term (parserContext& ctx,term obj,int dest){
@@ -136,7 +136,7 @@ void eval::Term (parserContext& ctx,term obj,int dest){
                 synErr::processError(ctx,L"Unknown expr_wrap type ",__FILE__,__func__,__LINE__);
         }
     }
-    // TODO: multi all stackOffsets[Mul/Div/Mod]
+    // TODO: multiple all stackOffsets[Mul/Div/Mod]
     ctx.Asm->stack_offset=offs;
 }
 void eval::Power(parserContext& ctx,power obj,int dest){
