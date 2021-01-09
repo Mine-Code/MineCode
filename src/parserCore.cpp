@@ -241,8 +241,12 @@ namespace parserCore{
     }
     struct term term  (Context& ctx){
         struct term ret;
-
-        ret.parts.emplace_back(expo(ctx));
+        {
+            expo_wrap wrap;
+            wrap.type=expo_wrap::MUL;
+            wrap.value=expo(ctx);
+            ret.parts.emplace_back(wrap);
+        }
         while(
             ctx.iter.hasData() &&
             (
@@ -289,7 +293,11 @@ namespace parserCore{
             struct expo tmp;
             tmp.parts.emplace_back(pow);
 
-            part.parts.emplace_back(tmp);
+            struct expo_wrap wrap;
+            wrap.value=tmp;
+            wrap.type=expo_wrap::MUL;
+
+            part.parts.emplace_back(wrap);
         }
         ret.parts.emplace_back(part);
         
@@ -318,7 +326,11 @@ namespace parserCore{
                 struct expo tmp;
                 tmp.parts.emplace_back(pow);
 
-                part.parts.emplace_back(tmp);
+                struct expo_wrap wrap;
+                wrap.value=tmp;
+                wrap.type=expo_wrap::MUL;
+                
+                part.parts.emplace_back(wrap);
             }
             ret.parts.emplace_back(part);
         }

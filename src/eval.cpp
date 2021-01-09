@@ -33,7 +33,11 @@ term& optimize(term& val){
         expo expoElem;
         expoElem.parts.emplace_back(powerElem);
 
-        val.parts.emplace_back(expoElem);
+        expo_wrap wrapElem;
+        wrapElem.type=expo_wrap::MUL;
+        wrapElem.value=expoElem;
+
+        val.parts.emplace_back(wrapElem);
     }
 
     return val;
@@ -59,8 +63,12 @@ expr& optimize(expr& val){
         expo exponent;
         exponent.parts.emplace_back(value);
 
+        expo_wrap wrap;
+        wrap.type=expo_wrap::MUL;
+        wrap.value= exponent;
+
         term Term;
-        Term.parts.emplace_back(exponent);
+        Term.parts.emplace_back(wrap);
 
         val.parts.emplace_back(Term);
     }
