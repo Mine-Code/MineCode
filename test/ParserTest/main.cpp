@@ -37,6 +37,11 @@ int main()
     prs.tokenize();
     auto compiled=prs.compile();
     std::wcout<<compiled<<std::endl; // show compiled code
+    
+    // count  lines
+    int lines=0;
+    for(auto ch:compiled) if (ch=='\n') lines++;
+    std::wcout<<"lines: "<<lines<<std::endl;
     prs.debug();
     return 0;
 }
