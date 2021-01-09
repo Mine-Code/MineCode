@@ -2,7 +2,8 @@
 #include <typedIterator.hxx>
 
 class Iasm{
-
+public:
+    std::wstring name;
 };
 
 optimizer::optimizer(std::wstring src){
