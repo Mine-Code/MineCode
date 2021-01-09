@@ -105,12 +105,12 @@ void eval::Expo (parserContext& ctx,expo,int){
 }
 void eval::Term (parserContext& ctx,term obj,int dest){
     int offs=ctx.Asm->stack_offset;
-    std::vector<int> stackOffsets;
+    std::vector<int> stackOffsetsMul;
 
     // write mul[s]
     for(expo elem : obj.parts_mul){
         Expo(ctx,elem,dest);
-        stackOffsets.emplace_back(ctx.Asm->push(dest));
+        stackOffsetsMul.emplace_back(ctx.Asm->push(dest));
     }
 
     ctx.Asm->stack_offset=offs;
