@@ -8,7 +8,7 @@ class optimizer{
 private:
     std::vector<std::wstring> codes;
 public:
-    optimizer();
+    optimizer(std::wstring src);
     std::vector<std::wstring> get();
 };
 
