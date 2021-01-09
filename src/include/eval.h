@@ -11,7 +11,7 @@ namespace parserTypes{
     class power;
 
     class ptr;
-};
+}
 
 namespace eval
 {
