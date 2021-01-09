@@ -144,41 +144,45 @@ void eval::Term (parserContext& ctx,term obj,int dest){
     };
     std::vector<struct offset> stackOffsets;
 
-    // write all
-    for(auto elem : obj.parts){
-        Expo(ctx,elem.value,dest);
+    if(obj.isSingle()){
+        Expo(ctx,obj.parts[0].value,dest);
+    }else{
+        // write all
+        for(auto elem : obj.parts){
+            Expo(ctx,elem.value,dest);
 
-        int offset=ctx.Asm->push(dest);
-        offset::Type type;
-        switch(elem.type)
-        {
-            case expo_wrap::MUL: type=offset::Type::MUL; break;
-            case expo_wrap::DIV: type=offset::Type::DIV; break;
-            case expo_wrap::MOD: type=offset::Type::MOD; break;
-            default:
-                synErr::processError(ctx,L"Unknown expr_wrap type ",__FILE__,__func__,__LINE__);
+            int offset=ctx.Asm->push(dest);
+            offset::Type type;
+            switch(elem.type)
+            {
+                case expo_wrap::MUL: type=offset::Type::MUL; break;
+                case expo_wrap::DIV: type=offset::Type::DIV; break;
+                case expo_wrap::MOD: type=offset::Type::MOD; break;
+                default:
+                    synErr::processError(ctx,L"Unknown expr_wrap type ",__FILE__,__func__,__LINE__);
+            }
+
+            struct offset element;
+            element.type=type;
+            element.offset=offset;
+
+            stackOffsets.emplace_back(element);
         }
 
-        struct offset element;
-        element.type=type;
-        element.offset=offset;
-
-        stackOffsets.emplace_back(element);
-    }
-    
-    ctx.Asm->writeRegister(1,dest);// init dest
-    for(auto a: stackOffsets){
-        ctx.Asm->pop(a.offset,14);
-        switch(a.type){
-        case offset::MUL:
-            ctx.stream<<"# r"<<dest<<" = r"<<dest<<" * r14"<<std::endl;// TODO: dest = dest*r14
-            break;
-        case offset::DIV:
-            ctx.stream<<"# r"<<dest<<" = r"<<dest<<" / r14"<<std::endl;// TODO: dest = dest/r14
-            break;
-        case offset::MOD:
-            ctx.stream<<"# r"<<dest<<" = r"<<dest<<" % r14"<<std::endl;// TODO: dest = dest%r14
-            break;
+        ctx.Asm->writeRegister(1,dest);// init dest
+        for(auto a: stackOffsets){
+            ctx.Asm->pop(a.offset,14);
+            switch(a.type){
+            case offset::MUL:
+                ctx.stream<<"# r"<<dest<<" = r"<<dest<<" * r14"<<std::endl;// TODO: dest = dest*r14
+                break;
+            case offset::DIV:
+                ctx.stream<<"# r"<<dest<<" = r"<<dest<<" / r14"<<std::endl;// TODO: dest = dest/r14
+                break;
+            case offset::MOD:
+                ctx.stream<<"# r"<<dest<<" = r"<<dest<<" % r14"<<std::endl;// TODO: dest = dest%r14
+                break;
+            }
         }
     }
 
