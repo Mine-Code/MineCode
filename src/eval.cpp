@@ -159,7 +159,7 @@ void eval::Term (parserContext& ctx,term obj,int dest){
         element.offset=offset;
     }
     
-    // TODO: multiple all stackOffsets[Mul/Div/Mod]
+    ctx.Asm->writeRegister(1,dest);// init dest
 
     ctx.Asm->stack_offset=offs;
 }
