@@ -64,7 +64,7 @@ namespace parserTypes
         struct expo value;
     };
     struct term{
-        std::vector<struct expo> parts;
+        std::vector<struct expo_wrap> parts;
         bool isSingle();
     };
     struct expo{
