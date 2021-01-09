@@ -7,9 +7,6 @@
 
 using namespace parserTypes;
 
-expo& optimize(expo& val){
-    return val;
-}
 
 term& optimize(term& val){
     int immutable_mul=0;
