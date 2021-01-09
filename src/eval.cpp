@@ -16,7 +16,9 @@ term& optimize(term& val){
     for(auto part:val.parts){
         if(part.value.isSingle() && part.value.parts[0].type==power::IMM){
             auto imm=part.value.parts[0].imm;
-            if(part.type==expo_wrap::MUL)immutable_mul*=imm;
+            if(part.type==expo_wrap::MUL)immutable_mul*=imm; else
+            if(part.type==expo_wrap::DIV)immutable_div*=imm; else
+            if(part.type==expo_wrap::MOD)newTerm.parts.emplace_back(part);
         }else{
             newTerm.parts.emplace_back(part);
         }
