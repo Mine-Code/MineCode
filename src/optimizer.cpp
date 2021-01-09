@@ -10,3 +10,7 @@ optimizer::optimizer(std::wstring src){
         }
     }
 }
+
+std::vector<std::wstring> optimizer::get(){
+    // optimize and return!
+}
