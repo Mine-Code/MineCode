@@ -160,6 +160,20 @@ void eval::Term (parserContext& ctx,term obj,int dest){
     }
     
     ctx.Asm->writeRegister(1,dest);// init dest
+    for(auto a: stackOffsets){
+        ctx.Asm->pop(a.offset,14);
+        switch(a.type){
+        case offset::MUL:
+            // TODO: dest = dest*r14
+            break;
+        case offset::DIV:
+            // TODO: dest = dest/r14
+            break;
+        case offset::MOD:
+            // TODO: dest = dest%r14
+            break;
+        }
+    }
 
     ctx.Asm->stack_offset=offs;
 }
