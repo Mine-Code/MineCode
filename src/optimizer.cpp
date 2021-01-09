@@ -1,3 +1,3 @@
 #include <optimizer.h>
 
-optimizer::optimizer(){}
+optimizer::optimizer(std::wstring src){}
