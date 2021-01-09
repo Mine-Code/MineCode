@@ -166,6 +166,9 @@ void eval::Power(parserContext& ctx,power obj,int dest){
     case power::PTR:
         Ptr(ctx,obj.ptr,dest);
         break;
+    case power::VAR:
+        ctx.Asm->pop(ctx.variables[util::wstr2str(obj.var)].offset,dest);
+        break;
     default:
         synErr::processError(ctx,
             L"unknown type error ["
