@@ -102,7 +102,15 @@ void eval::Expr (parserContext& ctx,expr obj,int dest){
         Term(ctx,elem,dest);
         stackOffsets.emplace_back(ctx.Asm->push(dest));
     }
-    // TODO: add all stackOffsets
+    
+    ctx.Asm->writeRegister(0,dest);
+    for (auto i : stackOffsets)
+    {
+        ctx.Asm->pop(i,14);
+        // TODO: dest=dest+r14
+    }
+    
+
     ctx.Asm->stack_offset=offs;
 }
 void eval::Expo (parserContext& ctx,expo obj,int dest){
