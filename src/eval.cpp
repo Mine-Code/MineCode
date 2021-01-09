@@ -127,31 +127,40 @@ void eval::Expo (parserContext& ctx,expo obj,int dest){
 }
 void eval::Term (parserContext& ctx,term obj,int dest){
     int offs=ctx.Asm->stack_offset;
-    std::vector<int> stackOffsetsMul;
-    std::vector<int> stackOffsetsDiv;
-    std::vector<int> stackOffsetsMod;
+    struct offset{
+        enum Type{
+            MUL,
+            DIV,
+            MOD
+        };
+
+        Type type;
+        int offset=0;
+    };
+    std::vector<struct offset> stackOffsets;
 
     // write all
     for(auto elem : obj.parts){
         Expo(ctx,elem.value,dest);
 
         int offset=ctx.Asm->push(dest);
+        offset::Type type;
         switch(elem.type)
         {
-            case expo_wrap::MUL:
-                stackOffsetsMul.emplace_back(offset);
-                break;
-            case expo_wrap::DIV:
-                stackOffsetsMul.emplace_back(offset);
-                break;
-            case expo_wrap::MOD:
-                stackOffsetsMul.emplace_back(offset);
-                break;
+            case expo_wrap::MUL: type=offset::Type::MUL; break;
+            case expo_wrap::DIV: type=offset::Type::DIV; break;
+            case expo_wrap::MOD: type=offset::Type::MOD; break;
             default:
                 synErr::processError(ctx,L"Unknown expr_wrap type ",__FILE__,__func__,__LINE__);
         }
+
+        struct offset element;
+        element.type=type;
+        element.offset=offset;
     }
+    
     // TODO: multiple all stackOffsets[Mul/Div/Mod]
+
     ctx.Asm->stack_offset=offs;
 }
 void eval::Power(parserContext& ctx,power obj,int dest){
