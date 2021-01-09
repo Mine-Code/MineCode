@@ -38,6 +38,18 @@ term& optimize(term& val){
     val.parts_div=newTerm.parts_div;
     val.parts_mod=newTerm.parts_mod;
 
+    // add mul/div element
+    {// add mul
+        power powerElem;
+        powerElem.type=power::IMM;
+        powerElem.imm=immutable_mul;
+
+        expo expoElem;
+        expoElem.parts.emplace_back(powerElem);
+
+        val.parts_mul.emplace_back(expoElem);
+    }
+
     return val;
 }
 
