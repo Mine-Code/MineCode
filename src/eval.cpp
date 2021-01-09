@@ -14,8 +14,9 @@ term& optimize(term& val){
     term newTerm;
     // process of mul
     for(auto part:val.parts){
-        if(part.type==expo_wrap::MUL && part.value.isSingle() && part.value.parts[0].type==power::IMM){
-            immutable_mul*=part.value.parts[0].imm;
+        if(part.value.isSingle() && part.value.parts[0].type==power::IMM){
+            auto imm=part.value.parts[0].imm;
+            if(part.type==expo_wrap::MUL)immutable_mul*=imm;
         }else{
             newTerm.parts.emplace_back(part);
         }
