@@ -157,7 +157,7 @@ void eval::Power(parserContext& ctx,power obj,int dest){
         ctx.Asm->writeRegister(obj.imm,dest);
         break;
     case power::PTR:
-        //TODO: Ptr(ctx,obj.ptr,dest);
+        Ptr(ctx,obj.ptr,dest);
         break;
     default:
         synErr::processError(ctx,
