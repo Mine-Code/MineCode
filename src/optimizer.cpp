@@ -1,4 +1,5 @@
 #include <optimizer.h>
+#include <typedIterator.hxx>
 
 optimizer::optimizer(std::wstring src){
     std::wstring line;
