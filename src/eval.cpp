@@ -106,6 +106,8 @@ void eval::Expo (parserContext& ctx,expo,int){
 void eval::Term (parserContext& ctx,term obj,int dest){
     int offs=ctx.Asm->stack_offset;
     std::vector<int> stackOffsets;
+    
+    
     ctx.Asm->stack_offset=offs;
 }
 void eval::Power(parserContext& ctx,power obj,int dest){
