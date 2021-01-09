@@ -44,8 +44,8 @@ expr& optimize(expr& val){
     expr newExpr;
     for(auto _part:val.parts){
         auto part=optimize(_part);
-        if(part.isSingle() && part.parts[0].isSingle() && part.parts[0].parts[0].type==power::IMM){
-            immutable+=part.parts[0].parts[0].imm;
+        if(part.isSingle() && part.parts[0].value.isSingle() && part.parts[0].value.parts[0].type==power::IMM){
+            immutable+=part.parts[0].value.parts[0].imm;
         }
         else{
             newExpr.parts.emplace_back(part);
