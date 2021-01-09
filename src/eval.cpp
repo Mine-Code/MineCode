@@ -49,6 +49,16 @@ term& optimize(term& val){
 
         val.parts_mul.emplace_back(expoElem);
     }
+    {// add div
+        power powerElem;
+        powerElem.type=power::IMM;
+        powerElem.imm=immutable_mul;
+
+        expo expoElem;
+        expoElem.parts.emplace_back(powerElem);
+
+        val.parts_div.emplace_back(expoElem);
+    }
 
     return val;
 }
