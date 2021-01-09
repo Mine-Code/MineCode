@@ -53,6 +53,16 @@ namespace parserTypes
         std::vector<struct term> parts;
         bool isSingle();
     };
+    struct expo_wrap{
+        enum Type{
+            MUL,
+            DIV,
+            MOD
+        };
+
+        Type type;
+        struct expo value;
+    };
     struct term{
         std::vector<struct expo> parts;
         bool isSingle();
