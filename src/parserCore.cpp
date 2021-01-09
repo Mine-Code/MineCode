@@ -260,7 +260,15 @@ namespace parserCore{
             );
 
             expo_wrap Elem;
-            ret.parts.emplace_back(expo(ctx));
+            if(text==L"*"){
+                Elem.type=expo_wrap::MUL;
+            }else if(text==L"/"){
+                Elem.type=expo_wrap::DIV;
+            }else if(text==L"%"){
+                Elem.type=expo_wrap::MOD;
+            }
+            Elem.value=expo(ctx);
+            ret.parts.emplace_back(Elem);
         }
         return ret;
     }
