@@ -158,6 +158,8 @@ void eval::Term (parserContext& ctx,term obj,int dest){
         struct offset element;
         element.type=type;
         element.offset=offset;
+
+        stackOffsets.emplace_back(element);
     }
     
     ctx.Asm->writeRegister(1,dest);// init dest
