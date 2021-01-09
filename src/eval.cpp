@@ -86,9 +86,24 @@ void eval::Term (parserContext& ctx,term obj,int dest){
     std::vector<int> stackOffsetsMod;
 
     // write all
-    for(expo elem : obj.parts){
-        Expo(ctx,elem,dest);
-        stackOffsetsMul.emplace_back(ctx.Asm->push(dest));
+    for(auto elem : obj.parts){
+        Expo(ctx,elem.value,dest);
+
+        int offset=ctx.Asm->push(dest);
+        switch(elem.type)
+        {
+            case expo_wrap::MUL:
+                stackOffsetsMul.emplace_back(offset);
+                break;
+            case expo_wrap::DIV:
+                stackOffsetsMul.emplace_back(offset);
+                break;
+            case expo_wrap::MOD:
+                stackOffsetsMul.emplace_back(offset);
+                break;
+            default:
+                synErr::processError(ctx,L"Unknown expr_wrap type ",__FILE__,__func__,__LINE__);
+        }
     }
 
     ctx.Asm->stack_offset=offs;
