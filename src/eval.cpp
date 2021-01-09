@@ -16,27 +16,16 @@ term& optimize(term& val){
     int immutable_div=0;
     term newTerm;
     // process of mul
-    for(auto part:val.parts_mul){
+    for(auto part:val.parts){
         if(part.isSingle() && part.parts[0].type==power::IMM){
             // single pattern
             immutable_mul*=part.parts[0].imm;
         }else{
-            newTerm.parts_mul.emplace_back(part);
-        }
-    }
-    // process of div
-    for(auto part:val.parts_div){
-        if(part.isSingle() && part.parts[0].type==power::IMM){
-            // single pattern
-            immutable_div*=part.parts[0].imm;
-        }else{
-            newTerm.parts_div.emplace_back(part);
+            newTerm.parts.emplace_back(part);
         }
     }
     
-    val.parts_mul=newTerm.parts_mul;
-    val.parts_div=newTerm.parts_div;
-    val.parts_mod=newTerm.parts_mod;
+    val.parts=newTerm.parts;
 
     // add mul/div element
     {// add mul
@@ -47,17 +36,7 @@ term& optimize(term& val){
         expo expoElem;
         expoElem.parts.emplace_back(powerElem);
 
-        val.parts_mul.emplace_back(expoElem);
-    }
-    {// add div
-        power powerElem;
-        powerElem.type=power::IMM;
-        powerElem.imm=immutable_mul;
-
-        expo expoElem;
-        expoElem.parts.emplace_back(powerElem);
-
-        val.parts_div.emplace_back(expoElem);
+        val.parts.emplace_back(expoElem);
     }
 
     return val;
@@ -68,8 +47,8 @@ expr& optimize(expr& val){
     expr newExpr;
     for(auto _part:val.parts){
         auto part=optimize(_part);
-        if(part.isSingle() && part.parts_mul[0].isSingle() && part.parts_mul[0].parts[0].type==power::IMM){
-            immutable+=part.parts_mul[0].parts[0].imm;
+        if(part.isSingle() && part.parts[0].isSingle() && part.parts[0].parts[0].type==power::IMM){
+            immutable+=part.parts[0].parts[0].imm;
         }
         else{
             newExpr.parts.emplace_back(part);
@@ -84,7 +63,7 @@ expr& optimize(expr& val){
         exponent.parts.emplace_back(value);
 
         term Term;
-        Term.parts_mul.emplace_back(exponent);
+        Term.parts.emplace_back(exponent);
 
         val.parts.emplace_back(Term);
     }
@@ -106,9 +85,11 @@ void eval::Expo (parserContext& ctx,expo,int){
 void eval::Term (parserContext& ctx,term obj,int dest){
     int offs=ctx.Asm->stack_offset;
     std::vector<int> stackOffsetsMul;
+    std::vector<int> stackOffsetsDiv;
+    std::vector<int> stackOffsetsMod;
 
     // write mul[s]
-    for(expo elem : obj.parts_mul){
+    for(expo elem : obj.parts){
         Expo(ctx,elem,dest);
         stackOffsetsMul.emplace_back(ctx.Asm->push(dest));
     }

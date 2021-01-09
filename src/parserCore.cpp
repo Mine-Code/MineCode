@@ -242,7 +242,7 @@ namespace parserCore{
     struct term term  (Context& ctx){
         struct term ret;
 
-        ret.parts_mul.emplace_back(expo(ctx));
+        ret.parts.emplace_back(expo(ctx));
         while(
             ctx.iter.hasData() &&
             (
@@ -258,13 +258,7 @@ namespace parserCore{
                 text == L"%"
             , L"excepted '*' or '/','%'"
             );
-            if(text==L"/"){
-                ret.parts_div.emplace_back(expo(ctx));
-            }else if(text==L"*"){
-                ret.parts_mul.emplace_back(expo(ctx));
-            }else if(text==L"%"){
-                ret.parts_mod.emplace_back(expo(ctx));
-            }
+            ret.parts.emplace_back(expo(ctx));
         }
         return ret;
     }
@@ -285,7 +279,7 @@ namespace parserCore{
             struct expo tmp;
             tmp.parts.emplace_back(pow);
 
-            part.parts_mul.emplace_back(tmp);
+            part.parts.emplace_back(tmp);
         }
         ret.parts.emplace_back(part);
         
@@ -314,7 +308,7 @@ namespace parserCore{
                 struct expo tmp;
                 tmp.parts.emplace_back(pow);
 
-                part.parts_mul.emplace_back(tmp);
+                part.parts.emplace_back(tmp);
             }
             ret.parts.emplace_back(part);
         }
