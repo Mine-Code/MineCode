@@ -95,6 +95,13 @@ expr& optimize(expr& val){
 
 void eval::Expr (parserContext& ctx,expr obj,int dest){
     int offs=ctx.Asm->stack_offset;
+    std::vector<int> stackOffsets;
+
+    // write all
+    for(auto elem : obj.parts){
+        Term(ctx,elem,dest);
+        stackOffsets.emplace_back(ctx.Asm->push(dest));
+    }
     // TODO: add all stackOffsets
     ctx.Asm->stack_offset=offs;
 }
