@@ -258,6 +258,8 @@ namespace parserCore{
                 text == L"%"
             , L"excepted '*' or '/','%'"
             );
+
+            expo_wrap Elem;
             ret.parts.emplace_back(expo(ctx));
         }
         return ret;
