@@ -136,7 +136,7 @@ void eval::Term (parserContext& ctx,term obj,int dest){
                 synErr::processError(ctx,L"Unknown expr_wrap type ",__FILE__,__func__,__LINE__);
         }
     }
-
+    // TODO: multi all stackOffsets[Mul/Div/Mod]
     ctx.Asm->stack_offset=offs;
 }
 void eval::Power(parserContext& ctx,power obj,int dest){
