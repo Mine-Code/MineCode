@@ -97,18 +97,22 @@ void eval::Expr (parserContext& ctx,expr obj,int dest){
     int offs=ctx.Asm->stack_offset;
     std::vector<int> stackOffsets;
 
-    // write all
-    for(auto elem : obj.parts){
-        Term(ctx,elem,dest);
-        stackOffsets.emplace_back(ctx.Asm->push(dest));
-    }
-    
-    ctx.Asm->writeRegister(0,dest);
-    for (auto i : stackOffsets)
-    {
-        ctx.Asm->pop(i,14);
-        // TODO: dest=dest+r14
-        ctx.stream<<"# r"<<dest<<" = r"<<dest<<" + r14"<<std::endl;
+    if(obj.isSingle()){
+        Term(ctx,obj.parts[0],dest);
+    }else{
+        // write all
+        for(auto elem : obj.parts){
+            Term(ctx,elem,dest);
+            stackOffsets.emplace_back(ctx.Asm->push(dest));
+        }
+
+        ctx.Asm->writeRegister(0,dest);
+        for (auto i : stackOffsets)
+        {
+            ctx.Asm->pop(i,14);
+            // TODO: dest=dest+r14
+            ctx.stream<<"# r"<<dest<<" = r"<<dest<<" + r14"<<std::endl;
+        }
     }
     
 
