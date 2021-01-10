@@ -43,6 +43,10 @@ int main()
     int lines=0;
     for(auto ch:compiled) if (ch=='\n') lines++;
     std::wcout<<"lines: "<<lines<<std::endl;
+
+    optimizer a(compiled);
+    a.get();
+
     prs.debug();
     return 0;
 }
