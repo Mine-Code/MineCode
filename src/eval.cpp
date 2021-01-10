@@ -110,7 +110,6 @@ void eval::Expr (parserContext& ctx,expr obj,int dest){
         for (auto i : stackOffsets)
         {
             ctx.Asm->pop(i,14);
-            // TODO: dest=dest+r14
             ctx.stream<<"add r"<<dest<<", r"<<dest<<", r14"<<std::endl;
         }
     }
