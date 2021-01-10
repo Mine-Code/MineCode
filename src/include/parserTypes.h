@@ -133,7 +133,7 @@ namespace parserTypes
 
         std::vector<expr> args;
         std::wstring funcId;
-        struct expr funcAddr;
+        int funcAddr;
         CallType type;
     };
 } // namespace parserCtx
