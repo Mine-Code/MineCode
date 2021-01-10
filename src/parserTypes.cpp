@@ -7,6 +7,16 @@ parserTypes::parserContext::parserContext()
     iter=iterType();
     variables=varsType();
 }
+
+parserTypes::parserContext::parserContext(parserTypes::parserContext& source)
+    : Asm(source.Asm)
+    , iter(source.iter)
+    , variables(source.variables)
+    , puts(source.puts)
+{
+    stream<<source.stream.rdbuf();
+}
+
 parserTypes::cond::cond()
     : conds( std::vector<std::pair<Type,condChild>>() )
 {
