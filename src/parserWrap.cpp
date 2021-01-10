@@ -33,11 +33,9 @@ void parserWrap::tokenize(){
         if(ch=='0' && nextch == L'x'){
             value+=L"0x";
             chiter.next(); // skip 'x'
-            while(1){
+            while(chiter.hasData()){
                 ch=std::tolower(chiter.peekSafe());
-                if(!chiter.hasData()){
-                    error_program(chiter);
-                }else if(util::isHex(ch)){
+                if(util::isHex(ch)){
                     auto tmp=std::tolower(chiter.next());
                     value+=tmp;
                 }else{
@@ -48,11 +46,9 @@ void parserWrap::tokenize(){
         }else if(ch=='0' && nextch == L'o'){
             value+=L"0o";
             chiter.next(); // skip 'o'
-            while(1){
+            while(chiter.hasData()){
                 ch=chiter.peekSafe();
-                if(!chiter.hasData()){
-                    error_program(chiter);
-                }else if(util::inRange<char>('0',ch,'8')){
+                if(util::inRange<char>('0',ch,'8')){
                     value+=chiter.next();
                 }else{
                     break;
@@ -65,12 +61,9 @@ void parserWrap::tokenize(){
             tokens.emplace_back(L"...");
         }else if(isdigit(ch)){
             value+=ch;
-            while(1){
+            while(chiter.hasData()){
                 ch=chiter.peekSafe();
-                if(!chiter.hasData()){
-                    error_program(chiter);
-                }
-                else if(util::isDec(ch)){
+                if(util::isDec(ch)){
                     value+=chiter.next();
                 }else{
                     break;
@@ -90,11 +83,9 @@ void parserWrap::tokenize(){
         }else if(ch=='f' && nextch =='\"'){
             value+=ch;
             value+=chiter.next();
-            while(1){
+            while(chiter.hasData()){
                 ch=chiter.peekSafe();
-                if(!chiter.hasData()){
-                    error_program(chiter);
-                }else if(ch=='\\'){
+                if(ch=='\\'){
                     value+=ch;
                     ch=chiter.next();
                     if(!chiter.hasData()){
@@ -116,11 +107,9 @@ void parserWrap::tokenize(){
             chiter.next();
         }else if(util::isIdent(ch)){
             value+=ch;
-            while(1){
+            while(chiter.hasData()){
                 ch=chiter.peekSafe();
-                if(!chiter.hasData()){
-                    error_program(chiter);
-                }else if(util::isIdent(ch)){
+                if(util::isIdent(ch)){
                     value+=chiter.next();
                 }else{
                     break;
@@ -129,11 +118,9 @@ void parserWrap::tokenize(){
             tokens.emplace_back(value);
         }else if(ch == L'\"'){
             value+=ch;
-            while(1){
+            while(chiter.hasData()){
                 ch=chiter.peekSafe();
-                if(!chiter.hasData()){
-                    error_program(chiter);
-                }else if(ch=='\\'){
+                if(ch=='\\'){
                     value+=ch;
                     ch=chiter.next();
                     if(!chiter.hasData()){
