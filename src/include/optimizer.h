@@ -4,6 +4,12 @@
 #include <vector>
 #include <string>
 
+class Iasm{
+public:
+    std::wstring name;
+};
+
+
 class optimizer{
 private:
     std::vector<std::wstring> codes;
