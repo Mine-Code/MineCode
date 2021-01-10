@@ -100,6 +100,11 @@ void stmtProcessor::executeFunction (Context& ctx,parserTypes::ExecFunc call){
         // name based
         ctx.Asm->pop(ctx.variables[util::wstr2str(call.funcId)].offset,12);
     }
+    //load arguments
+    int n=0;
+    for(auto arg: call.args){
+        eval::Expr(ctx,arg,n++);
+    }
     ctx.stream<<"mtctr r12\n"
                 "btcrl\n";
 }
