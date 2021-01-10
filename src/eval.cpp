@@ -111,7 +111,7 @@ void eval::Expr (parserContext& ctx,expr obj,int dest){
         {
             ctx.Asm->pop(i,14);
             // TODO: dest=dest+r14
-            ctx.stream<<"# r"<<dest<<" = r"<<dest<<" + r14"<<std::endl;
+            ctx.stream<<"add r"<<dest<<", r"<<dest<<", r14"<<std::endl;
         }
     }
     
