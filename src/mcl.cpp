@@ -15,7 +15,7 @@ using json = nlohmann::json;
 
 json convertTree2Single(json);
 
-void operator<<(parserTypes::parserContext& ctx, std::string name){
+void operator<<(parserWrap& ctx, std::string name){
     json j;
     std::ifstream jsonin;
     jsonin.open("mcls/"+name+".json");

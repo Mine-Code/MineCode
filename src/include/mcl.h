@@ -3,14 +3,8 @@
 #define MCL_H
 
 #include <string>
-#include <map>
-#include <vector>
+class parserWrap;
 
-namespace parserTypes
-{
-    class parserContext;
-} // namespace parserTypes
-
-void operator<<(parserTypes::parserContext&, std::string);
+void operator<<(parserWrap&, std::string);
 
 #endif
