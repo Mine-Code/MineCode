@@ -41,7 +41,7 @@ void operator<<(parserWrap& ctx, std::string name){
         compile.set(converter.from_bytes(obj["proc"].get<std::string>()));
         compile.tokenize();
         auto compiled=compile.compile();
-        ctx.puts[name]=converter.to_bytes(compiled);
+        ctx.ctx.puts[name]=converter.to_bytes(compiled);
     }
 }
 
