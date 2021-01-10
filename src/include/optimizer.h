@@ -6,6 +6,7 @@
 
 class Iasm{
 public:
+    std::wstring raw;
     std::wstring name;
 };
 
