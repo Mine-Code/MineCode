@@ -204,17 +204,17 @@ namespace parserCore{
     }
     struct power power (Context& ctx){
         struct power ret;
-        if(ctx.iter.peek()==L"("){
+        if(ctx.iter.peekSafe()==L"("){
             ret.type=power::EXPR;
             // inner type
             ctx.iter.next();
             ret.expr=expr(ctx);
             assertChar(")");
-        }else if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
+        }else if(isFunccall(ctx.iter.peekSafe(),ctx.iter.peekSafe(1))){
             ret.type=power::FUNCCALL;
             struct ExecFunc func=funcCall(ctx);
             ret.func=&func;
-        }else if(isInt(ctx.iter.peek())){
+        }else if(isInt(ctx.iter.peekSafe())){
             ret.type=power::IMM;
             ret.imm=Int(ctx);
         }else if(isSingle(ctx.iter.peek()) && ctx.iter.peek()!=L"["){
