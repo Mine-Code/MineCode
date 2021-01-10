@@ -177,13 +177,13 @@ void eval::Term (parserContext& ctx,term obj,int dest){
             ctx.Asm->pop(a.offset,14);
             switch(a.type){
             case offset::MUL:
-                ctx.stream<<"# r"<<dest<<" = r"<<dest<<" * r14"<<std::endl;// TODO: dest = dest*r14
+                ctx.stream<<"mullw r"<<dest<<", r"<<dest<<", r14"<<std::endl;
                 break;
             case offset::DIV:
-                ctx.stream<<"# r"<<dest<<" = r"<<dest<<" / r14"<<std::endl;// TODO: dest = dest/r14
+                ctx.stream<<"divw r"<<dest<<", r"<<dest<<", r14"<<std::endl;
                 break;
             case offset::MOD:
-                ctx.stream<<"# r"<<dest<<" = r"<<dest<<" % r14"<<std::endl;// TODO: dest = dest%r14
+                ctx.stream<<"#mod r"<<dest<<", r"<<dest<<", r14"<<std::endl;
                 break;
             }
         }
