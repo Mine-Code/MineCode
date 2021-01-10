@@ -64,7 +64,8 @@ void parserWrap::tokenize(){
             while(chiter.hasData()){
                 ch=chiter.peekSafe();
                 if(util::isDec(ch)){
-                    value+=chiter.next();
+                    value+=ch;
+                    chiter.next();
                 }else{
                     break;
                 }
