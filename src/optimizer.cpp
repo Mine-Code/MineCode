@@ -1,10 +1,6 @@
 #include <optimizer.h>
 #include <typedIterator.hxx>
 
-Iasm* convert(std::wstring assembler){
-
-}
-
 optimizer::optimizer(std::wstring src){
     std::wstring line;
     for(auto ch: src){
@@ -17,6 +13,4 @@ optimizer::optimizer(std::wstring src){
 }
 
 std::vector<std::wstring> optimizer::get(){
-    iterator<std::wstring> iter;
-    // convert to Iasm and subclass
 }
