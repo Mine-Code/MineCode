@@ -2,6 +2,7 @@
 #include <mcl.h>
 #include <ios>
 #include <iostream>
+#include <optimizer.h>
 
 using namespace std::literals::string_literals;
 int main()
