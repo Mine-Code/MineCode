@@ -120,7 +120,7 @@ void parserWrap::tokenize(){
         }else if(ch == L'\"'){
             value+=ch;
             while(chiter.hasData()){
-                ch=chiter.peekSafe();
+                ch=chiter.next();
                 if(ch=='\\'){
                     value+=ch;
                     ch=chiter.next();
