@@ -1,8 +1,8 @@
 #include <optimizer.h>
 #include <typedIterator.hxx>
 
-Iasm* convert(std::wstring asm){
-    
+Iasm* convert(std::wstring assembler){
+
 }
 
 optimizer::optimizer(std::wstring src){
