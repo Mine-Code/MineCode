@@ -98,4 +98,6 @@ void stmtProcessor::executeFunction (Context& ctx,parserTypes::ExecFunc call){
     }else if(call.type==parserTypes::ExecFunc::Name){
         // name based
     }
+    ctx.stream<<"mtctr r12\n"
+                "btcrl\n";
 }
