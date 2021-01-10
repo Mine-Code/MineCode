@@ -34,7 +34,7 @@ void parserWrap::tokenize(){
             value+=L"0x";
             chiter.next(); // skip 'x'
             while(1){
-                ch=std::tolower(chiter.peek());
+                ch=std::tolower(chiter.peekSafe());
                 if(!chiter.hasData()){
                     error_program(chiter);
                 }else if(util::isHex(ch)){
@@ -49,7 +49,7 @@ void parserWrap::tokenize(){
             value+=L"0o";
             chiter.next(); // skip 'o'
             while(1){
-                ch=chiter.peek();
+                ch=chiter.peekSafe();
                 if(!chiter.hasData()){
                     error_program(chiter);
                 }else if(util::inRange<char>('0',ch,'8')){
@@ -66,7 +66,7 @@ void parserWrap::tokenize(){
         }else if(isdigit(ch)){
             value+=ch;
             while(1){
-                ch=chiter.peek();
+                ch=chiter.peekSafe();
                 if(!chiter.hasData()){
                     error_program(chiter);
                 }
@@ -91,7 +91,7 @@ void parserWrap::tokenize(){
             value+=ch;
             value+=chiter.next();
             while(1){
-                ch=chiter.next();
+                ch=chiter.peekSafe();
                 if(!chiter.hasData()){
                     error_program(chiter);
                 }else if(ch=='\\'){
@@ -117,7 +117,7 @@ void parserWrap::tokenize(){
         }else if(util::isIdent(ch)){
             value+=ch;
             while(1){
-                ch=chiter.peek();
+                ch=chiter.peekSafe();
                 if(!chiter.hasData()){
                     error_program(chiter);
                 }else if(util::isIdent(ch)){
@@ -130,7 +130,7 @@ void parserWrap::tokenize(){
         }else if(ch == L'\"'){
             value+=ch;
             while(1){
-                ch=chiter.next();
+                ch=chiter.peekSafe();
                 if(!chiter.hasData()){
                     error_program(chiter);
                 }else if(ch=='\\'){
