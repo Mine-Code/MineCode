@@ -14,5 +14,5 @@ optimizer::optimizer(std::wstring src){
 
 std::vector<std::wstring> optimizer::get(){
     iterator<std::wstring> iter;
-    // optimize and return!
+    // convert to Iasm and subclass
 }
