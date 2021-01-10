@@ -27,6 +27,7 @@ void operator<<(parserTypes::parserContext& ctx, std::string name){
     json functions=convertTree2Single(j["functions"]);
 
     auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
+    parserWrap compile;
 
     // compile pointers
     for(auto [name,obj]: pointers.items()){
@@ -35,7 +36,6 @@ void operator<<(parserTypes::parserContext& ctx, std::string name){
     }
 
     // compile puts
-    parserWrap compile;
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<converter.from_bytes(name)<<std::endl;
         compile.set(converter.from_bytes(obj["proc"].get<std::string>()));
