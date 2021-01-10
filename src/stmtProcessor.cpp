@@ -89,6 +89,7 @@ void stmtProcessor::Assign (Context& ctx,parserTypes::value _target,std::wstring
         ctx.Asm->add(-1);
     }else{
         // TODO:two value assign
+        std::wcout<<op<<std::endl;
     }
 }
 
