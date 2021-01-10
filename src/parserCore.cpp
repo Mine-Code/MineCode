@@ -429,7 +429,7 @@ namespace parserCore{
 
             assert(ctx.iter.next()==L"func",L"excepted 'func'");
             assertChar("[");
-            ret.funcAddr=expr(ctx);
+            ret.funcAddr=Int(ctx);
             assertChar("]");
         }else{
             // name based call
