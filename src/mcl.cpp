@@ -31,7 +31,12 @@ void operator<<(parserWrap& ctx, std::string name){
     // compile pointers
     for(auto [name,obj]: pointers.items()){
         std::wcout<<"setting of "<<converter.from_bytes(name)<<std::endl;
-        std::cout<<obj;
+        
+        std::wstring source=converter.from_bytes(name+" = "+obj.get<std::string>());
+        
+        ctx.set(source);
+        ctx.tokenize();
+        ctx.compile();
     }
 
     // compile puts
