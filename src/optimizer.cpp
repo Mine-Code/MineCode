@@ -1,6 +1,10 @@
 #include <optimizer.h>
 #include <typedIterator.hxx>
 
+Iasm* convert(std::wstring asm){
+    
+}
+
 optimizer::optimizer(std::wstring src){
     std::wstring line;
     for(auto ch: src){
