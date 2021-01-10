@@ -21,6 +21,8 @@ namespace parserTypes
     using varsType   = std::unordered_map<std::string,struct varType>;
     struct parserContext{
         parserContext();
+        parserContext(parserContext&);
+
         Assembly* Asm;
         streamType stream;
         iterType iter;
