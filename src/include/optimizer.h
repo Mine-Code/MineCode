@@ -9,6 +9,10 @@ public:
     std::wstring name;
 };
 
+class push: public Iasm{
+    int offs;
+    int dest;
+};
 
 class optimizer{
 private:
