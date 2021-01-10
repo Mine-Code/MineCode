@@ -78,4 +78,6 @@
         "shared_mutex": "cpp",
         "valarray": "cpp"
     },
+    "todo-tree.tree.showBadges": true,
+    "todo-tree.tree.showCountsInTree": true,
 }
