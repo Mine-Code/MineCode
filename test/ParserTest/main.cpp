@@ -44,7 +44,7 @@ int main()
     for(auto ch:compiled) if (ch=='\n') lines++;
     std::wcout<<"lines: "<<lines<<std::endl;
 
-    optimizer a(compiled);
+    optimizer a = optimizer(compiled);
     a.get();
 
     prs.debug();
