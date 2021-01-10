@@ -28,6 +28,8 @@ void operator<<(parserTypes::parserContext& ctx, std::string name){
 
     auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
     parserWrap compile;
+    
+    parserTypes::parserContext bk=compile.ctx;
 
     // compile pointers
     for(auto [name,obj]: pointers.items()){
