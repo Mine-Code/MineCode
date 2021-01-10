@@ -45,7 +45,7 @@ void stmtProcessor::If     (Context& ctx){
 void stmtProcessor::Func   (Context& ctx){
     ctx.Asm->startOfFunction();
     int r14 = ctx.Asm->push(14);
-    int r14 = ctx.Asm->push(15);
+    int r15 = ctx.Asm->push(15);
     ctx.stream<<"# Inner Function\n";
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
@@ -53,7 +53,7 @@ void stmtProcessor::Func   (Context& ctx){
     }
     ctx.stream<<"# Outer Function\n";
     ctx.Asm->pop(r14,14);
-    ctx.Asm->pop(r14,15);
+    ctx.Asm->pop(r15,15);
     ctx.Asm->endOfFunction();
 }
 
