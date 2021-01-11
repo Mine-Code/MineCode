@@ -48,7 +48,7 @@ namespace parserTypes
         ptr          pointer;
         std::wstring ident  ;
         std::wstring str    ;
-        int          imm    ;
+        uint32_t     imm    ;
     };
 
     struct expr{
