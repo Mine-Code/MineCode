@@ -47,7 +47,7 @@ void operator<<(parserWrap& ctx, std::string name){
         ctx.ctx.puts[name]=converter.to_bytes(ctx.compile());
     }
     std::wcout<<"compiled all"<<std::endl;
-    
+    ctx.clear();
     ctx.ctx.stream<<pointerasm;
 }
 
