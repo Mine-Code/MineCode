@@ -9,6 +9,7 @@
 void parserWrap::debug(){
     std::wcout<<"----- Debug -----"<<std::endl;
     auto backup=std::wcout.flags();
+    
     // show all variables
     for(auto [key, value]: this->ctx.variables){
         std::wcout
