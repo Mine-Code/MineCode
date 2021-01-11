@@ -6,7 +6,14 @@
 #include <parserTypes.h>
 
 void parserWrap::debug(){
-    
+    // show all variables
+    for(auto [key, value]: this->ctx.variables){
+        std::wcout
+            <<value.offset<<" / "
+            <<value.type<<":"
+            <<util::str2wstr(key)
+        <<std::endl;
+    }
 }
 
 void parserWrap::set(std::wstring src){
