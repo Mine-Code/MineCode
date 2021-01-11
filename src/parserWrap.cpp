@@ -29,7 +29,7 @@ void parserWrap::debug(){
             std::wcout<<ch;
             if(ch=='\n')std::wcout<<"  ";
         }
-        std::wcout<<"----------"<<std::endl;
+        std::wcout<<"\r";
     }
 
     std::wcout.flags(backup);
