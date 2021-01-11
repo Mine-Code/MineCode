@@ -20,18 +20,20 @@ void parserWrap::debug(){
             <<util::str2wstr(key)
         <<std::endl;
     }
+    std::wcout<<"| "<<std::endl;
     
     // show all puts
     std::wcout<<"| Puts"<<std::endl;
     for(auto [key, value]: this->ctx.puts){
-        std::wcout<<"| "<<util::str2wstr(key)<<std::endl;
-        std::wcout<<"| | ";
+        std::wcout<<"| | "<<util::str2wstr(key)<<std::endl;
+        std::wcout<<"| | | ";
         for(auto ch: value){
             std::wcout<<ch;
-            if(ch=='\n')std::wcout<<"| | ";
+            if(ch=='\n')std::wcout<<"| | | ";
         }
-        std::wcout<<"\r";
+        std::wcout<<"\r| |   "<<std::endl;
     }
+    std::wcout<<"| "<<std::endl;
 
     std::wcout.flags(backup);
     std::wcout<<"-----------------"<<std::endl;
