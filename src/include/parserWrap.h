@@ -22,6 +22,7 @@ public:
     void set(std::wstring);
     void debug();
     void reset();
+    void clear();
 };
 
 #endif
