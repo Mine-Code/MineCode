@@ -41,6 +41,10 @@ void operator<<(parserWrap& ctx, std::string name){
 
     // compile puts
     parserWrap compile;
+    
+    // move ctx variables to compile
+    compile.ctx.variables=ctx.ctx.variables;
+    
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<converter.from_bytes(name)<<std::endl;
         compile.set(converter.from_bytes(obj["proc"].get<std::string>()));
