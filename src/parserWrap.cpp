@@ -195,6 +195,7 @@ std::wstring parserWrap::compile(){
     parserCore::program(ctx);
     std::wstring compiled= ctx.Asm->ss.str();
     ctx.stream.str(L"");
+    ctx.stream.clear(std::stringstream::goodbit);
     return compiled;
 }
 
@@ -213,4 +214,5 @@ void parserWrap::clear(){
     
     this->ctx.iter.clear();
     this->ctx.stream.str(L"");
+    this->ctx.stream.clear(std::stringstream::goodbit);
 }
