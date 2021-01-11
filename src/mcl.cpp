@@ -44,8 +44,7 @@ void operator<<(parserWrap& ctx, std::string name){
         std::wcout<<"compile of "<<converter.from_bytes(name)<<std::endl;
         ctx.set(converter.from_bytes(obj["proc"].get<std::string>()));
         ctx.tokenize();
-        auto compiled=ctx.compile();
-        ctx.ctx.puts[name]=converter.to_bytes(compiled);
+        ctx.ctx.puts[name]=converter.to_bytes(ctx.compile());
     }
     std::wcout<<"compiled all"<<std::endl;
     
