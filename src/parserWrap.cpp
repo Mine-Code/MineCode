@@ -4,6 +4,7 @@
 #include <util.h>
 #include <parserCore.h>
 #include <parserTypes.h>
+#include <iomanip>
 
 void parserWrap::debug(){
     // show all variables
