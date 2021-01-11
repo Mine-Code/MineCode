@@ -18,6 +18,8 @@ int main()
 
     parserWrap prs;
     prs<<"minecraft";
+    prs.debug();
+    
     prs.set(
         L""
         "#do once"                          "\n"
