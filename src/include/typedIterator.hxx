@@ -54,7 +54,7 @@ public:
         return true;
     }
 
-    void reset(){
+    void clear(){
         this->array.clear();
     }
 };
