@@ -199,16 +199,10 @@ std::wstring parserWrap::compile(){
 }
 
 void parserWrap::reset(){
-    this->string.clear();
-    this->tokens.clear();
-
-    delete this->ctx.Asm;
-    this->ctx.Asm=new Assembly(this->ctx.stream);
-
-    this->ctx.iter.clear();
     this->ctx.puts.clear();
-    this->ctx.stream.clear();
     this->ctx.variables.clear();
+
+    clear();
 }
 void parserWrap::clear(){
     this->string.clear();
