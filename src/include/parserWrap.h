@@ -11,9 +11,7 @@
 class parserWrap{
 private:
     std::wstring string;
-    int index;
     std::vector<std::wstring> tokens;
-    std::wstringstream assembly;
 
     void error_program(iterator<wchar_t> chiter);
 public:
