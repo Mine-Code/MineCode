@@ -18,6 +18,17 @@ void parserWrap::debug(){
             <<util::str2wstr(key)
         <<std::endl;
     }
+    
+    // show all puts
+    for(auto [key, value]: this->ctx.puts){
+        std::wcout<<util::str2wstr(key)<<std::endl;
+        std::wcout<<"  ";
+        for(auto ch: value){
+            std::wcout<<ch;
+            if(ch=='\n')std::wcout<<"  ";
+        }
+        std::wcout<<"----------"<<std::endl;
+    }
 
     std::wcout.flags(backup);
     std::wcout<<"##### Debug #####"<<std::endl;
