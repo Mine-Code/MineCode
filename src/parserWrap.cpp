@@ -11,6 +11,7 @@ void parserWrap::debug(){
     auto backup=std::wcout.flags();
     
     // show all variables
+    std::wcout<<"--Variables--"<<std::endl;
     for(auto [key, value]: this->ctx.variables){
         std::wcout
             <<std::setw(6)<<value.offset<<std::setw(0)<<" / "
@@ -20,6 +21,7 @@ void parserWrap::debug(){
     }
     
     // show all puts
+    std::wcout<<"--Puts--"<<std::endl;
     for(auto [key, value]: this->ctx.puts){
         std::wcout<<util::str2wstr(key)<<std::endl;
         std::wcout<<"  ";
