@@ -194,7 +194,7 @@ std::wstring parserWrap::compile(){
     ctx.iter=iterator<std::wstring>(tokens);
     parserCore::program(ctx);
     std::wstring compiled= ctx.Asm->ss.str();
-    ctx.stream.clear();
+    ctx.stream.str(L"");
     return compiled;
 }
 
@@ -212,5 +212,5 @@ void parserWrap::clear(){
     this->ctx.Asm=new Assembly(this->ctx.stream);
     
     this->ctx.iter.clear();
-    this->ctx.stream.clear();
+    this->ctx.stream.str(L"");
 }
