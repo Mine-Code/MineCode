@@ -8,6 +8,7 @@
 
 void parserWrap::debug(){
     // show all variables
+    auto backup=std::wcout.flags();
     for(auto [key, value]: this->ctx.variables){
         std::wcout
             <<value.offset<<" / "
@@ -15,6 +16,7 @@ void parserWrap::debug(){
             <<util::str2wstr(key)
         <<std::endl;
     }
+    std::wcout.flags(backup);
 }
 
 void parserWrap::set(std::wstring src){
