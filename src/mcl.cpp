@@ -27,6 +27,7 @@ void operator<<(parserWrap& ctx, std::string name){
     json functions=convertTree2Single(j["functions"]);
 
     auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
+    std::wstring pointerasm;
 
     // compile pointers
     for(auto [name,obj]: pointers.items()){
@@ -36,7 +37,7 @@ void operator<<(parserWrap& ctx, std::string name){
         
         ctx.set(source);
         ctx.tokenize();
-        ctx.compile();
+        pointerasm += ctx.compile();
     }
 
     // compile puts
