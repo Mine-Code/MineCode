@@ -53,6 +53,10 @@ public:
         }
         return true;
     }
+
+    void reset(){
+        this->array.clear();
+    }
 };
 
 #endif
