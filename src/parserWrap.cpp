@@ -211,5 +211,12 @@ void parserWrap::reset(){
     this->ctx.variables.clear();
 }
 void parserWrap::clear(){
+    this->string.clear();
+    this->tokens.clear();
+
+    delete this->ctx.Asm;
+    this->ctx.Asm=new Assembly(this->ctx.stream);
     
+    this->ctx.iter.clear();
+    this->ctx.stream.clear();
 }
