@@ -210,3 +210,6 @@ void parserWrap::reset(){
     this->ctx.stream.clear();
     this->ctx.variables.clear();
 }
+void parserWrap::clear(){
+    
+}
