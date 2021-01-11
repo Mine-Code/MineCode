@@ -21,6 +21,7 @@ public:
     std::wstring compile();
     void set(std::wstring);
     void debug();
+    void reset();
 };
 
 #endif

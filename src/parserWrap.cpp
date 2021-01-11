@@ -197,3 +197,7 @@ std::wstring parserWrap::compile(){
     ctx.stream.clear();
     return compiled;
 }
+
+void parserWrap::reset(){
+    
+}
