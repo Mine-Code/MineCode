@@ -40,17 +40,11 @@ void operator<<(parserWrap& ctx, std::string name){
         pointerasm += ctx.compile();
     }
 
-    // compile puts
-    parserWrap compile;
-    
-    // move ctx variables to compile
-    compile.ctx.variables=ctx.ctx.variables;
-    
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<converter.from_bytes(name)<<std::endl;
-        compile.set(converter.from_bytes(obj["proc"].get<std::string>()));
-        compile.tokenize();
-        auto compiled=compile.compile();
+        ctx.set(converter.from_bytes(obj["proc"].get<std::string>()));
+        ctx.tokenize();
+        auto compiled=ctx.compile();
         ctx.ctx.puts[name]=converter.to_bytes(compiled);
     }
     std::wcout<<"compiled all"<<std::endl;
