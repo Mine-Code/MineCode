@@ -54,6 +54,8 @@ void operator<<(parserWrap& ctx, std::string name){
         ctx.ctx.puts[name]=converter.to_bytes(compiled);
     }
     std::wcout<<"compiled all"<<std::endl;
+    
+    ctx.ctx.stream<<pointerasm;
 }
 
 bool isShallow(json src){
