@@ -144,7 +144,6 @@ namespace parserCore{
             *tmp=value(ctx);
             ret.base=tmp;
         }
-        std::wstring offs;
         while(ctx.iter.peek()==L"+"){
             ctx.iter.next();
             ret.offsets.emplace_back(util::toInt(ctx.iter.next()));
