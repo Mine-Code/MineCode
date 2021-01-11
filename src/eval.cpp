@@ -163,6 +163,7 @@ void eval::Term (parserContext& ctx,term obj,int dest){
                 case expo_wrap::MOD: type=offset::Type::MOD; break;
                 default:
                     synErr::processError(ctx,L"Unknown expr_wrap type ",__FILE__,__func__,__LINE__);
+                    std::terminate(); // dead code
             }
 
             struct offset element;
