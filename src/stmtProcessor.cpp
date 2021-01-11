@@ -87,6 +87,25 @@ void stmtProcessor::Assign (Context& ctx,parserTypes::value _target,std::wstring
         ctx.Asm->add(1);
     }else if(op==L"--"){
         ctx.Asm->add(-1);
+    }else if(op==L"="){
+        eval::Expr(ctx,val,14);
+        std::string name;
+
+        switch (_target.type)
+        {
+        case parserTypes::value::IDENT:
+            name=util::wstr2str(_target.ident);
+            if(ctx.variables[name].type == parserTypes::varType::INT){
+                ctx.Asm->poke(ctx.variables[name].offset,1,14);
+            }else if(ctx.variables[name].type == parserTypes::varType::FLOAT){
+                processError(ctx,L"assign to "+std::to_wstring(_target.type)+L"in float is not implemented...",__FILE__,__func__,__LINE__);
+            }
+            break;
+        
+        default:
+            processError(ctx,L"assign to "+std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
+            break;
+        }
     }else{
         // TODO:two value assign
         std::wcout<<op<<std::endl;
