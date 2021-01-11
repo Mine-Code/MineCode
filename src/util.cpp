@@ -28,7 +28,7 @@ namespace util
                     if(util::isDec(ch)){
                         value+=ch-'0';
                     }else{
-                        value+=tolower(ch)-'a';
+                        value+=tolower(ch)-'a'+0xa;
                     }
                 }
             }else if(text[1]==L'o'){
