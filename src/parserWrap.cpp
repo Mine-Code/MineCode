@@ -12,10 +12,11 @@ void parserWrap::debug(){
     
     // show all variables
     std::wcout<<"| ---Variables---"<<std::endl;
+    std::wcout<<"| | offset | id| name"<<std::endl;
     for(auto [key, value]: this->ctx.variables){
         std::wcout<<"| | "
-            <<std::setw(6)<<value.offset<<std::setw(0)<<" / "
-            <<value.type<<":  "
+            <<std::setw(6)<<value.offset<<std::setw(0)<<" | "
+            <<value.type<<" | "
             <<util::str2wstr(key)
         <<std::endl;
     }
