@@ -164,6 +164,6 @@ std::wstring parserWrap::compile(){
     ctx.iter=iterator<std::wstring>(tokens);
     parserCore::program(ctx);
     std::wstring compiled= ctx.Asm->ss.str();
-
+    ctx.stream.clear();
     return compiled;
 }
