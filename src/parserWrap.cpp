@@ -7,11 +7,11 @@
 #include <iomanip>
 
 void parserWrap::debug(){
-    std::wcout<<"------Debug------"<<std::endl;
+    std::wcout<<"Debug"<<std::endl;
     auto backup=std::wcout.flags();
     
     // show all variables
-    std::wcout<<"| ---Variables---"<<std::endl;
+    std::wcout<<"| Variables"<<std::endl;
     std::wcout<<"| | offset | id| name"<<std::endl;
     for(auto [key, value]: this->ctx.variables){
         std::wcout<<"| | "
@@ -22,7 +22,7 @@ void parserWrap::debug(){
     }
     
     // show all puts
-    std::wcout<<"| ---Puts---"<<std::endl;
+    std::wcout<<"| Puts"<<std::endl;
     for(auto [key, value]: this->ctx.puts){
         std::wcout<<"| "<<util::str2wstr(key)<<std::endl;
         std::wcout<<"| | ";
