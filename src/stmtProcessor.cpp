@@ -121,7 +121,7 @@ void stmtProcessor::executeFunction (Context& ctx,parserTypes::ExecFunc call){
         ctx.Asm->pop(ctx.variables[util::wstr2str(call.funcId)].offset,12);
     }
     //load arguments
-    int n=0;
+    int n=3;
     for(auto arg: call.args){
         eval::Expr(ctx,arg,n++);
     }
