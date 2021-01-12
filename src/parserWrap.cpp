@@ -199,6 +199,14 @@ std::wstring parserWrap::compile(){
     return compiled;
 }
 
+std::wstring parserWrap::compile(std::wstring source){
+    clear();
+    set(source);
+    tokenize();
+    clear();
+    return compile(source);
+}
+
 void parserWrap::reset(){
     this->ctx.puts.clear();
     this->ctx.variables.clear();
