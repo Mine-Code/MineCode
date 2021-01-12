@@ -119,16 +119,16 @@ void stmtProcessor::Assign (Context& ctx,parserTypes::value _target,std::wstring
 void stmtProcessor::executeFunction (Context& ctx,parserTypes::ExecFunc call){
     if(call.type==parserTypes::ExecFunc::ADDRESS){
         // address based
-        ctx.Asm->writeRegister(call.funcAddr,12);
+        ctx.Asm->writeRegister(call.funcAddr,15);
     }else if(call.type==parserTypes::ExecFunc::Name){
         // name based
-        ctx.Asm->pop(ctx.variables[util::wstr2str(call.funcId)].offset,12);
+        ctx.Asm->pop(ctx.variables[util::wstr2str(call.funcId)].offset,15);
     }
     //load arguments
     int n=3;
     for(auto arg: call.args){
         eval::Expr(ctx,arg,n++);
     }
-    ctx.stream<<"mtctr r12\n"
+    ctx.stream<<"mtctr r15\n"
                 "btcrl\n";
 }
