@@ -256,5 +256,9 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     ctx.Asm->stack_offset=offs;
 }
 void eval::Var  (parserContext& ctx,std::wstring obj,int dest){
-    ctx.Asm->pop(ctx.variables[util::wstr2str(obj)].offset,dest);
+    if(obj==L"false"){
+        ctx.stream<<"#"<<dest<<L" <- false";
+    }else{
+        ctx.Asm->pop(ctx.variables[util::wstr2str(obj)].offset,dest);
+    }
 }
