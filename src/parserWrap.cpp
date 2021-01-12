@@ -203,8 +203,7 @@ std::wstring parserWrap::compile(std::wstring source){
     clear();
     set(source);
     tokenize();
-    clear();
-    return compile(source);
+    return compile();
 }
 
 void parserWrap::reset(){
