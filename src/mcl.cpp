@@ -35,16 +35,14 @@ void operator<<(parserWrap& ctx, std::string name){
         
         std::wstring source=converter.from_bytes(name+" = "+obj.get<std::string>());
         
-        ctx.set(source);
-        ctx.tokenize();
-        pointerasm += ctx.compile();
+        pointerasm += ctx.compile(source);
     }
+    ctx.clear();
 
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<converter.from_bytes(name)<<std::endl;
-        ctx.set(converter.from_bytes(obj["proc"].get<std::string>()));
-        ctx.tokenize();
-        ctx.ctx.puts[name]=converter.to_bytes(ctx.compile());
+        std::wstring source=converter.from_bytes(obj["proc"].get<std::string>());
+        ctx.ctx.puts[name]=converter.to_bytes(ctx.compile(source));
     }
     std::wcout<<"compiled all"<<std::endl;
     ctx.clear();
