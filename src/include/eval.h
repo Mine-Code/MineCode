@@ -22,6 +22,7 @@ namespace eval
     void Term (parserContext& ctx,term  val,int dest=13);
     void Power(parserContext& ctx,power val,int dest=13);
     void Ptr  (parserContext& ctx,ptr   val,int dest=13);
+    void Var  (parserContext& ctx,std::wstring obj,int dest);
 } // namespace eval
 
 
