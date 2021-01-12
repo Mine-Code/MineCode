@@ -257,7 +257,7 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
 }
 void eval::Var  (parserContext& ctx,std::wstring obj,int dest){
     if(obj==L"false"){
-        ctx.stream<<"#"<<dest<<L" <- false";
+        ctx.Asm->writeRegister(0,dest);
     }else{
         ctx.Asm->pop(ctx.variables[util::wstr2str(obj)].offset,dest);
     }
