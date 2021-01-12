@@ -19,6 +19,7 @@ public:
     
     void tokenize();
     std::wstring compile();
+    std::wstring compile(std::wstring source);
     void set(std::wstring);
     void debug();
     void reset();
