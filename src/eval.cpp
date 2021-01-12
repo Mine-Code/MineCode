@@ -213,7 +213,7 @@ void eval::Power(parserContext& ctx,power obj,int dest){
         Ptr(ctx,obj.ptr,dest);
         break;
     case power::VAR:
-        ctx.Asm->pop(ctx.variables[util::wstr2str(obj.var)].offset,dest);
+        Var(ctx,obj.var,dest);
         break;
     default:
         synErr::processError(ctx,
