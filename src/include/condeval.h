@@ -4,6 +4,7 @@
 
 namespace parserTypes
 {
+    class parserContext;
     class cond;
     class condChild;
 } // namespace parserTypes
@@ -11,8 +12,8 @@ namespace parserTypes
 
 namespace condeval
 {
-    void Cond(parserTypes::cond cond);
-    void CondChild(parserTypes::condChild cond);
+    void Cond(parserTypes::parserContext ctx, parserTypes::cond cond);
+    void CondChild(parserTypes::parserContext ctx, parserTypes::condChild cond);
 } // namespace condeval
 
 
