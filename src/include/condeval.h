@@ -11,8 +11,8 @@ namespace parserTypes
 
 namespace condeval
 {
-    void Cond();
-    void CondChild();
+    void Cond(parserTypes::cond cond);
+    void CondChild(parserTypes::condChild cond);
 } // namespace condeval
 
 
