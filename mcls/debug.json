@@ -4,7 +4,7 @@
     "put":{
         "Debug":{
             "type":"asm",
-            "proc":"# < Debug >"
+            "proc":"# < Debug >\n"
         }
     },
     "pointers":{
