@@ -4,9 +4,9 @@
 
 using namespace parserTypes;
 
-void condeval::Cond(parserTypes::parserContext ctx, parserTypes::cond cond){
+void condeval::Cond(parserContext ctx, cond cond){
 
 }
-void condeval::CondChild(parserTypes::parserContext ctx, parserTypes::condChild cond){
+void condeval::CondChild(parserContext ctx, condChild cond){
 
 }
