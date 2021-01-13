@@ -1,6 +1,7 @@
 #include <condeval.h>
 
 #include <parserTypes.h>
+#include <eval.h>
 
 using namespace parserTypes;
 
