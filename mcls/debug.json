@@ -1,0 +1,19 @@
+{
+    "name": "Debug",
+    "ver": 1,
+    "put":{
+        "Debug":{
+            "type":"asm",
+            "proc":"func[0x0313873C]([gui_ptr], \"test\", [player_ptr + 0x960], false, false, false, false)"
+        }
+    },
+    "pointers":{
+        "dbgPtr":"[0xBEEFBEEF]"
+    },
+    "basePointers":{
+        "dbgPtr2":"[0x29292929]"
+    },
+    "functions":{
+        
+    }
+}
