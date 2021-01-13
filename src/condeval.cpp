@@ -2,6 +2,7 @@
 
 #include <parserTypes.h>
 #include <eval.h>
+#include <util.h>
 
 using namespace parserTypes;
 
