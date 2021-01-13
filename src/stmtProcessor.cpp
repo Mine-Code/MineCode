@@ -119,17 +119,18 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
 }
 
 void stmtProcessor::executeFunction (Context& ctx,ExecFunc call){
+    //load arguments
+    int n=3;
+    for(auto arg: call.args){
+        eval::Expr(ctx,arg,n++);
+    }
+    //load address
     if(call.type==ExecFunc::ADDRESS){
         // address based
         ctx.Asm->writeRegister(call.funcAddr,15);
     }else if(call.type==ExecFunc::Name){
         // name based
         ctx.Asm->pop(ctx.variables[util::wstr2str(call.funcId)].offset,15);
-    }
-    //load arguments
-    int n=3;
-    for(auto arg: call.args){
-        eval::Expr(ctx,arg,n++);
     }
     ctx.stream<<"mtctr r15\n"
                 "btcrl\n";
