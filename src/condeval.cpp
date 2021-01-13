@@ -12,14 +12,15 @@ void condeval::Cond(parserContext ctx, cond cond){
 }
 void condeval::CondChild(parserContext ctx, condChild cond){
     if(cond.op == condChild::SINGLE){
+        varType var;
         switch(cond.single.type){
         case value::IDENT:
-            varType var = ctx.variables[util::wstr2str(cond.single.ident)];
+            var = ctx.variables[util::wstr2str(cond.single.ident)];
             if(var.type == varType::INT){
                 // TODO: implement this
             }else{
                 // TODO: show error message
-                
+
             }
             break;
         case value::IMM:
