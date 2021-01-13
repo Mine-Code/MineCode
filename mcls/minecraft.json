@@ -13,6 +13,9 @@
         "player_ptr":"[0x109CD8E4] + 0x34",
         "gui_ptr":"[[[0x109CD8E4] + 0x34] + 0x8B4] + 0x144"
     },
+    "basePointers":[
+        "gui_ptr"
+    ],
     "functions":{
         
     }
