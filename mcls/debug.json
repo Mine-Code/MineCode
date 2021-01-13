@@ -8,7 +8,7 @@
         }
     },
     "pointers":{
-        "dbgPtr":"[0xBEEFBEEF]"
+        "dbgPtr":"[[dbgPtr2]+0x2929]"
     },
     "basePointers":{
         "dbgPtr2":"[0x29292929]"
