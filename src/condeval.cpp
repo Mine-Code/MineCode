@@ -2,7 +2,7 @@
 
 #include <parserTypes.h>
 
-using namespace condeval;
+using namespace parserTypes;
 
 void condeval::Cond(parserTypes::parserContext ctx, parserTypes::cond cond){
 
