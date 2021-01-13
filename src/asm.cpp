@@ -202,6 +202,33 @@ void Assembly::startOfIf(int src_1, std::string mode, int src_2)
     make_if_ctr++;
 }
 
+void Assembly::startOfIf(condType mode, int condReg){
+    switch(mode){
+        case EQU: // ==
+            ss << "beq if_" << make_if_ctr << ", cr"<<condReg << "\n";
+            break;
+        case NEQ: // !=
+            ss << "beq if_" << make_if_ctr << ", cr"<<condReg << "\n";
+            break;
+        case LT:  // < 
+            ss << "blt if_" << make_if_ctr << ", cr"<<condReg << "\n";
+            break;
+        case GT:  // > 
+            ss << "bgt if_" << make_if_ctr << ", cr"<<condReg << "\n";
+            break;
+        case GE:  // <=
+            ss << "bge if_" << make_if_ctr << ", cr"<<condReg << "\n";
+            break;
+        case LE:  // >=
+            ss << "ble if_" << make_if_ctr << ", cr"<<condReg << "\n";
+            break;
+    }
+    ss <<
+        "b " << "endif_" << make_if_ctr << ":\n"
+        "if_" << make_if_ctr << ":\n";
+    make_if_ctr++;
+}
+
 void Assembly::endOfIf()
 {
     ss <<
