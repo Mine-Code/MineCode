@@ -6,6 +6,7 @@
 #include <eval.h>
 
 using namespace synErr;
+using namespace parserTypes;
 
 void stmtProcessor::For    (
     Context& ctx,
@@ -35,7 +36,8 @@ void stmtProcessor::While  (Context& ctx){
     }
 }
 
-void stmtProcessor::If     (Context& ctx, struct parserTypes::cond conditional){
+void stmtProcessor::If     (Context& ctx, struct cond conditional){
+    
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
@@ -65,15 +67,15 @@ void stmtProcessor::Put    (Context&){
 
 }
 
-void stmtProcessor::Assign (Context& ctx,parserTypes::value _target,std::wstring op,struct parserTypes::expr& val){
-    if(_target.type==parserTypes::value::IDENT){
+void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct expr& val){
+    if(_target.type==value::IDENT){
         std::string target=util::wstr2str(_target.ident);
         // check: is avail variable of target
         if(ctx.variables.count(target)==0){
             // check: is [op==equal and not have element]
             if(op==L"="){
                 // make variable
-                parserTypes::varType var;
+                varType var;
                 eval::Expr(ctx,val,13);
 
                 var.offset=ctx.Asm->push();
@@ -97,11 +99,11 @@ void stmtProcessor::Assign (Context& ctx,parserTypes::value _target,std::wstring
 
         switch (_target.type)
         {
-        case parserTypes::value::IDENT:
+        case value::IDENT:
             name=util::wstr2str(_target.ident);
-            if(ctx.variables[name].type == parserTypes::varType::INT){
+            if(ctx.variables[name].type == varType::INT){
                 ctx.Asm->poke(ctx.variables[name].offset,1,14);
-            }else if(ctx.variables[name].type == parserTypes::varType::FLOAT){
+            }else if(ctx.variables[name].type == varType::FLOAT){
                 processError(ctx,L"assign to "+std::to_wstring(_target.type)+L"in float is not implemented...",__FILE__,__func__,__LINE__);
             }
             break;
@@ -116,11 +118,11 @@ void stmtProcessor::Assign (Context& ctx,parserTypes::value _target,std::wstring
     }
 }
 
-void stmtProcessor::executeFunction (Context& ctx,parserTypes::ExecFunc call){
-    if(call.type==parserTypes::ExecFunc::ADDRESS){
+void stmtProcessor::executeFunction (Context& ctx,ExecFunc call){
+    if(call.type==ExecFunc::ADDRESS){
         // address based
         ctx.Asm->writeRegister(call.funcAddr,15);
-    }else if(call.type==parserTypes::ExecFunc::Name){
+    }else if(call.type==ExecFunc::Name){
         // name based
         ctx.Asm->pop(ctx.variables[util::wstr2str(call.funcId)].offset,15);
     }
