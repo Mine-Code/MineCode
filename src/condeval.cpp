@@ -12,7 +12,20 @@ void condeval::Cond(parserContext ctx, cond cond){
 }
 void condeval::CondChild(parserContext ctx, condChild cond){
     if(cond.op == condChild::SINGLE){
-        // TODO: process cond.single
+        switch(cond.single.type){
+        case value::IDENT:
+            ctx.variables[util::wstr2str(cond.single.ident)];
+            break;
+        case value::IMM:
+            // TODO: implement this
+            break;
+        case value::PTR:
+            // TODO: implement this
+            break;
+        case value::STR:
+            // TODO: implement this
+            break;
+        }
     }else{
         // TODO: process cond.op and val1/2
     }
