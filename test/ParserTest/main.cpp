@@ -17,7 +17,7 @@ int main()
     );
 
     parserWrap prs;
-    prs<<"minecraft";
+    prs<<"debug";
     prs.debug();
     
     prs.set(
@@ -27,13 +27,13 @@ int main()
         //"  a = 1+2+3"                       "\n"
         //"  n = (a*(100+a*10)+3*(1+5))/20+a" "\n" 
         "  if 0o20==0x10{"                  "\n"
-        "    Local.Console << \"^^\" "      "\n"
+        "    Debug << \"^^\" "              "\n"
         "  }"                               "\n"
         //"  for i in 0...0x10{"              "\n"
-        //"    Local.Console << \"{i}\" "     "\n"
+        //"    Debug << \"{i}\" "     "\n"
         //"  }"                               "\n"
         //"  while a<=10{"                    "\n"
-        //"    Local.Console << \"(^^)v\""    "\n"
+        //"    Debug << \"(^^)v\""    "\n"
         //"  }"                               "\n"
         "}"s
     );
