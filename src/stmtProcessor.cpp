@@ -38,7 +38,7 @@ void stmtProcessor::While  (Context& ctx){
 }
 
 void stmtProcessor::If     (Context& ctx, struct cond conditional){
-    
+    condeval::Cond(conditional);
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
