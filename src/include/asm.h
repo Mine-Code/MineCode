@@ -7,6 +7,15 @@
 
 class Assembly {
 public:
+    enum condType{
+        EQU, // ==
+        NEQ, // !=
+        LT,  // < 
+        GT,  // > 
+        GE,  // <=
+        LE   // >=
+    };
+
     int stack_size = 0x20;
     std::wstringstream& ss;
 
