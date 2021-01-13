@@ -193,7 +193,8 @@ namespace util
     bool isIdent(T ch){
         return
                isalpha(ch) || 
-               ch=='_'
+               ch=='_' ||
+               isDec(ch)
         ;
     }
 
