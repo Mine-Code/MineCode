@@ -355,7 +355,7 @@ namespace parserCore{
         struct cond conditional = cond(ctx);
         ctx.stream<<"# if"<<std::endl;
         assertChar("{");
-        stmtProcessor::If(ctx);
+        stmtProcessor::If(ctx,conditional);
         assertChar("}");
         ctx.stream<<"# fi"<<std::endl;
     }
