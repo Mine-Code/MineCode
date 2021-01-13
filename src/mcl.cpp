@@ -58,7 +58,7 @@ void operator<<(parserWrap& ctx, std::string name){
         if(type=="MineCode"){
             ctx.ctx.puts[name]=converter.to_bytes(ctx.compile(source));
         }else if(type=="asm"){
-            ctx.ctx.puts[name]=converter.to_bytes(source);
+            ctx.ctx.puts[name]=obj["proc"].get<std::string>();
         }
     }
     std::wcout<<"compiled all"<<std::endl;
