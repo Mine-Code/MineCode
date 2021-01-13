@@ -20,7 +20,6 @@ void condeval::CondChild(parserContext ctx, condChild cond){
                 // TODO: implement this
             }else{
                 // TODO: show error message
-
             }
             break;
         case value::IMM:
