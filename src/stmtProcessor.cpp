@@ -9,11 +9,7 @@
 using namespace synErr;
 using namespace parserTypes;
 
-void stmtProcessor::For    (
-    Context& ctx,
-    std::wstring target,
-    std::wstring iter
-){
+void stmtProcessor::For    (Context& ctx,std::wstring target,std::wstring iter){
     std::wcout<<"for iterator "<<target<<" in "<<iter<<std::endl;
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
