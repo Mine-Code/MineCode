@@ -24,10 +24,21 @@ void operator<<(parserWrap& ctx, std::string name){
     // load datas
     json puts=convertTree2Single(j["put"]);
     json pointers=convertTree2Single(j["pointers"]);
+    json basePointers=convertTree2Single(j["basePointers"]);
     json functions=convertTree2Single(j["functions"]);
 
     auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
     std::wstring pointerasm;
+
+    // compile base pointers
+    for(auto [name,obj]: basePointers.items()){
+        std::wcout<<"setting of "<<converter.from_bytes(name)<<std::endl;
+        
+        std::wstring source=converter.from_bytes(name+" = "+obj.get<std::string>());
+        
+        pointerasm += ctx.compile(source);
+    }
+    ctx.clear();
 
     // compile pointers
     for(auto [name,obj]: pointers.items()){
