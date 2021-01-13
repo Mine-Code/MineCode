@@ -10,5 +10,9 @@ void condeval::Cond(parserContext ctx, cond cond){
     // TODO: process cond.conds
 }
 void condeval::CondChild(parserContext ctx, condChild cond){
-
+    if(cond.op == condChild::single){
+        // TODO: process cond.single
+    }else{
+        // TODO: process cond.op and val1/2
+    }
 }
