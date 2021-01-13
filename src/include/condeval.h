@@ -4,7 +4,8 @@
 
 namespace condeval
 {
-    
+    void Cond();
+    void CondChild();
 } // namespace condeval
 
 
