@@ -4,6 +4,7 @@
 #include <util.h>
 #include <syntaxError.h>
 #include <eval.h>
+#include <condeval.h>
 
 using namespace synErr;
 using namespace parserTypes;
