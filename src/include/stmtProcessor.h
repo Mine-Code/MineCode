@@ -10,6 +10,7 @@ namespace parserTypes
     class ExecFunc;
     class expr;
     class value;
+    class cond;
 } // namespace parserTypes
 
 namespace stmtProcessor
@@ -20,7 +21,7 @@ namespace stmtProcessor
     void For    (Context& ctx,String,String);
     void Forr   (Context& ctx,int,int);
     void While  (Context& ctx);
-    void If     (Context& ctx);
+    void If     (Context& ctx, struct parserTypes::cond conditional);
     void Func   (Context& ctx);
     void Put    (Context& ctx);
     void Assign (Context& ctx,parserTypes::value target,std::wstring op,struct parserTypes::expr& value);

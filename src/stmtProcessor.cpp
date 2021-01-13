@@ -35,7 +35,7 @@ void stmtProcessor::While  (Context& ctx){
     }
 }
 
-void stmtProcessor::If     (Context& ctx){
+void stmtProcessor::If     (Context& ctx, struct parserTypes::cond conditional){
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
