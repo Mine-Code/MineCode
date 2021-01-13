@@ -53,7 +53,11 @@ void operator<<(parserWrap& ctx, std::string name){
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<converter.from_bytes(name)<<std::endl;
         std::wstring source=converter.from_bytes(obj["proc"].get<std::string>());
-        ctx.ctx.puts[name]=converter.to_bytes(ctx.compile(source));
+        
+        auto type=obj["type"].get<std::string>();
+        if(type=="MineCode"){
+            ctx.ctx.puts[name]=converter.to_bytes(ctx.compile(source));
+        }
     }
     std::wcout<<"compiled all"<<std::endl;
     ctx.clear();
