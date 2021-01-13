@@ -49,6 +49,6 @@ int main()
     optimizer a = optimizer(compiled);
     a.get();
 
-    prs.debug();
+    //prs.debug();
     return 0;
 }
