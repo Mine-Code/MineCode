@@ -17,7 +17,7 @@ void condeval::CondChild(parserContext ctx, condChild cond){
         case value::IDENT:
             var = ctx.variables[util::wstr2str(cond.single.ident)];
             if(var.type == varType::INT){
-                ctx.Asm.pop(var.offset);
+                ctx.Asm->pop(var.offset);
                 // if r13 == 1
             }else{
                 // TODO: show error message
