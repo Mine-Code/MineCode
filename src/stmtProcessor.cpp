@@ -39,6 +39,7 @@ void stmtProcessor::If     (Context& ctx, struct cond conditional){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
+    ctx.Asm->endOfIf();
 }
 
 void stmtProcessor::Func   (Context& ctx){
