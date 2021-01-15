@@ -31,7 +31,8 @@ void condeval::CondChild(parserContext ctx, condChild cond, int dest){
             }
             break;
         case value::PTR:
-            // TODO: implement this
+            eval::Ptr(ctx,cond.single.pointer);
+            ctx.Asm->compareImm(13,1);
             break;
         case value::STR:
             // TODO: implement this
