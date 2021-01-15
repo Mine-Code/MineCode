@@ -35,7 +35,7 @@ void condeval::CondChild(parserContext ctx, condChild cond, int dest){
             ctx.Asm->compareImm(13,1);
             break;
         case value::STR:
-            // TODO: implement this
+            synErr::processError(ctx,L"condition value is must be integer, identity or pointer",__FILE__,__func__,__LINE__);
             break;
         }
     }else{
