@@ -3,6 +3,7 @@
 #include <parserTypes.h>
 #include <eval.h>
 #include <util.h>
+#include <syntaxError.h>
 
 using namespace parserTypes;
 
