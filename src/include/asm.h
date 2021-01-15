@@ -59,6 +59,8 @@ public:
     void startOfIf(std::string mode, int cond = 0);
     void startOfIf(condType mode = EQU, int condReg = 0);
     void endOfIf();
+
+    void compare(int reg1, int reg2);
 };
 
 #endif
