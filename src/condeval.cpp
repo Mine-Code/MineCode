@@ -43,5 +43,18 @@ void condeval::CondChild(parserContext ctx, condChild cond, int dest){
         // process val1/2
         eval::Expr(ctx,cond.val1,13);
         eval::Expr(ctx,cond.val2,14);
+        Assembly::condType t;
+        switch (cond.op)
+        {
+        case condChild::EQU:  t=Assembly::EQU; break;
+        case condChild::NEQ:  t=Assembly::NEQ; break;
+        case condChild::LT:   t=Assembly::LT;  break;
+        case condChild::GT:   t=Assembly::GT;  break;
+        case condChild::GE:   t=Assembly::GE;  break;
+        case condChild::LE:   t=Assembly::LE;  break;
+        
+        default:
+            break;
+        }
     }
 }
