@@ -25,7 +25,10 @@ void condeval::CondChild(parserContext ctx, condChild cond, int dest){
             }
             break;
         case value::IMM:
-            // TODO: implement this
+            if(cond.single.imm==1){
+                ctx.Asm->writeRegister(1,13);
+                ctx.Asm->compareImm(13,1);
+            }
             break;
         case value::PTR:
             // TODO: implement this
