@@ -10,7 +10,7 @@ void condeval::Cond(parserContext ctx, cond cond){
     CondChild(ctx,cond.first);
     // TODO: process cond.conds
 }
-void condeval::CondChild(parserContext ctx, condChild cond){
+void condeval::CondChild(parserContext ctx, condChild cond, int dest){
     if(cond.op == condChild::SINGLE){
         varType var;
         switch(cond.single.type){
