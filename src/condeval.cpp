@@ -19,7 +19,7 @@ void condeval::CondChild(parserContext ctx, condChild cond, int dest){
             var = ctx.variables[util::wstr2str(cond.single.ident)];
             if(var.type == varType::INT){
                 ctx.Asm->pop(var.offset);
-                // if r13 == 1
+                ctx.Asm->compareImm(13,1);
             }else{
                 synErr::processError(ctx,L"condition variable is must be integer",__FILE__,__func__,__LINE__);
             }
