@@ -235,3 +235,7 @@ void Assembly::endOfIf()
         "endif_" << make_if_ctr - 1 << ":\n";
     make_if_ctr--;
 }
+
+void Assembly::compare(int reg1, int reg2){
+    ss<<"cmplw r" << reg1 << ", r" << reg2 << "\n";
+}
