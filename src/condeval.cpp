@@ -21,7 +21,7 @@ void condeval::CondChild(parserContext ctx, condChild cond, int dest){
                 ctx.Asm->pop(var.offset);
                 // if r13 == 1
             }else{
-                // TODO: show error message
+                synErr::processError(ctx,L"condition variable is must be integer",__FILE__,__func__,__LINE__);
             }
             break;
         case value::IMM:
