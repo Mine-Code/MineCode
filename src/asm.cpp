@@ -239,3 +239,6 @@ void Assembly::endOfIf()
 void Assembly::compare(int reg1, int reg2){
     ss<<"cmplw r" << reg1 << ", r" << reg2 << "\n";
 }
+void Assembly::compareImm(int reg1, int imm){
+    ss<<"cmplwi r" << reg1 << ", " << imm << "\n";
+}
