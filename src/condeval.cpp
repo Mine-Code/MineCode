@@ -7,7 +7,7 @@
 using namespace parserTypes;
 
 void condeval::Cond(parserContext ctx, cond cond, int dest){
-    CondChild(ctx,cond.first);
+    CondChild(ctx,cond.first, 2);
     // TODO: process cond.conds
 }
 void condeval::CondChild(parserContext ctx, condChild cond, int dest){
