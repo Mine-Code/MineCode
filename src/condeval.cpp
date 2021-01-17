@@ -11,7 +11,7 @@ void condeval::Cond(parserContext ctx, cond cond, int dest){
     CondChild(ctx,cond.first, 2);
     // TODO: process cond.conds
 }
-void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target, int dest){
+void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target){
     if(cond.op == condChild::SINGLE){
         varType var;
         switch(cond.single.type){
