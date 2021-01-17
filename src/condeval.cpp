@@ -20,6 +20,7 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target,
             if(var.type == varType::INT){
                 ctx.Asm->pop(var.offset);
                 ctx.Asm->compareImm(13,1);
+                ctx.Asm->condJump(Assembly::EQU,0,target);
             }else{
                 synErr::processError(ctx,L"condition variable is must be integer",__FILE__,__func__,__LINE__);
             }
