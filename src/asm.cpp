@@ -196,10 +196,7 @@ void Assembly::startOfIf(int src_1, std::string mode, int src_2)
     } else if (mode == ">=") {
         ss << "bge if_" << make_if_ctr << "\n";
     }
-    ss <<
-        "b " << "endif_" << make_if_ctr << ":\n"
-        "if_" << make_if_ctr << ":\n";
-    make_if_ctr++;
+    startOfIf_footer();
 }
 
 void Assembly::startOfIf(condType mode, int condReg){
@@ -223,10 +220,7 @@ void Assembly::startOfIf(condType mode, int condReg){
             ss << "ble if_" << make_if_ctr << ", cr"<<condReg << "\n";
             break;
     }
-    ss <<
-        "b " << "endif_" << make_if_ctr << ":\n"
-        "if_" << make_if_ctr << ":\n";
-    make_if_ctr++;
+    startOfIf_footer();
 }
 
 void Assembly::startOfIf_footer(){
