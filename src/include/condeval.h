@@ -2,6 +2,8 @@
 #ifndef CONDEVAL_H
 #define CONDEVAL_H
 
+#include <string>
+
 namespace parserTypes
 {
     class parserContext;
