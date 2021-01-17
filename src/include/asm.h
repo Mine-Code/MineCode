@@ -64,6 +64,7 @@ public:
     void compareImm(int reg1, int imm);
     void condJump(condType mode, int condReg,uint32_t addr);
     void condJump(condType mode, int condReg,std::wstring label);
+    void makeLabel(std::wstring name);
 };
 
 #endif
