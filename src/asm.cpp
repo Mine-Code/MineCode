@@ -257,3 +257,15 @@ void Assembly::condJump(condType mode, int condReg,uint32_t addr){
       << mnemonic<< "\n";
     make_if_ctr++;
 }
+void Assembly::condJump(condType mode, int condReg,std::wstring label){
+    std::wstring mnemonic;
+    switch(mode){
+        case EQU: mnemonic=L"beq"; break;
+        case NEQ: mnemonic=L"beq"; break;
+        case LT:  mnemonic=L"blt"; break;
+        case GT:  mnemonic=L"bgt"; break;
+        case GE:  mnemonic=L"bge"; break;
+        case LE:  mnemonic=L"ble"; break;
+    }
+    ss<< mnemonic<< " " <<label <<"\n";
+}
