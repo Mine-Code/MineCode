@@ -268,10 +268,11 @@ void Assembly::condJump(condType mode, int condReg,std::wstring label){
     }
     ss<< mnemonic<< " " <<label <<"\n";
 }
-void Assembly::makeLabel(std::wstring name){
+std::wstring Assembly::makeLabel(std::wstring name){
     ss<<name<<":";
+    return name;
 }
-void Assembly::makeLabel(){
+std::wstring Assembly::makeLabel(){
     static int no=0;
     ss<<"L"<<no<<":\n";
 }
