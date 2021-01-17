@@ -27,8 +27,7 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target,
             break;
         case value::IMM:
             if(cond.single.imm==1){
-                ctx.Asm->writeRegister(1,13);
-                ctx.Asm->compareImm(13,1);
+                ctx.stream<<"b "<<target<<"\n";
             }
             break;
         case value::PTR:
