@@ -35,7 +35,6 @@ void stmtProcessor::While  (Context& ctx){
 
 void stmtProcessor::If     (Context& ctx, struct cond conditional){
     condeval::Cond(ctx,conditional,0);
-    ctx.Asm->startOfIf(Assembly::EQU,0);
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
