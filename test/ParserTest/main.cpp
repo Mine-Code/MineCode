@@ -22,7 +22,7 @@ int main()
     
     prs.set(
         L""
-        "#do once"                          "\n"
+        //"#do once"                          "\n"
         //"func test(){"                      "\n"
         //"  a = 1+2+3"                       "\n"
         //"  n = (a*(100+a*10)+3*(1+5))/20+a" "\n" 
