@@ -157,11 +157,11 @@ namespace util
     
     template<typename T>
     bool isInt(T text){
-        bool ishex=(text[0]=='0' && text[1]=='x');
+        bool skip=(text[0]=='0' && text[1]=='x');
         int counter=0;
         for(auto ch: text){
             if(!isdigit(ch)){
-                if(ishex && counter<2){
+                if(skip && counter<2){
                     continue;
                 }
                 return false;
