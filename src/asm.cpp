@@ -271,3 +271,7 @@ void Assembly::condJump(condType mode, int condReg,std::wstring label){
 void Assembly::makeLabel(std::wstring name){
     ss<<name<<":";
 }
+void Assembly::makeLabel(){
+    static int no=0;
+    ss<<"L"<<no<<":\n";
+}
