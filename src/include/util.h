@@ -157,7 +157,7 @@ namespace util
     
     template<typename T>
     bool isInt(T text){
-        bool skip=(text[0]=='0' && text[1]=='x');
+        bool skip= (text[0]=='0' && (text[1]=='x' || text[1]=='o')) ;
         int counter=0;
         for(auto ch: text){
             if(!isdigit(ch)){
