@@ -13,7 +13,7 @@ namespace parserTypes
 namespace condeval
 {
     void Cond(parserTypes::parserContext ctx, parserTypes::cond cond, int dest);
-    void CondChild(parserTypes::parserContext ctx, parserTypes::condChild cond, int dest);
+    void CondChild(parserTypes::parserContext ctx, parserTypes::condChild cond, std::wstring target, int dest);
 } // namespace condeval
 
 

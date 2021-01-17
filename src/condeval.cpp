@@ -56,5 +56,6 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target,
         default:
             break;
         }
+        ctx.Asm->condJump(t,0,target);
     }
 }
