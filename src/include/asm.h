@@ -65,6 +65,7 @@ public:
     void condJump(condType mode, int condReg,uint32_t addr);
     void condJump(condType mode, int condReg,std::wstring label);
     void makeLabel(std::wstring name);
+    void makeLabel();
 };
 
 #endif
