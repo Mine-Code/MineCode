@@ -22,7 +22,7 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target,
                 ctx.Asm->compareImm(13,1);
                 ctx.Asm->condJump(Assembly::EQU,0,target);
             }else{
-                synErr::processError(ctx,L"condition variable is must be integer",__FILE__,__func__,__LINE__);
+                synErr::processError(ctx,L"condition variable is must be integer. but this is float",__FILE__,__func__,__LINE__);
             }
             break;
         case value::IMM:
