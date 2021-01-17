@@ -62,6 +62,7 @@ public:
 
     void compare(int reg1, int reg2);
     void compareImm(int reg1, int imm);
+    void condJump(condType mode, int condReg,uint32_t addr);
 };
 
 #endif

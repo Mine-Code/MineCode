@@ -242,3 +242,18 @@ void Assembly::compare(int reg1, int reg2){
 void Assembly::compareImm(int reg1, int imm){
     ss<<"cmplwi r" << reg1 << ", " << imm << "\n";
 }
+void Assembly::condJump(condType mode, int condReg,uint32_t addr){
+    std::wstring mnemonic;
+    switch(mode){
+        case EQU: mnemonic=L"beqctrl"; break;
+        case NEQ: mnemonic=L"beqctrl"; break;
+        case LT:  mnemonic=L"bltctrl"; break;
+        case GT:  mnemonic=L"bgtctrl"; break;
+        case GE:  mnemonic=L"bgectrl"; break;
+        case LE:  mnemonic=L"blectrl"; break;
+    }
+    writeRegister(addr,12);
+    ss<< "mtctr r12\n"
+      << mnemonic<< "\n";
+    make_if_ctr++;
+}
