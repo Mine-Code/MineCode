@@ -8,7 +8,8 @@
 using namespace parserTypes;
 
 void condeval::Cond(parserContext ctx, cond cond){
-    CondChild(ctx,cond.first, L"1");
+    CondChild(ctx,cond.first, L"if_"+std::to_wstring(ctx.Asm->make_if_ctr)+L":");
+    ctx.Asm->startOfIf_footer();
     // TODO: process cond.conds
 }
 void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target){
@@ -43,6 +44,7 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target)
         // process val1/2
         eval::Expr(ctx,cond.val1,13);
         eval::Expr(ctx,cond.val2,14);
+        ctx.Asm->compare(13,14);
         Assembly::condType t;
         switch (cond.op)
         {
