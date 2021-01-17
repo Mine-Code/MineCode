@@ -229,6 +229,13 @@ void Assembly::startOfIf(condType mode, int condReg){
     make_if_ctr++;
 }
 
+void Assembly::startOfIf_footer(){
+    ss <<
+        "b " << "endif_" << make_if_ctr << ":\n"
+        "if_" << make_if_ctr << ":\n";
+    make_if_ctr++;
+}
+
 void Assembly::endOfIf()
 {
     ss <<
