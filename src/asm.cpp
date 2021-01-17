@@ -255,7 +255,6 @@ void Assembly::condJump(condType mode, int condReg,uint32_t addr){
     writeRegister(addr,12);
     ss<< "mtctr r12\n"
       << mnemonic<< "\n";
-    make_if_ctr++;
 }
 void Assembly::condJump(condType mode, int condReg,std::wstring label){
     std::wstring mnemonic;
