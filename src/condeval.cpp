@@ -8,8 +8,6 @@
 using namespace parserTypes;
 
 void condeval::Cond(parserContext ctx, cond cond){
-    //CondChild(ctx,cond.first, L"if_"+std::to_wstring(ctx.Asm->make_if_ctr)+L":");
-    //ctx.Asm->startOfIf_footer();
     std::wstring label = L"if_"+std::to_wstring(ctx.Asm->make_if_ctr)+L":";
     for(auto condChild: cond.conds){
         CondAnd(ctx,condChild,label);
