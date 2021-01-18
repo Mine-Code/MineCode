@@ -50,8 +50,10 @@ void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     }else if(cond.conds.size() == 1){
         std::wstring elseLabel=ctx.Asm->getLabel();
         for(auto child: cond.conds){
-            // TODO: implement process of child
+            CondChild(ctx,invertConditional(child),elseLabel);
         }
+        // direct jump to 'target'
+        ctx.Asm->makeLabel(elseLabel);
     }
 }
 void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target){
