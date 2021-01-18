@@ -362,6 +362,7 @@ namespace parserCore{
     struct cond cond  (Context& ctx){
         struct cond ret;
         std::wstring text;
+        ret.conds.emplace_back(condAnd(ctx));
         while(
             ctx.iter.hasData() &&
             (
@@ -376,6 +377,7 @@ namespace parserCore{
     }
     struct condAnd condAnd  (Context& ctx){
         struct condAnd ret;
+        ret.conds.emplace_back(cond_inner(ctx));
         while(
             ctx.iter.hasData() &&
             (
