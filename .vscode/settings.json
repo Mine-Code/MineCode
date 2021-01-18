@@ -10,6 +10,7 @@
     },
     
     "files.associations": {
+        "*.mc": "json",
         "array": "cpp",
         "atomic": "cpp",
         "hash_map": "cpp",
@@ -76,7 +77,8 @@
         "forward_list": "cpp",
         "regex": "cpp",
         "shared_mutex": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "cassert": "cpp"
     },
     "todo-tree.tree.showBadges": true,
     "todo-tree.tree.showCountsInTree": true,
