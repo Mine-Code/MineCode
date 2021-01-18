@@ -17,12 +17,6 @@ parserTypes::parserContext::parserContext(parserTypes::parserContext& source)
     stream<<source.stream.rdbuf();
 }
 
-parserTypes::cond::cond()
-    : conds( std::vector<std::pair<Type,condChild>>() )
-{
-    
-}
-
 parserTypes::ExecFunc::ExecFunc()
     : args( std::vector<expr>() )
     , funcId( L"0x00000000" )
