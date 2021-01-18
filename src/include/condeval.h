@@ -8,6 +8,7 @@ namespace parserTypes
 {
     class parserContext;
     class cond;
+    class condAnd;
     class condChild;
 } // namespace parserTypes
 
