@@ -112,6 +112,11 @@ namespace parserTypes
         Type op;
         expr val2;
     };
+    struct condAnd
+    {
+        condChild first;
+        std::vector<condChild> conds;
+    };
     struct cond
     {
         enum Type{
