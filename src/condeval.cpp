@@ -16,6 +16,24 @@ condChild invertConditional(condChild source){
     case condChild::SINGLE_INV:
         source.op=condChild::SINGLE;
         break;
+    case condChild::EQU:
+        source.op=condChild::NEQ;
+        break;
+    case condChild::NEQ:
+        source.op=condChild::EQU;
+        break;
+    case condChild::LT:
+        source.op=condChild::GE;
+        break;
+    case condChild::GT:
+        source.op=condChild::LE;
+        break;
+    case condChild::GE:
+        source.op=condChild::LT;
+        break;
+    case condChild::LE:
+        source.op=condChild::GT;
+        break;
     }
 }
 
