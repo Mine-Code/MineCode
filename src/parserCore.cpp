@@ -362,26 +362,15 @@ namespace parserCore{
     struct cond cond  (Context& ctx){
         struct cond conditional;
         std::wstring text;
-        conditional.first=cond_inner(ctx);
         while(
             ctx.iter.hasData() &&
             (
-                ctx.iter.peek() == L"&&" ||
                 ctx.iter.peek() == L"||"
             )
         ){
             auto op=ctx.iter.next();
-            assert(op == L"&&" ||op == L"||"
-                ,L"excepted '&&' or '||'");
-            if(op==L"&&"){
-                conditional.conds.emplace_back(std::make_pair(
-                    cond::AND,cond_inner(ctx)
-                ));
-            }else if(op==L"||"){
-                conditional.conds.emplace_back(std::make_pair(
-                    cond::OR,cond_inner(ctx)
-                ));
-            }
+            assert(op == L"||",L"excepted '||'");
+            conditional.conds.emplace_back(condAnd(ctx));
         }
         return conditional;
     }
