@@ -104,6 +104,12 @@ void parserWrap::tokenize(){
         }else if(ch==L'=' && nextch==L'='){
             chiter.next(); //skip one equal
             tokens.emplace_back(L"==");
+        }else if(ch==L'|' && nextch==L'|'){
+            chiter.next(); // skip one
+            tokens.emplace_back(L"||");
+        }else if(ch==L'&' && nextch==L'&'){
+            chiter.next(); // skip one
+            tokens.emplace_back(L"&&");
         }else if(ch==L'='){
             value+=ch;
             tokens.emplace_back(value);
