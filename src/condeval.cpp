@@ -52,7 +52,7 @@ void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
         for(auto child: cond.conds){
             CondChild(ctx,invertConditional(child),elseLabel);
         }
-        // direct jump to 'target'
+        ctx.Asm->Jump(target);
         ctx.Asm->makeLabel(elseLabel);
     }
 }
