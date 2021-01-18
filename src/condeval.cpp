@@ -8,7 +8,12 @@
 using namespace parserTypes;
 
 condChild invertConditional(condChild source){
-    
+    condChild::Type old=source.op;
+    switch(old){
+    case condChild::SINGLE:
+        
+        break;
+    }
 }
 
 void condeval::Cond(parserContext ctx, cond cond){
@@ -28,7 +33,7 @@ void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     }
 }
 void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target){
-    if(cond.op == condChild::SINGLE){
+    if(cond.op == condChild::SINGLE || cond.op == condChild::SINGLE_INV){
         varType var;
         switch(cond.single.type){
         case value::IDENT:
