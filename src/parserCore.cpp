@@ -385,6 +385,11 @@ namespace parserCore{
         }
         return conditional;
     }
+    struct condAnd condAnd  (Context& ctx){
+        struct condAnd ret;
+        
+        return ret;
+    }
     struct condChild cond_inner  (Context& ctx){
         struct condChild cond;
         std::wstring text;
