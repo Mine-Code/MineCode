@@ -387,7 +387,16 @@ namespace parserCore{
     }
     struct condAnd condAnd  (Context& ctx){
         struct condAnd ret;
-        
+        while(
+            ctx.iter.hasData() &&
+            (
+                ctx.iter.peek() == L"&&"
+            )
+        ){
+            auto op=ctx.iter.next();
+            assert(op == L"&&",L"excepted '&&'");
+            ret.conds.emplace_back(cond_inner(ctx));
+        }
         return ret;
     }
     struct condChild cond_inner  (Context& ctx){
