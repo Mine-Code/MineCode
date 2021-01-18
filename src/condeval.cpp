@@ -12,8 +12,9 @@ void condeval::Cond(parserContext ctx, cond cond){
     //ctx.Asm->startOfIf_footer();
     std::wstring label = L"if_"+std::to_wstring(ctx.Asm->make_if_ctr)+L":";
     for(auto condChild: cond.conds){
-        // TODO: process condChild
+        CondAnd(ctx,condChild,label);
     }
+    ctx.Asm->makeLabel(label);
 }
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     // TODO: implement condAnd
