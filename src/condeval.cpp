@@ -15,7 +15,13 @@ void condeval::Cond(parserContext ctx, cond cond){
     ctx.Asm->makeLabel(label);
 }
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
-    // TODO: implement condAnd
+    if(cond.conds.size() == 1){
+        // TODO: implement processing cond
+    }else if(cond.conds.size() == 1){
+        for(auto child: cond.conds){
+            // TODO: implement process of child
+        }
+    }
 }
 void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target){
     if(cond.op == condChild::SINGLE){
