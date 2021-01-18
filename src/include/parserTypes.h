@@ -98,6 +98,7 @@ namespace parserTypes
     struct condChild{
         enum Type{
             SINGLE, // var (to val1)
+            SINGLE_INV,
 
             EQU, // ==
             NEQ, // !=
