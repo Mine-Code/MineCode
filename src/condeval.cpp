@@ -35,6 +35,11 @@ void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
 void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target){
     if(cond.op == condChild::SINGLE || cond.op == condChild::SINGLE_INV){
         varType var;
+        int compareTarget=1;
+        if(cond.op==condChild::SINGLE_INV){
+            compareTarget=0;
+        }
+        
         switch(cond.single.type){
         case value::IDENT:
             var = ctx.variables[util::wstr2str(cond.single.ident)];
