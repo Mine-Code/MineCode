@@ -360,7 +360,7 @@ namespace parserCore{
         ctx.stream<<"# fi"<<std::endl;
     }
     struct cond cond  (Context& ctx){
-        struct cond conditional;
+        struct cond ret;
         std::wstring text;
         while(
             ctx.iter.hasData() &&
@@ -370,9 +370,9 @@ namespace parserCore{
         ){
             auto op=ctx.iter.next();
             assert(op == L"||",L"excepted '||'");
-            conditional.conds.emplace_back(condAnd(ctx));
+            ret.conds.emplace_back(condAnd(ctx));
         }
-        return conditional;
+        return ret;
     }
     struct condAnd condAnd  (Context& ctx){
         struct condAnd ret;
