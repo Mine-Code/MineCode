@@ -47,6 +47,7 @@ namespace parserCore
     struct parserTypes::expr expr  (Context&);
 
     struct parserTypes::cond cond  (Context&);
+    struct parserTypes::condAnd condAnd  (Context&);
     struct parserTypes::condChild cond_inner  (Context&);
 
     Range range  (Context&);
