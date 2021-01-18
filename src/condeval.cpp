@@ -38,7 +38,7 @@ condChild invertConditional(condChild source){
 }
 
 void condeval::Cond(parserContext ctx, cond cond){
-    std::wstring footer=std::to_wstring(ctx.Asm->make_if_ctr)+L":";
+    std::wstring footer=std::to_wstring(ctx.Asm->make_if_ctr++)+L":";
     std::wstring label = L"if_"+footer;
     std::wstring endLabel = L"endif_"+footer;
     for(auto condChild: cond.conds){
