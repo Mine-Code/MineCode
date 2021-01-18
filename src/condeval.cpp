@@ -42,7 +42,7 @@ void condeval::Cond(parserContext ctx, cond cond){
     for(auto condChild: cond.conds){
         CondAnd(ctx,condChild,label);
     }
-    ctx.Asm->makeLabel(label);
+    ctx.Asm->makeLabel(label+L"\n");
 }
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     if(cond.conds.size() == 1){
