@@ -114,7 +114,6 @@ namespace parserTypes
     };
     struct condAnd
     {
-        condChild first;
         std::vector<condChild> conds;
     };
     struct cond
