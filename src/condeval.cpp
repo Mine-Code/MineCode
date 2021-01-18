@@ -12,6 +12,9 @@ void condeval::Cond(parserContext ctx, cond cond){
     //ctx.Asm->startOfIf_footer();
     // TODO: process cond.conds
 }
+void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
+    // TODO: implement condAnd
+}
 void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target){
     if(cond.op == condChild::SINGLE){
         varType var;
