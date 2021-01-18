@@ -11,7 +11,7 @@ condChild invertConditional(condChild source){
     condChild::Type old=source.op;
     switch(old){
     case condChild::SINGLE:
-        
+        source.op=condChild::SINGLE_INV;
         break;
     }
 }
