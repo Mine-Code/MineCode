@@ -9,8 +9,9 @@
 namespace parserTypes
 {
     class condChild;
+    class condAnd;
     class cond;
-    
+
     class parserContext;
     class ExecFunc;
 
