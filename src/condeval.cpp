@@ -13,6 +13,9 @@ condChild invertConditional(condChild source){
     case condChild::SINGLE:
         source.op=condChild::SINGLE_INV;
         break;
+    case condChild::SINGLE_INV:
+        source.op=condChild::SINGLE;
+        break;
     }
 }
 
