@@ -39,26 +39,26 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target)
         if(cond.op==condChild::SINGLE_INV){
             compareTarget=0;
         }
-        
+
         switch(cond.single.type){
         case value::IDENT:
             var = ctx.variables[util::wstr2str(cond.single.ident)];
             if(var.type == varType::INT){
                 ctx.Asm->pop(var.offset);
-                ctx.Asm->compareImm(13,1);
+                ctx.Asm->compareImm(13,compareTarget);
                 ctx.Asm->condJump(Assembly::EQU,0,target);
             }else{
                 synErr::processError(ctx,L"condition variable is must be integer. but this is float",__FILE__,__func__,__LINE__);
             }
             break;
         case value::IMM:
-            if(cond.single.imm==1){
+            if(cond.single.imm==compareTarget){
                 ctx.stream<<"b "<<target<<"\n";
             }
             break;
         case value::PTR:
             eval::Ptr(ctx,cond.single.pointer);
-            ctx.Asm->compareImm(13,1);
+            ctx.Asm->compareImm(13,compareTarget);
             break;
         case value::STR:
             synErr::processError(ctx,L"condition value is must be integer, identity or pointer",__FILE__,__func__,__LINE__);
