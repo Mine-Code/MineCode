@@ -119,15 +119,7 @@ namespace parserTypes
     };
     struct cond
     {
-        enum Type{
-            AND,
-            OR
-        };
-
-        cond();
-        
-        condChild first;
-        std::vector<std::pair<Type,condChild>> conds;
+        std::vector<condAnd> conds;
     };
 
     struct ExecFunc
