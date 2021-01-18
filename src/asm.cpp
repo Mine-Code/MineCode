@@ -278,3 +278,8 @@ std::wstring Assembly::makeLabel(){
     ss<<"L"<<no<<":\n";
     return L"L"+no;
 }
+
+std::wstring Assembly::getLabel(){
+    static int no=0;
+    return L"L"+no;
+}
