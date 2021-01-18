@@ -10,7 +10,9 @@ using namespace parserTypes;
 void condeval::Cond(parserContext ctx, cond cond){
     //CondChild(ctx,cond.first, L"if_"+std::to_wstring(ctx.Asm->make_if_ctr)+L":");
     //ctx.Asm->startOfIf_footer();
-    // TODO: process cond.conds
+    for(auto condChild: cond.conds){
+        // TODO: process condChild
+    }
 }
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     // TODO: implement condAnd
