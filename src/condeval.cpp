@@ -39,7 +39,7 @@ condChild invertConditional(condChild source){
 
 void condeval::Cond(parserContext ctx, cond cond){
     std::wstring label = L"if_"+std::to_wstring(ctx.Asm->make_if_ctr)+L":";
-    std::wstring endLabel = L"if_"+std::to_wstring(ctx.Asm->make_if_ctr)+L":";
+    std::wstring endLabel = L"endif_"+std::to_wstring(ctx.Asm->make_if_ctr)+L":";
     for(auto condChild: cond.conds){
         CondAnd(ctx,condChild,label);
     }
