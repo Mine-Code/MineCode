@@ -283,3 +283,6 @@ std::wstring Assembly::getLabel(){
     static int no=0;
     return L"L"+no;
 }
+std::wstring Assembly::Jump(std::wstring label){
+    ss<<"b "<<label<<"\n";
+}
