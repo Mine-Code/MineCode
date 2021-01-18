@@ -369,8 +369,7 @@ namespace parserCore{
                 ctx.iter.peek() == L"||"
             )
         ){
-            auto op=ctx.iter.next();
-            assert(op == L"||",L"excepted '||'");
+            assertChar("||");
             ret.conds.emplace_back(condAnd(ctx));
         }
         return ret;
@@ -384,8 +383,7 @@ namespace parserCore{
                 ctx.iter.peek() == L"&&"
             )
         ){
-            auto op=ctx.iter.next();
-            assert(op == L"&&",L"excepted '&&'");
+            assertChar("&&");
             ret.conds.emplace_back(cond_inner(ctx));
         }
         return ret;
