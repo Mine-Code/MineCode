@@ -16,7 +16,7 @@ void condeval::Cond(parserContext ctx, cond cond){
 }
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     if(cond.conds.size() == 1){
-        // TODO: implement processing cond
+        CondChild(ctx,cond.conds[0],target);
     }else if(cond.conds.size() == 1){
         for(auto child: cond.conds){
             // TODO: implement process of child
