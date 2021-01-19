@@ -52,9 +52,9 @@ namespace util
     template<typename T>
     bool isBitOpFull(T str){
         return
-               ch==L"|"|| ch==L"^"
-            || ch==L"&"
-            || ch==L">>"|| ch==L"<<"
+               str==L"|"|| str==L"^"
+            || str==L"&"
+            || str==L">>"|| str==L"<<"
         ;
     }
 
