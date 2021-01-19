@@ -270,7 +270,7 @@ void Assembly::condJump(condType mode, int condReg,std::wstring label){
     ss<< mnemonic<< " " <<label <<"\n";
 }
 std::wstring Assembly::makeLabel(std::wstring name){
-    ss<<name<<":";
+    ss<<name<<":\n";
     return name;
 }
 std::wstring Assembly::makeLabel(){
