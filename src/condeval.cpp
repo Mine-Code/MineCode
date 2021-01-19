@@ -46,7 +46,7 @@ void condeval::Cond(parserContext ctx, cond cond){
         CondAnd(ctx,condChild,label);
     }
     ctx.Asm->Jump(endLabel);
-    ctx.Asm->makeLabel(label+L"\n");
+    ctx.Asm->makeLabel(label);
 }
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     if(cond.conds.size() == 1){
