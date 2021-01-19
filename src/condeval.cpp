@@ -35,6 +35,7 @@ condChild invertConditional(condChild source){
         source.op=condChild::GT;
         break;
     }
+    return source;
 }
 
 void condeval::Cond(parserContext ctx, cond cond){
@@ -50,10 +51,13 @@ void condeval::Cond(parserContext ctx, cond cond){
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     if(cond.conds.size() == 1){
         CondChild(ctx,cond.conds[0],target);
-    }else if(cond.conds.size() == 1){
+    }else{
         std::wstring elseLabel=ctx.Asm->getLabel();
         for(auto child: cond.conds){
-            CondChild(ctx,invertConditional(child),elseLabel);
+            auto inv=invertConditional(child);
+            std::wcout<<"being cond child"<<std::endl;
+            CondChild(ctx,inv,elseLabel);
+            std::wcout<<"processed cond child"<<std::endl;
         }
         ctx.Asm->Jump(target);
         ctx.Asm->makeLabel(elseLabel);
