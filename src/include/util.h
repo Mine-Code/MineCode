@@ -49,6 +49,14 @@ namespace util
             || str==L"==" || str==L"!="
         ;
     }
+    template<typename T>
+    bool isBitOpFull(T str){
+        return
+               ch==L"|"|| ch==L"^"
+            || ch==L"&"
+            || ch==L">>"|| ch==L"<<"
+        ;
+    }
 
     template<typename T>
     bool isIdentity(T ch){
