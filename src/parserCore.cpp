@@ -407,9 +407,7 @@ namespace parserCore{
             }else if(op == L"!="){
                 cond.op=condChild::NEQ;
             }
-            std::wcout<<ctx.iter.index<<" || "<<ctx.iter.peekSafe(-1)<<ctx.iter.peekSafe(0)<<ctx.iter.peekSafe(1)<<std::endl;
             cond.val2=expr(ctx);
-            std::wcout<<ctx.iter.index<<" || "<<ctx.iter.peekSafe(-1)<<ctx.iter.peekSafe(0)<<ctx.iter.peekSafe(1)<<std::endl;
         }else{
             cond.op=condChild::SINGLE;
             cond.single=value(ctx);
