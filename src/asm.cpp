@@ -281,7 +281,7 @@ std::wstring Assembly::makeLabel(){
 
 std::wstring Assembly::getLabel(){
     static int no=0;
-    return L"L"+no;
+    return L"L"+std::to_wstring(no);
 }
 void Assembly::Jump(std::wstring label){
     ss<<"b "<<label<<"\n";
