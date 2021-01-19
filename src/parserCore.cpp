@@ -304,14 +304,14 @@ namespace parserCore{
             ctx.iter.hasData() && (
                 ctx.iter.peek() == L"+" ||
                 ctx.iter.peek() == L"-" ||
-                isBitOp(ctx.iter.peek()[0])
+                isBitOpFull(ctx.iter.peek())
             )
         ){
             auto text=ctx.iter.next();
             assert(
                 text == L"+" ||
                 text == L"-" ||
-                isBitOp(text[0])
+                isBitOpFull(text)
             ,   L"excepted '+' or '+', bitOperator"
             );
 
@@ -407,7 +407,9 @@ namespace parserCore{
             }else if(op == L"!="){
                 cond.op=condChild::NEQ;
             }
+            std::wcout<<ctx.iter.index<<" || "<<ctx.iter.peekSafe(-1)<<ctx.iter.peekSafe(0)<<ctx.iter.peekSafe(1)<<std::endl;
             cond.val2=expr(ctx);
+            std::wcout<<ctx.iter.index<<" || "<<ctx.iter.peekSafe(-1)<<ctx.iter.peekSafe(0)<<ctx.iter.peekSafe(1)<<std::endl;
         }else{
             cond.op=condChild::SINGLE;
             cond.single=value(ctx);
