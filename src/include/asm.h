@@ -72,6 +72,9 @@ public:
     std::wstring makeLabel();
 
     std::wstring getLabel();
+
+    int whileBegin();
+    void whileEnd(int id);
 };
 
 #endif
