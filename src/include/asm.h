@@ -74,6 +74,7 @@ public:
     std::wstring getLabel();
 
     int whileBegin();
+    std::wstring getEnd_While(int id);
     void whileEnd(int id);
 };
 
