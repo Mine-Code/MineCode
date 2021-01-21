@@ -419,7 +419,7 @@ namespace parserCore{
         struct cond conditional = cond(ctx);
         ctx.stream<<"# while {"<<std::endl;
         assertChar("{");
-        stmtProcessor::While(ctx);
+        stmtProcessor::While(ctx,conditional);
         assertChar("}");
         ctx.stream<<"# }"<<std::endl;
     }
