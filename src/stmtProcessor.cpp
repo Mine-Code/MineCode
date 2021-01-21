@@ -26,7 +26,7 @@ void stmtProcessor::Forr   (Context& ctx,int start,int end){
     ctx.Asm->endOfLoop();
 }
 
-void stmtProcessor::While  (Context& ctx){
+void stmtProcessor::While  (Context& ctx,cond conditional){
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);

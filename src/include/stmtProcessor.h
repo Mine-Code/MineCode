@@ -20,7 +20,7 @@ namespace stmtProcessor
 
     void For    (Context& ctx,String,String);
     void Forr   (Context& ctx,int,int);
-    void While  (Context& ctx);
+    void While  (Context& ctx,parserTypes::cond conditional);
     void If     (Context& ctx, struct parserTypes::cond conditional);
     void Func   (Context& ctx);
     void Put    (Context& ctx);
