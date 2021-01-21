@@ -261,7 +261,7 @@ void Assembly::condJump(condType mode, int condReg,std::wstring label){
     std::wstring mnemonic;
     switch(mode){
         case EQU: mnemonic=L"beq"; break;
-        case NEQ: mnemonic=L"beq"; break;
+        case NEQ: mnemonic=L"bne"; break;
         case LT:  mnemonic=L"blt"; break;
         case GT:  mnemonic=L"bgt"; break;
         case GE:  mnemonic=L"bge"; break;
