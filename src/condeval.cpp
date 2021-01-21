@@ -93,7 +93,6 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target)
             break;
         }
     }else{
-        // TODO: process cond.op and val1/2
         // process val1/2
         eval::Expr(ctx,cond.val1,13);
         eval::Expr(ctx,cond.val2,14);
