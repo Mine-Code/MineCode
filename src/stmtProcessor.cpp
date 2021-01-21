@@ -27,10 +27,12 @@ void stmtProcessor::Forr   (Context& ctx,int start,int end){
 }
 
 void stmtProcessor::While  (Context& ctx,cond conditional){
+    int id=ctx.Asm->whileBegin();
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
+    ctx.Asm->whileEnd(id);
 }
 
 void stmtProcessor::If     (Context& ctx, struct cond conditional){
