@@ -286,3 +286,14 @@ std::wstring Assembly::getLabel(){
 void Assembly::Jump(std::wstring label){
     ss<<"b "<<label<<"\n";
 }
+int Assembly::whileBegin(){
+    static int id=0;
+
+    int newid=id++;
+    
+    ss<<"W"<<newid<<":\n";
+    return newid;
+}
+void Assembly::whileEnd(int id){
+    ss<<"b W"<<id<<":\n";
+}
