@@ -14,6 +14,7 @@ namespace util{
     using namespace parserTypes;
     
     condChild invertConditional(condChild source);
+    condChild invertConditional(cond source);
 }
 
 #endif
