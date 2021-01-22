@@ -32,7 +32,7 @@ int main()
         //"  for i in 0...0x10{"              "\n"
         //"    Debug << \"{i}\" "     "\n"
         //"  }"                               "\n"
-        "  while a<=10{"                    "\n"
+        "  while a==10{"                    "\n"
         "    Debug << \"(^^)v\""    "\n"
         "  }"                               "\n"
         //"}"s
