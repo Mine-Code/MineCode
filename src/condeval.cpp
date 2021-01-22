@@ -4,6 +4,7 @@
 #include <eval.h>
 #include <util.h>
 #include <syntaxError.h>
+#include <condutil.h>
 
 using namespace parserTypes;
 
