@@ -5,6 +5,7 @@
 #include <syntaxError.h>
 #include <eval.h>
 #include <condeval.h>
+#include <condutil.h>
 
 using namespace synErr;
 using namespace parserTypes;
@@ -32,6 +33,7 @@ void stmtProcessor::While  (Context& ctx,cond conditional){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
+
     ctx.Asm->whileEnd(id);
 }
 
