@@ -34,6 +34,6 @@ condChild util::invertConditional(condChild source){
     }
     return source;
 }
-cond invertConditional(cond source){
+cond util::invertConditional(cond source){
     
 }
