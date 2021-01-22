@@ -24,7 +24,7 @@ void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     }else{
         std::wstring elseLabel=ctx.Asm->getLabel();
         for(auto child: cond.conds){
-            CondChild(ctx,invertConditional(child),elseLabel);
+            CondChild(ctx,util::invertConditional(child),elseLabel);
         }
         ctx.Asm->Jump(target);
         ctx.Asm->makeLabel(elseLabel);
