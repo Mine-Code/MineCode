@@ -15,6 +15,7 @@ namespace util{
     
     condChild invertConditional(condChild source);
     cond invertConditional(cond source);
+    condAnd invertConditional(condAnd source);
 }
 
 #endif
