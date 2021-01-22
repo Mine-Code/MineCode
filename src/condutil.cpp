@@ -35,5 +35,7 @@ condChild util::invertConditional(condChild source){
     return source;
 }
 cond util::invertConditional(cond source){
-    
+    cond ret;
+    //TODO: implement
+    return ret;
 }
