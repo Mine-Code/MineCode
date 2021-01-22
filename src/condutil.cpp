@@ -34,13 +34,13 @@ condChild util::invertConditional(condChild source){
     }
     return source;
 }
-cond util::invertConditional(cond source){
-    cond ret;
+condAnd util::invertConditional(cond source){
+    condAnd ret;
     //TODO: implement
     return ret;
 }
-condAnd util::invertConditional(condAnd source){
-    condAnd ret;
+cond util::invertConditional(condAnd source){
+    cond ret;
     //TODO: implement
     return ret;
 }
