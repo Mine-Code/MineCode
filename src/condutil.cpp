@@ -39,3 +39,8 @@ cond util::invertConditional(cond source){
     //TODO: implement
     return ret;
 }
+condAnd util::invertConditional(condAnd source){
+    condAnd ret;
+    //TODO: implement
+    return ret;
+}
