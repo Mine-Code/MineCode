@@ -44,6 +44,10 @@ condAnd util::invertConditional(cond source){
 }
 cond util::invertConditional(condAnd source){
     cond ret;
-    //TODO: implement
+    for (auto part : source.conds)
+    {
+        ret.conds.emplace_back(invertConditional(part))
+    }
+    
     return ret;
 }
