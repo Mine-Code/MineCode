@@ -18,6 +18,12 @@ void condeval::Cond(parserContext ctx, cond cond){
     ctx.Asm->Jump(endLabel);
     ctx.Asm->makeLabel(label);
 }
+void condeval::Cond(parserContext ctx, cond cond,std::wstring elseLabel){
+    for(auto condChild: cond.conds){
+        CondAnd(ctx,condChild,elseLabel);
+    }
+    ctx.Asm->Jump(elseLabel);
+}
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     if(cond.conds.size() == 1){
         CondChild(ctx,cond.conds[0],target);
