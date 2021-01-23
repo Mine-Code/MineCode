@@ -36,10 +36,13 @@ condChild util::invertConditional(condChild source){
 }
 cond util::invertConditional(cond source){
     cond ret;
+    condAnd tmp;
     for (auto part: source.conds)
     {
-        ret.conds.emplace_back(invertConditional(part));
+        tmp.conds.emplace_back(invertConditional(part));
     }
+
+    ret.conds.emplace_back(tmp);
     return ret;
 }
 cond util::invertConditional(condAnd source){
