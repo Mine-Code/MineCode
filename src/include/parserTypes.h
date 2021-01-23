@@ -97,6 +97,8 @@ namespace parserTypes
     
     struct condChild{
         enum Type{
+            COND,
+
             SINGLE, // var (to val1)
             SINGLE_INV,
 
@@ -107,6 +109,8 @@ namespace parserTypes
             GE,  // <=
             LE   // >=
         };
+
+        struct cond child;
         struct value single;
 
         expr val1;
