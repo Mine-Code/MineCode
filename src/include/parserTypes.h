@@ -95,6 +95,14 @@ namespace parserTypes
         struct ptr ptr;
     };
     
+    struct cond
+    {
+        std::vector<condAnd> conds;
+    };
+    struct condAnd
+    {
+        std::vector<condChild> conds;
+    };
     struct condChild{
         enum Type{
             COND,
@@ -116,14 +124,6 @@ namespace parserTypes
         expr val1;
         Type op;
         expr val2;
-    };
-    struct condAnd
-    {
-        std::vector<condChild> conds;
-    };
-    struct cond
-    {
-        std::vector<condAnd> conds;
     };
 
     struct ExecFunc
