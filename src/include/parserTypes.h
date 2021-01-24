@@ -97,11 +97,11 @@ namespace parserTypes
     
     struct cond
     {
-        std::vector<condAnd> conds;
+        std::vector<struct condAnd> conds;
     };
     struct condAnd
     {
-        std::vector<condChild> conds;
+        std::vector<struct condChild> conds;
     };
     struct condChild{
         enum Type{
