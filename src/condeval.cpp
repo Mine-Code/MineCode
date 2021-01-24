@@ -26,7 +26,9 @@ void condeval::Cond(parserContext ctx, cond cond,std::wstring trueLabel, std::ws
     for(auto condChild: cond.conds){
         CondAnd(ctx,condChild,trueLabel);
     }
-    ctx.Asm->Jump(falseLabel);
+    if(falseLabel!=L""){
+        ctx.Asm->Jump(falseLabel);
+    }
 }
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     if(cond.conds.size() == 1){
