@@ -86,7 +86,7 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target)
         case condChild::LE:   t=Assembly::LE;  break;
         
         default:
-            std::wcout<<"Warning: invalid conditional type id (set to equal)";
+            std::wcout<<"Warning: invalid conditional type id (set to equal)"<<std::endl;
             t=Assembly::EQU;
             break;
         }
