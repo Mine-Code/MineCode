@@ -298,5 +298,6 @@ std::wstring Assembly::getEnd_While(int id){
     return L"Wend"+std::to_wstring(id);
 }
 void Assembly::whileEnd(int id){
-    ss<<"b W"<<id<<":\n";
+    ss<<"b W"<<id<<":\n"
+      <<getEnd_While(id)<<":\n";
 }
