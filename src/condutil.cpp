@@ -31,6 +31,9 @@ condChild util::invertConditional(condChild source){
     case condChild::LE:
         source.op=condChild::GT;
         break;
+    case condChild::COND:
+        source.child=condAnd2cond(invertConditional(source.child));
+        break;
     }
     return source;
 }
