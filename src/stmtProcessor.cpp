@@ -33,8 +33,8 @@ void stmtProcessor::While  (Context& ctx,cond conditional){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
-
-    condeval::Cond(ctx,conditional,L"",L"/# while outer label #/");
+    std::wstring outerWhile = ctx.Asm->getEnd_While(id);
+    condeval::Cond(ctx,conditional,L"",outerWhile);
 
     ctx.Asm->whileEnd(id);
 }
