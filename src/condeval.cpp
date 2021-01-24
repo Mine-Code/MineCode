@@ -70,6 +70,8 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target)
             synErr::processError(ctx,L"condition value is must be integer, identity or pointer",__FILE__,__func__,__LINE__);
             break;
         }
+    }else if(cond.op == condChild::COND){
+        Cond(ctx,cond.child);
     }else{
         // process val1/2
         eval::Expr(ctx,cond.val1,13);
@@ -84,7 +86,6 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target)
         case condChild::GT:   t=Assembly::GT;  break;
         case condChild::GE:   t=Assembly::GE;  break;
         case condChild::LE:   t=Assembly::LE;  break;
-        
         default:
             std::wcout<<"Warning: invalid conditional type id (set to equal)"<<std::endl;
             t=Assembly::EQU;
