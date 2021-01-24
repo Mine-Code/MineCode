@@ -18,13 +18,11 @@ void condeval::Cond(parserContext ctx, cond cond){
     ctx.Asm->Jump(endLabel);
     ctx.Asm->makeLabel(label);
 }
-void condeval::Cond(parserContext ctx, cond cond,std::wstring elseLabel){
-    std::wstring label=ctx.Asm->getLabel();
+void condeval::Cond(parserContext ctx, cond cond,std::wstring trueLabel, std::wstring falseLabel){
     for(auto condChild: cond.conds){
-        CondAnd(ctx,condChild,label);
+        CondAnd(ctx,condChild,trueLabel);
     }
-    ctx.Asm->Jump(elseLabel);
-    ctx.Asm->makeLabel(label);
+    ctx.Asm->Jump(falseLabel);
 }
 void condeval::CondAnd(parserContext ctx, condAnd cond,std::wstring target){
     if(cond.conds.size() == 1){
