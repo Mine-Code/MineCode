@@ -13,6 +13,8 @@ namespace parserTypes
 namespace util{
     using namespace parserTypes;
     
+    condAnd cond2condAnd(cond source);
+
     condChild invertConditional(condChild source);
     condAnd invertConditional(cond source);
     cond invertConditional(condAnd source);

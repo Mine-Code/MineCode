@@ -57,3 +57,14 @@ cond util::invertConditional(condAnd source){
     
     return ret;
 }
+
+condAnd cond2condAnd(cond source){
+    condChild wrap;
+    wrap.op=condChild::COND;
+    wrap.child=source;
+
+    condAnd ret;
+    ret.conds.emplace_back(wrap);
+    
+    return ret;
+}
