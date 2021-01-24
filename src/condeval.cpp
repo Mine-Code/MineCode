@@ -19,6 +19,10 @@ void condeval::Cond(parserContext ctx, cond cond){
     ctx.Asm->makeLabel(label);
 }
 void condeval::Cond(parserContext ctx, cond cond,std::wstring trueLabel, std::wstring falseLabel){
+    if(trueLabel==L"" && falseLabel!=L""){
+        Cond(ctx,util::condAnd2cond(util::invertConditional(cond)),falseLabel,L"");
+        return;
+    }
     for(auto condChild: cond.conds){
         CondAnd(ctx,condChild,trueLabel);
     }
