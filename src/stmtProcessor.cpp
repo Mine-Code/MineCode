@@ -34,6 +34,8 @@ void stmtProcessor::While  (Context& ctx,cond conditional){
         parserCore::stmt(ctx);
     }
 
+    condeval::Cond(ctx,conditional,L"",L"/# while outer label #/");
+
     ctx.Asm->whileEnd(id);
 }
 
