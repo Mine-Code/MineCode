@@ -38,10 +38,12 @@ condAnd util::invertConditional(cond source){
     condAnd ret;
     for (auto part: source.conds)
     {
-        tmp.conds.emplace_back(invertConditional(part));
-    }
+        condChild wrap;
+        wrap.op=condChild::COND;
+        wrap.child=invertConditional(part);
 
-    ret.conds.emplace_back(tmp);
+        ret.conds.emplace_back(wrap);
+    }
     return ret;
 }
 cond util::invertConditional(condAnd source){
