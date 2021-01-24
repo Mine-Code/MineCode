@@ -68,3 +68,9 @@ condAnd cond2condAnd(cond source){
     
     return ret;
 }
+cond condAnd2cond(condAnd source){
+    cond ret;
+    ret.conds.emplace_back(source);
+    
+    return ret;
+}
