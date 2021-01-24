@@ -75,7 +75,7 @@ void condeval::CondChild(parserContext ctx, condChild cond, std::wstring target)
             break;
         }
     }else if(cond.op == condChild::COND){
-        Cond(ctx,cond.child);
+        Cond(ctx,cond.child,target,L"");
     }else{
         // process val1/2
         eval::Expr(ctx,cond.val1,13);
