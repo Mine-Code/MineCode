@@ -103,9 +103,8 @@ void Assembly::poke_i(int address, int src, int offset)
 
 void Assembly::add(int value, int src, int dest)
 {
-    writeRegister(value, 3);
     ss <<
-        "add r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 + r(src)
+        "addi r" << dest << ", r" << src << ", "<<value << "\n"; //r(dest) = r3 + r(src)
 }
 void Assembly::mul(int value, int src, int dest)
 {
