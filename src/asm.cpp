@@ -133,7 +133,7 @@ void Assembly::divReg(int valueReg, int src, int dest){
     ss << "divw r"<<dest<<", r"<<src<<", r"<<valueReg<<"\n";
 }
 
-void Assembly::modReg(int valueReg, int src = 13, int dest = 13){
+void Assembly::modReg(int valueReg, int src, int dest){
     ss
         <<"divw    r"<<dest<<", r"<< src<<", r"<<valueReg <<std::endl
         <<"mullw   r"<<dest<<", r"<<dest<<", r"<<valueReg <<std::endl
@@ -141,11 +141,11 @@ void Assembly::modReg(int valueReg, int src = 13, int dest = 13){
         <<"mr r"<<src<<", r"<<dest                        <<std::endl;
 }
 
-void Assembly::shtrReg(int valueReg, int src = 13, int dest = 13){
+void Assembly::shtrReg(int valueReg, int src, int dest){
     ss << "srw r"<<dest<<", r"<<src<<", r"<<valueReg<<std::endl;
 }
 
-void Assembly::shtlReg(int valueReg, int src = 13, int dest = 13){
+void Assembly::shtlReg(int valueReg, int src, int dest){
 
 }
 
