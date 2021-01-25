@@ -121,7 +121,17 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
     }else{
         op=op.substr(0,op.length()-1);
         eval::Expr(ctx,val,14);
-        // TODO: process two value assign using op
+        if(op==L"+"){
+            ctx.stream<<op<<std::endl;
+        }else if(op==L"-"){
+            ctx.stream<<op<<std::endl;
+        }else if(op==L"/"){
+            ctx.stream<<op<<std::endl;
+        }else if(op==L"*"){
+            ctx.stream<<op<<std::endl;
+        }else{
+            ctx.stream<<op<<std::endl;
+        }
 
     }
     if(_target.type==value::IDENT){
