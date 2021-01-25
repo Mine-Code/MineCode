@@ -134,7 +134,11 @@ void Assembly::divReg(int valueReg, int src, int dest){
 }
 
 void Assembly::modReg(int valueReg, int src = 13, int dest = 13){
-
+    ss
+        <<"divw    r"<<dest<<", r"<< src<<", r"<<valueReg <<std::endl
+        <<"mullw   r"<<dest<<", r"<<dest<<", r"<<valueReg <<std::endl
+        <<"subf    r"<<dest<<", r"<<dest<<", r"<<src      <<std::endl
+        <<"mr r"<<src<<", r"<<dest                        <<std::endl;
 }
 
 void Assembly::shtrReg(int valueReg, int src = 13, int dest = 13){
