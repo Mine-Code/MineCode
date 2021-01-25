@@ -45,6 +45,9 @@ public:
     void subReg(int valueReg, int src = 13, int dest = 13);
     void mulReg(int valueReg, int src = 13, int dest = 13);
     void divReg(int valueReg, int src = 13, int dest = 13);
+    void modReg(int valueReg, int src = 13, int dest = 13);
+    void shtrReg(int valueReg, int src = 13, int dest = 13);
+    void shtlReg(int valueReg, int src = 13, int dest = 13);
 
     void OR(int src_1, int dest = 13, int src_2 = 13);
     void XOR(int src_1, int dest = 13, int src_2 = 13);
