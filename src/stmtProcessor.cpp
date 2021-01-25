@@ -110,7 +110,7 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
             if(ctx.variables[name].type == varType::INT){
                 ctx.Asm->poke(ctx.variables[name].offset,1,14);
             }else if(ctx.variables[name].type == varType::FLOAT){
-                processError(ctx,L"assign to "+std::to_wstring(_target.type)+L"in float is not implemented...",__FILE__,__func__,__LINE__);
+                processError(ctx,L"assign to variable in float is not implemented...",__FILE__,__func__,__LINE__);
             }
             break;
         
