@@ -195,6 +195,12 @@ void parserWrap::tokenize(){
             value+=ch;
             value+='=';
             tokens.emplace_back(value);
+        }else if((util::isMathOp(ch) || util::isBitOp(ch)) && nextch == '='){
+            chiter.next();
+
+            value+=ch;
+            value+='=';
+            tokens.emplace_back(value);
         }else if(ch==L'\n' || ch==L' '){
             // passing!
         }else{
