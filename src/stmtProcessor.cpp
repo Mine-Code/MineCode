@@ -120,6 +120,7 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
         }
     }else{
         op=op.substr(0,op.length()-1);
+        eval::Expr(ctx,val,14);
         // TODO: process two value assign using op
 
     }
