@@ -130,7 +130,7 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
         }else if(op==L"*"){
             ctx.stream<<op<<std::endl;
         }else{
-            ctx.stream<<op<<std::endl;
+            ctx.stream<<"Default: "<<op<<std::endl;
         }
 
     }
