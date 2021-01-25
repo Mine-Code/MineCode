@@ -172,6 +172,20 @@ void parserWrap::tokenize(){
                 }
             }
             tokens.emplace_back(value);
+        }else if(ch==nextch && (ch == '<' || ch == '>') && chiter.peekSafe(1) == '='){
+            chiter.next();
+            chiter.next();
+
+            value+=ch;
+            value+=ch;
+            value+='=';
+            tokens.emplace_back(value);
+        }else if((util::isMathOp(ch) || util::isBitOp(ch)) && nextch == '='){
+            chiter.next();
+
+            value+=ch;
+            value+='=';
+            tokens.emplace_back(value);
         }else if(util::isIdentity(ch)){
             std::wstring tmp;
             tmp+=ch;
@@ -187,20 +201,6 @@ void parserWrap::tokenize(){
                 }
             }
             tokens.emplace_back(tmp);
-        }else if(ch==nextch && (ch == '<' || ch == '>') && chiter.peekSafe(1) == '='){
-            chiter.next();
-            chiter.next();
-
-            value+=ch;
-            value+=ch;
-            value+='=';
-            tokens.emplace_back(value);
-        }else if((util::isMathOp(ch) || util::isBitOp(ch)) && nextch == '='){
-            chiter.next();
-
-            value+=ch;
-            value+='=';
-            tokens.emplace_back(value);
         }else if(ch==L'\n' || ch==L' '){
             // passing!
         }else{
