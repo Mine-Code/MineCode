@@ -42,6 +42,7 @@ public:
     void div(int value, int src = 13, int dest = 13);
 
     void addReg(int valueReg, int src = 13, int dest = 13);
+    void subReg(int valueReg, int src = 13, int dest = 13);
     void mulReg(int valueReg, int src = 13, int dest = 13);
     void divReg(int valueReg, int src = 13, int dest = 13);
 
