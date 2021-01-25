@@ -24,8 +24,6 @@ int main()
         "#do once"  "\n"
         "a = 0"     "\n"
         "Debug << \"\"" "\n"
-        "a++\n"
-        "Debug << \"\"" "\n"
         "a += 10"   "\n"
         "Debug << \"\"" "\n"
         "a -= 10"   "\n"
