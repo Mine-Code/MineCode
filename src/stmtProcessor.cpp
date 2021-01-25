@@ -136,7 +136,7 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
         }else if(op==L">>"){
             ctx.stream<<op<<std::endl;
         }else{
-            ctx.stream<<"Default: "<<op<<std::endl;
+            processError(ctx,L"Unknown operator type: "+op,__FILE__,__func__,__LINE__);
         }
 
     }
