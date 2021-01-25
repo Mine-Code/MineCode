@@ -18,7 +18,6 @@ int main()
 
     parserWrap prs;
     prs<<"debug";
-    prs.debug();
     
     prs.set(
         L""
@@ -34,6 +33,7 @@ int main()
     );
     prs.tokenize();
     auto compiled=prs.compile();
+    prs.debug();
     std::wcout<<compiled<<std::endl; // show compiled code
     
     // count  lines
