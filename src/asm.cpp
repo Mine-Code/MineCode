@@ -146,7 +146,7 @@ void Assembly::shtrReg(int valueReg, int src, int dest){
 }
 
 void Assembly::shtlReg(int valueReg, int src, int dest){
-
+    ss << "slw r"<<dest<<", r"<<src<<", r"<<valueReg<<std::endl;
 }
 
 
