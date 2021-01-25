@@ -142,7 +142,7 @@ void Assembly::modReg(int valueReg, int src = 13, int dest = 13){
 }
 
 void Assembly::shtrReg(int valueReg, int src = 13, int dest = 13){
-
+    ss << "srw r"<<dest<<", r"<<src<<", r"<<valueReg<<std::endl;
 }
 
 void Assembly::shtlReg(int valueReg, int src = 13, int dest = 13){
