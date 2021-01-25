@@ -113,6 +113,14 @@ void parserWrap::tokenize(){
         }else if(ch==L'='){
             value+=ch;
             tokens.emplace_back(value);
+        }else if(ch==nextch && (ch == '<' || ch == '>') && chiter.peekSafe(1) == '='){
+            chiter.next();
+            chiter.next();
+
+            value+=ch;
+            value+=ch;
+            value+='=';
+            tokens.emplace_back(value);
         }else if(util::isCondOp(ch)){
             value+=ch;
             value+=chiter.next();
@@ -171,14 +179,6 @@ void parserWrap::tokenize(){
                     break;
                 }
             }
-            tokens.emplace_back(value);
-        }else if(ch==nextch && (ch == '<' || ch == '>') && chiter.peekSafe(1) == '='){
-            chiter.next();
-            chiter.next();
-
-            value+=ch;
-            value+=ch;
-            value+='=';
             tokens.emplace_back(value);
         }else if((util::isMathOp(ch) || util::isBitOp(ch)) && nextch == '='){
             chiter.next();
