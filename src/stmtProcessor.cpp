@@ -130,11 +130,11 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
         }else if(op==L"*"){
             ctx.Asm->mulReg(14);
         }else if(op==L"%"){
-            ctx.stream<<op<<std::endl;
+            ctx.Asm->modReg(14);
         }else if(op==L"<<"){
-            ctx.stream<<op<<std::endl;
+            ctx.Asm->shtlReg(14);
         }else if(op==L">>"){
-            ctx.stream<<op<<std::endl;
+            ctx.Asm->shtrReg(14);
         }else{
             processError(ctx,L"Unknown operator type: "+op,__FILE__,__func__,__LINE__);
         }
