@@ -120,6 +120,16 @@ void Assembly::div(int value, int src, int dest)
         "divw r" << dest << ", r3" << ", r" << src << "\n"; //r(dest) = r3 + r(src)
 }
 
+void Assembly::addReg(int valueReg, int src, int dest){
+    ss << "add r"<<dest<<", r"<<src<<", r"<<valueReg<<"\n";
+}
+void Assembly::mulReg(int valueReg, int src, int dest){
+    ss << "mullw r"<<dest<<", r"<<src<<", r"<<valueReg<<"\n";
+}
+void Assembly::divReg(int valueReg, int src, int dest){
+    ss << "divw r"<<dest<<", r"<<src<<", r"<<valueReg<<"\n";
+}
+
 void Assembly::OR(int src_1, int dest, int src_2)
 {
     ss <<
