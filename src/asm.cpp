@@ -133,6 +133,19 @@ void Assembly::divReg(int valueReg, int src, int dest){
     ss << "divw r"<<dest<<", r"<<src<<", r"<<valueReg<<"\n";
 }
 
+void Assembly::modReg(int valueReg, int src = 13, int dest = 13){
+
+}
+
+void Assembly::shtrReg(int valueReg, int src = 13, int dest = 13){
+
+}
+
+void Assembly::shtlReg(int valueReg, int src = 13, int dest = 13){
+
+}
+
+
 void Assembly::OR(int src_1, int dest, int src_2)
 {
     ss <<
