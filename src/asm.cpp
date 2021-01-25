@@ -123,6 +123,9 @@ void Assembly::div(int value, int src, int dest)
 void Assembly::addReg(int valueReg, int src, int dest){
     ss << "add r"<<dest<<", r"<<src<<", r"<<valueReg<<"\n";
 }
+void Assembly::subReg(int valueReg, int src, int dest){
+    ss << "sub r"<<dest<<", r"<<src<<", r"<<valueReg<<"\n";
+}
 void Assembly::mulReg(int valueReg, int src, int dest){
     ss << "mullw r"<<dest<<", r"<<src<<", r"<<valueReg<<"\n";
 }
