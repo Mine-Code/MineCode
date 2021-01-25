@@ -122,13 +122,13 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
         op=op.substr(0,op.length()-1);
         eval::Expr(ctx,val,14);
         if(op==L"+"){
-            ctx.stream<<op<<std::endl;
+            ctx.Asm->addReg(14);
         }else if(op==L"-"){
-            ctx.stream<<op<<std::endl;
+            ctx.Asm->subReg(14);
         }else if(op==L"/"){
-            ctx.stream<<op<<std::endl;
+            ctx.Asm->divReg(14);
         }else if(op==L"*"){
-            ctx.stream<<op<<std::endl;
+            ctx.Asm->mulReg(14);
         }else if(op==L"%"){
             ctx.stream<<op<<std::endl;
         }else if(op==L"<<"){
