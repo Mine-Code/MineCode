@@ -118,8 +118,8 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
             break;
         }
     }else{
-        // TODO:two value assign
-        std::wcout<<op<<std::endl;
+        op=op.substr(0,op.length()-1);
+        // TODO: process two value assign using op
     }
 }
 
