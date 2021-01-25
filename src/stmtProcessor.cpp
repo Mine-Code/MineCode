@@ -89,8 +89,9 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
             }else{
                 processError(ctx,_target.ident+L" is not found",__FILE__,__func__,__LINE__);
             }
+        }else {
+            ctx.Asm->pop(ctx.variables[target].offset);//load value
         }
-        ctx.Asm->pop(ctx.variables[target].offset);//load value
     }else{
         processError(ctx,_target.type+L" is not implemented...",__FILE__,__func__,__LINE__);
     }
@@ -120,6 +121,7 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
     }else{
         op=op.substr(0,op.length()-1);
         // TODO: process two value assign using op
+
     }
 }
 
