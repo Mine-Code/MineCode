@@ -124,6 +124,13 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
         // TODO: process two value assign using op
 
     }
+    if(_target.type==value::IDENT){
+        std::string target=util::wstr2str(_target.ident);
+        // check: is avail variable of target
+        ctx.Asm->poke(ctx.variables[target].offset,1,13);
+    }else{
+        processError(ctx,_target.type+L" is not implemented...",__FILE__,__func__,__LINE__);
+    }
 }
 
 void stmtProcessor::executeFunction (Context& ctx,ExecFunc call){
