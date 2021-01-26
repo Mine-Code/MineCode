@@ -15,17 +15,16 @@ namespace parserTypes
 
 namespace stmtProcessor
 {
-    using Context = parserTypes::parserContext;
     using String = std::wstring;
 
-    void For    (Context& ctx,String,String);
-    void Forr   (Context& ctx,int,int);
-    void While  (Context& ctx,parserTypes::cond conditional);
-    void If     (Context& ctx, struct parserTypes::cond conditional);
-    void Func   (Context& ctx);
-    void Put    (Context& ctx);
-    void Assign (Context& ctx,parserTypes::value target,std::wstring op,struct parserTypes::expr& value);
-    void executeFunction (Context& ctx,parserTypes::ExecFunc);
+    void For    (parserTypes::parserContext& ctx,String,String);
+    void Forr   (parserTypes::parserContext& ctx,int,int);
+    void While  (parserTypes::parserContext& ctx,parserTypes::cond conditional);
+    void If     (parserTypes::parserContext& ctx, struct parserTypes::cond conditional);
+    void Func   (parserTypes::parserContext& ctx);
+    void Put    (parserTypes::parserContext& ctx);
+    void Assign (parserTypes::parserContext& ctx,parserTypes::value target,std::wstring op,struct parserTypes::expr& value);
+    void executeFunction (parserTypes::parserContext& ctx,parserTypes::ExecFunc);
 } // namespace stmtProcessor
 
 
