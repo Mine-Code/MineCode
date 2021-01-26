@@ -20,6 +20,9 @@ int main(int argc, char *argv[])
 
 	// read the file
 	file.open(argv[1]);
+	std::istreambuf_iterator<wchar_t> it(file);
+    std::istreambuf_iterator<wchar_t> last;
+    std::wstring str(it, last);
 	
 	return 0;
 }
