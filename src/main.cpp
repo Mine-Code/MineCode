@@ -6,7 +6,7 @@
 
 using namespace std::literals::string_literals;
 
-int main()
+int main(int argc, char *argv[])
 {
 	parserWrap prs;
 	std::ifstream file;
