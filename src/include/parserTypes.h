@@ -6,6 +6,9 @@
 #include <sstream>
 #include "typedIterator.hxx"
 #include "asm.h"
+
+class parserWrap;
+
 namespace parserTypes
 {
     struct varType{
@@ -28,6 +31,8 @@ namespace parserTypes
         iterType iter;
         varsType variables;
         std::unordered_map<std::string,std::string> puts;
+
+        parserWrap *wraper;
     };
     
     class value;
