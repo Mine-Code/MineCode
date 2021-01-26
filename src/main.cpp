@@ -9,7 +9,7 @@ using namespace std::literals::string_literals;
 int main(int argc, char *argv[])
 {
 	parserWrap prs;
-	std::ifstream file;
+	std::wifstream file;
 
 	//argument check
 	if(argc!=2){
