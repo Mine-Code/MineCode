@@ -10,7 +10,7 @@
 using namespace synErr;
 using namespace parserTypes;
 
-void stmtProcessor::For    (Context& ctx,std::wstring target,std::wstring iter){
+void stmtProcessor::For    (parserTypes::parserContext& ctx,std::wstring target,std::wstring iter){
     std::wcout<<"for iterator "<<target<<" in "<<iter<<std::endl;
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
@@ -18,7 +18,7 @@ void stmtProcessor::For    (Context& ctx,std::wstring target,std::wstring iter){
     }
 }
 
-void stmtProcessor::Forr   (Context& ctx,int start,int end){
+void stmtProcessor::Forr   (parserTypes::parserContext& ctx,int start,int end){
     ctx.Asm->startOfLoop(end-start,start);
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
@@ -27,7 +27,7 @@ void stmtProcessor::Forr   (Context& ctx,int start,int end){
     ctx.Asm->endOfLoop();
 }
 
-void stmtProcessor::While  (Context& ctx,cond conditional){
+void stmtProcessor::While  (parserTypes::parserContext& ctx,cond conditional){
     int id=ctx.Asm->whileBegin();
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
@@ -39,7 +39,7 @@ void stmtProcessor::While  (Context& ctx,cond conditional){
     ctx.Asm->whileEnd(id);
 }
 
-void stmtProcessor::If     (Context& ctx, struct cond conditional){
+void stmtProcessor::If     (parserTypes::parserContext& ctx, struct cond conditional){
     condeval::Cond(ctx,conditional);
 
     while(ctx.iter.hasData()){
@@ -49,7 +49,7 @@ void stmtProcessor::If     (Context& ctx, struct cond conditional){
     ctx.Asm->endOfIf();
 }
 
-void stmtProcessor::Func   (Context& ctx){
+void stmtProcessor::Func   (parserTypes::parserContext& ctx){
     ctx.Asm->startOfFunction();
     
     int r14 = ctx.Asm->push(14);
@@ -68,11 +68,11 @@ void stmtProcessor::Func   (Context& ctx){
     ctx.Asm->endOfFunction();
 }
 
-void stmtProcessor::Put    (Context&){
+void stmtProcessor::Put    (parserTypes::parserContext&){
 
 }
 
-void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct expr& val){
+void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::wstring op,struct expr& val){
     if(_target.type==value::IDENT){
         std::string target=util::wstr2str(_target.ident);
         // check: is avail variable of target
@@ -149,7 +149,7 @@ void stmtProcessor::Assign (Context& ctx,value _target,std::wstring op,struct ex
     }
 }
 
-void stmtProcessor::executeFunction (Context& ctx,ExecFunc call){
+void stmtProcessor::executeFunction (parserTypes::parserContext& ctx,ExecFunc call){
     //load arguments
     int n=3;
     for(auto arg: call.args){

@@ -16,7 +16,7 @@ using namespace util;
 namespace parserCore{
     
 
-    void program(Context& ctx){
+    void program(parserTypes::parserContext& ctx){
         if(ctx.iter.peek()==L"#"){
             ctx.stream<<"# do once"<<std::endl;
             assert(ctx.iter.next() == L"#"   , L"mismatch preprecessor operation");
@@ -28,7 +28,7 @@ namespace parserCore{
             stmt(ctx);
         }
     }
-    void stmt(Context& ctx){
+    void stmt(parserTypes::parserContext& ctx){
         // stmt Switcher
         std::wstring text=ctx.iter.peek();
         if(text==L"for"){
@@ -57,7 +57,7 @@ namespace parserCore{
             }
         }
     }
-    void func(Context& ctx){
+    void func(parserTypes::parserContext& ctx){
         assertChar("func");
         std::wstring functionName=ctx.iter.next();
         ctx.stream<<"# "<<"funcName:"<<functionName<<std::endl;
@@ -80,7 +80,7 @@ namespace parserCore{
         stmtProcessor::Func(ctx);
         assertChar("}");
     }
-    void For(Context& ctx){
+    void For(parserTypes::parserContext& ctx){
         assertChar("for");
         std::wstring varname=ctx.iter.next();
         assertChar("in");
@@ -99,7 +99,7 @@ namespace parserCore{
         }
         assertChar("}");
     }
-    void put(Context& ctx){
+    void put(parserTypes::parserContext& ctx){
         auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
 
         std::string target = converter.to_bytes(ident(ctx));
@@ -108,13 +108,13 @@ namespace parserCore{
         assert(ctx.puts.count(target)==1,L"Puts Not found");
         ctx.stream<<converter.from_bytes(ctx.puts[target]);
     }
-    Arg arg(Context& ctx){
+    Arg arg(parserTypes::parserContext& ctx){
         return std::make_pair(
             ctx.iter.next(), // type
             ctx.iter.next()  // name
         );
     }
-    struct value value(Context& ctx){
+    struct value value(parserTypes::parserContext& ctx){
         struct value ret;
         wchar_t ch=ctx.iter.peek()[0];
         if(ctx.iter.peek()==L"["){
@@ -135,7 +135,7 @@ namespace parserCore{
         }
         return ret;
     }
-    struct ptr ptr(Context& ctx){
+    struct ptr ptr(parserTypes::parserContext& ctx){
         struct ptr ret;
         assertChar("[");
         [[maybe_unused]] bool isImmutable=isdigit(ctx.iter.peek()[0]);
@@ -151,7 +151,7 @@ namespace parserCore{
         assertChar("]");
         return ret;
     }
-    struct value editable(Context& ctx){
+    struct value editable(parserTypes::parserContext& ctx){
         struct value ret;
         if(ctx.iter.peek()==L"["){
             ret.type=value::PTR;
@@ -162,7 +162,7 @@ namespace parserCore{
         }
         return ret;
     }
-    std::wstring ident(Context& ctx){
+    std::wstring ident(parserTypes::parserContext& ctx){
         std::wstring text=ctx.iter.next();
         // check word?
         if(!isalpha(text[0])){
@@ -176,7 +176,7 @@ namespace parserCore{
         }
         return text;
     }
-    struct value constant(Context& ctx){
+    struct value constant(parserTypes::parserContext& ctx){
         struct value ret;
         std::wstring text=ctx.iter.next();
         // check integer?
@@ -192,7 +192,7 @@ namespace parserCore{
         }
         return ret;
     }
-    void assign(Context& ctx){
+    void assign(parserTypes::parserContext& ctx){
         struct value target=editable(ctx);
         std::wstring op=ctx.iter.next();
         struct expr value;
@@ -201,7 +201,7 @@ namespace parserCore{
         }
         stmtProcessor::Assign(ctx,target,op,value);
     }
-    struct power power (Context& ctx){
+    struct power power (parserTypes::parserContext& ctx){
         struct power ret;
         if(ctx.iter.peekSafe()==L"("){
             ret.type=power::EXPR;
@@ -229,7 +229,7 @@ namespace parserCore{
         return ret;
 
     }
-    struct expo expo  (Context& ctx){
+    struct expo expo  (parserTypes::parserContext& ctx){
         struct expo val;
         val.parts.emplace_back(power(ctx));
         while(ctx.iter.hasData() && ctx.iter.peek() == L"**"){
@@ -238,7 +238,7 @@ namespace parserCore{
         }
         return val;
     }
-    struct term term  (Context& ctx){
+    struct term term  (parserTypes::parserContext& ctx){
         struct term ret;
         {
             expo_wrap wrap;
@@ -275,7 +275,7 @@ namespace parserCore{
         }
         return ret;
     }
-    struct expr expr  (Context& ctx){
+    struct expr expr  (parserTypes::parserContext& ctx){
         struct expr ret;
         struct term part;
         std::wstring text=ctx.iter.peek();
@@ -335,14 +335,14 @@ namespace parserCore{
         }
         return ret;
     }
-    Range range  (Context& ctx){
+    Range range  (parserTypes::parserContext& ctx){
         int start=Int(ctx);
         assertChar("...");
         int end=Int(ctx);
         // convert start/end: wstr => int
         return std::make_pair(start,end);
     }
-    int Int  (Context& ctx){
+    int Int  (parserTypes::parserContext& ctx){
         std::wstring text=ctx.iter.next();
         if(!isdigit(text[0])){
             syntaxError(ctx,L"is not integer",__FILE__,__func__,__LINE__);
@@ -350,7 +350,7 @@ namespace parserCore{
         // convert test<wstr> to value<int>
         return toInt(text);
     }
-    void If(Context& ctx){
+    void If(parserTypes::parserContext& ctx){
         assertChar("if");
         struct cond conditional = cond(ctx);
         ctx.stream<<"# if"<<std::endl;
@@ -359,7 +359,7 @@ namespace parserCore{
         assertChar("}");
         ctx.stream<<"# fi"<<std::endl;
     }
-    struct cond cond  (Context& ctx){
+    struct cond cond  (parserTypes::parserContext& ctx){
         struct cond ret;
         std::wstring text;
         ret.conds.emplace_back(condAnd(ctx));
@@ -374,7 +374,7 @@ namespace parserCore{
         }
         return ret;
     }
-    struct condAnd condAnd  (Context& ctx){
+    struct condAnd condAnd  (parserTypes::parserContext& ctx){
         struct condAnd ret;
         ret.conds.emplace_back(cond_inner(ctx));
         while(
@@ -388,7 +388,7 @@ namespace parserCore{
         }
         return ret;
     }
-    struct condChild cond_inner  (Context& ctx){
+    struct condChild cond_inner  (parserTypes::parserContext& ctx){
         struct condChild cond;
         std::wstring text;
         if(isCondOpFull(ctx.iter.peekSafe(1))){
@@ -414,7 +414,7 @@ namespace parserCore{
         }
         return cond;
     }
-    void While(Context& ctx){
+    void While(parserTypes::parserContext& ctx){
         assertChar("while");
         struct cond conditional = cond(ctx);
         ctx.stream<<"# while {"<<std::endl;
@@ -423,7 +423,7 @@ namespace parserCore{
         assertChar("}");
         ctx.stream<<"# }"<<std::endl;
     }
-    struct ExecFunc funcCall(Context& ctx){
+    struct ExecFunc funcCall(parserTypes::parserContext& ctx){
         struct ExecFunc ret;
         if(ctx.iter.peek()==L"func"){
             // address based call
