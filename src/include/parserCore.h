@@ -29,38 +29,37 @@ namespace parserCore
 {
     using Arg=std::pair<std::wstring,std::wstring>;
     using Range=std::pair<int,int>;
-    using Context=parserTypes::parserContext;
 
-    int Int  (Context&);
-    std::wstring ident(Context&);
+    int Int  (parserTypes::parserContext&);
+    std::wstring ident(parserTypes::parserContext&);
 
-    Arg arg(Context&);
-    struct parserTypes::ptr ptr(Context&);
+    Arg arg(parserTypes::parserContext&);
+    struct parserTypes::ptr ptr(parserTypes::parserContext&);
     
-    struct parserTypes::value editable(Context&);
-    struct parserTypes::value constant(Context&);
-    struct parserTypes::value value(Context&);
+    struct parserTypes::value editable(parserTypes::parserContext&);
+    struct parserTypes::value constant(parserTypes::parserContext&);
+    struct parserTypes::value value(parserTypes::parserContext&);
     
-    struct parserTypes::power power (Context&);
-    struct parserTypes::expo expo  (Context&);
-    struct parserTypes::term term  (Context&);
-    struct parserTypes::expr expr  (Context&);
+    struct parserTypes::power power (parserTypes::parserContext&);
+    struct parserTypes::expo expo  (parserTypes::parserContext&);
+    struct parserTypes::term term  (parserTypes::parserContext&);
+    struct parserTypes::expr expr  (parserTypes::parserContext&);
 
-    struct parserTypes::cond cond  (Context&);
-    struct parserTypes::condAnd condAnd  (Context&);
-    struct parserTypes::condChild cond_inner  (Context&);
+    struct parserTypes::cond cond  (parserTypes::parserContext&);
+    struct parserTypes::condAnd condAnd  (parserTypes::parserContext&);
+    struct parserTypes::condChild cond_inner  (parserTypes::parserContext&);
 
-    Range range  (Context&);
+    Range range  (parserTypes::parserContext&);
 
-    void program(Context&);
+    void program(parserTypes::parserContext&);
     void stmt(parserTypes::parserContext&);
-    void func(Context&);
-    void If(Context&);
-    void For(Context&);
-    void While(Context&);
-    void put(Context&);
-    void assign(Context&);
-    struct parserTypes::ExecFunc funcCall(Context&);
+    void func(parserTypes::parserContext&);
+    void If(parserTypes::parserContext&);
+    void For(parserTypes::parserContext&);
+    void While(parserTypes::parserContext&);
+    void put(parserTypes::parserContext&);
+    void assign(parserTypes::parserContext&);
+    struct parserTypes::ExecFunc funcCall(parserTypes::parserContext&);
 } // namespace parserWrap
 
 
