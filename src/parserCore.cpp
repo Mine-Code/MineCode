@@ -196,7 +196,7 @@ namespace parserCore{
         struct value target=editable(ctx);
         std::wstring op=ctx.iter.next();
         struct expr value;
-        if(not (op==L"++" or op==L"--") ){
+        if(! (op==L"++" || op==L"--") ){
             value=expr(ctx);
         }
         stmtProcessor::Assign(ctx,target,op,value);
