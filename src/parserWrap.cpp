@@ -212,6 +212,7 @@ void parserWrap::tokenize(){
 
 std::wstring parserWrap::compile(){
     ctx.iter=iterator<std::wstring>(tokens);
+    ctx.wraper=this;
     parserCore::program(ctx);
     std::wstring compiled= ctx.Asm->ss.str();
     ctx.stream.str(L"");
