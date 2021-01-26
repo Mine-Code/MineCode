@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 		std::wcout
 			<<"Error: Invalid argument count"<<std::endl
 			<<"[Usage] "<<argv[0]<<" <Source filename>"<<std::endl;
+		return 1;
 	}
 
 	// read the file
