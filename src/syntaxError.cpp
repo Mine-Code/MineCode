@@ -3,7 +3,7 @@
 
 using namespace synErr;
 
-void synErr::ReportError(Context ctx,errorType type,std::wstring exMsg,const char* fname,const char* funcname,int line){
+void synErr::ReportError(parserTypes::parserContext& ctx,errorType type,std::wstring exMsg,const char* fname,const char* funcname,int line){
     std::wstring strType;
     if(type==SYNTAX){
         strType=L"syntax";
@@ -37,6 +37,6 @@ void synErr::ReportError(Context ctx,errorType type,std::wstring exMsg,const cha
     
     throw exMsg;
 }
-void synErr::syntaxError  (Context ctx,std::wstring ex,const char* fname,const char* funcname,int line) {ReportError(ctx,SYNTAX,ex,fname,funcname,line);}
-void synErr::tokenizeError(Context ctx,std::wstring ex,const char* fname,const char* funcname,int line) {ReportError(ctx,TOKENIZE,ex,fname,funcname,line);}
-void synErr::processError (Context ctx,std::wstring ex,const char* fname,const char* funcname,int line) {ReportError(ctx,PROCESS,ex,fname,funcname,line);}
+void synErr::syntaxError  (parserTypes::parserContext& ctx,std::wstring ex,const char* fname,const char* funcname,int line) {ReportError(ctx,SYNTAX,ex,fname,funcname,line);}
+void synErr::tokenizeError(parserTypes::parserContext& ctx,std::wstring ex,const char* fname,const char* funcname,int line) {ReportError(ctx,TOKENIZE,ex,fname,funcname,line);}
+void synErr::processError (parserTypes::parserContext& ctx,std::wstring ex,const char* fname,const char* funcname,int line) {ReportError(ctx,PROCESS,ex,fname,funcname,line);}
