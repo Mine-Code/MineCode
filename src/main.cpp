@@ -18,5 +18,8 @@ int main(int argc, char *argv[])
 			<<"[Usage] "<<argv[0]<<" <Source filename>"<<std::endl;
 	}
 
+	// read the file
+	file.open(argv[1]);
+	
 	return 0;
 }
