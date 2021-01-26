@@ -2,7 +2,7 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "python3 autotool/auto/autoc.py make test TEST=ParserTest DEBUG=1",
+                "cmd": "python3 autotool/auto/autoc.py make run",
                 "isAsync": true,
                 "silent": true
             }
