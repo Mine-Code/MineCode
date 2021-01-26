@@ -28,5 +28,6 @@ int main(int argc, char *argv[])
 	prs.set(str);
 	prs.tokenize();
 	
+	std::wcout<<prs.compile()<<std::endl;
 	return 0;
 }
