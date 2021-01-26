@@ -6,5 +6,7 @@ using namespace std::literals::string_literals;
 
 int main()
 {
+	parserWrap prs;
+	
 	return 0;
 }
