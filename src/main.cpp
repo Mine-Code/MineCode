@@ -24,5 +24,9 @@ int main(int argc, char *argv[])
     std::istreambuf_iterator<wchar_t> last;
     std::wstring str(it, last);
 	
+	// Compile!!!
+	prs.set(str);
+	prs.tokenize();
+	
 	return 0;
 }
