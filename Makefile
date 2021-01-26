@@ -60,7 +60,7 @@ test: $(TESTEXE)/$(TEST)
 	@./$<
 
 run: $(TARGET)
-	@./$<
+	@./$< $(arg)
 
 info:
 	@echo "--------------------"
