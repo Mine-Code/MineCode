@@ -13,4 +13,7 @@ optimizer::optimizer(std::wstring src){
 }
 
 std::vector<std::wstring> optimizer::get(){
+    std::vector<std::wstring> ret;
+
+    return ret;
 }
