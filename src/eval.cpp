@@ -143,7 +143,7 @@ void eval::Term (parserContext& ctx,term obj,int dest){
         };
 
         Type type;
-        int offset=0;
+        int offset;
     };
     std::vector<struct offset> stackOffsets;
 
