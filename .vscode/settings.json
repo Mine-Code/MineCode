@@ -2,7 +2,7 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "python3 autotool/auto/autoc.py make run arg=demo/debug",
+                "cmd": "python3 autotool/auto/autoc.py make run arg=demo/fix",
                 "isAsync": true,
                 "silent": true
             }
