@@ -20,7 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\asm.cpp" />
+    <ClCompile Include="src\condeval.cpp" />
+    <ClCompile Include="src\condutil.cpp" />
+    <ClCompile Include="src\eval.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\mcl.cpp" />
+    <ClCompile Include="src\myassert.cpp" />
+    <ClCompile Include="src\optimizer.cpp" />
     <ClCompile Include="src\parserCore.cpp" />
     <ClCompile Include="src\parserTypes.cpp" />
     <ClCompile Include="src\parserWrap.cpp" />
@@ -30,6 +36,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\asm.h" />
+    <ClInclude Include="src\include\condeval.h" />
+    <ClInclude Include="src\include\condutil.h" />
+    <ClInclude Include="src\include\eval.h" />
+    <ClInclude Include="src\include\mcl.h" />
+    <ClInclude Include="src\include\myassert.h" />
+    <ClInclude Include="src\include\optimizer.h" />
     <ClInclude Include="src\include\parserCore.h" />
     <ClInclude Include="src\include\parserTypes.h" />
     <ClInclude Include="src\include\parserWrap.h" />
