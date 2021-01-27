@@ -139,6 +139,7 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
             break;
         case value::PTR:
             ctx.Asm->poke(0,13,14);
+            break;
         default:
             processError(ctx,L"assign to "+std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
             break;
