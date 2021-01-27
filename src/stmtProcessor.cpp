@@ -89,27 +89,27 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
             }else{
                 processError(ctx,_target.ident+L" is not found",__FILE__,__func__,__LINE__);
             }
-        }else if(_target.type==value::PTR){
-            switch(_target.pointer.base->type){
-            case value::PTR:
-                //TODO: implement of PTR
-                break;
-            case value::IDENT:
-                //TODO: implement of IDENT
-                break;
-            case value::STR:
-                //TODO: implement of STR
-                break;
-            case value::IMM:
-                //TODO: implement of IMM
-                break;
-            default:
-               processError(ctx,L"unknown pointer base type: "+std::to_wstring(_target.type),__FILE__,__func__,__LINE__);
-            }
-            // calculate all offsets
         }else {
             ctx.Asm->pop(ctx.variables[target].offset);//load value
         }
+    }else if(_target.type==value::PTR){
+        switch(_target.pointer.base->type){
+        case value::PTR:
+            //TODO: implement of PTR
+            break;
+        case value::IDENT:
+            //TODO: implement of IDENT
+            break;
+        case value::STR:
+            //TODO: implement of STR
+            break;
+        case value::IMM:
+            //TODO: implement of IMM
+            break;
+        default:
+           processError(ctx,L"unknown pointer base type: "+std::to_wstring(_target.type),__FILE__,__func__,__LINE__);
+        }
+        // calculate all offsets
     }else{
         processError(ctx,std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
     }
