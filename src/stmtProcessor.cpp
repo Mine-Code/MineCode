@@ -95,16 +95,16 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
     }else if(_target.type==value::PTR){
         switch(_target.pointer.base->type){
         case value::PTR:
-            //TODO: implement of PTR
+            eval::Ptr(ctx,_target.pointer.base->pointer,13);
             break;
         case value::IDENT:
-            //TODO: implement of IDENT
+            eval::Var(ctx,_target.pointer.base->ident,13);
             break;
         case value::STR:
-            //TODO: implement of STR
+            processError(ctx,L"can not set string to pointer address",__FILE__,__func__,__LINE__);
             break;
         case value::IMM:
-            //TODO: implement of IMM
+            ctx.Asm->writeRegister(_target.pointer.base->imm,13);
             break;
         default:
            processError(ctx,L"unknown pointer base type: "+std::to_wstring(_target.type),__FILE__,__func__,__LINE__);
