@@ -137,7 +137,8 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
                 processError(ctx,L"assign to variable in float is not implemented...",__FILE__,__func__,__LINE__);
             }
             break;
-        
+        case value::PTR:
+            ctx.Asm->poke(0,13,14);
         default:
             processError(ctx,L"assign to "+std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
             break;
