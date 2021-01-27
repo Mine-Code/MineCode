@@ -110,6 +110,12 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
            processError(ctx,L"unknown pointer base type: "+std::to_wstring(_target.type),__FILE__,__func__,__LINE__);
         }
         // calculate all offsets
+        int offset;
+        for (auto off: _target.pointer.offsets)
+        {
+            offset+=off;
+        }
+        
     }else{
         processError(ctx,std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
     }
