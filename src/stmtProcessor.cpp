@@ -93,7 +93,7 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
             ctx.Asm->pop(ctx.variables[target].offset);//load value
         }
     }else{
-        processError(ctx,_target.type+L" is not implemented...",__FILE__,__func__,__LINE__);
+        processError(ctx,std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
     }
     if(op==L"++"){
         ctx.Asm->add(1);
