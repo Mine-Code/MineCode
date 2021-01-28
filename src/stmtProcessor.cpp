@@ -125,7 +125,7 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
     if(op==L"++"){
         ctx.Asm->add(1,14,14);
     }else if(op==L"--"){
-        ctx.Asm->add(-1);
+        ctx.Asm->add(-1,14,14);
     }else if(op==L"="){
         eval::Expr(ctx,val,14);
         std::string name;
