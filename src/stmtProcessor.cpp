@@ -127,26 +127,7 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
     }else if(op==L"--"){
         ctx.Asm->add(-1,14,14);
     }else if(op==L"="){
-        eval::Expr(ctx,val,14);
-        std::string name;
-
-        switch (_target.type)
-        {
-        case value::IDENT:
-            name=util::wstr2str(_target.ident);
-            if(ctx.variables[name].type == varType::INT){
-                ctx.Asm->poke(ctx.variables[name].offset,1,14);
-            }else if(ctx.variables[name].type == varType::FLOAT){
-                processError(ctx,L"assign to variable in float is not implemented...",__FILE__,__func__,__LINE__);
-            }
-            break;
-        case value::PTR:
-            ctx.Asm->poke(0,13,14);
-            break;
-        default:
-            processError(ctx,L"assign to "+std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
-            break;
-        }
+        
     }else if( (  util::isMathOp(op[0]) || util::isBitOpFull(op.substr(0,op.length()-1))  ) && op[op.length()-1]==L'='){
         op=op.substr(0,op.length()-1);
         eval::Expr(ctx,val,14);
