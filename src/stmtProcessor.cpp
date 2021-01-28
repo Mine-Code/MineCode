@@ -119,6 +119,9 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
     }else{
         processError(ctx,std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
     }
+    // Load value
+    eval::Expr(ctx,val,14);
+    
     if(op==L"++"){
         ctx.Asm->add(1);
     }else if(op==L"--"){
