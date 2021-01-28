@@ -121,9 +121,9 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
     }
     // Load value
     eval::Expr(ctx,val,14);
-    
+
     if(op==L"++"){
-        ctx.Asm->add(1);
+        ctx.Asm->add(1,14,14);
     }else if(op==L"--"){
         ctx.Asm->add(-1);
     }else if(op==L"="){
