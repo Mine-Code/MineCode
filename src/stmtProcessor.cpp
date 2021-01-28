@@ -147,7 +147,7 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
             processError(ctx,L"assign to "+std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
             break;
         }
-    }else{
+    }else if( (  util::isMathOp(op[0]) || util::isBitOpFull(op.substr(0,op.length()-1))  ) && op[op.length()-1]==L'='){
         op=op.substr(0,op.length()-1);
         eval::Expr(ctx,val,14);
         if(op==L"+"){
@@ -170,6 +170,10 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
 
     }
     if(_target.type==value::IDENT){
+        std::string target=util::wstr2str(_target.ident);
+        // check: is avail variable of target
+        ctx.Asm->poke(ctx.variables[target].offset,1,13);
+    }else if(_target.type==value::PTR){
         std::string target=util::wstr2str(_target.ident);
         // check: is avail variable of target
         ctx.Asm->poke(ctx.variables[target].offset,1,13);
