@@ -9,6 +9,7 @@
 #include <util.h>
 #include <syntaxError.h>
 #include <myassert.h>
+#include <mcl.h>
 
 using namespace synErr;
 using namespace parserTypes;
