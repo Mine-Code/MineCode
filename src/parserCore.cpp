@@ -41,6 +41,8 @@ namespace parserCore{
             stmtProcessor::executeFunction(ctx,funcCall(ctx));
         }else if(text==L"func"){
             func(ctx);
+        }else if(text==L"mcl"){
+            mcl(ctx);
         }else{
             //put / assign
             assert(ctx.iter.hasData(),L"does not have data in iterator");
