@@ -285,7 +285,7 @@ void Assembly::condJump(condType mode, int condReg,uint32_t addr){
     }
     writeRegister(addr,12);
     ss<< "mtctr r12\n"
-      << mnemonic<< "\n";
+      << mnemonic<< ", cr"<<condReg <<"\n";
 }
 void Assembly::condJump(condType mode, int condReg,std::wstring label){
     std::wstring mnemonic;
@@ -297,7 +297,7 @@ void Assembly::condJump(condType mode, int condReg,std::wstring label){
         case GE:  mnemonic=L"bge"; break;
         case LE:  mnemonic=L"ble"; break;
     }
-    ss<< mnemonic<< " " <<label <<"\n";
+    ss<< mnemonic<< " " <<label << ", cr"<<condReg <<"\n";
 }
 std::wstring Assembly::makeLabel(std::wstring name){
     ss<<name<<":\n";
