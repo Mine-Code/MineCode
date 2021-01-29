@@ -83,6 +83,9 @@ public:
     int whileBegin();
     std::wstring getEnd_While(int id);
     void whileEnd(int id);
+
+    int string_offset = 0;
+    void setString(std::wstring str, int dest = 13);
 };
 
 #endif
