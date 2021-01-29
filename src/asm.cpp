@@ -1,5 +1,6 @@
 #include <sstream>
 #include <cassert>
+#include <wchar.h>
 #include <asm.h>
 
 
@@ -329,4 +330,27 @@ std::wstring Assembly::getEnd_While(int id){
 void Assembly::whileEnd(int id){
     ss<<"b W"<<id<<":\n"
       <<getEnd_While(id)<<":\n";
+}
+
+void Assembly::setString(std::wstring str, int dest)
+{   
+    ss <<
+        "bl string_" << string_offset << "\n";
+    for (int i = 0; i < str.length(); i++) {
+        wchar_t* wc = (wchar_t*)str.c_str();
+        char byte1[40];
+        char byte2[40];
+        int val1, val2;
+        val1 = ((uint32_t)wc >> 10) && 0xFFFF;
+        val2 = ((uint32_t)wc >> 8) && 0xFFFF;
+        sprintf_s(byte1, "%x", val1);
+        sprintf_s(byte1, "%x", val2);
+
+        ss <<
+            ".long 0x" << byte1 << byte2 << "\n";
+    }
+    ss <<
+        "string_" << string_offset << ":\n"
+        "mflr r" << dest << "\n";
+    string_offset++;
 }
