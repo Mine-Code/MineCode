@@ -59,6 +59,8 @@ namespace parserCore
     void While(parserTypes::parserContext&);
     void put(parserTypes::parserContext&);
     void assign(parserTypes::parserContext&);
+    void mcl(parserTypes::parserContext&);
+
     struct parserTypes::ExecFunc funcCall(parserTypes::parserContext&);
 } // namespace parserWrap
 

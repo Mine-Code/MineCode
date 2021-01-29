@@ -425,6 +425,9 @@ namespace parserCore{
         assertChar("}");
         ctx.stream<<"# }"<<std::endl;
     }
+    void mcl(parserTypes::parserContext& ctx){
+        
+    }
     struct ExecFunc funcCall(parserTypes::parserContext& ctx){
         struct ExecFunc ret;
         if(ctx.iter.peek()==L"func"){
