@@ -81,7 +81,6 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
             if(op==L"="){
                 // make variable
                 varType var;
-                eval::Expr(ctx,val,13);
 
                 var.offset=ctx.Asm->push();
 
