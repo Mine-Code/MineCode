@@ -1,5 +1,5 @@
 mcl debug
 
 [0x10000000] = i
-debug.Debug << ""
+Debug << ""
 [0x10000000] /= i
