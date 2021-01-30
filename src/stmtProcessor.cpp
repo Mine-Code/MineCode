@@ -84,13 +84,6 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
         }
     }else if(_target.type==value::PTR){
         eval::Ptr_Addr(ctx,_target.pointer,13);
-        // calculate all offsets
-        int offset = 0;
-        for (auto off: _target.pointer.offsets)
-        {
-            offset+=off;
-        }
-        if(offset!=0)ctx.Asm->add(offset,13,13);
     }else{
         processError(ctx,std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
     }

@@ -228,12 +228,7 @@ void eval::Power(parserContext& ctx,power obj,int dest){
 }
 void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     int offs=ctx.Asm->stack_offset;
-    // calculate offset
-    int offset=0;
-    for(auto val:obj.offsets)offset+=val;
-    // get value
     Ptr_Addr(ctx,obj,dest);
-    ctx.Asm->add(offset,dest,dest);
     ctx.Asm->poke(0,dest,dest);
     ctx.Asm->stack_offset=offs;
 }
@@ -254,6 +249,12 @@ void eval::Ptr_Addr(parserContext& ctx, ptr obj, int dest){
     default:
        synErr::processError(ctx,L"unknown pointer base type: "+std::to_wstring(obj.base->type),__FILE__,__func__,__LINE__);
     }
+    int offset = 0;
+    for (auto off: obj.offsets)
+    {
+        offset+=off;
+    }
+    if(offset!=0)ctx.Asm->add(offset,dest,dest);
 }
 void eval::Var  (parserContext& ctx,std::wstring obj,int dest){
     if(obj[0]=='\"'){
