@@ -56,6 +56,8 @@ namespace parserCore{
             func(ctx);
         }else if(text==L"mcl"){
             mcl(ctx);
+        }else if(text==L"return"){
+            ctx.Asm->Jump(L"__ret");
         }else{
             //put / assign
             assert(ctx.iter.hasData(),L"does not have data in iterator");
