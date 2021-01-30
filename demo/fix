@@ -1,3 +1,4 @@
 mcl debug
 i=0
+Debug<<0
 i+=1
