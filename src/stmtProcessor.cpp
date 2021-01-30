@@ -115,7 +115,7 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
         {
             offset+=off;
         }
-        ctx.Asm->add(offset,13,13);
+        if(offset!=0)ctx.Asm->add(offset,13,13);
     }else{
         processError(ctx,std::to_wstring(_target.type)+L" is not implemented...",__FILE__,__func__,__LINE__);
     }
