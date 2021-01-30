@@ -78,8 +78,7 @@ void Assembly::callFunction(int address)
 void Assembly::peek(int offset, int dest, int src)
 {
     ss <<
-        "mr r12, r" << src << "\n"
-        "lwz r" << dest << ", " << offset << "(r12)\n";
+        "lwz r" << dest << ", " << offset << "(r"<<src<<")\n";
 }
 
 void Assembly::peek_i(int address, int offset, int dest)
