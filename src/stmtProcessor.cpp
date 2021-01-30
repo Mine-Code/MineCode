@@ -155,9 +155,7 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
         // check: is avail variable of target
         ctx.Asm->poke(ctx.variables[target].offset,1,13);
     }else if(_target.type==value::PTR){
-        std::string target=util::wstr2str(_target.ident);
-        // check: is avail variable of target
-        ctx.Asm->poke(ctx.variables[target].offset,1,13);
+        ctx.Asm->poke(0,13,14);
     }else{
         processError(ctx,_target.type+L" is not implemented...",__FILE__,__func__,__LINE__);
     }
