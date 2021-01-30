@@ -82,7 +82,8 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
                 // make variable
                 varType var;
 
-                var.offset=ctx.Asm->push();
+                ctx.Asm->stack_offset+=4;
+                var.offset=ctx.Asm->stack_size - ctx.Asm->stack_offset + 4;
 
                 ctx.variables[target]=var;
             }else{
