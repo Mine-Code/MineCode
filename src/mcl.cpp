@@ -10,6 +10,7 @@
 #include <parserWrap.h>
 #include <parserCore.h>
 
+        #include <util.h>
 using namespace std::literals::string_literals;
 using json = nlohmann::json;
 
@@ -29,7 +30,7 @@ void operator<<(parserWrap& ctx, std::string name){
     std::wstring pointerasm;
 
     // compile pointers
-    for(auto pointer: pointers){
+    for(auto pointer: j["pointers"]){
         auto name=pointer[0].get<std::string>();
         auto expr=pointer[1].get<std::string>();
         std::wcout<<"setting of "<<converter.from_bytes(name)<<std::endl;
