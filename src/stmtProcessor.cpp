@@ -118,7 +118,7 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
     if(_target.type==value::IDENT){
         std::string target=util::wstr2str(_target.ident);
         // check: is avail variable of target
-        ctx.Asm->poke(ctx.variables[target].offset,1,13);
+        ctx.Asm->poke(ctx.variables[target].offset,1,14);
     }else if(_target.type==value::PTR){
         ctx.Asm->poke(0,13,14);
     }else{
