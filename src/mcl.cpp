@@ -43,6 +43,7 @@ void operator<<(parserWrap& ctx, std::string name){
         pointerasm += ctx.compile(source);
     }
     ctx.clear();
+    ctx.ctx.Asm->stack_offset=compiler.ctx.Asm->stack_offset; // set stack_offset
 
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<converter.from_bytes(name)<<std::endl;
