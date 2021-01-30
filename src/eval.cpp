@@ -255,6 +255,9 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     }
     ctx.Asm->stack_offset=offs;
 }
+void eval::Ptr_Addr(parserContext& ctx, ptr obj, int dest){
+
+}
 void eval::Var  (parserContext& ctx,std::wstring obj,int dest){
     if(obj[0]=='\"'){
         // TODO:
