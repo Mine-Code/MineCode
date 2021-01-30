@@ -110,7 +110,7 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
            processError(ctx,L"unknown pointer base type: "+std::to_wstring(_target.type),__FILE__,__func__,__LINE__);
         }
         // calculate all offsets
-        int offset;
+        int offset = 0;
         for (auto off: _target.pointer.offsets)
         {
             offset+=off;
