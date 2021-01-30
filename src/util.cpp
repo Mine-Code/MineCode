@@ -1,7 +1,5 @@
 #include "util.h"
 #include <string>
-#include <codecvt>
-#include <locale>
 
 
 namespace util
@@ -46,9 +44,9 @@ namespace util
         return value*sign;
     }
     std::string wstr2str(std::wstring str){
-        return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(str);
+        return std::string(str.begin(), str.end());
     }
     std::wstring str2wstr(std::string str){
-        return std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(str);
+        return std::wstring(str.begin(), str.end());
     }
 } // namespace util
