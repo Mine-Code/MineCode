@@ -256,7 +256,22 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     ctx.Asm->stack_offset=offs;
 }
 void eval::Ptr_Addr(parserContext& ctx, ptr obj, int dest){
-
+    switch(obj.base->type){
+    case value::PTR:
+        eval::Ptr(ctx,obj.base->pointer,dest);
+        break;
+    case value::IDENT:
+        eval::Var(ctx,obj.base->ident,dest);
+        break;
+    case value::STR:
+        synErr::processError(ctx,L"can not set string to pointer address",__FILE__,__func__,__LINE__);
+        break;
+    case value::IMM:
+        ctx.Asm->writeRegister(obj.base->imm,dest);
+        break;
+    default:
+       synErr::processError(ctx,L"unknown pointer base type: "+std::to_wstring(obj.base->type),__FILE__,__func__,__LINE__);
+    }
 }
 void eval::Var  (parserContext& ctx,std::wstring obj,int dest){
     if(obj[0]=='\"'){
