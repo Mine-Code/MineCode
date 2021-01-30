@@ -44,9 +44,19 @@ namespace util
         return value*sign;
     }
     std::string wstr2str(std::wstring str){
-        return std::string(str.begin(), str.end());
+	    char *raw = new char[str.length() * MB_CUR_MAX + 1];
+	    wcstombs(raw, str.c_str(), str.length() * MB_CUR_MAX + 1);
+	    std::string ret(raw);
+	    delete [] raw;
+        
+        return ret;
     }
     std::wstring str2wstr(std::string str){
-        return std::wstring(str.begin(), str.end());
+        wchar_t *raw = new wchar_t[str.length() + 1];
+	    mbstowcs(raw, str.c_str(), str.length() + 1);
+	    std::wstring ret(raw);
+	    delete [] raw;
+
+        return ret;
     }
 } // namespace util
