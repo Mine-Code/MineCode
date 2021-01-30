@@ -57,7 +57,6 @@ void operator<<(parserWrap& ctx, std::string name){
         }
     }
     std::wcout<<"compiled all"<<std::endl;
-    ctx.clear();
     ctx.ctx.stream<<pointerasm;
 }
 
