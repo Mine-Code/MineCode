@@ -36,6 +36,7 @@ namespace parserCore{
         }
 
         ctx.stream<<"# end program\n";
+        ctx.stream<<"__ret:\n";
         ctx.Asm->pop(r14,14);
         ctx.Asm->pop(r15,15);
         ctx.Asm->endOfFunction();
