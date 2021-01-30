@@ -23,10 +23,8 @@ void operator<<(parserWrap& ctx, std::string name){
     
     // load datas
     json puts=convertTree2Single(j["put"]);
-    json pointers=convertTree2Single(j["pointers"]);
-    json basePointers=convertTree2Single(j["basePointers"]);
+    json pointers=j["pointers"];
     json functions=convertTree2Single(j["functions"]);
-
     auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
     std::wstring pointerasm;
 
