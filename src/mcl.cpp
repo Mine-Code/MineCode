@@ -29,10 +29,12 @@ void operator<<(parserWrap& ctx, std::string name){
     std::wstring pointerasm;
 
     // compile pointers
-    for(auto [name,obj]: pointers.items()){
+    for(auto pointer: pointers){
+        auto name=pointer[0].get<std::string>();
+        auto expr=pointer[1].get<std::string>();
         std::wcout<<"setting of "<<converter.from_bytes(name)<<std::endl;
         
-        std::wstring source=converter.from_bytes(name+" = "+obj.get<std::string>());
+        std::wstring source=converter.from_bytes(name+" = "+expr);
         
         pointerasm += ctx.compile(source);
     }
