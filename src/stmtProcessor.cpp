@@ -79,8 +79,6 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
             }else{
                 processError(ctx,_target.ident+L" is not found",__FILE__,__func__,__LINE__);
             }
-        }else {
-            ctx.Asm->pop(ctx.variables[target].offset);//load value
         }
     }else if(_target.type==value::PTR){
         eval::Ptr_Addr(ctx,_target.pointer,13);
