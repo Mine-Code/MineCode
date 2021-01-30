@@ -1,2 +1,4 @@
+mcl debug
 a=[0x10000000]
+Debug<<0
 [a]=1
