@@ -229,7 +229,7 @@ void eval::Power(parserContext& ctx,power obj,int dest){
 void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     int offs=ctx.Asm->stack_offset;
     Ptr_Addr(ctx,obj,dest);
-    ctx.Asm->poke(0,dest,dest);
+    ctx.Asm->peek(0,dest,dest);
     ctx.Asm->stack_offset=offs;
 }
 void eval::Ptr_Addr(parserContext& ctx, ptr obj, int dest){
