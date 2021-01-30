@@ -232,27 +232,9 @@ void eval::Ptr  (parserContext& ctx,ptr obj,int dest){
     int offset=0;
     for(auto val:obj.offsets)offset+=val;
     // get value
-    std::string key;
-    switch (obj.base->type)
-    {
-    case value::IMM:
-        ctx.Asm->peek_i(obj.base->imm,offset,dest);
-        break;
-    case value::IDENT:
-        key = util::wstr2str(obj.base->ident);
-        if(ctx.variables.count(key)==0){
-            // doesn't have key
-            synErr::processError(ctx,obj.base->ident+L" is not found!",__FILE__,__func__,__LINE__);
-        }
-        ctx.Asm->pop(ctx.variables[key].offset,14);
-        ctx.Asm->peek(offset,dest,14);
-        break;
-    case value::PTR:
-        Ptr(ctx,obj.base->pointer,14);
-        ctx.Asm->peek(offset,dest,14);
-    default:
-        break;
-    }
+    Ptr_Addr(ctx,obj,dest);
+    ctx.Asm->add(offset,dest,dest);
+    ctx.Asm->poke(0,dest,dest);
     ctx.Asm->stack_offset=offs;
 }
 void eval::Ptr_Addr(parserContext& ctx, ptr obj, int dest){
