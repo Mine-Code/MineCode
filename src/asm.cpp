@@ -34,11 +34,11 @@ void Assembly::writeRegister(int value, int dest)
 
     int high = ((uint16_t*)&value)[1];
     int low = ((uint16_t*)&value)[0];
-
+    if(low!=0){}
     if (high != 0) {
         ss <<
-            "lis r" << dest << ", " << ((uint16_t*)&value)[1] << "\n"
-            "ori r" << dest << ", r" << dest << ", " << ((uint16_t*)&value)[0] << "\n";
+            "lis r" << dest << ", " << ((uint16_t*)&value)[1] << "\n";
+        if(low!=0)ss <<"ori r" << dest << ", r" << dest << ", " << ((uint16_t*)&value)[0] << "\n";
     } else {
         ss <<
             "li r" << dest << ", " << ((uint16_t*)&value)[0] << "\n";
@@ -330,27 +330,4 @@ std::wstring Assembly::getEnd_While(int id){
 void Assembly::whileEnd(int id){
     ss<<"b W"<<id<<":\n"
       <<getEnd_While(id)<<":\n";
-}
-
-void Assembly::setString(std::wstring str, int dest)
-{   
-    ss <<
-        "bl string_" << string_offset << "\n";
-    for (int i = 0; i < str.length(); i++) {
-        wchar_t* wc = (wchar_t*)str.c_str();
-        char byte1[40];
-        char byte2[40];
-        int val1, val2;
-        val1 = ((uint32_t)wc >> 10) && 0xFFFF;
-        val2 = ((uint32_t)wc >> 8) && 0xFFFF;
-        sprintf_s(byte1, "%x", val1);
-        sprintf_s(byte1, "%x", val2);
-
-        ss <<
-            ".long 0x" << byte1 << byte2 << "\n";
-    }
-    ss <<
-        "string_" << string_offset << ":\n"
-        "mflr r" << dest << "\n";
-    string_offset++;
 }
