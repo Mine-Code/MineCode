@@ -25,9 +25,20 @@ namespace parserCore{
             assert(ctx.iter.next() == L"once", L"mismatch preprecessor operation");
             // TODO: implement do once
         }
+
+        ctx.Asm->startOfFunction();
+        int r14 = ctx.Asm->push(14);
+        int r15 = ctx.Asm->push(15);
+        ctx.stream<<"# begin program\n";
+        
         while(ctx.iter.hasData()){
             stmt(ctx);
         }
+
+        ctx.stream<<"# end program\n";
+        ctx.Asm->pop(r14,14);
+        ctx.Asm->pop(r15,15);
+        ctx.Asm->endOfFunction();
     }
     void stmt(parserTypes::parserContext& ctx){
         // stmt Switcher

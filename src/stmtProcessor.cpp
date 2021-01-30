@@ -50,22 +50,12 @@ void stmtProcessor::If     (parserTypes::parserContext& ctx, struct cond conditi
 }
 
 void stmtProcessor::Func   (parserTypes::parserContext& ctx){
-    ctx.Asm->startOfFunction();
-    
-    int r14 = ctx.Asm->push(14);
-    int r15 = ctx.Asm->push(15);
-
     ctx.stream<<"# Inner Function\n";
     while(ctx.iter.hasData()){
         if(ctx.iter.peek()==L"}")break;
         parserCore::stmt(ctx);
     }
     ctx.stream<<"# Outer Function\n";
-
-    ctx.Asm->pop(r14,14);
-    ctx.Asm->pop(r15,15);
-
-    ctx.Asm->endOfFunction();
 }
 
 void stmtProcessor::Put    (parserTypes::parserContext&){
