@@ -28,6 +28,8 @@ void operator<<(parserWrap& ctx, std::string name){
     json functions=convertTree2Single(j["functions"]);
     auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
     std::wstring pointerasm;
+    
+    parserWrap compiler;
 
     // compile pointers
     for(auto pointer: j["pointers"]){
