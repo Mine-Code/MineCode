@@ -32,6 +32,7 @@ void operator<<(parserWrap& ctx, std::string name){
     parserWrap compiler;
 
     // compile pointers
+    compiler.ctx.Asm->stack_offset=ctx.ctx.Asm->stack_offset; // copy stack_offset
     for(auto pointer: j["pointers"]){
         auto name=pointer[0].get<std::string>();
         auto expr=pointer[1].get<std::string>();
