@@ -23,6 +23,7 @@ namespace eval
     void Power(parserContext& ctx,power val,int dest=13);
     void Ptr  (parserContext& ctx,ptr   val,int dest=13);
     void Var  (parserContext& ctx,std::wstring obj,int dest);
+    void Ptr_Addr(parserContext& ctx, ptr obj, int dest);
 } // namespace eval
 
 
