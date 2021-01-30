@@ -57,6 +57,7 @@ namespace parserCore{
         }else if(text==L"mcl"){
             mcl(ctx);
         }else if(text==L"return"){
+            ctx.iter.next();
             ctx.Asm->Jump(L"__ret");
         }else{
             //put / assign
