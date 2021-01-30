@@ -1,5 +1,6 @@
 mcl debug
-
+i=0
+Debug<<0
 [0x10000000] = i
 Debug << ""
 [0x10000000] /= i
