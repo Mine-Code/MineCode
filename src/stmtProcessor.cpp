@@ -130,7 +130,6 @@ void stmtProcessor::Assign (parserTypes::parserContext& ctx,value _target,std::w
         
     }else if( (  util::isMathOp(op[0]) || util::isBitOpFull(op.substr(0,op.length()-1))  ) && op[op.length()-1]==L'='){
         op=op.substr(0,op.length()-1);
-        eval::Expr(ctx,val,14);
         if(op==L"+"){
             ctx.Asm->addReg(14);
         }else if(op==L"-"){
