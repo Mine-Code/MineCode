@@ -183,10 +183,9 @@ namespace parserCore{
             processError(ctx,L"isn't ident",__FILE__,__func__,__LINE__);
         }
         // read under the `.`
-        while (ctx.iter.peek()==L".")
+        while (ctx.iter.peek()==L"." || ctx.iter.peek()==L"::")
         {
-            ctx.iter.next();
-            text+=L"."+ctx.iter.next();
+            text+=ctx.iter.next()+ctx.iter.next();
         }
         return text;
     }
