@@ -54,14 +54,6 @@ namespace parserCore{
             If(ctx);
             return;
         }
-        if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
-            stmtProcessor::executeFunction(ctx,funcCall(ctx));
-            return;
-        }
-        if(text==L"func"){
-            func(ctx);
-            return;
-        }
         if(text==L"mcl"){
             mcl(ctx);
             return;
@@ -69,6 +61,14 @@ namespace parserCore{
         if(text==L"return"){
             ctx.iter.next();
             ctx.Asm->Jump(L"__ret");
+            return;
+        }
+        if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
+            stmtProcessor::executeFunction(ctx,funcCall(ctx));
+            return;
+        }
+        if(text==L"func"){
+            func(ctx);
             return;
         }
         //put / assign
