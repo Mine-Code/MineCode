@@ -21,6 +21,7 @@ public:
     std::wstring compile();
     std::wstring compile_expr();
     std::wstring compile(std::wstring source);
+    std::wstring compile_expr(std::wstring source);
     void set(std::wstring);
     void debug();
     void reset();
