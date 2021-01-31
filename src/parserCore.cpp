@@ -1,8 +1,6 @@
 #include <parserCore.h>
 
 #include <numeric>
-#include <locale>
-#include <codecvt>
 
 #include <parserTypes.h>
 #include <stmtProcessor.h>
@@ -118,13 +116,11 @@ namespace parserCore{
         assertChar("}");
     }
     void put(parserTypes::parserContext& ctx){
-        auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
-
-        std::string target = converter.to_bytes(ident(ctx));
+        std::string target = util::wstr2str(ident(ctx));
         assertChar("<<");
         struct expr val=expr(ctx);
         assert(ctx.puts.count(target)==1,L"Puts Not found");
-        ctx.stream<<converter.from_bytes(ctx.puts[target]);
+        ctx.stream<<util::str2wstr(ctx.puts[target]);
     }
     Arg arg(parserTypes::parserContext& ctx){
         return std::make_pair(
