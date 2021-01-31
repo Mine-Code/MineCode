@@ -9,8 +9,8 @@
 #include <parserTypes.h>
 #include <parserWrap.h>
 #include <parserCore.h>
+#include <util.h>
 
-        #include <util.h>
 using namespace std::literals::string_literals;
 using json = nlohmann::json;
 
