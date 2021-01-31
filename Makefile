@@ -38,7 +38,7 @@ INCLUDES ?= -Isrc/include -Ilib/json/include
 COMPFLAGS?= -Wall -Wextra $(INCLUDES) $(DBG_OPT_COMPILE) -pedantic
 
 LDFLAGS  ?= $(DBG_OPT_COMMON)
-CXXFLAGS ?= $(DBG_OPT_COMMON) $(COMPFLAGS) -std=c++2a
+CXXFLAGS ?= $(DBG_OPT_COMMON) $(COMPFLAGS) -std=c++14
 CFLAGS   ?= $(DBG_OPT_COMMON) $(COMPFLAGS) -std=gnu11
 
 ## File list
