@@ -1,8 +1,6 @@
 #include <mcl.h>
 
-#include <codecvt>
 #include <fstream>
-#include <locale>
 #include <unordered_map>
 #include <../../lib/json/single_include/nlohmann/json.hpp>
 
@@ -26,7 +24,6 @@ void operator<<(parserWrap& ctx, std::string name){
     json puts=convertTree2Single(j["put"]);
     json pointers=j["pointers"];
     json functions=convertTree2Single(j["functions"]);
-    auto converter=std::wstring_convert<std::codecvt_utf8<wchar_t>>();
     std::wstring pointerasm;
     
     parserWrap compiler;
@@ -36,9 +33,9 @@ void operator<<(parserWrap& ctx, std::string name){
     for(auto pointer: j["pointers"]){
         auto name=pointer[0].get<std::string>();
         auto expr=pointer[1].get<std::string>();
-        std::wcout<<"setting of "<<converter.from_bytes(name)<<std::endl;
+        std::wcout<<"setting of "<<util::str2wstr(name)<<std::endl;
         
-        std::wstring source=converter.from_bytes(name+" = "+expr);
+        std::wstring source=util::str2wstr(name+" = "+expr);
         
         pointerasm += compiler.compile(source);
     }
@@ -46,13 +43,13 @@ void operator<<(parserWrap& ctx, std::string name){
 
     compiler.reset();
     for(auto [name,obj]: puts.items()){
-        std::wcout<<"compile of "<<converter.from_bytes(name)<<std::endl;
+        std::wcout<<"compile of "<<util::str2wstr(name)<<std::endl;
 
         auto type=obj["type"].get<std::string>();
         auto proc=obj["proc"].get<std::string>();
         if(type=="MineCode"){
-            std::wstring source=converter.from_bytes(proc);
-            ctx.ctx.puts[name]=converter.to_bytes(ctx.compile(source));
+            std::wstring source=util::str2wstr(proc);
+            ctx.ctx.puts[name]=util::wstr2str(ctx.compile(source));
         }else if(type=="asm"){
             ctx.ctx.puts[name]=proc;
         }
