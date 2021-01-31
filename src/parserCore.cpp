@@ -63,20 +63,11 @@ namespace parserCore{
             ctx.Asm->Jump(L"__ret");
             return;
         }
-        if(text==L"func"){
-            if(ctx.iter.peekSafe(1)==L"["){
-                stmtProcessor::executeFunction(ctx,funcCall(ctx));
-            }else{
-                func(ctx);
-            }
+        if(text==L"func" && ctx.iter.peekSafe(1)!=L"["){
+            func(ctx);
             return;
         }
-        if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
-            stmtProcessor::executeFunction(ctx,funcCall(ctx));
-            return;
-        }
-        //put / assign
-        assert(ctx.iter.hasData(),L"does not have data in iterator");
+
         // skip one 'value' and read one
         auto backup=ctx.iter.index;
         value(ctx);
@@ -85,6 +76,8 @@ namespace parserCore{
         // done skip and read
         if(text==L"<<"){
             put(ctx);
+        }else if(text==L"("){
+            stmtProcessor::executeFunction(ctx,funcCall(ctx));
         }else if(isAssignOp(text)){
             assign(ctx);
         }
