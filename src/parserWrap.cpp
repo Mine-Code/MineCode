@@ -239,6 +239,12 @@ std::wstring parserWrap::compile(std::wstring source){
     tokenize();
     return compile();
 }
+std::wstring parserWrap::compile_expr(std::wstring source){
+    clear();
+    set(source);
+    tokenize();
+    return compile_expr();
+}
 
 void parserWrap::reset(){
     this->ctx.puts.clear();
