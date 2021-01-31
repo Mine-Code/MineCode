@@ -223,6 +223,16 @@ std::wstring parserWrap::compile(){
     return compiled;
 }
 
+std::wstring parserWrap::compile_expr(){
+    ctx.iter=iterator<std::wstring>(tokens);
+    ctx.wraper=this;
+    parserCore::expr(ctx);
+    std::wstring compiled= ctx.Asm->ss.str();
+    ctx.stream.str(L"");
+    ctx.stream.clear(std::stringstream::goodbit);
+    return compiled;
+}
+
 std::wstring parserWrap::compile(std::wstring source){
     clear();
     set(source);
