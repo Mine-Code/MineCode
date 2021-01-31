@@ -55,7 +55,10 @@ void operator<<(parserWrap& ctx, std::string name){
         }
     }
     std::wcout<<"compiled all"<<std::endl;
-    ctx.ctx.stream<<pointerasm;
+    ctx.ctx.stream
+        << "# Lib:"<< util::str2wstr(name)<<"\n"
+        << pointerasm
+        << "##Lib:"<< util::str2wstr(name)<<"\n";
 }
 
 bool isShallow(json src){
