@@ -63,8 +63,12 @@ namespace parserCore{
             ctx.Asm->Jump(L"__ret");
             return;
         }
-        if(text==L"func" && ctx.iter.peekSafe(1)!=L"["){
-            func(ctx);
+        if(text==L"func"){
+            if(ctx.iter.peekSafe(1)==L"["){
+                stmtProcessor::executeFunction(ctx,funcCall(ctx));
+            }else{
+                func(ctx);
+            }
             return;
         }
 
@@ -74,6 +78,7 @@ namespace parserCore{
         text=ctx.iter.peek();
         ctx.iter.index=backup;
         // done skip and read
+        std::wcout<<text<<std::endl;
         if(text==L"<<"){
             put(ctx);
         }else if(text==L"("){
