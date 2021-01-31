@@ -49,7 +49,7 @@ void operator<<(parserWrap& ctx, std::string name){
         auto proc=obj["proc"].get<std::string>();
         if(type=="MineCode"){
             std::wstring source=util::str2wstr(proc);
-            ctx.ctx.puts[name]=util::wstr2str(ctx.compile(source));
+            ctx.ctx.puts[name]=util::wstr2str(compiler.compile_expr(source));
         }else if(type=="asm"){
             ctx.ctx.puts[name]=proc;
         }
