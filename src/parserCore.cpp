@@ -63,8 +63,12 @@ namespace parserCore{
             ctx.Asm->Jump(L"__ret");
             return;
         }
-        if(text==L"func" && ctx.iter.peekSafe(1)!=L"["){
-            func(ctx);
+        if(text==L"func"){
+            if(ctx.iter.peekSafe(1)==L"["){
+                stmtProcessor::executeFunction(ctx,funcCall(ctx));
+            }else{
+                func(ctx);
+            }
             return;
         }
         if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
