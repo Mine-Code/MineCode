@@ -44,33 +44,45 @@ namespace parserCore{
         std::wstring text=ctx.iter.peek();
         if(text==L"for"){
             For(ctx);
-        }else if(text==L"while"){
+            return;
+        }
+        if(text==L"while"){
             While(ctx);
-        }else if(text==L"if"){
+            return;
+        }
+        if(text==L"if"){
             If(ctx);
-        }else if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
+            return;
+        }
+        if(isFunccall(ctx.iter.peek(),ctx.iter.peek(1))){
             stmtProcessor::executeFunction(ctx,funcCall(ctx));
-        }else if(text==L"func"){
+            return;
+        }
+        if(text==L"func"){
             func(ctx);
-        }else if(text==L"mcl"){
+            return;
+        }
+        if(text==L"mcl"){
             mcl(ctx);
-        }else if(text==L"return"){
+            return;
+        }
+        if(text==L"return"){
             ctx.iter.next();
             ctx.Asm->Jump(L"__ret");
-        }else{
-            //put / assign
-            assert(ctx.iter.hasData(),L"does not have data in iterator");
-            // skip one 'value' and read one
-            auto backup=ctx.iter.index;
-            value(ctx);
-            text=ctx.iter.peek();
-            ctx.iter.index=backup;
-            // done skip and read
-            if(text==L"<<"){
-                put(ctx);
-            }else if(isAssignOp(text)){
-                assign(ctx);
-            }
+            return;
+        }
+        //put / assign
+        assert(ctx.iter.hasData(),L"does not have data in iterator");
+        // skip one 'value' and read one
+        auto backup=ctx.iter.index;
+        value(ctx);
+        text=ctx.iter.peek();
+        ctx.iter.index=backup;
+        // done skip and read
+        if(text==L"<<"){
+            put(ctx);
+        }else if(isAssignOp(text)){
+            assign(ctx);
         }
     }
     void func(parserTypes::parserContext& ctx){
