@@ -203,6 +203,9 @@ void parserWrap::tokenize(){
             tokens.emplace_back(tmp);
         }else if(ch==L'\n' || ch==L' '){
             // passing!
+        }else if(ch==':' || nextch==':'){
+            chiter.next();
+            tokens.emplace_back(L"::");
         }else{
             value+=ch;
             tokens.emplace_back(value);
