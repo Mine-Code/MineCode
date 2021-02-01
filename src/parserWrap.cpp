@@ -232,6 +232,23 @@ std::wstring parserWrap::compile_expr(){
     ctx.stream.clear(std::stringstream::goodbit);
     return compiled;
 }
+std::wstring parserWrap::compile_full(std::wstring source){
+    ctx.iter=iterator<std::wstring>(tokens);
+    ctx.wraper=this;
+    
+    ctx.Asm->startOfFunction();
+    int r14 = ctx.Asm->push(14);
+    int r15 = ctx.Asm->push(15);
+    parserCore::expr(ctx);
+    ctx.Asm->pop(r14,14);
+    ctx.Asm->pop(r15,15);
+    ctx.Asm->endOfFunction();
+
+    std::wstring compiled= ctx.Asm->ss.str();
+    ctx.stream.str(L"");
+    ctx.stream.clear(std::stringstream::goodbit);
+    return compiled;
+}
 
 std::wstring parserWrap::compile(std::wstring source){
     clear();
