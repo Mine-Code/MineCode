@@ -239,7 +239,7 @@ std::wstring parserWrap::compile_full(std::wstring source){
     ctx.Asm->startOfFunction();
     int r14 = ctx.Asm->push(14);
     int r15 = ctx.Asm->push(15);
-    parserCore::expr(ctx);
+    parserCore::program(ctx);
     ctx.Asm->pop(r14,14);
     ctx.Asm->pop(r15,15);
     ctx.Asm->endOfFunction();
