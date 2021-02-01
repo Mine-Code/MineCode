@@ -233,6 +233,9 @@ std::wstring parserWrap::compile_expr(){
     return compiled;
 }
 std::wstring parserWrap::compile_full(std::wstring source){
+    clear();
+    set(source);
+    tokenize();
     ctx.iter=iterator<std::wstring>(tokens);
     ctx.wraper=this;
     
