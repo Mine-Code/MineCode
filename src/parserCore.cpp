@@ -72,7 +72,6 @@ namespace parserCore{
         text=ctx.iter.peek();
         ctx.iter.index=backup;
         // done skip and read
-        std::wcout<<text<<std::endl;
         if(text==L"<<"){
             put(ctx);
         }else if(text==L"("){
