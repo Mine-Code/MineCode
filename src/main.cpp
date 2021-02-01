@@ -26,9 +26,6 @@ int main(int argc, char *argv[])
     std::wstring str(it, last);
 	
 	// Compile!!!
-	prs.set(str);
-	prs.tokenize();
-	
-	std::wcout<<prs.compile_full()<<std::endl;
+	std::wcout<<prs.compile_full(str)<<std::endl;
 	return 0;
 }
