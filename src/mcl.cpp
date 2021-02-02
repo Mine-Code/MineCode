@@ -40,7 +40,8 @@ void operator<<(parserWrap& ctx, std::string name){
         pointerasm += compiler.compile(source);
     }
     ctx.ctx.Asm->stack_offset=compiler.ctx.Asm->stack_offset; // set stack_offset
-
+    ctx.ctx.variables=compiler.ctx.variables;
+    
     compiler.reset();
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<util::str2wstr(name)<<std::endl;
