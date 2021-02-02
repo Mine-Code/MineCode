@@ -192,7 +192,8 @@ namespace parserCore{
         // read under the `.`
         while (ctx.iter.peek()==L"." || ctx.iter.peek()==L"::")
         {
-            text+=ctx.iter.next()+ctx.iter.next();
+            std::wstring joint=ctx.iter.next();
+            text+=joint+ctx.iter.next();
         }
         return text;
     }
@@ -461,6 +462,7 @@ namespace parserCore{
             // name based call
             ret.type=ExecFunc::Name;
             ret.funcId=ident(ctx);
+            std::wcout<<ret.funcId<<std::endl;
         }
         assertChar("(");
         if(ctx.iter.peek() != L")"){
