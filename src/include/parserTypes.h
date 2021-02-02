@@ -22,6 +22,12 @@ namespace parserTypes
     using streamType = std::wstringstream;
     using iterType   = iterator<std::wstring>;
     using varsType   = std::unordered_map<std::string,struct varType>;
+    enum funcArgType{
+        INT,
+        CSTR,
+        WSTR,
+        PTR
+    };
     struct parserContext{
         parserContext();
         parserContext(parserContext&);
