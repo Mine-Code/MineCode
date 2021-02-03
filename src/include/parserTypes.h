@@ -22,21 +22,7 @@ namespace parserTypes
     using streamType = std::wstringstream;
     using iterType   = iterator<std::wstring>;
     using varsType   = std::unordered_map<std::string,struct varType>;
-    struct function;
-    struct parserContext{
-        parserContext();
-        parserContext(parserContext&);
-
-        Assembly* Asm;
-        streamType stream;
-        iterType iter;
-        varsType variables;
-        std::unordered_map<std::string,std::string> puts;
-        std::unordered_map<std::string,struct function> functions;
-        parserWrap *wraper;
-    };
     
-    class value;
     struct ptr{
         value *base;
         std::vector<int> offsets;
@@ -162,6 +148,21 @@ namespace parserTypes
         int funcAddr;
         CallType type;
     };
+
+    struct parserContext{
+        parserContext();
+        parserContext(parserContext&);
+
+        Assembly* Asm;
+        streamType stream;
+        iterType iter;
+        varsType variables;
+        std::unordered_map<std::string,std::string> puts;
+        std::unordered_map<std::string,struct function> functions;
+        parserWrap *wraper;
+    };
+    
+    class value;
 } // namespace parserCtx
 
 
