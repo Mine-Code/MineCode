@@ -462,7 +462,6 @@ namespace parserCore{
             // name based call
             ret.type=ExecFunc::Name;
             ret.funcId=ident(ctx);
-            std::wcout<<ret.funcId<<std::endl;
         }
         assertChar("(");
         if(ctx.iter.peek() != L")"){
