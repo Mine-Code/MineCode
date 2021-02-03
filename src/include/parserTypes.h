@@ -28,6 +28,10 @@ namespace parserTypes
         WSTR,
         PTR
     };
+    struct funcArg{
+        funcArgType type;
+        struct expr defaultValue;
+    };
     struct parserContext{
         parserContext();
         parserContext(parserContext&);
