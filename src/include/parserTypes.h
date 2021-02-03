@@ -32,7 +32,7 @@ namespace parserTypes
         iterType iter;
         varsType variables;
         std::unordered_map<std::string,std::string> puts;
-
+        std::unordered_map<std::string,struct function> functions;
         parserWrap *wraper;
     };
     
