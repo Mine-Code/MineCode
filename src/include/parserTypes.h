@@ -23,6 +23,7 @@ namespace parserTypes
     using iterType   = iterator<std::wstring>;
     using varsType   = std::unordered_map<std::string,struct varType>;
     
+    struct value;
     struct ptr{
         value *base;
         std::vector<int> offsets;
