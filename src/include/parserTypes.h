@@ -110,6 +110,17 @@ namespace parserTypes
         struct ptr ptr;
     };
     
+    enum funcArgType{
+        INT,
+        CSTR,
+        WSTR,
+        PTR
+    };
+    struct funcArg{
+        funcArgType type;
+        struct expr defaultValue;
+    };
+
     struct cond
     {
         std::vector<struct condAnd> conds;
