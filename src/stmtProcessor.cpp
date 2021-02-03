@@ -138,7 +138,11 @@ void stmtProcessor::executeFunction (parserTypes::parserContext& ctx,ExecFunc ca
         ctx.Asm->writeRegister(call.funcAddr,15);
     }else if(call.type==ExecFunc::Name){
         // name based
-        ctx.Asm->pop(ctx.variables[util::wstr2str(call.funcId)].offset,15);
+        if(ctx.variables.count(util::wstr2str(call.funcId))==1){
+            ctx.Asm->pop(ctx.variables[util::wstr2str(call.funcId)].offset,15);
+        }else{
+            processError(ctx,L"Function not found: "+call.funcId,__FILE__,__func__,__LINE__);
+        }
     }
     ctx.stream<<"mtctr r15\n"
                 "btcrl\n";
