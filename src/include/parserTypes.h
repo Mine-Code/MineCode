@@ -111,6 +111,12 @@ namespace parserTypes
         funcArgType type;
         struct expr defaultValue;
     };
+    struct function
+    {
+        uint32_t addr;
+        std::vector<struct funcArg> args;
+    };
+    
 
     struct cond
     {
