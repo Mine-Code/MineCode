@@ -80,6 +80,7 @@ void operator<<(parserWrap& ctx, std::string name){
             compiler.tokenize();
             newarg.defaultValue=parserCore::expr(compiler.ctx);
         }
+        ctx.ctx.functions[name]=func;
     }
     std::wcout<<"compiled all"<<std::endl;
     ctx.ctx.stream
