@@ -140,6 +140,9 @@ void stmtProcessor::executeFunction (parserTypes::parserContext& ctx,ExecFunc ca
         // name based
         if(ctx.variables.count(util::wstr2str(call.funcId))==1){
             ctx.Asm->pop(ctx.variables[util::wstr2str(call.funcId)].offset,15);
+        }else if(ctx.functions.count(util::wstr2str(call.funcId))==1){
+            ctx.Asm->writeRegister(ctx.functions[util::wstr2str(call.funcId)].addr,15);
+            // TODO: check argument
         }else{
             processError(ctx,L"Function not found: "+call.funcId,__FILE__,__func__,__LINE__);
         }
