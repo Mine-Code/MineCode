@@ -64,7 +64,21 @@ void operator<<(parserWrap& ctx, std::string name){
         func.addr=(uint32_t)obj["addr"].get<int>();
 
         for(auto arg: obj["args"]){
-            std::wcout<<util::str2wstr(arg.dump())<<std::endl;
+            parserTypes::funcArg newarg;
+            
+            std::string type=arg["T"];
+            if(type=="int"){
+                newarg.type=parserTypes::funcArgType::INT;
+            }else if(type=="cstr"){
+                newarg.type=parserTypes::funcArgType::CSTR;
+            }else if(type=="wstr"){
+                newarg.type=parserTypes::funcArgType::WSTR;
+            }else if(type=="ptr"){
+                newarg.type=parserTypes::funcArgType::PTR;
+            }
+            compiler.set(util::str2wstr(arg["default"]));
+            compiler.tokenize();
+            newarg.defaultValue=parserCore::expr(compiler.ctx);
         }
     }
     std::exit(0);
