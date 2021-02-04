@@ -211,10 +211,10 @@ void parserWrap::tokenize(){
             tokens.emplace_back(value);
         }
     }
+    ctx.iter=iterator<std::wstring>(tokens);
 }
 
 std::wstring parserWrap::compile(){
-    ctx.iter=iterator<std::wstring>(tokens);
     ctx.wraper=this;
     parserCore::program(ctx);
     std::wstring compiled= ctx.Asm->ss.str();
@@ -224,7 +224,6 @@ std::wstring parserWrap::compile(){
 }
 
 std::wstring parserWrap::compile_expr(){
-    ctx.iter=iterator<std::wstring>(tokens);
     ctx.wraper=this;
     parserCore::expr(ctx);
     std::wstring compiled= ctx.Asm->ss.str();
@@ -236,7 +235,6 @@ std::wstring parserWrap::compile_full(std::wstring source){
     clear();
     set(source);
     tokenize();
-    ctx.iter=iterator<std::wstring>(tokens);
     ctx.wraper=this;
     
     ctx.Asm->startOfFunction();
