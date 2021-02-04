@@ -26,7 +26,7 @@ void operator<<(parserWrap& ctx, std::string name){
     json pointers=j["pointers"];
     json functions=convertTree2Single_function(j["functions"]);
     std::wstring pointerasm;
-    
+
     parserWrap compiler;
 
     // compile pointers
@@ -63,7 +63,7 @@ void operator<<(parserWrap& ctx, std::string name){
         parserTypes::function func;
         func.addr=(uint32_t)obj["addr"].get<int>();
 
-        for(auto arg: functions["args"]){
+        for(auto arg: obj["args"]){
             std::wcout<<util::str2wstr(arg.dump())<<std::endl;
         }
     }
@@ -104,7 +104,12 @@ json convertTree2Single(json src){
     return dest;
 }
 bool isShallow_function(json src){
-    return src.count("addr")==1;
+    for(auto [key,val]:src.items()){
+        if(key=="addr"){
+            return true;
+        }
+    }
+    return false;
 }
 json convertTree2Single_function(json src){
     json dest;
