@@ -135,7 +135,7 @@ json convertTree2Single_function(json src){
                 dest[key]=tmp;
             }else{
                 for (auto [cKey,cVal]: tmp.items()){
-                    dest[key+"."+cKey]=cVal;
+                    dest[key+"::"+cKey]=cVal;
                 }
             }
             
