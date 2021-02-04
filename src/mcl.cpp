@@ -112,7 +112,7 @@ json convertTree2Single_function(json src){
         return src;
     }else{
         for(auto [key,val]: src.items()){
-            json tmp = convertTree2Single(val);
+            json tmp = convertTree2Single_function(val);
             if(isShallow_function(tmp)){
                 dest[key]=tmp;
             }else{
