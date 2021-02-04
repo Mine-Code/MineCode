@@ -13,6 +13,7 @@ using namespace std::literals::string_literals;
 using json = nlohmann::json;
 
 json convertTree2Single(json);
+json convertTree2Single_function(json);
 
 void operator<<(parserWrap& ctx, std::string name){
     json j;
@@ -23,7 +24,7 @@ void operator<<(parserWrap& ctx, std::string name){
     // load datas
     json puts=convertTree2Single(j["put"]);
     json pointers=j["pointers"];
-    json functions=convertTree2Single(j["functions"]);
+    json functions=convertTree2Single_function(j["functions"]);
     std::wstring pointerasm;
     
     parserWrap compiler;
@@ -41,7 +42,7 @@ void operator<<(parserWrap& ctx, std::string name){
     }
     ctx.ctx.Asm->stack_offset=compiler.ctx.Asm->stack_offset; // set stack_offset
     ctx.ctx.variables=compiler.ctx.variables;
-    
+
     compiler.reset();
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<util::str2wstr(name)<<std::endl;
@@ -55,6 +56,18 @@ void operator<<(parserWrap& ctx, std::string name){
             ctx.ctx.puts[name]=proc;
         }
     }
+
+    for(auto [name,obj]: functions.items()){
+        std::wcout<<"converting of "<<util::str2wstr(name)<<std::endl;
+
+        parserTypes::function func;
+        func.addr=(uint32_t)obj["addr"].get<int>();
+
+        for(auto arg: functions["args"]){
+            std::wcout<<util::str2wstr(arg.dump())<<std::endl;
+        }
+    }
+    std::exit(0);
     std::wcout<<"compiled all"<<std::endl;
     ctx.ctx.stream
         << "# Lib:"<< util::str2wstr(name)<<"\n"
@@ -79,6 +92,28 @@ json convertTree2Single(json src){
         for(auto [key,val]: src.items()){
             json tmp = convertTree2Single(val);
             if(isShallow(tmp)){
+                dest[key]=tmp;
+            }else{
+                for (auto [cKey,cVal]: tmp.items()){
+                    dest[key+"."+cKey]=cVal;
+                }
+            }
+            
+        }
+    }
+    return dest;
+}
+bool isShallow_function(json src){
+    return src.count("addr")==1;
+}
+json convertTree2Single_function(json src){
+    json dest;
+    if(isShallow_function(src)){
+        return src;
+    }else{
+        for(auto [key,val]: src.items()){
+            json tmp = convertTree2Single(val);
+            if(isShallow_function(tmp)){
                 dest[key]=tmp;
             }else{
                 for (auto [cKey,cVal]: tmp.items()){
