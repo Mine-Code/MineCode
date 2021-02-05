@@ -5,7 +5,7 @@
         "Local":{
             "Console":{
                 "type":"MineCode",
-                "proc":"func[0x0313873C]([gui_ptr], \"test\", [player_ptr + 0x960], false, false, false, false)"
+                "proc":"func[0x0313873C]([gui_ptr], $arg, [player_ptr + 0x960], false, false, false, false)"
             }
         }
     },
