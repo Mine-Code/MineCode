@@ -202,7 +202,8 @@ namespace util
         return
                isalpha(ch) || 
                ch=='_' ||
-               isDec(ch)
+               isDec(ch) ||
+               ch=='$'
         ;
     }
 
