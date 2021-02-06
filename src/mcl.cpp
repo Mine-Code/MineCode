@@ -15,6 +15,8 @@ using json = nlohmann::json;
 json convertTree2Single(json);
 json convertTree2Single_function(json);
 
+std::wstring convPut(std::wstring);
+
 void operator<<(parserWrap& ctx, std::string name){
     json j;
     std::ifstream jsonin;
