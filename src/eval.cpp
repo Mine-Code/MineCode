@@ -263,6 +263,10 @@ void eval::Var  (parserContext& ctx,std::wstring obj,int dest){
     }else if(obj==L"false"){
         ctx.Asm->writeRegister(0,dest);
     }else{
-        ctx.Asm->pop(ctx.variables[util::wstr2str(obj)].offset,dest);
+        if(ctx.variables.count(util::wstr2str(obj))==1){
+            ctx.Asm->pop(ctx.variables[util::wstr2str(obj)].offset,dest);
+        }else{
+            synErr::processError(ctx,L"variable not found: "+obj,__FILE__,__func__,__LINE__);
+        }
     }
 }
