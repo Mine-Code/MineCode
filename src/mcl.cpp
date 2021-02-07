@@ -33,10 +33,9 @@ void operator<<(parserWrap& ctx, std::string name){
     if(!ctx.ctx.compiler){
         ctx.ctx.compiler=new parserWrap;
     }
-    parserWrap compiler;
 
     // compile pointers
-    compiler.ctx.Asm->stack_offset=ctx.ctx.Asm->stack_offset; // copy stack_offset
+    ctx.ctx.compiler->ctx.Asm->stack_offset=ctx.ctx.Asm->stack_offset; // copy stack_offset
     for(auto pointer: j["pointers"]){
         auto name=pointer[0].get<std::string>();
         auto expr=pointer[1].get<std::string>();
@@ -44,12 +43,12 @@ void operator<<(parserWrap& ctx, std::string name){
         
         std::wstring source=util::str2wstr(name+" = "+expr);
         
-        pointerasm += compiler.compile(source);
+        pointerasm += ctx.ctx.compiler->compile(source);
     }
-    ctx.ctx.Asm->stack_offset=compiler.ctx.Asm->stack_offset; // set stack_offset
-    ctx.ctx.variables=compiler.ctx.variables;
+    ctx.ctx.Asm->stack_offset=ctx.ctx.compiler->ctx.Asm->stack_offset; // set stack_offset
+    ctx.ctx.variables=ctx.ctx.compiler->ctx.variables;
 
-    compiler.reset();
+    ctx.ctx.compiler->reset();
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<util::str2wstr(name)<<std::endl;
 
@@ -78,9 +77,9 @@ void operator<<(parserWrap& ctx, std::string name){
             }else if(type=="ptr"){
                 newarg.type=parserTypes::funcArgType::PTR;
             }
-            compiler.set(util::str2wstr(arg["default"]));
-            compiler.tokenize();
-            newarg.defaultValue=parserCore::expr(compiler.ctx);
+            ctx.ctx.compiler->set(util::str2wstr(arg["default"]));
+            ctx.ctx.compiler->tokenize();
+            newarg.defaultValue=parserCore::expr(ctx.ctx.compiler->ctx);
         }
         ctx.ctx.functions[name]=func;
     }
