@@ -49,7 +49,6 @@ void operator<<(parserWrap& ctx, std::string name){
         ctx.ctx.variables[key]=val;
     }
 
-    ctx.ctx.compiler->reset();
     for(auto [name,obj]: puts.items()){
         std::wcout<<"compile of "<<util::str2wstr(name)<<std::endl;
 
