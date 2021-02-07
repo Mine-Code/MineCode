@@ -151,5 +151,9 @@ json convertTree2Single_function(json src){
 std::wstring convPut(std::wstring src){
     std::wstring ret;
     auto iter=iterator<wchar_t>(util::convToVector<wchar_t,std::wstring>(src));
+    while(iter.hasData()){
+        wchar_t ch=iter.next();
+        wchar_t ne=iter.peekSafe(1);
+    }
     return ret;
 }
