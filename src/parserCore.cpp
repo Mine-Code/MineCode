@@ -16,8 +16,6 @@ using namespace util;
 std::wstring convPut(std::wstring src,std::wstring argument);
 
 namespace parserCore{
-    
-
     void program(parserTypes::parserContext& ctx){
         if(ctx.iter.peekSafe()==L"#"){
             ctx.stream<<"# do once"<<std::endl;
