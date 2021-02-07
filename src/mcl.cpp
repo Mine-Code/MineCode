@@ -40,11 +40,14 @@ void operator<<(parserWrap& ctx, std::string name){
         std::wcout<<"setting of "<<util::str2wstr(name)<<std::endl;
         
         std::wstring source=util::str2wstr(name+" = "+expr);
-        
+
         pointerasm += ctx.ctx.compiler->compile(source);
     }
     ctx.ctx.Asm->stack_offset=ctx.ctx.compiler->ctx.Asm->stack_offset; // set stack_offset
-    ctx.ctx.variables=ctx.ctx.compiler->ctx.variables;
+    for(auto [key, val]: ctx.ctx.compiler->ctx.variables){
+        std::wcout<<"copying "<<util::str2wstr(key)<<std::endl;
+        ctx.ctx.variables[key]=val;
+    }
 
     ctx.ctx.compiler->reset();
     for(auto [name,obj]: puts.items()){
