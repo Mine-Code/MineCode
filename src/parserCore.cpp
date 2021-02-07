@@ -33,7 +33,6 @@ namespace parserCore{
         }
 
         ctx.stream<<"# end program\n";
-        ctx.stream<<"__ret:\n";
     }
     void stmt(parserTypes::parserContext& ctx){
         // stmt Switcher

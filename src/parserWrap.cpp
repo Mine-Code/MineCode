@@ -243,6 +243,7 @@ std::wstring parserWrap::compile_full(std::wstring source){
     parserCore::program(ctx);
     ctx.Asm->pop(r14,14);
     ctx.Asm->pop(r15,15);
+    ctx.stream<<"__ret:\n";
     ctx.Asm->endOfFunction();
 
     std::wstring compiled= ctx.Asm->ss.str();
