@@ -13,7 +13,7 @@ using namespace synErr;
 using namespace parserTypes;
 using namespace util;
 
-std::wstring convPut(std::wstring src);
+std::wstring convPut(std::wstring src,std::wstring argument);
 
 namespace parserCore{
     
@@ -490,7 +490,7 @@ namespace parserCore{
         return ret;
     }}
 
-std::wstring convPut(std::wstring src){
+std::wstring convPut(std::wstring src,std::wstring argument){
     std::wstring ret;
     auto iter=iterator<wchar_t>(util::convToVector<wchar_t,std::wstring>(src));
     while(iter.hasData()){
