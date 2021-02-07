@@ -163,6 +163,7 @@ namespace parserTypes
         parserWrap *wraper;
 
         parserWrap *compiler; // used for compile
+        std::unordered_map<std::string,bool> puts_table; // true,false = minecode,asm
     };
     
     class value;
