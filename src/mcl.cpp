@@ -154,7 +154,12 @@ std::wstring convPut(std::wstring src){
     while(iter.hasData()){
         wchar_t ch=iter.next();
         wchar_t ne=iter.peekSafe(1);
-        ret+=ch;
+        if(ch=='$' && ne=='$'){
+            ret+='$';
+            iter.next();
+        }else{
+            ret+=ch;
+        }
     }
     return ret;
 }
