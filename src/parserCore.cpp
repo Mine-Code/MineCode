@@ -141,7 +141,9 @@ namespace parserCore{
         }
         ctx.iter.index=end;
         assert(ctx.puts.count(target)==1,L"Puts Not found");
-        ctx.stream<<util::str2wstr(ctx.puts[target]);
+        std::wstring source=util::str2wstr(ctx.puts[target]);
+        source=convPut(source,expression);
+        ctx.stream<<ctx.compiler->compile(source);
     }
     Arg arg(parserTypes::parserContext& ctx){
         return std::make_pair(
