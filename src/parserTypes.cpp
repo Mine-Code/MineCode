@@ -6,6 +6,7 @@ parserTypes::parserContext::parserContext()
     Asm=new Assembly(stream);
     iter=iterType();
     variables=varsType();
+    compiler=nullptr;
 }
 
 parserTypes::parserContext::parserContext(parserTypes::parserContext& source)
@@ -13,6 +14,7 @@ parserTypes::parserContext::parserContext(parserTypes::parserContext& source)
     , iter(source.iter)
     , variables(source.variables)
     , puts(source.puts)
+    , compiler(nullptr)
 {
     stream<<source.stream.rdbuf();
 }
