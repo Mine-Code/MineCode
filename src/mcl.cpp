@@ -29,6 +29,10 @@ void operator<<(parserWrap& ctx, std::string name){
     json functions=convertTree2Single_function(j["functions"]);
     std::wstring pointerasm;
 
+    // check defined compile
+    if(!ctx.ctx.compiler){
+        ctx.ctx.compiler=new parserWrap;
+    }
     parserWrap compiler;
 
     // compile pointers
@@ -51,12 +55,8 @@ void operator<<(parserWrap& ctx, std::string name){
 
         auto type=obj["type"].get<std::string>();
         auto proc=obj["proc"].get<std::string>();
-        if(type=="MineCode"){
-            std::wstring source=util::str2wstr(proc);
-            ctx.ctx.puts[name]=util::wstr2str(compiler.compile(source));
-        }else if(type=="asm"){
-            ctx.ctx.puts[name]=proc;
-        }
+        ctx.ctx.puts[name]=proc;
+        ctx.ctx.puts_table[name]= type=="MineCode" ? 1 : 0;
     }
 
     for(auto [name,obj]: functions.items()){
