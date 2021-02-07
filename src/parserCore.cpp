@@ -474,3 +474,27 @@ namespace parserCore{
         assertChar(")");
         return ret;
     }}
+
+std::wstring convPut(std::wstring src){
+    std::wstring ret;
+    auto iter=iterator<wchar_t>(util::convToVector<wchar_t,std::wstring>(src));
+    while(iter.hasData()){
+        wchar_t ch=iter.next();
+        wchar_t ne=iter.peekSafe(1);
+        if(ch=='$' && ne=='$'){
+            ret+='$';
+            iter.next();
+        }else if(
+            ch=='$' &&
+            iter.peekSafe(0)=='a' &&
+            iter.peekSafe(1)=='r' &&
+            iter.peekSafe(2)=='g'
+        ){
+            ret+='#';
+            iter.index+=3;
+        }else{
+            ret+=ch;
+        }
+    }
+    return ret;
+}
