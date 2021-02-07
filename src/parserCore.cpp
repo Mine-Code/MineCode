@@ -12,6 +12,9 @@
 using namespace synErr;
 using namespace parserTypes;
 using namespace util;
+
+std::wstring convPut(std::wstring src);
+
 namespace parserCore{
     
 
