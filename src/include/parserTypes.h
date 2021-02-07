@@ -161,6 +161,8 @@ namespace parserTypes
         std::unordered_map<std::string,std::string> puts;
         std::unordered_map<std::string,struct function> functions;
         parserWrap *wraper;
+
+        parserWrap *compiler; // used for compile
     };
     
     class value;
