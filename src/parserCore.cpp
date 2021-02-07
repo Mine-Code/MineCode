@@ -505,7 +505,10 @@ std::wstring convPut(std::wstring src,std::wstring argument){
             iter.peekSafe(1)=='r' &&
             iter.peekSafe(2)=='g'
         ){
-            ret+='#';
+            for (auto ch : argument)
+            {
+                ret+=ch;
+            }
             iter.index+=3;
         }else{
             ret+=ch;
