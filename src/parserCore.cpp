@@ -125,7 +125,19 @@ namespace parserCore{
     void put(parserTypes::parserContext& ctx){
         std::string target = util::wstr2str(ident(ctx));
         assertChar("<<");
+        // get end
+        auto start=ctx.iter.index;
         struct expr val=expr(ctx);
+        auto end=ctx.iter.index;
+        ctx.iter.index=start;
+        // get end
+        std::wstring expression;
+        ctx.iter.index=0; // enable absolute get
+        for (size_t i = start; i < end; i++)
+        {
+            expression+=ctx.iter.peekSafe(i);
+        }
+        ctx.iter.index=end;
         assert(ctx.puts.count(target)==1,L"Puts Not found");
         ctx.stream<<util::str2wstr(ctx.puts[target]);
     }
