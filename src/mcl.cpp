@@ -48,13 +48,10 @@ void operator<<(parserWrap& ctx, std::string name){
     }
     ctx.ctx.Asm->stack_offset=ctx.ctx.compiler->ctx.Asm->stack_offset; // set stack_offset
     for(auto [key, val]: ctx.ctx.compiler->ctx.variables){
-        std::wcout<<"copying "<<util::str2wstr(key)<<std::endl;
         ctx.ctx.variables[key]=val;
     }
 
     for(auto [name,obj]: puts.items()){
-        std::wcout<<"compile of "<<util::str2wstr(name)<<std::endl;
-
         auto type=obj["type"].get<std::string>();
         auto proc=obj["proc"].get<std::string>();
         ctx.ctx.puts[name]=proc;
@@ -62,8 +59,6 @@ void operator<<(parserWrap& ctx, std::string name){
     }
 
     for(auto [name,obj]: functions.items()){
-        std::wcout<<"converting of "<<util::str2wstr(name)<<std::endl;
-
         parserTypes::function func;
         func.addr=(uint32_t)obj["addr"].get<int>();
 
@@ -86,7 +81,6 @@ void operator<<(parserWrap& ctx, std::string name){
         }
         ctx.ctx.functions[name]=func;
     }
-    std::wcout<<"compiled all"<<std::endl;
     ctx.ctx.stream<< "##Lib:"<< util::str2wstr(name)<<"\n";
 }
 
