@@ -34,7 +34,7 @@ void operator<<(parserWrap& ctx, std::string name){
 
     // output Lib start
     ctx.ctx.stream<< "# Lib:"<< util::str2wstr(name)<<std::endl;
-    
+
     // compile pointers
     ctx.ctx.compiler->ctx.Asm->stack_offset=ctx.ctx.Asm->stack_offset; // copy stack_offset
     for(auto pointer: j["pointers"]){
@@ -44,7 +44,7 @@ void operator<<(parserWrap& ctx, std::string name){
         
         std::wstring source=util::str2wstr(name+" = "+expr);
 
-        pointerasm += ctx.ctx.compiler->compile(source);
+        ctx.ctx.stream<< ctx.ctx.compiler->compile(source);
     }
     ctx.ctx.Asm->stack_offset=ctx.ctx.compiler->ctx.Asm->stack_offset; // set stack_offset
     for(auto [key, val]: ctx.ctx.compiler->ctx.variables){
@@ -87,9 +87,7 @@ void operator<<(parserWrap& ctx, std::string name){
         ctx.ctx.functions[name]=func;
     }
     std::wcout<<"compiled all"<<std::endl;
-    ctx.ctx.stream
-        << pointerasm
-        << "##Lib:"<< util::str2wstr(name)<<"\n";
+    ctx.ctx.stream<< "##Lib:"<< util::str2wstr(name)<<"\n";
 }
 
 bool isShallow(json src){
