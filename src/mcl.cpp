@@ -37,7 +37,7 @@ void operator<<(parserWrap& ctx, std::string name){
     for(auto pointer: j["pointers"]){
         auto name=pointer[0].get<std::string>();
         auto expr=pointer[1].get<std::string>();
-        std::wcout<<"setting of "<<util::str2wstr(name)<<std::endl;
+        ctx.ctx.stream<<"# Pointer "<<util::str2wstr(name)<<" in "<<util::str2wstr(name)<<std::endl;
         
         std::wstring source=util::str2wstr(name+" = "+expr);
 
