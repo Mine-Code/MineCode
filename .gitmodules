@@ -4,3 +4,6 @@
 [submodule "lib/json"]
 	path = lib/json
 	url = https://github.com/nlohmann/json
+[submodule "lib/Assembler"]
+	path = lib/Assembler
+	url = https://github.com/syoch/Assembler-ppc
