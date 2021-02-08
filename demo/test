@@ -1,3 +1,1 @@
-mcl minecraft
-
-Local.Console << "hi"
+a = "hi"
