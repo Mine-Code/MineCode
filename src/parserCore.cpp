@@ -25,14 +25,10 @@ namespace parserCore{
             assert(ctx.iter.next() == L"once", L"mismatch preprecessor operation");
             // TODO: implement do once
         }
-
-        ctx.stream<<"# begin program\n";
         
         while(ctx.iter.hasData()){
             stmt(ctx);
         }
-
-        ctx.stream<<"# end program\n";
     }
     void stmt(parserTypes::parserContext& ctx){
         // stmt Switcher
