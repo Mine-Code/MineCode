@@ -32,6 +32,9 @@ void operator<<(parserWrap& ctx, std::string name){
         ctx.ctx.compiler=new parserWrap;
     }
 
+    // output Lib start
+    ctx.ctx.stream<< "# Lib:"<< util::str2wstr(name)<<std::endl;
+    
     // compile pointers
     ctx.ctx.compiler->ctx.Asm->stack_offset=ctx.ctx.Asm->stack_offset; // copy stack_offset
     for(auto pointer: j["pointers"]){
@@ -85,7 +88,6 @@ void operator<<(parserWrap& ctx, std::string name){
     }
     std::wcout<<"compiled all"<<std::endl;
     ctx.ctx.stream
-        << "# Lib:"<< util::str2wstr(name)<<"\n"
         << pointerasm
         << "##Lib:"<< util::str2wstr(name)<<"\n";
 }
