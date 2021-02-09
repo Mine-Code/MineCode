@@ -1,36 +1,8 @@
 {
 	"folders": [
 		{
-			"name": "Assembler",
-			"path": "../lib/Assembler"
-		},
-		{
-			"name": "src",
-			"path": "../src"
-		},
-		{
-			"name": "mcls",
-			"path": "../mcls"
-		},
-		{
-			"name": "demo",
-			"path": "../demo"
-		},
-		{
-			"name": "docs",
-			"path": "../docs"
-		},
-		{
-			"name": "test",
-			"path": "../test"
-		},
-		{
 			"name": "MineCode",
 			"path": ".."
-		},
-		{
-			"name": "autotool",
-			"path": "../autotool"
 		}
 	],
 	"settings": {
