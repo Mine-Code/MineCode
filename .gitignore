@@ -8,9 +8,12 @@
 
 # binary
 MineCode
-build/test/*
-build/dep/Debug
-build/obj/Debug
+
+# CMake
+cmake_install.cmake
+CMakeCache.txt
+build/
+CMakeFiles/
 
 # https://github.com/github/gitignore/blob/master/C++.gitignore
 
