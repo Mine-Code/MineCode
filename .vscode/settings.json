@@ -1,14 +1,4 @@
 {
-    "saveAndRun": {
-        "commands": [
-            {
-                "cmd": "python3 autotool/auto/autoc.py make run arg=demo/test",
-                "isAsync": true,
-                "silent": true
-            }
-        ]
-    },
-    
     "files.associations": {
         "*.mc": "json",
         "array": "cpp",
