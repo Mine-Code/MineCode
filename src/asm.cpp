@@ -330,3 +330,17 @@ void Assembly::whileEnd(int id){
     ss<<"b W"<<id<<":\n"
       <<getEnd_While(id)<<":\n";
 }
+
+void Assembly::setString(std::wstring str, int dest)
+{
+    ss <<
+        "bl " << "str_" << string_offset << "\n";
+
+    for (wchar_t ch : str) {
+        ss << ".word " << (uint16_t)ch << "\n";
+    }
+
+    ss <<
+        "." << "str_" << string_offset << "\n"
+        "mflr r" << dest << "\n";
+}
