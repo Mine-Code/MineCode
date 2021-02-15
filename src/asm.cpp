@@ -363,4 +363,6 @@ void Assembly::setString(std::wstring str, int dest)
 	ss <<
 		"." << "str_" << string_offset << "\n"
 		"mflr r" << dest << "\n";
+
+	string_offset++;
 }

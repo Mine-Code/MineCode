@@ -7,7 +7,9 @@ int main()
     Assembly assembly(ss);
     assembly.startOfFunction();
 
-    assembly.setString(L"test");
+    assembly.setString(L"‚Ç‚¤‚àAƒTƒ‚Å‚·I");
+    assembly.setString(L"Gawr Gura");
+    assembly.setString(L"Shaaaaaark");
 
     assembly.endOfFunction();
     std::wcout << ss.str() << std::endl;
