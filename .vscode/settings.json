@@ -1,4 +1,13 @@
 {
+    "saveAndRun": {
+        "commands": [
+            {
+                "cmd": "python3 autotool/auto/autoc.py \"cmake .; cmake --build . \"",
+                "isAsync": true,
+                "silent": true
+            }
+        ]
+    },
     "files.associations": {
         "*.mc": "json",
         "array": "cpp",
