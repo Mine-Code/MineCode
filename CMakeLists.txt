@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-
+add_subdirectory(lib/Assembler)
 include_directories("src/include")
 
 add_executable(MineCode
@@ -23,3 +23,4 @@ add_executable(MineCode
     src/syntaxError.cpp
     src/util.cpp
 )
+target_link_libraries(MineCode ppcasm)
