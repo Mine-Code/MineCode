@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	Assembler assembler;
 	auto insts = assembler.PPC(prs.compile_full(str));
 	bool flag = false;
-	std::wcout << std::hex;
+	std::wcout << std::hex << std::uppercase;
 
 	if (true) // cafecode mode
 	{
