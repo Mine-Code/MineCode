@@ -31,6 +31,24 @@ int main(int argc, char *argv[])
 	auto insts = assembler.PPC(prs.compile_full(str));
 	bool flag = false;
 	std::wcout << std::hex;
+
+	if (true) // cafecode mode
+	{
+		auto size = insts.size();
+		std::wcout << "C000";
+		std::wcout.fill('0');
+		std::wcout.width(4);
+		if (size & 1 == 0)
+		{
+			std::wcout << insts.size() / 2;
+		}
+		else
+		{
+			std::wcout << (insts.size() + 1) / 2;
+		}
+		std::wcout << " 60000000" << std::endl;
+	}
+	std::wcout.width(8);
 	for (auto inst : insts)
 	{
 		std::wcout << inst;
