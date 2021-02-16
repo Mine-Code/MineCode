@@ -27,6 +27,19 @@ int main(int argc, char *argv[])
 	std::wstring str(it, last);
 
 	// Compile!!!
-	std::wcout << prs.compile_full(str) << std::endl;
+	Assembler assembler;
+	auto insts = assembler.PPC(prs.compile_full(str));
+	bool flag = false;
+	std::wcout << std::hex;
+	for (auto inst : insts)
+	{
+		std::wcout << inst;
+		std::wcout << (flag ? '\n' : ' ');
+		flag ^= 1;
+	}
+	if (flag)
+	{
+		std::wcout << "60000000" << std::endl;
+	}
 	return 0;
 }
