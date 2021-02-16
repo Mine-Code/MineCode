@@ -2,13 +2,12 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "python3 autotool/auto/autoc.py make run arg=demo/test",
+                "cmd": "python3 autotool/auto/autoc.py \"cmake .; cmake --build . ; ./MineCode demo/test\"",
                 "isAsync": true,
                 "silent": true
             }
         ]
     },
-    
     "files.associations": {
         "*.mc": "json",
         "array": "cpp",

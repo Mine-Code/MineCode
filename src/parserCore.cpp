@@ -331,7 +331,6 @@ namespace parserCore{
             part.parts.emplace_back(wrap);
         }
         ret.parts.emplace_back(part);
-        
         while(
             ctx.iter.hasData() && (
                 ctx.iter.peek() == L"+" ||
@@ -349,7 +348,6 @@ namespace parserCore{
 
             part=term(ctx);
             if(text==L"-"){
-                ctx.iter.next(); // read
                 struct power pow;
                 pow.type=power::IMM;
                 pow.imm=-1;
