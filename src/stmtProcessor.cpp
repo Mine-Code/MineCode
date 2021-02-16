@@ -148,5 +148,5 @@ void stmtProcessor::executeFunction (parserTypes::parserContext& ctx,ExecFunc ca
         }
     }
     ctx.stream<<"mtctr r15\n"
-                "btcrl\n";
+                "bctrl\n";
 }
