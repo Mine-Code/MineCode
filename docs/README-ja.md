@@ -8,12 +8,12 @@
 ~~~
 mcl minecraft
 for player in ServerPlayer.List {
-    Local.Console << player.name;
+    Local.Console << player.name
 }
 ~~~
 ~~~
-ptr = [[0x1E4A1220] + 0x12] + 0x144;
-[ptr] = 1;
+ptr = [[0x1E4A1220] + 0x12] + 0x144
+[ptr] = 1
 ~~~
 ## フィードバック
 - 新機能の提案・要望または不具合の報告等をお待ちしております
