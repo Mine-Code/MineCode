@@ -1,5 +1,5 @@
 cmake_minimum_required( VERSION 2.8 )
-set(CMAKE_CXX_FLAGS "-Wl,--gc-sections,-s -O3")
+set(CMAKE_CXX_FLAGS "-Wl,--gc-sections,-s -Os")
 project(MineCode CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
