@@ -24,7 +24,18 @@ int main(int argc, char *argv[])
 	for (size_t i = 1; i < argc; i++)
 	{
 		std::string arg(argv[i]);
+		if (arg == "-h")
+		{
+			std::wcout
+				<< "[Usage] " << argv[0] << " [ -J | -h ] <Source filename>" << std::endl
+				<< "" << std::endl
+				<< "Argument Options" << std::endl
+				<< "----------" << std::endl
+				<< "-J    | Output CafeCode" << std::endl
+				<< "-h    | Show help (this message)" << std::endl;
+			std::exit(0);
 		}
+	}
 
 	// read the file
 	file.open(argv[1]);
