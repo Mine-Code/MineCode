@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	std::wifstream file;
 
 	//argument check
-	if (argc != 2)
+	if (argc < 2)
 	{
 		std::wcout
 			<< "Error: Invalid argument count" << std::endl
