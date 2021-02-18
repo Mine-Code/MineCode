@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 			hasSrcFile = true;
 		}
 	}
-	if (hasSrcFile)
+	if (!hasSrcFile)
 	{
 		std::wcout << "Error: No input files" << std::endl;
 		std::exit(1);
