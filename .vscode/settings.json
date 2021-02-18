@@ -2,7 +2,7 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "python3 autotool/auto/autoc.py \"cmake .; cmake --build . ; ./MineCode -h\"",
+                "cmd": "python3 autotool/auto/autoc.py \"cmake .; cmake --build . ; ./MineCode -J demo/test\"",
                 "isAsync": true,
                 "silent": true
             }
