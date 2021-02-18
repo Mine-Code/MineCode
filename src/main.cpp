@@ -22,6 +22,8 @@ int main(int argc, char *argv[])
 
 	// analysis argument(s)
 	bool isCafecode = false;
+	bool hasSrcFile = false;
+	std::string srcfile = "";
 	for (size_t i = 1; i < argc; i++)
 	{
 		std::string arg(argv[i]);
@@ -40,10 +42,19 @@ int main(int argc, char *argv[])
 		{
 			isCafecode = true;
 		}
+		else
+		{
+			srcfile = arg;
+			hasSrcFile = true;
+		}
 	}
-
+	if (hasSrcFile)
+	{
+		std::wcout << "Error: No input files" << std::endl;
+		std::exit(1);
+	}
 	// read the file
-	file.open(argv[1]);
+	file.open(srcfile);
 	std::istreambuf_iterator<wchar_t> it(file);
 	std::istreambuf_iterator<wchar_t> last;
 	std::wstring str(it, last);
