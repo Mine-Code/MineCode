@@ -308,8 +308,7 @@ void eval::Var(parserContext &ctx, std::wstring obj, int dest)
 {
     if (obj[0] == '\"')
     {
-        // TODO:
-        ctx.stream << "# " << dest << " <- " << obj << std::endl;
+        ctx.Asm->setString(obj, dest);
     }
     else if (obj == L"false")
     {
