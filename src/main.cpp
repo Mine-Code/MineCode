@@ -80,37 +80,44 @@ int main(int argc, char *argv[])
 	std::wstring str(it, last);
 
 	// Compile!!!
-	Assembler assembler;
-	auto insts = assembler.PPC(prs.compile_full(str));
-	bool flag = false;
-	std::wcout << std::hex << std::uppercase;
+	if (isAssembly)
+	{
+		std::wcout << prs.compile_full(str) << std::endl;
+	}
+	else
+	{
+		Assembler assembler;
+		auto insts = assembler.PPC(prs.compile_full(str));
+		bool flag = false;
+		std::wcout << std::hex << std::uppercase;
 
-	if (isCafecode) // cafecode mode
-	{
-		auto size = insts.size();
-		std::wcout << "C000";
-		std::wcout.fill('0');
-		std::wcout.width(4);
-		if (size & 1 == 0)
+		if (isCafecode) // cafecode mode
 		{
-			std::wcout << insts.size() / 2;
+			auto size = insts.size();
+			std::wcout << "C000";
+			std::wcout.fill('0');
+			std::wcout.width(4);
+			if (size & 1 == 0)
+			{
+				std::wcout << insts.size() / 2;
+			}
+			else
+			{
+				std::wcout << (insts.size() + 1) / 2;
+			}
+			std::wcout << " 60000000" << std::endl;
 		}
-		else
+		std::wcout.width(8);
+		for (auto inst : insts)
 		{
-			std::wcout << (insts.size() + 1) / 2;
+			std::wcout << inst;
+			std::wcout << (flag ? '\n' : ' ');
+			flag ^= 1;
 		}
-		std::wcout << " 60000000" << std::endl;
-	}
-	std::wcout.width(8);
-	for (auto inst : insts)
-	{
-		std::wcout << inst;
-		std::wcout << (flag ? '\n' : ' ');
-		flag ^= 1;
-	}
-	if (flag)
-	{
-		std::wcout << "60000000" << std::endl;
+		if (flag)
+		{
+			std::wcout << "60000000" << std::endl;
+		}
 	}
 	return 0;
 }
