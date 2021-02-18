@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 
 	// analysis argument(s)
 	bool isCafecode = false;
+	bool isAssembly = false;
 	bool hasSrcFile = false;
 	std::string srcfile = "";
 	for (size_t i = 1; i < argc; i++)
@@ -40,7 +41,21 @@ int main(int argc, char *argv[])
 		}
 		else if (arg == "-J")
 		{
+			if (isAssembly)
+			{
+				std::wcout << "Error: cannnot set Cafecode mode when compile only mode";
+				std::exit(3);
+			}
 			isCafecode = true;
+		}
+		else if (arg == "-c")
+		{
+			if (isCafecode)
+			{
+				std::wcout << "Error: cannnot set compile only mode when Cafecode mode";
+				std::exit(3);
+			}
+			isAssembly = true;
 		}
 		else
 		{
