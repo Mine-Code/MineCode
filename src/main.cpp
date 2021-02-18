@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 	}
 
 	// analysis argument(s)
+	bool isCafecode = false;
 	for (size_t i = 1; i < argc; i++)
 	{
 		std::string arg(argv[i]);
@@ -34,6 +35,10 @@ int main(int argc, char *argv[])
 				<< "-J    | Output CafeCode" << std::endl
 				<< "-h    | Show help (this message)" << std::endl;
 			std::exit(0);
+		}
+		else if (arg == "-J")
+		{
+			isCafecode = true;
 		}
 	}
 
@@ -49,7 +54,7 @@ int main(int argc, char *argv[])
 	bool flag = false;
 	std::wcout << std::hex << std::uppercase;
 
-	if (true) // cafecode mode
+	if (isCafecode) // cafecode mode
 	{
 		auto size = insts.size();
 		std::wcout << "C000";
