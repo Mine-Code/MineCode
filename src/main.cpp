@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	{
 		std::wcout
 			<< "Error: Invalid argument count" << std::endl
-			<< "[Usage] " << argv[0] << " <Source filename>" << std::endl;
+			<< "[Usage] " << argv[0] << " [ -J | -h ] <Source filename>" << std::endl;
 		return 1;
 	}
 
