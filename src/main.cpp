@@ -110,6 +110,8 @@ int main(int argc, char *argv[])
 		std::wcout.width(8);
 		for (auto inst : insts)
 		{
+			std::wcout.fill('0');
+			std::wcout.width(8);
 			std::wcout << inst;
 			std::wcout << (flag ? '\n' : ' ');
 			flag ^= 1;
