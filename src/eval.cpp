@@ -314,6 +314,10 @@ void eval::Var(parserContext &ctx, std::wstring obj, int dest)
     {
         ctx.Asm->writeRegister(0, dest);
     }
+    else if (obj == L"true")
+    {
+        ctx.Asm->writeRegister(1, dest);
+    }
     else
     {
         if (ctx.variables.count(util::wstr2str(obj)) == 1)
