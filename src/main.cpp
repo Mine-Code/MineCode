@@ -12,16 +12,54 @@ int main(int argc, char *argv[])
 	std::wifstream file;
 
 	//argument check
-	if (argc != 2)
+	if (argc < 2)
 	{
 		std::wcout
 			<< "Error: Invalid argument count" << std::endl
-			<< "[Usage] " << argv[0] << " <Source filename>" << std::endl;
+			<< "[Usage] " << argv[0] << " [ -J | -h ] <Source filename>" << std::endl;
 		return 1;
 	}
 
+	// analysis argument(s)
+	bool isCafecode = false;
+	bool hasSrcFile = false;
+	std::string srcfile = "";
+	for (size_t i = 1; i < argc; i++)
+	{
+		std::string arg(argv[i]);
+		if (arg == "-h")
+		{
+			std::wcout
+				<< "[Usage] " << argv[0] << " [ -J | -h ] <Source filename>" << std::endl
+				<< "" << std::endl
+				<< "Argument Options" << std::endl
+				<< "----------" << std::endl
+				<< "-J    | Output CafeCode" << std::endl
+				<< "-h    | Show help (this message)" << std::endl;
+			std::exit(0);
+		}
+		else if (arg == "-J")
+		{
+			isCafecode = true;
+		}
+		else
+		{
+			if (hasSrcFile)
+			{
+				std::wcout << "Error: Too many input files (require one source file)" << std::endl;
+				std::exit(2);
+			}
+			srcfile = arg;
+			hasSrcFile = true;
+		}
+	}
+	if (!hasSrcFile)
+	{
+		std::wcout << "Error: No input files" << std::endl;
+		std::exit(1);
+	}
 	// read the file
-	file.open(argv[1]);
+	file.open(srcfile);
 	std::istreambuf_iterator<wchar_t> it(file);
 	std::istreambuf_iterator<wchar_t> last;
 	std::wstring str(it, last);
@@ -32,7 +70,7 @@ int main(int argc, char *argv[])
 	bool flag = false;
 	std::wcout << std::hex << std::uppercase;
 
-	if (true) // cafecode mode
+	if (isCafecode) // cafecode mode
 	{
 		auto size = insts.size();
 		std::wcout << "C000";
