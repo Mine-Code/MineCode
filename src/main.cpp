@@ -20,6 +20,12 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
+	// analysis argument(s)
+	for (size_t i = 1; i < argc; i++)
+	{
+		std::string arg(argv[i]);
+		}
+
 	// read the file
 	file.open(argv[1]);
 	std::istreambuf_iterator<wchar_t> it(file);
