@@ -44,6 +44,11 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
+			if (hasSrcFile)
+			{
+				std::wcout << "Error: Too many input files (require one source file)" << std::endl;
+				std::exit(2);
+			}
 			srcfile = arg;
 			hasSrcFile = true;
 		}
