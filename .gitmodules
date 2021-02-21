@@ -1,6 +1,6 @@
 [submodule "autotool"]
 	path = autotool
-	url = git@github.com:syoch/autotool.git
+	url = https://github.com/syoch/autotool
 [submodule "lib/json"]
 	path = lib/json
 	url = https://github.com/nlohmann/json
