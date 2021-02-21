@@ -5,16 +5,11 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "../../lib/strutil/strutil.h"
 
 namespace util
 {
     int _toInt(std::wstring);
-
-    template <typename T>
-    bool inRange(T min, T val, T max)
-    {
-        return min <= val && val <= max;
-    }
 
     template <typename T>
     bool isMathOp(T ch)
@@ -111,18 +106,6 @@ namespace util
     std::vector<T> convToVector(T2 str)
     {
         return std::vector<T>(str.begin(), str.end());
-    }
-
-    template <typename T>
-    bool isDec(T val)
-    {
-        return inRange<T>('0', val, '9');
-    }
-
-    template <typename T>
-    bool isHex(T val)
-    {
-        return isDec(val) || inRange<T>('a', val, 'f');
     }
 
     template <typename T>
