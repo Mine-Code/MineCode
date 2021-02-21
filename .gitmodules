@@ -7,3 +7,6 @@
 [submodule "lib/Assembler"]
 	path = lib/Assembler
 	url = https://github.com/syoch/Assembler-ppc
+[submodule "lib/strutil"]
+	path = lib/strutil
+	url = https://github.com/syoch/stringUtility
