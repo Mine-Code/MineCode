@@ -301,6 +301,11 @@ namespace parserCore
         {
             ret.type = power::FUNCCALL;
             struct ExecFunc func = funcCall(ctx);
+            ExecFunc *func2 = new ExecFunc;
+            func2->args = func.args;
+            func2->funcAddr = func.funcAddr;
+            func2->funcId = func.funcId;
+            func2->type = func.type;
             ret.func = &func;
         }
         else if (isInt(ctx.iter.peekSafe()))
