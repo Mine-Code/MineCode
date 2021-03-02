@@ -386,7 +386,7 @@ void Assembly::setString(std::wstring str, int dest)
 		ss << ".word " << (uint16_t)ch << "\n";
 	}
 	ss << ".word 0" << std::endl;
-	if (str.length() & 1 == 0)
+	if (str.length() % 2 == 0)
 	{
 		ss << ".word 0" << std::endl;
 	}
