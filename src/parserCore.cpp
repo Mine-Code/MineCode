@@ -306,7 +306,7 @@ namespace parserCore
             func2->funcAddr = func.funcAddr;
             func2->funcId = func.funcId;
             func2->type = func.type;
-            ret.func = &func;
+            ret.func = func2;
         }
         else if (isInt(ctx.iter.peekSafe()))
         {
