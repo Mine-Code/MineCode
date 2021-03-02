@@ -10,23 +10,19 @@ Assembly::Assembly(std::wstringstream &_ss)
 
 void Assembly::startOfFunction()
 {
-	ss << "stwu r1, -" << stack_size << "(r1)\n"
-										"mflr r0\n"
-										"stw r0, "
-	   << stack_size + 4 << "(r1)\n"
-							"stw r13, "
-	   << stack_size - 4 << "(r1)\n";
+	ss << "stwu r1, -" << stack_size << "(r1)" << std::endl
+	   << "mflr r0" << std::endl
+	   << "stw r0, " << stack_size + 4 << "(r1)" << std::endl
+	   << "stw r13, " << stack_size - 4 << "(r1)" << std::endl;
 }
 
 void Assembly::endOfFunction()
 {
-	ss << "lwz r0, " << stack_size + 4 << "(r1)\n"
-										  "lwz r13, "
-	   << stack_size - 4 << "(r1)\n"
-							"mtlr r0\n"
-							"addi r1, r1, "
-	   << stack_size << "\n"
-						"blr";
+	ss << "lwz r0, " << stack_size + 4 << "(r1)" << std::endl
+	   << "lwz r13, " << stack_size - 4 << "(r1)" << std::endl
+	   << "mtlr r0" << std::endl
+	   << "addi r1, r1, " << stack_size << "" << std::endl
+	   << "blr";
 }
 
 void Assembly::writeRegister(int value, int dest)
