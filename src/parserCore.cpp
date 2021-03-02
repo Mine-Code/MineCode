@@ -554,7 +554,7 @@ namespace parserCore
     }
     struct ExecFunc funcCall(parserTypes::parserContext &ctx)
     {
-        struct ExecFunc ret;
+        ExecFunc ret;
         if (ctx.iter.peek() == L"func")
         {
             // address based call
