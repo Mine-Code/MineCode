@@ -159,7 +159,13 @@ namespace util
         int counter = 0;
         for (auto ch : text)
         {
-            if (!isdigit(ch))
+            if (isdigit(ch))
+            {
+            }
+            else if (text[0] == '0' && text[1] == 'x' && isHex(ch))
+            {
+            }
+            else
             {
                 if (skip && counter < 2)
                 {
