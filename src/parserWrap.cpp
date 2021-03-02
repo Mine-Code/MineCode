@@ -318,6 +318,7 @@ std::wstring parserWrap::compile_full(std::wstring source)
     int r14 = ctx.Asm->push(14);
     int r15 = ctx.Asm->push(15);
     parserCore::program(ctx);
+    ctx.stream << "__ret:\n";
 
     ctx.Asm->pop(r14, 14);
     ctx.Asm->pop(r15, 15);
