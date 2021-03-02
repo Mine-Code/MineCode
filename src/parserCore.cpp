@@ -500,7 +500,15 @@ namespace parserCore
     {
         struct condChild cond;
         std::wstring text;
-        if (isCondOpFull(ctx.iter.peekSafe(1)))
+
+        std::wstring maybeOp;
+        {
+            auto offs = ctx.iter.index;
+            value(ctx);
+            maybeOp = ctx.iter.peekSafe();
+            ctx.iter.index = offs;
+        }
+        if (isCondOpFull(maybeOp))
         {
             cond.val1 = expr(ctx);
             std::wstring op = ctx.iter.next();
