@@ -208,8 +208,10 @@ namespace parserCore
     }
     struct ptr ptr(parserTypes::parserContext &ctx)
     {
+        assertChar("[");
         struct expr *value = new struct expr;
         *value = expr(ctx);
+        assertChar("]");
         return parserTypes::ptr(value);
     }
     struct value editable(parserTypes::parserContext &ctx)
