@@ -33,6 +33,7 @@ namespace parserTypes
 
     public:
         ptr(expr &_base);
+        ptr(expr *_base);
         ptr();
 
         expr getBase();
