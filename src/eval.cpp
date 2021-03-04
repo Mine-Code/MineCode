@@ -9,23 +9,7 @@ using namespace parserTypes;
 
 void Ptr_AddrBase(parserContext &ctx, ptr obj, int dest)
 {
-    switch (obj.base->type)
-    {
-    case value::PTR:
-        eval::Ptr(ctx, obj.base->pointer, dest);
-        break;
-    case value::IDENT:
-        eval::Var(ctx, obj.base->ident, dest);
-        break;
-    case value::STR:
-        synErr::processError(ctx, L"can not set string to pointer address", __FILE__, __func__, __LINE__);
-        break;
-    case value::IMM:
-        ctx.Asm->writeRegister(obj.base->imm, dest);
-        break;
-    default:
-        synErr::processError(ctx, L"unknown pointer base type: " + std::to_wstring(obj.base->type), __FILE__, __func__, __LINE__);
-    }
+    eval::Expr(ctx, obj.getBase(), dest);
 }
 
 term &optimize(term &val)
@@ -268,7 +252,7 @@ void eval::Power(parserContext &ctx, power obj, int dest)
         ctx.Asm->writeRegister(obj.imm, dest);
         break;
     case power::PTR:
-        Ptr(ctx, obj.ptr, dest);
+        Ptr(ctx, obj.Pointer, dest);
         break;
     case power::VAR:
         Var(ctx, obj.var, dest);
@@ -284,27 +268,12 @@ void eval::Ptr(parserContext &ctx, ptr obj, int dest)
 {
     int offs = ctx.Asm->stack_offset;
     Ptr_AddrBase(ctx, obj, dest);
-    int offset = 0;
-    for (auto off : obj.offsets)
-    {
-        offset += off;
-    }
-    if (offset != 0)
-        ctx.Asm->peek(offset, dest, dest);
-    else
-        ctx.Asm->peek(0, dest, dest);
+    ctx.Asm->peek(0, dest, dest);
     ctx.Asm->stack_offset = offs;
 }
 void eval::Ptr_Addr(parserContext &ctx, ptr obj, int dest)
 {
     Ptr_AddrBase(ctx, obj, dest);
-    int offset = 0;
-    for (auto off : obj.offsets)
-    {
-        offset += off;
-    }
-    if (offset != 0)
-        ctx.Asm->add(offset, dest, dest);
 }
 void eval::Var(parserContext &ctx, std::wstring obj, int dest)
 {

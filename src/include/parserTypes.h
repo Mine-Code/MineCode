@@ -4,6 +4,7 @@
 
 #include <unordered_map>
 #include <sstream>
+#include <memory>
 #include "typedIterator.hxx"
 #include "asm.h"
 
@@ -11,26 +12,37 @@ class parserWrap;
 
 namespace parserTypes
 {
-    struct varType{
-        enum Type{
+    struct varType
+    {
+        enum Type
+        {
             FLOAT,
             INT
         };
-        Type type=INT;
-        size_t offset=0;
+        Type type = INT;
+        size_t offset = 0;
     };
     using streamType = std::wstringstream;
-    using iterType   = iterator<std::wstring>;
-    using varsType   = std::unordered_map<std::string,struct varType>;
-    
-    struct value;
-    struct ptr{
-        value *base;
-        std::vector<int> offsets;
+    using iterType = iterator<std::wstring>;
+    using varsType = std::unordered_map<std::string, struct varType>;
+
+    class expr;
+    class ptr
+    {
+        std::shared_ptr<expr> base;
+
+    public:
+        ptr(expr &_base);
+        ptr(expr *_base);
+        ptr();
+
+        expr getBase();
     };
 
-    struct value{
-        enum Type{
+    struct value
+    {
+        enum Type
+        {
             PTR,
             IDENT,
             STR,
@@ -38,26 +50,31 @@ namespace parserTypes
         };
         Type type;
 
-        ptr          pointer;
-        std::wstring ident  ;
-        std::wstring str    ;
-        uint32_t     imm    ;
+        ptr pointer;
+        std::wstring ident;
+        std::wstring str;
+        uint32_t imm;
     };
 
-    struct expr{
+    struct expr
+    {
         std::vector<struct term> parts;
         bool isSingle();
     };
-    struct term{
+    struct term
+    {
         std::vector<struct expo_wrap> parts;
         bool isSingle();
     };
-    struct expo{
+    struct expo
+    {
         std::vector<struct power> parts;
         bool isSingle();
     };
-    struct expo_wrap{
-        enum Type{
+    struct expo_wrap
+    {
+        enum Type
+        {
             MUL,
             DIV,
             MOD
@@ -66,8 +83,10 @@ namespace parserTypes
         Type type;
         struct expo value;
     };
-    struct power{
-        enum Type{
+    struct power
+    {
+        enum Type
+        {
             IMM,
             FLT,
             EXPR,
@@ -83,18 +102,20 @@ namespace parserTypes
         int imm;
         float flt;
         struct expr expr;
-        struct ExecFunc* func;
+        struct ExecFunc *func;
         std::wstring var;
-        struct ptr ptr;
+        ptr Pointer;
     };
-    
-    enum funcArgType{
+
+    enum funcArgType
+    {
         INT,
         CSTR,
         WSTR,
         PTR
     };
-    struct funcArg{
+    struct funcArg
+    {
         funcArgType type;
         struct expr defaultValue;
     };
@@ -103,7 +124,6 @@ namespace parserTypes
         uint32_t addr;
         std::vector<struct funcArg> args;
     };
-    
 
     struct cond
     {
@@ -113,8 +133,10 @@ namespace parserTypes
     {
         std::vector<struct condChild> conds;
     };
-    struct condChild{
-        enum Type{
+    struct condChild
+    {
+        enum Type
+        {
             COND,
 
             SINGLE, // var (to val1)
@@ -122,8 +144,8 @@ namespace parserTypes
 
             EQU, // ==
             NEQ, // !=
-            LT,  // < 
-            GT,  // > 
+            LT,  // <
+            GT,  // >
             GE,  // <=
             LE   // >=
         };
@@ -138,7 +160,8 @@ namespace parserTypes
 
     struct ExecFunc
     {
-        enum CallType{
+        enum CallType
+        {
             ADDRESS,
             Name
         };
@@ -150,24 +173,24 @@ namespace parserTypes
         CallType type;
     };
 
-    struct parserContext{
+    struct parserContext
+    {
         parserContext();
-        parserContext(parserContext&);
+        parserContext(parserContext &);
 
-        Assembly* Asm;
+        Assembly *Asm;
         streamType stream;
         iterType iter;
         varsType variables;
-        std::unordered_map<std::string,std::string> puts;
-        std::unordered_map<std::string,struct function> functions;
+        std::unordered_map<std::string, std::string> puts;
+        std::unordered_map<std::string, struct function> functions;
         parserWrap *wraper;
 
-        parserWrap *compiler; // used for compile
-        std::unordered_map<std::string,bool> puts_table; // true,false = minecode,asm
+        parserWrap *compiler;                             // used for compile
+        std::unordered_map<std::string, bool> puts_table; // true,false = minecode,asm
     };
-    
+
     class value;
 } // namespace parserCtx
-
 
 #endif
