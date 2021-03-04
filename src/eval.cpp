@@ -252,7 +252,7 @@ void eval::Power(parserContext &ctx, power obj, int dest)
         ctx.Asm->writeRegister(obj.imm, dest);
         break;
     case power::PTR:
-        Ptr(ctx, obj.ptr, dest);
+        Ptr(ctx, obj.Pointer, dest);
         break;
     case power::VAR:
         Var(ctx, obj.var, dest);
