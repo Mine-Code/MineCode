@@ -309,7 +309,7 @@ namespace parserCore
         else if (ctx.iter.peek() == L"[")
         {
             ret.type = power::PTR;
-            ret.ptr = ptr(ctx);
+            ret.Pointer = ptr(ctx);
         }
         else
         {
