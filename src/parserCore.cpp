@@ -208,21 +208,9 @@ namespace parserCore
     }
     struct ptr ptr(parserTypes::parserContext &ctx)
     {
-        struct ptr ret;
-        assertChar("[");
-        [[maybe_unused]] bool isImmutable = isdigit(ctx.iter.peek()[0]);
-        {
-            struct value *tmp = new struct value;
-            *tmp = value(ctx);
-            ret.base = tmp;
-        }
-        while (ctx.iter.peek() == L"+")
-        {
-            ctx.iter.next();
-            ret.offsets.emplace_back(util::toInt(ctx.iter.next()));
-        }
-        assertChar("]");
-        return ret;
+        struct expr *value = new struct expr;
+        *value = expr(ctx);
+        return parserTypes::ptr(value);
     }
     struct value editable(parserTypes::parserContext &ctx)
     {
