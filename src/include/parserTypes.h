@@ -26,10 +26,14 @@ namespace parserTypes
     using iterType = iterator<std::wstring>;
     using varsType = std::unordered_map<std::string, struct varType>;
 
-    struct expr;
-    struct ptr
+    class expr;
+    class ptr
     {
-        std::unique_ptr<expr> base;
+        std::shared_ptr<expr> base;
+
+    public:
+        ptr(expr &_base);
+        ptr();
     };
 
     struct value
@@ -97,7 +101,7 @@ namespace parserTypes
         struct expr expr;
         struct ExecFunc *func;
         std::wstring var;
-        struct ptr ptr;
+        ptr Pointer;
     };
 
     enum funcArgType
