@@ -268,15 +268,7 @@ void eval::Ptr(parserContext &ctx, ptr obj, int dest)
 {
     int offs = ctx.Asm->stack_offset;
     Ptr_AddrBase(ctx, obj, dest);
-    int offset = 0;
-    for (auto off : obj.offsets)
-    {
-        offset += off;
-    }
-    if (offset != 0)
-        ctx.Asm->peek(offset, dest, dest);
-    else
-        ctx.Asm->peek(0, dest, dest);
+    ctx.Asm->peek(0, dest, dest);
     ctx.Asm->stack_offset = offs;
 }
 void eval::Ptr_Addr(parserContext &ctx, ptr obj, int dest)
