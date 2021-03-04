@@ -282,13 +282,6 @@ void eval::Ptr(parserContext &ctx, ptr obj, int dest)
 void eval::Ptr_Addr(parserContext &ctx, ptr obj, int dest)
 {
     Ptr_AddrBase(ctx, obj, dest);
-    int offset = 0;
-    for (auto off : obj.offsets)
-    {
-        offset += off;
-    }
-    if (offset != 0)
-        ctx.Asm->add(offset, dest, dest);
 }
 void eval::Var(parserContext &ctx, std::wstring obj, int dest)
 {
