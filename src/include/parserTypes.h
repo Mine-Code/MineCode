@@ -4,6 +4,7 @@
 
 #include <unordered_map>
 #include <sstream>
+#include <memory>
 #include "typedIterator.hxx"
 #include "asm.h"
 
