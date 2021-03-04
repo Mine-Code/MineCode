@@ -1,5 +1,5 @@
 cmake_minimum_required( VERSION 2.8 )
-set(CMAKE_CXX_FLAGS "-Wl,--gc-sections,-s -Os")
+
 project(MineCode CXX)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g -O0 -rdynamic")
