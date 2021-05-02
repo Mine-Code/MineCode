@@ -237,7 +237,7 @@ void Assembly::startOfIf(condType mode, int condReg)
 		ss << "beq if_" << make_if_ctr << ", cr" << condReg << "\n";
 		break;
 	case NEQ: // !=
-		ss << "beq if_" << make_if_ctr << ", cr" << condReg << "\n";
+		ss << "bne if_" << make_if_ctr << ", cr" << condReg << "\n";
 		break;
 	case LT: // <
 		ss << "blt if_" << make_if_ctr << ", cr" << condReg << "\n";
