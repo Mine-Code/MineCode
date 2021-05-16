@@ -11,7 +11,7 @@ namespace parserTypes
     class condAnd;
     class condChild;
 } // namespace parserTypes
-
+class parserCore;
 namespace condeval
 {
     void Cond(parserCore *that, parserTypes::cond cond);
