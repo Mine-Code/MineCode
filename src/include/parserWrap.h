@@ -17,6 +17,8 @@ private:
     void error_program(iterator<wchar_t> chiter);
 
 public:
+    parserWrap();
+    //
     parserCore &ctx;
 
     void tokenize();

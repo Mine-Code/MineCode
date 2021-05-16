@@ -6,6 +6,11 @@
 #include <parserTypes.h>
 #include <iomanip>
 
+parserWrap::parserWrap()
+    : ctx(parserCore())
+{
+}
+
 void parserWrap::debug()
 {
     std::wcout << "Debug" << std::endl;
