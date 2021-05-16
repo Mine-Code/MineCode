@@ -10,7 +10,7 @@
 #include "types/varType.hpp"
 #include "types/function.hpp"
 #include "types/expr.hpp"
-
+#include "types/cond.hpp"
 class parserWrap;
 
 namespace parserTypes
@@ -18,39 +18,6 @@ namespace parserTypes
     using streamType = std::wstringstream;
     using iterType = iterator<std::wstring>;
     using varsType = std::unordered_map<std::string, struct varType>;
-
-    struct cond
-    {
-        std::vector<struct condAnd> conds;
-    };
-    struct condAnd
-    {
-        std::vector<struct condChild> conds;
-    };
-    struct condChild
-    {
-        enum Type
-        {
-            COND,
-
-            SINGLE, // var (to val1)
-            SINGLE_INV,
-
-            EQU, // ==
-            NEQ, // !=
-            LT,  // <
-            GT,  // >
-            GE,  // <=
-            LE   // >=
-        };
-
-        struct cond child;
-        struct value single;
-
-        expr val1;
-        Type op;
-        expr val2;
-    };
 
     struct ExecFunc
     {
