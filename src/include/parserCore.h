@@ -61,6 +61,6 @@ class parserCore
     void mcl(parserTypes::parserContext &);
 
     struct parserTypes::ExecFunc funcCall(parserTypes::parserContext &);
-} // namespace parserWrap
+}; // namespace parserWrap
 
 #endif
