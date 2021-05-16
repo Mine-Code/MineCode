@@ -16,7 +16,7 @@ using namespace util;
 
 std::wstring convPut(std::wstring src, std::wstring argument);
 
-namespace parserCore
+class parserCore
 {
     void program(parserTypes::parserContext &ctx)
     {
@@ -584,7 +584,8 @@ namespace parserCore
     }
 }
 
-std::wstring convPut(std::wstring src, std::wstring argument)
+std::wstring
+convPut(std::wstring src, std::wstring argument)
 {
     std::wstring ret;
     auto iter = iterator<wchar_t>(util::convToVector<wchar_t, std::wstring>(src));
