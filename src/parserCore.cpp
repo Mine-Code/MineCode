@@ -164,8 +164,7 @@ void parserCore::put()
     assert(puts.count(target) == 1, L"Puts Not found");
     std::wstring source = util::str2wstr(puts[target]);
     source = convPut(source, expression);
-    // TODO: impl this
-    //stream << compiler->compile(source);
+    stream << compiler->compile(source);
 }
 parserCore::Arg parserCore::arg()
 {
@@ -547,8 +546,7 @@ void parserCore::While()
 void parserCore::mcl()
 {
     assertChar("mcl");
-    // TODO: implement this.
-    //(*wraper) << util::wstr2str(iter.next());
+    (*wraper) << util::wstr2str(iter.next());
 }
 struct ExecFunc parserCore::funcCall()
 {
