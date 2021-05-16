@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <unordered_map>
+#include <typedIterator.hxx>
 
 namespace parserTypes
 {
