@@ -3,7 +3,7 @@
 #define STMT_PROC_H
 
 #include <string>
-
+class parserCore;
 namespace parserTypes
 {
     class parserContext;
@@ -17,15 +17,14 @@ namespace stmtProcessor
 {
     using String = std::wstring;
 
-    void For    (parserTypes::parserContext& ctx,String,String);
-    void Forr   (parserTypes::parserContext& ctx,int,int);
-    void While  (parserTypes::parserContext& ctx,parserTypes::cond conditional);
-    void If     (parserTypes::parserContext& ctx, struct parserTypes::cond conditional);
-    void Func   (parserTypes::parserContext& ctx);
-    void Put    (parserTypes::parserContext& ctx);
-    void Assign (parserTypes::parserContext& ctx,parserTypes::value target,std::wstring op,struct parserTypes::expr& value);
-    void executeFunction (parserTypes::parserContext& ctx,parserTypes::ExecFunc);
+    void For(parserCore *that, String, String);
+    void Forr(parserCore *that, int, int);
+    void While(parserCore *that, parserTypes::cond conditional);
+    void If(parserCore *that, struct parserTypes::cond conditional);
+    void Func(parserCore *that);
+    void Put(parserCore *that);
+    void Assign(parserCore *that, parserTypes::value target, std::wstring op, struct parserTypes::expr &value);
+    void executeFunction(parserTypes::parserContext &ctx, parserTypes::ExecFunc);
 } // namespace stmtProcessor
-
 
 #endif
