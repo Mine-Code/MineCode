@@ -164,23 +164,6 @@ namespace parserTypes
         CallType type;
     };
 
-    struct parserContext
-    {
-        parserContext();
-        parserContext(parserContext &);
-
-        Assembly *Asm;
-        streamType stream;
-        iterType iter;
-        varsType variables;
-        std::unordered_map<std::string, std::string> puts;
-        std::unordered_map<std::string, struct function> functions;
-        parserWrap *wraper;
-
-        parserWrap *compiler;                             // used for compile
-        std::unordered_map<std::string, bool> puts_table; // true,false = minecode,asm
-    };
-
     class value;
 } // namespace parserCtx
 
