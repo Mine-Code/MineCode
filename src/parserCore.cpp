@@ -546,7 +546,8 @@ void parserCore::While()
 void parserCore::mcl()
 {
     assertChar("mcl");
-    (*wraper) << util::wstr2str(iter.next());
+    // TODO: implement this.
+    //(*wraper) << util::wstr2str(iter.next());
 }
 struct ExecFunc parserCore::funcCall()
 {
