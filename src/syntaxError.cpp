@@ -1,9 +1,10 @@
 #include <syntaxError.h>
 #include <parserTypes.h>
+#include <parserCore.h>
 
 using namespace synErr;
 
-void synErr::ReportError(parserTypes::parserContext &ctx, errorType type, std::wstring exMsg, const char *fname, const char *funcname, int line)
+void synErr::ReportError(parserCore *that, errorType type, std::wstring exMsg, const char *fname, const char *funcname, int line)
 {
     std::wstring strType;
     if (type == SYNTAX)
@@ -44,6 +45,6 @@ void synErr::ReportError(parserTypes::parserContext &ctx, errorType type, std::w
 
     throw exMsg;
 }
-void synErr::syntaxError(parserTypes::parserContext &ctx, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(ctx, SYNTAX, ex, fname, funcname, line); }
-void synErr::tokenizeError(parserTypes::parserContext &ctx, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(ctx, TOKENIZE, ex, fname, funcname, line); }
-void synErr::processError(parserTypes::parserContext &ctx, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(ctx, PROCESS, ex, fname, funcname, line); }
+void synErr::syntaxError(parserCore *that, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(ctx, SYNTAX, ex, fname, funcname, line); }
+void synErr::tokenizeError(parserCore *that, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(ctx, TOKENIZE, ex, fname, funcname, line); }
+void synErr::processError(parserCore *that, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(ctx, PROCESS, ex, fname, funcname, line); }
