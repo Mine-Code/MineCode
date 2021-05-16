@@ -199,7 +199,7 @@ struct value parserCore::value()
     }
     else
     {
-        syntaxError(L"is not value type ", __FILE__, __func__, __LINE__);
+        syntaxError(this, L"is not value type ", __FILE__, __func__, __LINE__);
         throw ""; // do not call this
     }
     return ret;
@@ -233,7 +233,7 @@ std::wstring parserCore::ident()
     // check word?
     if (!isalpha(text[0]))
     {
-        processError(L"isn't ident", __FILE__, __func__, __LINE__);
+        processError(this, L"isn't ident", __FILE__, __func__, __LINE__);
     }
     // read under the `.`
     while (iter.peek() == L"." || iter.peek() == L"::")
@@ -249,7 +249,7 @@ struct value parserCore::constant()
     std::wstring text = iter.next();
     // check integer?
     if (!isdigit(text[0]) || text[0] != L'"')
-        processError(L"isn't constant integer", __FILE__, __func__, __LINE__);
+        processError(this, L"isn't constant integer", __FILE__, __func__, __LINE__);
 
     if (isdigit(text[0]))
     {
@@ -442,7 +442,7 @@ int parserCore::Int()
     std::wstring text = iter.next();
     if (!isdigit(text[0]))
     {
-        syntaxError(L"is not integer", __FILE__, __func__, __LINE__);
+        syntaxError(this, L"is not integer", __FILE__, __func__, __LINE__);
     }
     // convert test<wstr> to value<int>
     return toInt(text);
@@ -453,7 +453,7 @@ void parserCore::If()
     struct cond conditional = cond();
     stream << "# if" << std::endl;
     assertChar("{");
-    stmtProcessor::If(this, conditional());
+    stmtProcessor::If(this, conditional);
     assertChar("}");
     stream << "# fi" << std::endl;
 }
@@ -539,7 +539,7 @@ void parserCore::While()
     struct cond conditional = cond();
     stream << "# while {" << std::endl;
     assertChar("{");
-    stmtProcessor::While(this, conditional());
+    stmtProcessor::While(this, conditional);
     assertChar("}");
     stream << "# }" << std::endl;
 }
