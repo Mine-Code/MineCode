@@ -15,10 +15,11 @@ namespace parserTypes
 
 #define assert(cond, msg) \
     if (!(cond))          \
-    assert_fail(__FILE__, __func_get, __LINE__, ctx, msg)
+    assert_fail(__FILE__, __func_get, __LINE__, this, msg)
 
 #define assertChar(ch) assert(iter.next() == L##ch, L"excepted '" ch "'");
 
-void assert_fail(const char *, const char *, int, parserTypes::parserContext &, const wchar_t *);
+class parserCore;
+void assert_fail(const char *, const char *, int, parserCore *, const wchar_t *);
 
 #endif
