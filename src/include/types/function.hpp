@@ -3,6 +3,8 @@
 #define PARSER_FUNCTION_H
 #include <inttypes.h>
 #include <vector>
+#include "expr.hpp"
+
 namespace parserTypes
 {
   enum funcArgType
