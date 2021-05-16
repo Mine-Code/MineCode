@@ -20,9 +20,9 @@ void synErr::ReportError(parserCore *that, errorType type, std::wstring exMsg, c
         strType = L"process";
     }
 
-    std::wstring prev = ctx.iter.peekSafe(-1);
-    std::wstring curr = ctx.iter.peekSafe(0);
-    std::wstring next = ctx.iter.peekSafe(1);
+    std::wstring prev = that->iter.peekSafe(-1);
+    std::wstring curr = that->iter.peekSafe(0);
+    std::wstring next = that->iter.peekSafe(1);
     std::wstring pos = prev + curr + next;
 
     std::wstring offset = std::wstring(prev.length(), L' ');
@@ -45,6 +45,6 @@ void synErr::ReportError(parserCore *that, errorType type, std::wstring exMsg, c
 
     throw exMsg;
 }
-void synErr::syntaxError(parserCore *that, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(ctx, SYNTAX, ex, fname, funcname, line); }
-void synErr::tokenizeError(parserCore *that, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(ctx, TOKENIZE, ex, fname, funcname, line); }
-void synErr::processError(parserCore *that, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(ctx, PROCESS, ex, fname, funcname, line); }
+void synErr::syntaxError(parserCore *that, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(that, SYNTAX, ex, fname, funcname, line); }
+void synErr::tokenizeError(parserCore *that, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(that, TOKENIZE, ex, fname, funcname, line); }
+void synErr::processError(parserCore *that, std::wstring ex, const char *fname, const char *funcname, int line) { ReportError(that, PROCESS, ex, fname, funcname, line); }
