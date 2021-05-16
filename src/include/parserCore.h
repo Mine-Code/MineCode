@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <typedIterator.hxx>
 
+class Assembly;
+
 namespace parserTypes
 {
     class varType;
