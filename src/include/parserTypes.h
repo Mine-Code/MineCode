@@ -3,14 +3,13 @@
 #define PARSER_CONTEXT_H
 
 #include <unordered_map>
-#include <sstream>
-#include <memory>
 #include "typedIterator.hxx"
 #include "asm.h"
 #include "types/varType.hpp"
 #include "types/function.hpp"
 #include "types/expr.hpp"
 #include "types/cond.hpp"
+
 class parserWrap;
 
 namespace parserTypes
