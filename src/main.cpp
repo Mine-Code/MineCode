@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
 	if (argc < 2)
 	{
 		std::wcout
-			<< "Error: Invalid argument count" << std::endl
-			<< "[Usage] " << argv[0] << " [ -J | -h ] <Source filename>" << std::endl;
+				<< "Error: Invalid argument count" << std::endl
+				<< "[Usage] " << argv[0] << " [ -J | -h ] <Source filename>" << std::endl;
 		return 1;
 	}
 
@@ -31,13 +31,13 @@ int main(int argc, char *argv[])
 		if (arg == "-h")
 		{
 			std::wcout
-				<< "[Usage] " << argv[0] << " [ -J | -h | -c ] <Source filename>" << std::endl
-				<< "" << std::endl
-				<< "Argument Options" << std::endl
-				<< "----------" << std::endl
-				<< "-J    | Output CafeCode" << std::endl
-				<< "-c    | Output Assembler code(compile only)"
-				<< "-h    | Show help (this message)" << std::endl;
+					<< "[Usage] " << argv[0] << " [ -J | -h | -c ] <Source filename>" << std::endl
+					<< "" << std::endl
+					<< "Argument Options" << std::endl
+					<< "----------" << std::endl
+					<< "-J    | Output CafeCode" << std::endl
+					<< "-c    | Output Assembler code(compile only)"
+					<< "-h    | Show help (this message)" << std::endl;
 			std::exit(0);
 		}
 		else if (arg == "-J")
