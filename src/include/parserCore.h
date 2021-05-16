@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <typedIterator.hxx>
 #include "types/varType.hpp"
+#include "types/function.hpp"
 
 class Assembly;
 
