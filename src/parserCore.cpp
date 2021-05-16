@@ -18,7 +18,7 @@ std::wstring convPut(std::wstring src, std::wstring argument);
 
 class parserCore
 {
-    void program(parserTypes::parserContext &ctx)
+    void program()
     {
         if (ctx.iter.peekSafe() == L"#")
         {
@@ -34,7 +34,7 @@ class parserCore
             stmt(ctx);
         }
     }
-    void stmt(parserTypes::parserContext &ctx)
+    void stmt()
     {
         // stmt Switcher
         std::wstring text = ctx.iter.peek();
@@ -96,7 +96,7 @@ class parserCore
             assign(ctx);
         }
     }
-    void func(parserTypes::parserContext &ctx)
+    void func()
     {
         assertChar("func");
         std::wstring functionName = ctx.iter.next();
@@ -123,7 +123,7 @@ class parserCore
         stmtProcessor::Func(ctx);
         assertChar("}");
     }
-    void For(parserTypes::parserContext &ctx)
+    void For()
     {
         assertChar("for");
         std::wstring varname = ctx.iter.next();
@@ -146,7 +146,7 @@ class parserCore
         }
         assertChar("}");
     }
-    void put(parserTypes::parserContext &ctx)
+    void put()
     {
         std::string target = util::wstr2str(ident(ctx));
         assertChar("<<");
@@ -168,14 +168,14 @@ class parserCore
         source = convPut(source, expression);
         ctx.stream << ctx.compiler->compile(source);
     }
-    Arg arg(parserTypes::parserContext &ctx)
+    Arg arg()
     {
         return std::make_pair(
             ctx.iter.next(), // type
             ctx.iter.next()  // name
         );
     }
-    struct value value(parserTypes::parserContext &ctx)
+    struct value value()
     {
         struct value ret;
         wchar_t ch = ctx.iter.peek()[0];
@@ -206,7 +206,7 @@ class parserCore
         }
         return ret;
     }
-    struct ptr ptr(parserTypes::parserContext &ctx)
+    struct ptr ptr()
     {
         assertChar("[");
         struct expr *value = new struct expr;
@@ -214,7 +214,7 @@ class parserCore
         assertChar("]");
         return parserTypes::ptr(value);
     }
-    struct value editable(parserTypes::parserContext &ctx)
+    struct value editable()
     {
         struct value ret;
         if (ctx.iter.peek() == L"[")
@@ -229,7 +229,7 @@ class parserCore
         }
         return ret;
     }
-    std::wstring ident(parserTypes::parserContext &ctx)
+    std::wstring ident()
     {
         std::wstring text = ctx.iter.next();
         // check word?
@@ -245,7 +245,7 @@ class parserCore
         }
         return text;
     }
-    struct value constant(parserTypes::parserContext &ctx)
+    struct value constant()
     {
         struct value ret;
         std::wstring text = ctx.iter.next();
@@ -265,7 +265,7 @@ class parserCore
         }
         return ret;
     }
-    void assign(parserTypes::parserContext &ctx)
+    void assign()
     {
         struct value target = editable(ctx);
         std::wstring op = ctx.iter.next();
@@ -276,7 +276,7 @@ class parserCore
         }
         stmtProcessor::Assign(ctx, target, op, value);
     }
-    struct power power(parserTypes::parserContext &ctx)
+    struct power power()
     {
         struct power ret;
         if (ctx.iter.peekSafe() == L"(")
@@ -320,7 +320,7 @@ class parserCore
         }
         return ret;
     }
-    struct expo expo(parserTypes::parserContext &ctx)
+    struct expo expo()
     {
         struct expo val;
         val.parts.emplace_back(power(ctx));
@@ -331,7 +331,7 @@ class parserCore
         }
         return val;
     }
-    struct term term(parserTypes::parserContext &ctx)
+    struct term term()
     {
         struct term ret;
         {
@@ -371,7 +371,7 @@ class parserCore
         }
         return ret;
     }
-    struct expr expr(parserTypes::parserContext &ctx)
+    struct expr expr()
     {
         struct expr ret;
         struct term part;
@@ -431,7 +431,7 @@ class parserCore
         }
         return ret;
     }
-    Range range(parserTypes::parserContext &ctx)
+    Range range()
     {
         int start = Int(ctx);
         assertChar("...");
@@ -439,7 +439,7 @@ class parserCore
         // convert start/end: wstr => int
         return std::make_pair(start, end);
     }
-    int Int(parserTypes::parserContext &ctx)
+    int Int()
     {
         std::wstring text = ctx.iter.next();
         if (!isdigit(text[0]))
@@ -449,7 +449,7 @@ class parserCore
         // convert test<wstr> to value<int>
         return toInt(text);
     }
-    void If(parserTypes::parserContext &ctx)
+    void If()
     {
         assertChar("if");
         struct cond conditional = cond(ctx);
@@ -459,7 +459,7 @@ class parserCore
         assertChar("}");
         ctx.stream << "# fi" << std::endl;
     }
-    struct cond cond(parserTypes::parserContext &ctx)
+    struct cond cond()
     {
         struct cond ret;
         std::wstring text;
@@ -473,7 +473,7 @@ class parserCore
         }
         return ret;
     }
-    struct condAnd condAnd(parserTypes::parserContext &ctx)
+    struct condAnd condAnd()
     {
         struct condAnd ret;
         ret.conds.emplace_back(cond_inner(ctx));
@@ -486,7 +486,7 @@ class parserCore
         }
         return ret;
     }
-    struct condChild cond_inner(parserTypes::parserContext &ctx)
+    struct condChild cond_inner()
     {
         struct condChild cond;
         std::wstring text;
@@ -535,7 +535,7 @@ class parserCore
         }
         return cond;
     }
-    void While(parserTypes::parserContext &ctx)
+    void While()
     {
         assertChar("while");
         struct cond conditional = cond(ctx);
@@ -545,12 +545,12 @@ class parserCore
         assertChar("}");
         ctx.stream << "# }" << std::endl;
     }
-    void mcl(parserTypes::parserContext &ctx)
+    void mcl()
     {
         assertChar("mcl");
         (*ctx.wraper) << util::wstr2str(ctx.iter.next());
     }
-    struct ExecFunc funcCall(parserTypes::parserContext &ctx)
+    struct ExecFunc funcCall()
     {
         ExecFunc ret;
         if (ctx.iter.peek() == L"func")
