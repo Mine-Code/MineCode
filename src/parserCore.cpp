@@ -167,7 +167,7 @@ void parserCore::put()
     // TODO: impl this
     //stream << compiler->compile(source);
 }
-Arg parserCore::arg()
+parserCore::Arg parserCore::arg()
 {
     return std::make_pair(
         iter.next(), // type
@@ -430,7 +430,7 @@ struct expr parserCore::expr()
     }
     return ret;
 }
-Range parserCore::range()
+parserCore::Range parserCore::range()
 {
     int start = Int();
     assertChar("...");
