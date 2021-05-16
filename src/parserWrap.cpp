@@ -7,7 +7,7 @@
 #include <iomanip>
 
 parserWrap::parserWrap()
-    : ctx(parserCore())
+    : ctx(*(new parserCore))
 {
 }
 
