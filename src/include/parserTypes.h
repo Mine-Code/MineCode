@@ -8,7 +8,7 @@
 #include "typedIterator.hxx"
 #include "asm.h"
 #include "types/varType.hpp"
-
+#include "types/function.hpp"
 class parserWrap;
 
 namespace parserTypes
@@ -98,25 +98,7 @@ namespace parserTypes
         ptr Pointer;
     };
 
-    enum funcArgType
-    {
-        INT,
-        CSTR,
-        WSTR,
-        PTR
-    };
-    struct funcArg
-    {
-        funcArgType type;
-        struct expr defaultValue;
-    };
-    struct function
-    {
-        uint32_t addr;
-        std::vector<struct funcArg> args;
-    };
-
-    struct cond
+        struct cond
     {
         std::vector<struct condAnd> conds;
     };
