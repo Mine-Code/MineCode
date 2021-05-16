@@ -3,6 +3,9 @@
 #ifndef PARSER_EVAL_H
 #define PARSER_EVAL_H
 
+#include <memory>
+#include <vector>
+
 namespace parserTypes
 {
   class expr;
