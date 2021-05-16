@@ -3,10 +3,6 @@
 #define MYASSERT_H
 
 #include <string>
-namespace parserTypes
-{
-    class parserContext;
-} // namespace parserTypes
 #ifdef __USE_GNU
 #define __func_get __PRETTY_FUNCTION__
 #else

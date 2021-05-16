@@ -6,7 +6,6 @@
 class parserCore;
 namespace parserTypes
 {
-    class parserContext;
     class ExecFunc;
     class expr;
     class value;
