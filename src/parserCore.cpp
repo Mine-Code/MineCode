@@ -29,7 +29,7 @@ void parserCore::program()
 
     while (iter.hasData())
     {
-            stmt(;
+        stmt();
     }
 }
 void parserCore::stmt()
@@ -38,23 +38,23 @@ void parserCore::stmt()
     std::wstring text = iter.peek();
     if (text == L"for")
     {
-            For(;
-            return;
+        For();
+        return;
     }
     if (text == L"while")
     {
-            While(;
-            return;
+        While();
+        return;
     }
     if (text == L"if")
     {
-            If(;
-            return;
+        If();
+        return;
     }
     if (text == L"mcl")
     {
-            mcl(;
-            return;
+        mcl();
+        return;
     }
     if (text == L"return")
     {
@@ -66,33 +66,33 @@ void parserCore::stmt()
     {
         if (iter.peekSafe(1) == L"[")
         {
-                stmtProcessor::executeFunction( funcCall();
+            stmtProcessor::executeFunction(funcCall());
         }
         else
         {
-                func(;
+            func();
         }
         return;
     }
 
     // skip one 'value' and read one
     auto backup = iter.index;
-        value(;
-        text = iter.peek();
-        iter.index = backup;
-        // done skip and read
-        if (text == L"<<")
-        {
-            put(;
-        }
-        else if (text == L"(")
-        {
-            stmtProcessor::executeFunction( funcCall();
-        }
-        else if (isAssignOp(text))
-        {
-            assign(;
-        }
+    value();
+    text = iter.peek();
+    iter.index = backup;
+    // done skip and read
+    if (text == L"<<")
+    {
+        put();
+    }
+    else if (text == L"(")
+    {
+        stmtProcessor::executeFunction(funcCall());
+    }
+    else if (isAssignOp(text))
+    {
+        assign();
+    }
 }
 void parserCore::func()
 {
@@ -108,18 +108,18 @@ void parserCore::func()
 
     if (iter.peek() != L")")
     {
-            args.emplace_back(arg();
+        args.emplace_back(arg());
     }
     while (iter.peek() != L")")
     {
         assertChar(",");
-            args.emplace_back(arg();
+        args.emplace_back(arg());
     }
     // end: read arguments
     assertChar(")");
     assertChar("{");
-        stmtProcessor::Func(;
-        assertChar("}");
+    stmtProcessor::Func();
+    assertChar("}");
 }
 void parserCore::For()
 {
@@ -130,41 +130,41 @@ void parserCore::For()
     if (iter.peek(1) == L"...")
     {
         stream << " range" << std::endl;
-            Range target = range(;
-            assertChar("{");
-            stmtProcessor::Forr( target.first, target.second);
+        Range target = range();
+        assertChar("{");
+        stmtProcessor::Forr(target.first, target.second);
     }
     else
     {
         stream << " iter " << std::endl;
-            std::wstring target = ident(;
-            assertChar("{");
+        std::wstring target = ident();
+        assertChar("{");
 
-            stmtProcessor::For( varname, target);
+        stmtProcessor::For(varname, target);
     }
     assertChar("}");
 }
 void parserCore::put()
 {
-        std::string target = util::wstr2str(ident();
-        assertChar("<<");
-        // get end
-        auto start = iter.index;
-        struct expr val = expr(;
-        auto end = iter.index;
-        iter.index = start;
-        // get end
-        std::wstring expression;
-        iter.index = 0; // enable absolute get
-        for (size_t i = start; i < end; i++)
-        {
+    std::string target = util::wstr2str(ident());
+    assertChar("<<");
+    // get end
+    auto start = iter.index;
+    struct expr val = expr();
+    auto end = iter.index;
+    iter.index = start;
+    // get end
+    std::wstring expression;
+    iter.index = 0; // enable absolute get
+    for (size_t i = start; i < end; i++)
+    {
         expression += iter.peekSafe(i);
-        }
-        iter.index = end;
-        assert(puts.count(target) == 1, L"Puts Not found");
-        std::wstring source = util::str2wstr(puts[target]);
-        source = convPut(source, expression);
-        stream << compiler->compile(source);
+    }
+    iter.index = end;
+    assert(puts.count(target) == 1, L"Puts Not found");
+    std::wstring source = util::str2wstr(puts[target]);
+    source = convPut(source, expression);
+    stream << compiler->compile(source);
 }
 Arg parserCore::arg()
 {
@@ -180,12 +180,12 @@ struct value parserCore::value()
     if (iter.peek() == L"[")
     {
         ret.type = value::PTR;
-            ret.pointer = ptr(;
+        ret.pointer = ptr();
     }
     else if (isalpha(ch))
     {
         ret.type = value::IDENT;
-            ret.ident = ident(;
+        ret.ident = ident();
     }
     else if (ch == L'"')
     {
@@ -208,9 +208,9 @@ struct ptr parserCore::ptr()
 {
     assertChar("[");
     struct expr *value = new struct expr;
-        *value = expr(;
-        assertChar("]");
-        return parserTypes::ptr(value);
+    *value = expr();
+    assertChar("]");
+    return parserTypes::ptr(value);
 }
 struct value parserCore::editable()
 {
@@ -218,12 +218,12 @@ struct value parserCore::editable()
     if (iter.peek() == L"[")
     {
         ret.type = value::PTR;
-            ret.pointer = ptr(;
+        ret.pointer = ptr();
     }
     else
     {
         ret.type = value::IDENT;
-            ret.ident = ident(;
+        ret.ident = ident();
     }
     return ret;
 }
@@ -265,14 +265,14 @@ struct value parserCore::constant()
 }
 void parserCore::assign()
 {
-        struct value target = editable(;
-        std::wstring op = iter.next();
-        struct expr value;
-        if (!(op == L"++" || op == L"--"))
-        {
-            value = expr(;
-        }
-        stmtProcessor::Assign( target, op, value);
+    struct value target = editable();
+    std::wstring op = iter.next();
+    struct expr value;
+    if (!(op == L"++" || op == L"--"))
+    {
+        value = expr();
+    }
+    stmtProcessor::Assign(target, op, value);
 }
 struct power parserCore::power()
 {
@@ -282,24 +282,24 @@ struct power parserCore::power()
         ret.type = power::EXPR;
         // inner type
         iter.next();
-            ret.expr = expr(;
-            assertChar(")");
+        ret.expr = expr();
+        assertChar(")");
     }
     else if (isFunccall(iter.peekSafe(), iter.peekSafe(1)))
     {
         ret.type = power::FUNCCALL;
-            struct ExecFunc func = funcCall(;
-            ExecFunc *func2 = new ExecFunc;
-            func2->args = func.args;
-            func2->funcAddr = func.funcAddr;
-            func2->funcId = func.funcId;
-            func2->type = func.type;
-            ret.func = func2;
+        struct ExecFunc func = funcCall();
+        ExecFunc *func2 = new ExecFunc;
+        func2->args = func.args;
+        func2->funcAddr = func.funcAddr;
+        func2->funcId = func.funcId;
+        func2->type = func.type;
+        ret.func = func2;
     }
     else if (isInt(iter.peekSafe()))
     {
         ret.type = power::IMM;
-            ret.imm = Int(;
+        ret.imm = Int();
     }
     else if (isSingle(iter.peek()) && iter.peek() != L"[")
     {
@@ -309,25 +309,25 @@ struct power parserCore::power()
     else if (iter.peek() == L"[")
     {
         ret.type = power::PTR;
-            ret.Pointer = ptr(;
+        ret.Pointer = ptr();
     }
     else
     {
         ret.type = power::EXPR;
-            ret.expr = expr(;
+        ret.expr = expr();
     }
     return ret;
 }
 struct expo parserCore::expo()
 {
     struct expo val;
-        val.parts.emplace_back(power();
-        while (iter.hasData() && iter.peek() == L"**")
-        {
+    val.parts.emplace_back(power());
+    while (iter.hasData() && iter.peek() == L"**")
+    {
         assertChar("**");
-            val.parts.emplace_back(power();
-        }
-        return val;
+        val.parts.emplace_back(power());
+    }
+    return val;
 }
 struct term parserCore::term()
 {
@@ -335,8 +335,8 @@ struct term parserCore::term()
     {
         expo_wrap wrap;
         wrap.type = expo_wrap::MUL;
-            wrap.value = expo(;
-            ret.parts.emplace_back(wrap);
+        wrap.value = expo();
+        ret.parts.emplace_back(wrap);
     }
     while (
         iter.hasData() &&
@@ -364,8 +364,8 @@ struct term parserCore::term()
         {
             Elem.type = expo_wrap::MOD;
         }
-            Elem.value = expo(;
-            ret.parts.emplace_back(Elem);
+        Elem.value = expo();
+        ret.parts.emplace_back(Elem);
     }
     return ret;
 }
@@ -375,13 +375,13 @@ struct expr parserCore::expr()
     struct term part;
     std::wstring text = iter.peek();
 
-        part = term(;
-        if (text == L"+")
-        {
+    part = term();
+    if (text == L"+")
+    {
         iter.next(); // read
-        }
-        else if (text == L"-")
-        {
+    }
+    else if (text == L"-")
+    {
         iter.next(); // read
         struct power pow;
         pow.type = power::IMM;
@@ -395,13 +395,13 @@ struct expr parserCore::expr()
         wrap.type = expo_wrap::MUL;
 
         part.parts.emplace_back(wrap);
-        }
-        ret.parts.emplace_back(part);
-        while (
-            iter.hasData() && (iter.peek() == L"+" ||
-                                   iter.peek() == L"-" ||
-                                   isBitOpFull(iter.peek())))
-        {
+    }
+    ret.parts.emplace_back(part);
+    while (
+        iter.hasData() && (iter.peek() == L"+" ||
+                           iter.peek() == L"-" ||
+                           isBitOpFull(iter.peek())))
+    {
         auto text = iter.next();
         assert(
             text == L"+" ||
@@ -409,9 +409,9 @@ struct expr parserCore::expr()
                 isBitOpFull(text),
             L"excepted '+' or '+', bitOperator");
 
-            part = term(;
-            if (text == L"-")
-            {
+        part = term();
+        if (text == L"-")
+        {
             struct power pow;
             pow.type = power::IMM;
             pow.imm = -1;
@@ -424,18 +424,18 @@ struct expr parserCore::expr()
             wrap.type = expo_wrap::MUL;
 
             part.parts.emplace_back(wrap);
-            }
-            ret.parts.emplace_back(part);
         }
-        return ret;
+        ret.parts.emplace_back(part);
+    }
+    return ret;
 }
 Range parserCore::range()
 {
-        int start = Int(;
-        assertChar("...");
-        int end = Int(;
-        // convert start/end: wstr => int
-        return std::make_pair(start, end);
+    int start = Int();
+    assertChar("...");
+    int end = Int();
+    // convert start/end: wstr => int
+    return std::make_pair(start, end);
 }
 int parserCore::Int()
 {
@@ -450,39 +450,39 @@ int parserCore::Int()
 void parserCore::If()
 {
     assertChar("if");
-        struct cond conditional = cond(;
-        stream << "# if" << std::endl;
-        assertChar("{");
-        stmtProcessor::If( conditional);
-        assertChar("}");
-        stream << "# fi" << std::endl;
+    struct cond conditional = cond();
+    stream << "# if" << std::endl;
+    assertChar("{");
+    stmtProcessor::If(conditional());
+    assertChar("}");
+    stream << "# fi" << std::endl;
 }
 struct cond parserCore::cond()
 {
     struct cond ret;
     std::wstring text;
-        ret.conds.emplace_back(condAnd();
-        while (
-            iter.hasData() &&
-            (iter.peek() == L"||"))
-        {
+    ret.conds.emplace_back(condAnd());
+    while (
+        iter.hasData() &&
+        (iter.peek() == L"||"))
+    {
         assertChar("||");
-            ret.conds.emplace_back(condAnd();
-        }
-        return ret;
+        ret.conds.emplace_back(condAnd());
+    }
+    return ret;
 }
 struct condAnd parserCore::condAnd()
 {
     struct condAnd ret;
-        ret.conds.emplace_back(cond_inner();
-        while (
-            iter.hasData() &&
-            (iter.peek() == L"&&"))
-        {
+    ret.conds.emplace_back(cond_inner());
+    while (
+        iter.hasData() &&
+        (iter.peek() == L"&&"))
+    {
         assertChar("&&");
-            ret.conds.emplace_back(cond_inner();
-        }
-        return ret;
+        ret.conds.emplace_back(cond_inner());
+    }
+    return ret;
 }
 struct condChild parserCore::cond_inner()
 {
@@ -492,56 +492,56 @@ struct condChild parserCore::cond_inner()
     std::wstring maybeOp;
     {
         auto offs = iter.index;
-            value(;
-            maybeOp = iter.peekSafe();
-            iter.index = offs;
+        value();
+        maybeOp = iter.peekSafe();
+        iter.index = offs;
     }
     if (isCondOpFull(maybeOp))
     {
-            cond.val1 = expr(;
-            std::wstring op = iter.next();
-            if (op == L"<")
-            {
+        cond.val1 = expr();
+        std::wstring op = iter.next();
+        if (op == L"<")
+        {
             cond.op = condChild::LT;
-            }
-            else if (op == L">")
-            {
+        }
+        else if (op == L">")
+        {
             cond.op = condChild::GT;
-            }
-            else if (op == L"<=")
-            {
+        }
+        else if (op == L"<=")
+        {
             cond.op = condChild::LE;
-            }
-            else if (op == L">=")
-            {
+        }
+        else if (op == L">=")
+        {
             cond.op = condChild::GE;
-            }
-            else if (op == L"==")
-            {
+        }
+        else if (op == L"==")
+        {
             cond.op = condChild::EQU;
-            }
-            else if (op == L"!=")
-            {
+        }
+        else if (op == L"!=")
+        {
             cond.op = condChild::NEQ;
-            }
-            cond.val2 = expr(;
+        }
+        cond.val2 = expr();
     }
     else
     {
         cond.op = condChild::SINGLE;
-            cond.single = value(;
+        cond.single = value();
     }
     return cond;
 }
 void parserCore::While()
 {
     assertChar("while");
-        struct cond conditional = cond(;
-        stream << "# while {" << std::endl;
-        assertChar("{");
-        stmtProcessor::While( conditional);
-        assertChar("}");
-        stream << "# }" << std::endl;
+    struct cond conditional = cond();
+    stream << "# while {" << std::endl;
+    assertChar("{");
+    stmtProcessor::While(conditional());
+    assertChar("}");
+    stream << "# }" << std::endl;
 }
 void parserCore::mcl()
 {
@@ -558,24 +558,24 @@ struct ExecFunc parserCore::funcCall()
 
         assert(iter.next() == L"func", L"excepted 'func'");
         assertChar("[");
-            ret.funcAddr = Int(;
-            assertChar("]");
+        ret.funcAddr = Int();
+        assertChar("]");
     }
     else
     {
         // name based call
         ret.type = ExecFunc::Name;
-            ret.funcId = ident(;
+        ret.funcId = ident();
     }
     assertChar("(");
     if (iter.peek() != L")")
     {
-            ret.args.emplace_back(expr();
+        ret.args.emplace_back(expr());
     }
     while (iter.peek() != L")")
     {
         assertChar(",");
-            ret.args.emplace_back(expr();
+        ret.args.emplace_back(expr());
     }
     assertChar(")");
     return ret;
