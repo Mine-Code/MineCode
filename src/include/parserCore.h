@@ -7,12 +7,12 @@
 #include <sstream>
 #include <unordered_map>
 #include <typedIterator.hxx>
+#include "types/varType.hpp"
 
 class Assembly;
 
 namespace parserTypes
 {
-    class varType;
     class function;
     class condChild;
     class condAnd;
