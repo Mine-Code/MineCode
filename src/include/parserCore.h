@@ -5,9 +5,12 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <unordered_map>
 
 namespace parserTypes
 {
+    class varType;
+    class function;
     class condChild;
     class condAnd;
     class cond;
@@ -29,14 +32,14 @@ class parserCore
 public:
     using streamType = std::wstringstream;
     using iterType = iterator<std::wstring>;
-    using varsType = std::unordered_map<std::string, struct varType>;
+    using varsType = std::unordered_map<std::string, parserTypes::varType>;
     // variables
     Assembly *Asm;
     streamType stream;
     iterType iter;
     varsType variables;
     std::unordered_map<std::string, std::string> puts;
-    std::unordered_map<std::string, struct function> functions;
+    std::unordered_map<std::string, parserTypes::function> functions;
     parserWrap *wraper;
 
     parserWrap *compiler;                             // used for compile
