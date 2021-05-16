@@ -1,7 +1,7 @@
 #pragma once
 #ifndef PARSER_FUNCTION_H
 #define PARSER_FUNCTION_H
-#include <stddef.h>
+#include <inttypes.h>
 #include <vector>
 namespace parserTypes
 {
