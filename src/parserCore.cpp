@@ -164,7 +164,8 @@ void parserCore::put()
     assert(puts.count(target) == 1, L"Puts Not found");
     std::wstring source = util::str2wstr(puts[target]);
     source = convPut(source, expression);
-    stream << compiler->compile(source);
+    // TODO: impl this
+    //stream << compiler->compile(source);
 }
 Arg parserCore::arg()
 {
