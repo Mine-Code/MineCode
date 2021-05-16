@@ -11,6 +11,7 @@
 #include "types/function.hpp"
 
 class Assembly;
+class parserWrap;
 
 namespace parserTypes
 {
