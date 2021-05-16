@@ -43,9 +43,9 @@ public:
     varsType variables;
     std::unordered_map<std::string, std::string> puts;
     std::unordered_map<std::string, parserTypes::function &> functions;
-    //parserCore *wraper;
+    parserWrap *wraper;
 
-    //parserCore *compiler;                             // used for compile
+    parserWrap *compiler;                             // used for compile
     std::unordered_map<std::string, bool> puts_table; // true,false = minecode,asm
 
     // function
