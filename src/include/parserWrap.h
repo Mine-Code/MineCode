@@ -7,7 +7,7 @@
 #include <vector>
 #include <typedIterator.hxx>
 #include <parserTypes.h>
-
+class parserCore;
 class parserWrap
 {
 private:
