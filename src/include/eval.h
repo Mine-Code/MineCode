@@ -3,7 +3,8 @@
 #define EVAL_H
 #include <string>
 
-namespace parserTypes{
+namespace parserTypes
+{
     class parserContext;
 
     class expr;
@@ -13,18 +14,17 @@ namespace parserTypes{
 
     class ptr;
 }
-
+class parserCore;
 namespace eval
 {
     using namespace parserTypes;
-    void Expr (parserContext& ctx,expr  val,int dest=13);
-    void Expo (parserContext& ctx,expo  val,int dest=13);
-    void Term (parserContext& ctx,term  val,int dest=13);
-    void Power(parserContext& ctx,power val,int dest=13);
-    void Ptr  (parserContext& ctx,ptr   val,int dest=13);
-    void Var  (parserContext& ctx,std::wstring obj,int dest);
-    void Ptr_Addr(parserContext& ctx, ptr obj, int dest);
+    void Expr(parserCore *that, expr val, int dest = 13);
+    void Expo(parserCore *that, expo val, int dest = 13);
+    void Term(parserCore *that, term val, int dest = 13);
+    void Power(parserCore *that, power val, int dest = 13);
+    void Ptr(parserCore *that, ptr val, int dest = 13);
+    void Var(parserCore *that, std::wstring obj, int dest);
+    void Ptr_Addr(parserCore *that, ptr obj, int dest);
 } // namespace eval
-
 
 #endif
