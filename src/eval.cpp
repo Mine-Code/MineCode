@@ -4,12 +4,13 @@
 #include <syntaxError.h>
 #include <stmtProcessor.h>
 #include <util.h>
+#include <parserCore.h>
 
 using namespace parserTypes;
 
-void Ptr_AddrBase(parserContext &ctx, ptr obj, int dest)
+void Ptr_AddrBase(parserCore *that, ptr obj, int dest)
 {
-    eval::Expr(ctx, obj.getBase(), dest);
+    eval::Expr(that, obj.getBase(), dest);
 }
 
 term &optimize(term &val)
@@ -110,58 +111,58 @@ expr &optimize(expr &val)
     return val;
 }
 
-void eval::Expr(parserContext &ctx, expr obj, int dest)
+void eval::Expr(parserCore *that, expr obj, int dest)
 {
-    int offs = ctx.Asm->stack_offset;
+    int offs = that->Asm->stack_offset;
     std::vector<int> stackOffsets;
 
     if (obj.isSingle())
     {
-        Term(ctx, obj.parts[0], dest);
+        Term(that, obj.parts[0], dest);
     }
     else
     {
         // write all
         for (auto elem : obj.parts)
         {
-            Term(ctx, elem, dest);
-            stackOffsets.emplace_back(ctx.Asm->push(dest));
+            Term(that, elem, dest);
+            stackOffsets.emplace_back(that->Asm->push(dest));
         }
 
-        ctx.Asm->writeRegister(0, dest);
+        that->Asm->writeRegister(0, dest);
         for (auto i : stackOffsets)
         {
-            ctx.Asm->pop(i, 14);
-            ctx.stream << "add r" << dest << ", r" << dest << ", r14" << std::endl;
+            that->Asm->pop(i, 14);
+            that->stream << "add r" << dest << ", r" << dest << ", r14" << std::endl;
         }
     }
 
-    ctx.Asm->stack_offset = offs;
+    that->Asm->stack_offset = offs;
 }
-void eval::Expo(parserContext &ctx, expo obj, int dest)
+void eval::Expo(parserCore *that, expo obj, int dest)
 {
-    int offs = ctx.Asm->stack_offset;
+    int offs = that->Asm->stack_offset;
     std::vector<int> stackOffsets;
 
     if (obj.isSingle())
     {
-        Power(ctx, obj.parts[0], dest);
+        Power(that, obj.parts[0], dest);
     }
     else
     {
         // write all
         for (auto elem : obj.parts)
         {
-            Power(ctx, elem, dest);
-            stackOffsets.emplace_back(ctx.Asm->push(dest));
+            Power(that, elem, dest);
+            stackOffsets.emplace_back(that->Asm->push(dest));
         }
         // TODO: power all stackOffsets
     }
-    ctx.Asm->stack_offset = offs;
+    that->Asm->stack_offset = offs;
 }
-void eval::Term(parserContext &ctx, term obj, int dest)
+void eval::Term(parserCore *that, term obj, int dest)
 {
-    int offs = ctx.Asm->stack_offset;
+    int offs = that->Asm->stack_offset;
     struct offset
     {
         enum Type
@@ -178,16 +179,16 @@ void eval::Term(parserContext &ctx, term obj, int dest)
 
     if (obj.isSingle())
     {
-        Expo(ctx, obj.parts[0].value, dest);
+        Expo(that, obj.parts[0].value, dest);
     }
     else
     {
         // write all
         for (auto elem : obj.parts)
         {
-            Expo(ctx, elem.value, dest);
+            Expo(that, elem.value, dest);
 
-            int offset = ctx.Asm->push(dest);
+            int offset = that->Asm->push(dest);
             offset::Type type;
             switch (elem.type)
             {
@@ -201,7 +202,7 @@ void eval::Term(parserContext &ctx, term obj, int dest)
                 type = offset::Type::MOD;
                 break;
             default:
-                synErr::processError(ctx, L"Unknown expr_wrap type ", __FILE__, __func__, __LINE__);
+                synErr::processError(that, L"Unknown expr_wrap type ", __FILE__, __func__, __LINE__);
                 std::terminate(); // dead code
             }
 
@@ -212,92 +213,92 @@ void eval::Term(parserContext &ctx, term obj, int dest)
             stackOffsets.emplace_back(element);
         }
 
-        ctx.Asm->writeRegister(1, dest); // init dest
+        that->Asm->writeRegister(1, dest); // init dest
         for (auto a : stackOffsets)
         {
-            ctx.Asm->pop(a.offset, 14);
+            that->Asm->pop(a.offset, 14);
             switch (a.type)
             {
             case offset::MUL:
-                ctx.stream << "mullw r" << dest << ", r" << dest << ", r14" << std::endl;
+                that->stream << "mullw r" << dest << ", r" << dest << ", r14" << std::endl;
                 break;
             case offset::DIV:
-                ctx.stream << "divw r" << dest << ", r" << dest << ", r14" << std::endl;
+                that->stream << "divw r" << dest << ", r" << dest << ", r14" << std::endl;
                 break;
             case offset::MOD:
-                ctx.stream << "#mod r" << dest << ", r" << dest << ", r14" << std::endl;
+                that->stream << "#mod r" << dest << ", r" << dest << ", r14" << std::endl;
                 break;
             }
         }
     }
 
-    ctx.Asm->stack_offset = offs;
+    that->Asm->stack_offset = offs;
 }
-void eval::Power(parserContext &ctx, power obj, int dest)
+void eval::Power(parserCore *that, power obj, int dest)
 {
-    int offs = ctx.Asm->stack_offset;
+    int offs = that->Asm->stack_offset;
     switch (obj.type)
     {
     case power::EXPR:
-        Expr(ctx, obj.expr, dest);
+        Expr(that, obj.expr, dest);
         break;
     case power::FLT:
-        synErr::processError(ctx, L"Float isn't supported...", __FILE__, __func__, __LINE__);
+        synErr::processError(that, L"Float isn't supported...", __FILE__, __func__, __LINE__);
         break;
     case power::FUNCCALL:
-        stmtProcessor::executeFunction(ctx, *obj.func);
-        ctx.Asm->moveResister(3, dest);
+        stmtProcessor::executeFunction(that, *obj.func);
+        that->Asm->moveResister(3, dest);
         break;
     case power::IMM:
-        ctx.Asm->writeRegister(obj.imm, dest);
+        that->Asm->writeRegister(obj.imm, dest);
         break;
     case power::PTR:
-        Ptr(ctx, obj.Pointer, dest);
+        Ptr(that, obj.Pointer, dest);
         break;
     case power::VAR:
-        Var(ctx, obj.var, dest);
+        Var(that, obj.var, dest);
         break;
     default:
-        synErr::processError(ctx,
+        synErr::processError(that,
                              L"unknown type error [" + std::to_wstring(obj.type) + L"]", __FILE__, __func__, __LINE__);
         break;
     }
-    ctx.Asm->stack_offset = offs;
+    that->Asm->stack_offset = offs;
 }
-void eval::Ptr(parserContext &ctx, ptr obj, int dest)
+void eval::Ptr(parserCore *that, ptr obj, int dest)
 {
-    int offs = ctx.Asm->stack_offset;
-    Ptr_AddrBase(ctx, obj, dest);
-    ctx.Asm->peek(0, dest, dest);
-    ctx.Asm->stack_offset = offs;
+    int offs = that->Asm->stack_offset;
+    Ptr_AddrBase(that, obj, dest);
+    that->Asm->peek(0, dest, dest);
+    that->Asm->stack_offset = offs;
 }
-void eval::Ptr_Addr(parserContext &ctx, ptr obj, int dest)
+void eval::Ptr_Addr(parserCore *that, ptr obj, int dest)
 {
-    Ptr_AddrBase(ctx, obj, dest);
+    Ptr_AddrBase(that, obj, dest);
 }
-void eval::Var(parserContext &ctx, std::wstring obj, int dest)
+void eval::Var(parserCore *that, std::wstring obj, int dest)
 {
     if (obj[0] == '\"')
     {
-        ctx.Asm->setString(obj, dest);
+        that->Asm->setString(obj, dest);
     }
     else if (obj == L"false")
     {
-        ctx.Asm->writeRegister(0, dest);
+        that->Asm->writeRegister(0, dest);
     }
     else if (obj == L"true")
     {
-        ctx.Asm->writeRegister(1, dest);
+        that->Asm->writeRegister(1, dest);
     }
     else
     {
-        if (ctx.variables.count(util::wstr2str(obj)) == 1)
+        if (that->variables.count(util::wstr2str(obj)) == 1)
         {
-            ctx.Asm->pop(ctx.variables[util::wstr2str(obj)].offset, dest);
+            that->Asm->pop(that->variables[util::wstr2str(obj)].offset, dest);
         }
         else
         {
-            synErr::processError(ctx, L"variable not found: " + obj, __FILE__, __func__, __LINE__);
+            synErr::processError(that, L"variable not found: " + obj, __FILE__, __func__, __LINE__);
         }
     }
 }
