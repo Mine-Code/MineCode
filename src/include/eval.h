@@ -5,8 +5,6 @@
 
 namespace parserTypes
 {
-    class parserContext;
-
     class expr;
     class expo;
     class term;

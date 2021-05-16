@@ -4,10 +4,6 @@
 
 #include <iostream>
 
-namespace parserTypes
-{
-    class parserContext;
-} // namespace parserTypes
 class parserCore;
 namespace synErr
 {

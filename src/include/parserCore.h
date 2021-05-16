@@ -20,7 +20,6 @@ namespace parserTypes
     class condAnd;
     class cond;
 
-    class parserContext;
     class ExecFunc;
 
     class value;
