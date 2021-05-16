@@ -24,7 +24,7 @@ namespace stmtProcessor
     void Func(parserCore *that);
     void Put(parserCore *that);
     void Assign(parserCore *that, parserTypes::value target, std::wstring op, struct parserTypes::expr &value);
-    void executeFunction(parserTypes::parserContext &ctx, parserTypes::ExecFunc);
+    void executeFunction(parserCore *that, parserTypes::ExecFunc);
 } // namespace stmtProcessor
 
 #endif
