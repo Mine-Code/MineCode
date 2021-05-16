@@ -20,188 +20,188 @@ class parserCore
 {
     void program()
     {
-        if (ctx.iter.peekSafe() == L"#")
+        if (iter.peekSafe() == L"#")
         {
-            ctx.stream << "# do once" << std::endl;
-            assert(ctx.iter.next() == L"#", L"mismatch preprecessor operation");
-            assert(ctx.iter.next() == L"do", L"mismatch preprecessor operation");
-            assert(ctx.iter.next() == L"once", L"mismatch preprecessor operation");
+            stream << "# do once" << std::endl;
+            assert(iter.next() == L"#", L"mismatch preprecessor operation");
+            assert(iter.next() == L"do", L"mismatch preprecessor operation");
+            assert(iter.next() == L"once", L"mismatch preprecessor operation");
             // TODO: implement do once
         }
 
-        while (ctx.iter.hasData())
+        while (iter.hasData())
         {
-            stmt(ctx);
+            stmt(;
         }
     }
     void stmt()
     {
         // stmt Switcher
-        std::wstring text = ctx.iter.peek();
+        std::wstring text = iter.peek();
         if (text == L"for")
         {
-            For(ctx);
+            For(;
             return;
         }
         if (text == L"while")
         {
-            While(ctx);
+            While(;
             return;
         }
         if (text == L"if")
         {
-            If(ctx);
+            If(;
             return;
         }
         if (text == L"mcl")
         {
-            mcl(ctx);
+            mcl(;
             return;
         }
         if (text == L"return")
         {
-            ctx.iter.next();
-            ctx.Asm->Jump(L"__ret");
+            iter.next();
+            Asm->Jump(L"__ret");
             return;
         }
         if (text == L"func")
         {
-            if (ctx.iter.peekSafe(1) == L"[")
+            if (iter.peekSafe(1) == L"[")
             {
-                stmtProcessor::executeFunction(ctx, funcCall(ctx));
+                stmtProcessor::executeFunction( funcCall();
             }
             else
             {
-                func(ctx);
+                func(;
             }
             return;
         }
 
         // skip one 'value' and read one
-        auto backup = ctx.iter.index;
-        value(ctx);
-        text = ctx.iter.peek();
-        ctx.iter.index = backup;
+        auto backup = iter.index;
+        value(;
+        text = iter.peek();
+        iter.index = backup;
         // done skip and read
         if (text == L"<<")
         {
-            put(ctx);
+            put(;
         }
         else if (text == L"(")
         {
-            stmtProcessor::executeFunction(ctx, funcCall(ctx));
+            stmtProcessor::executeFunction( funcCall();
         }
         else if (isAssignOp(text))
         {
-            assign(ctx);
+            assign(;
         }
     }
     void func()
     {
         assertChar("func");
-        std::wstring functionName = ctx.iter.next();
-        ctx.stream << "# "
-                   << "funcName:" << functionName << std::endl;
+        std::wstring functionName = iter.next();
+        stream << "# "
+               << "funcName:" << functionName << std::endl;
         assertChar("(");
 
         // read arguments
         std::vector<Arg> args;
         // args=(type,name)
 
-        if (ctx.iter.peek() != L")")
+        if (iter.peek() != L")")
         {
-            args.emplace_back(arg(ctx));
+            args.emplace_back(arg();
         }
-        while (ctx.iter.peek() != L")")
+        while (iter.peek() != L")")
         {
             assertChar(",");
-            args.emplace_back(arg(ctx));
+            args.emplace_back(arg();
         }
         // end: read arguments
         assertChar(")");
         assertChar("{");
-        stmtProcessor::Func(ctx);
+        stmtProcessor::Func(;
         assertChar("}");
     }
     void For()
     {
         assertChar("for");
-        std::wstring varname = ctx.iter.next();
+        std::wstring varname = iter.next();
         assertChar("in");
-        ctx.stream << "# for ";
-        if (ctx.iter.peek(1) == L"...")
+        stream << "# for ";
+        if (iter.peek(1) == L"...")
         {
-            ctx.stream << " range" << std::endl;
-            Range target = range(ctx);
+            stream << " range" << std::endl;
+            Range target = range(;
             assertChar("{");
-            stmtProcessor::Forr(ctx, target.first, target.second);
+            stmtProcessor::Forr( target.first, target.second);
         }
         else
         {
-            ctx.stream << " iter " << std::endl;
-            std::wstring target = ident(ctx);
+            stream << " iter " << std::endl;
+            std::wstring target = ident(;
             assertChar("{");
 
-            stmtProcessor::For(ctx, varname, target);
+            stmtProcessor::For( varname, target);
         }
         assertChar("}");
     }
     void put()
     {
-        std::string target = util::wstr2str(ident(ctx));
+        std::string target = util::wstr2str(ident();
         assertChar("<<");
         // get end
-        auto start = ctx.iter.index;
-        struct expr val = expr(ctx);
-        auto end = ctx.iter.index;
-        ctx.iter.index = start;
+        auto start = iter.index;
+        struct expr val = expr(;
+        auto end = iter.index;
+        iter.index = start;
         // get end
         std::wstring expression;
-        ctx.iter.index = 0; // enable absolute get
+        iter.index = 0; // enable absolute get
         for (size_t i = start; i < end; i++)
         {
-            expression += ctx.iter.peekSafe(i);
+            expression += iter.peekSafe(i);
         }
-        ctx.iter.index = end;
-        assert(ctx.puts.count(target) == 1, L"Puts Not found");
-        std::wstring source = util::str2wstr(ctx.puts[target]);
+        iter.index = end;
+        assert(puts.count(target) == 1, L"Puts Not found");
+        std::wstring source = util::str2wstr(puts[target]);
         source = convPut(source, expression);
-        ctx.stream << ctx.compiler->compile(source);
+        stream << compiler->compile(source);
     }
     Arg arg()
     {
         return std::make_pair(
-            ctx.iter.next(), // type
-            ctx.iter.next()  // name
+            iter.next(), // type
+            iter.next()  // name
         );
     }
     struct value value()
     {
         struct value ret;
-        wchar_t ch = ctx.iter.peek()[0];
-        if (ctx.iter.peek() == L"[")
+        wchar_t ch = iter.peek()[0];
+        if (iter.peek() == L"[")
         {
             ret.type = value::PTR;
-            ret.pointer = ptr(ctx);
+            ret.pointer = ptr(;
         }
         else if (isalpha(ch))
         {
             ret.type = value::IDENT;
-            ret.ident = ident(ctx);
+            ret.ident = ident(;
         }
         else if (ch == L'"')
         {
             ret.type = value::STR;
-            ret.str = ctx.iter.next();
+            ret.str = iter.next();
         }
         else if (isdigit(ch))
         {
             ret.type = value::IMM;
-            ret.imm = util::toInt(ctx.iter.next());
+            ret.imm = util::toInt(iter.next());
         }
         else
         {
-            syntaxError(ctx, L"is not value type ", __FILE__, __func__, __LINE__);
+            syntaxError(L"is not value type ", __FILE__, __func__, __LINE__);
             throw ""; // do not call this
         }
         return ret;
@@ -210,48 +210,48 @@ class parserCore
     {
         assertChar("[");
         struct expr *value = new struct expr;
-        *value = expr(ctx);
+        *value = expr(;
         assertChar("]");
         return parserTypes::ptr(value);
     }
     struct value editable()
     {
         struct value ret;
-        if (ctx.iter.peek() == L"[")
+        if (iter.peek() == L"[")
         {
             ret.type = value::PTR;
-            ret.pointer = ptr(ctx);
+            ret.pointer = ptr(;
         }
         else
         {
             ret.type = value::IDENT;
-            ret.ident = ident(ctx);
+            ret.ident = ident(;
         }
         return ret;
     }
     std::wstring ident()
     {
-        std::wstring text = ctx.iter.next();
+        std::wstring text = iter.next();
         // check word?
         if (!isalpha(text[0]))
         {
-            processError(ctx, L"isn't ident", __FILE__, __func__, __LINE__);
+            processError(L"isn't ident", __FILE__, __func__, __LINE__);
         }
         // read under the `.`
-        while (ctx.iter.peek() == L"." || ctx.iter.peek() == L"::")
+        while (iter.peek() == L"." || iter.peek() == L"::")
         {
-            std::wstring joint = ctx.iter.next();
-            text += joint + ctx.iter.next();
+            std::wstring joint = iter.next();
+            text += joint + iter.next();
         }
         return text;
     }
     struct value constant()
     {
         struct value ret;
-        std::wstring text = ctx.iter.next();
+        std::wstring text = iter.next();
         // check integer?
         if (!isdigit(text[0]) || text[0] != L'"')
-            processError(ctx, L"isn't constant integer", __FILE__, __func__, __LINE__);
+            processError(L"isn't constant integer", __FILE__, __func__, __LINE__);
 
         if (isdigit(text[0]))
         {
@@ -267,30 +267,30 @@ class parserCore
     }
     void assign()
     {
-        struct value target = editable(ctx);
-        std::wstring op = ctx.iter.next();
+        struct value target = editable(;
+        std::wstring op = iter.next();
         struct expr value;
         if (!(op == L"++" || op == L"--"))
         {
-            value = expr(ctx);
+            value = expr(;
         }
-        stmtProcessor::Assign(ctx, target, op, value);
+        stmtProcessor::Assign( target, op, value);
     }
     struct power power()
     {
         struct power ret;
-        if (ctx.iter.peekSafe() == L"(")
+        if (iter.peekSafe() == L"(")
         {
             ret.type = power::EXPR;
             // inner type
-            ctx.iter.next();
-            ret.expr = expr(ctx);
+            iter.next();
+            ret.expr = expr(;
             assertChar(")");
         }
-        else if (isFunccall(ctx.iter.peekSafe(), ctx.iter.peekSafe(1)))
+        else if (isFunccall(iter.peekSafe(), iter.peekSafe(1)))
         {
             ret.type = power::FUNCCALL;
-            struct ExecFunc func = funcCall(ctx);
+            struct ExecFunc func = funcCall(;
             ExecFunc *func2 = new ExecFunc;
             func2->args = func.args;
             func2->funcAddr = func.funcAddr;
@@ -298,36 +298,36 @@ class parserCore
             func2->type = func.type;
             ret.func = func2;
         }
-        else if (isInt(ctx.iter.peekSafe()))
+        else if (isInt(iter.peekSafe()))
         {
             ret.type = power::IMM;
-            ret.imm = Int(ctx);
+            ret.imm = Int(;
         }
-        else if (isSingle(ctx.iter.peek()) && ctx.iter.peek() != L"[")
+        else if (isSingle(iter.peek()) && iter.peek() != L"[")
         {
             ret.type = power::VAR;
-            ret.var = ctx.iter.next();
+            ret.var = iter.next();
         }
-        else if (ctx.iter.peek() == L"[")
+        else if (iter.peek() == L"[")
         {
             ret.type = power::PTR;
-            ret.Pointer = ptr(ctx);
+            ret.Pointer = ptr(;
         }
         else
         {
             ret.type = power::EXPR;
-            ret.expr = expr(ctx);
+            ret.expr = expr(;
         }
         return ret;
     }
     struct expo expo()
     {
         struct expo val;
-        val.parts.emplace_back(power(ctx));
-        while (ctx.iter.hasData() && ctx.iter.peek() == L"**")
+        val.parts.emplace_back(power();
+        while (iter.hasData() && iter.peek() == L"**")
         {
             assertChar("**");
-            val.parts.emplace_back(power(ctx));
+            val.parts.emplace_back(power();
         }
         return val;
     }
@@ -337,16 +337,16 @@ class parserCore
         {
             expo_wrap wrap;
             wrap.type = expo_wrap::MUL;
-            wrap.value = expo(ctx);
+            wrap.value = expo(;
             ret.parts.emplace_back(wrap);
         }
         while (
-            ctx.iter.hasData() &&
-            (ctx.iter.peek() == L"*" ||
-             ctx.iter.peek() == L"/" ||
-             ctx.iter.peek() == L"%"))
+            iter.hasData() &&
+            (iter.peek() == L"*" ||
+             iter.peek() == L"/" ||
+             iter.peek() == L"%"))
         {
-            auto text = ctx.iter.next();
+            auto text = iter.next();
             assert(
                 text == L"*" ||
                     text == L"/" ||
@@ -366,7 +366,7 @@ class parserCore
             {
                 Elem.type = expo_wrap::MOD;
             }
-            Elem.value = expo(ctx);
+            Elem.value = expo(;
             ret.parts.emplace_back(Elem);
         }
         return ret;
@@ -375,16 +375,16 @@ class parserCore
     {
         struct expr ret;
         struct term part;
-        std::wstring text = ctx.iter.peek();
+        std::wstring text = iter.peek();
 
-        part = term(ctx);
+        part = term(;
         if (text == L"+")
         {
-            ctx.iter.next(); // read
+            iter.next(); // read
         }
         else if (text == L"-")
         {
-            ctx.iter.next(); // read
+            iter.next(); // read
             struct power pow;
             pow.type = power::IMM;
             pow.imm = -1;
@@ -400,18 +400,18 @@ class parserCore
         }
         ret.parts.emplace_back(part);
         while (
-            ctx.iter.hasData() && (ctx.iter.peek() == L"+" ||
-                                   ctx.iter.peek() == L"-" ||
-                                   isBitOpFull(ctx.iter.peek())))
+            iter.hasData() && (iter.peek() == L"+" ||
+                                   iter.peek() == L"-" ||
+                                   isBitOpFull(iter.peek())))
         {
-            auto text = ctx.iter.next();
+            auto text = iter.next();
             assert(
                 text == L"+" ||
                     text == L"-" ||
                     isBitOpFull(text),
                 L"excepted '+' or '+', bitOperator");
 
-            part = term(ctx);
+            part = term(;
             if (text == L"-")
             {
                 struct power pow;
@@ -433,18 +433,18 @@ class parserCore
     }
     Range range()
     {
-        int start = Int(ctx);
+        int start = Int(;
         assertChar("...");
-        int end = Int(ctx);
+        int end = Int(;
         // convert start/end: wstr => int
         return std::make_pair(start, end);
     }
     int Int()
     {
-        std::wstring text = ctx.iter.next();
+        std::wstring text = iter.next();
         if (!isdigit(text[0]))
         {
-            syntaxError(ctx, L"is not integer", __FILE__, __func__, __LINE__);
+            syntaxError(L"is not integer", __FILE__, __func__, __LINE__);
         }
         // convert test<wstr> to value<int>
         return toInt(text);
@@ -452,37 +452,37 @@ class parserCore
     void If()
     {
         assertChar("if");
-        struct cond conditional = cond(ctx);
-        ctx.stream << "# if" << std::endl;
+        struct cond conditional = cond(;
+        stream << "# if" << std::endl;
         assertChar("{");
-        stmtProcessor::If(ctx, conditional);
+        stmtProcessor::If( conditional);
         assertChar("}");
-        ctx.stream << "# fi" << std::endl;
+        stream << "# fi" << std::endl;
     }
     struct cond cond()
     {
         struct cond ret;
         std::wstring text;
-        ret.conds.emplace_back(condAnd(ctx));
+        ret.conds.emplace_back(condAnd();
         while (
-            ctx.iter.hasData() &&
-            (ctx.iter.peek() == L"||"))
+            iter.hasData() &&
+            (iter.peek() == L"||"))
         {
             assertChar("||");
-            ret.conds.emplace_back(condAnd(ctx));
+            ret.conds.emplace_back(condAnd();
         }
         return ret;
     }
     struct condAnd condAnd()
     {
         struct condAnd ret;
-        ret.conds.emplace_back(cond_inner(ctx));
+        ret.conds.emplace_back(cond_inner();
         while (
-            ctx.iter.hasData() &&
-            (ctx.iter.peek() == L"&&"))
+            iter.hasData() &&
+            (iter.peek() == L"&&"))
         {
             assertChar("&&");
-            ret.conds.emplace_back(cond_inner(ctx));
+            ret.conds.emplace_back(cond_inner();
         }
         return ret;
     }
@@ -493,15 +493,15 @@ class parserCore
 
         std::wstring maybeOp;
         {
-            auto offs = ctx.iter.index;
-            value(ctx);
-            maybeOp = ctx.iter.peekSafe();
-            ctx.iter.index = offs;
+            auto offs = iter.index;
+            value(;
+            maybeOp = iter.peekSafe();
+            iter.index = offs;
         }
         if (isCondOpFull(maybeOp))
         {
-            cond.val1 = expr(ctx);
-            std::wstring op = ctx.iter.next();
+            cond.val1 = expr(;
+            std::wstring op = iter.next();
             if (op == L"<")
             {
                 cond.op = condChild::LT;
@@ -526,58 +526,58 @@ class parserCore
             {
                 cond.op = condChild::NEQ;
             }
-            cond.val2 = expr(ctx);
+            cond.val2 = expr(;
         }
         else
         {
             cond.op = condChild::SINGLE;
-            cond.single = value(ctx);
+            cond.single = value(;
         }
         return cond;
     }
     void While()
     {
         assertChar("while");
-        struct cond conditional = cond(ctx);
-        ctx.stream << "# while {" << std::endl;
+        struct cond conditional = cond(;
+        stream << "# while {" << std::endl;
         assertChar("{");
-        stmtProcessor::While(ctx, conditional);
+        stmtProcessor::While( conditional);
         assertChar("}");
-        ctx.stream << "# }" << std::endl;
+        stream << "# }" << std::endl;
     }
     void mcl()
     {
         assertChar("mcl");
-        (*ctx.wraper) << util::wstr2str(ctx.iter.next());
+        (*wraper) << util::wstr2str(iter.next());
     }
     struct ExecFunc funcCall()
     {
         ExecFunc ret;
-        if (ctx.iter.peek() == L"func")
+        if (iter.peek() == L"func")
         {
             // address based call
             ret.type = ExecFunc::ADDRESS;
 
-            assert(ctx.iter.next() == L"func", L"excepted 'func'");
+            assert(iter.next() == L"func", L"excepted 'func'");
             assertChar("[");
-            ret.funcAddr = Int(ctx);
+            ret.funcAddr = Int(;
             assertChar("]");
         }
         else
         {
             // name based call
             ret.type = ExecFunc::Name;
-            ret.funcId = ident(ctx);
+            ret.funcId = ident(;
         }
         assertChar("(");
-        if (ctx.iter.peek() != L")")
+        if (iter.peek() != L")")
         {
-            ret.args.emplace_back(expr(ctx));
+            ret.args.emplace_back(expr();
         }
-        while (ctx.iter.peek() != L")")
+        while (iter.peek() != L")")
         {
             assertChar(",");
-            ret.args.emplace_back(expr(ctx));
+            ret.args.emplace_back(expr();
         }
         assertChar(")");
         return ret;
