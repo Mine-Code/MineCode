@@ -7,6 +7,7 @@
 #include <memory>
 #include "typedIterator.hxx"
 #include "asm.h"
+#include "types/varType.hpp"
 
 class parserWrap;
 
