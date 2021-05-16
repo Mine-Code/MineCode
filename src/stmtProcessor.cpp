@@ -14,77 +14,77 @@ using namespace parserTypes;
 void stmtProcessor::For(parserCore *that, std::wstring target, std::wstring iter)
 {
     std::wcout << "for iterator " << target << " in " << iter << std::endl;
-    while (ctx->iter.hasData())
+    while (that->iter.hasData())
     {
-        if (ctx->iter.peek() == L"}")
+        if (that->iter.peek() == L"}")
             break;
-        ctx->stmt();
+        that->stmt();
     }
 }
 
 void stmtProcessor::Forr(parserCore *that, int start, int end)
 {
-    ctx->Asm->startOfLoop(end - start, start);
-    while (ctx->iter.hasData())
+    that->Asm->startOfLoop(end - start, start);
+    while (that->iter.hasData())
     {
-        if (ctx->iter.peek() == L"}")
+        if (that->iter.peek() == L"}")
             break;
-        parserCore::stmt(ctx->;
+        that->stmt();
     }
-    ctx->Asm->endOfLoop();
+    that->Asm->endOfLoop();
 }
 
 void stmtProcessor::While(parserCore *that, cond conditional)
 {
-    int id = ctx->Asm->whileBegin();
-    while (ctx->iter.hasData())
+    int id = that->Asm->whileBegin();
+    while (that->iter.hasData())
     {
-        if (ctx->iter.peek() == L"}")
+        if (that->iter.peek() == L"}")
             break;
-        parserCore::stmt(ctx->;
+        that->stmt();
     }
-    std::wstring outerWhile = ctx->Asm->getEnd_While(id);
-    condeval::Cond(ctx->conditional, L"", outerWhile);
+    std::wstring outerWhile = that->Asm->getEnd_While(id);
+    condeval::Cond(that, conditional, L"", outerWhile);
 
-    ctx->Asm->whileEnd(id);
+    that->Asm->whileEnd(id);
 }
 
 void stmtProcessor::If(parserCore *that, struct cond conditional)
 {
-    condeval::Cond(ctx->conditional);
+    condeval::Cond(that, conditional);
 
-    while (ctx->iter.hasData())
+    while (that->iter.hasData())
     {
-        if (ctx->iter.peek() == L"}")
+        if (that->iter.peek() == L"}")
             break;
-        parserCore::stmt(ctx->;
+        that->stmt();
     }
-    ctx->Asm->endOfIf();
+    that->Asm->endOfIf();
 }
 
-void stmtProcessor::Func(parserTypes::parserContext &ctx->
+void stmtProcessor::Func(parserCore *that)
 {
-    ctx->stream << "# Inner Function\n";
-    while (ctx->iter.hasData())
+    that->stream << "# Inner Function\n";
+    while (that->iter.hasData())
     {
-        if (ctx->iter.peek() == L"}")
+        if (that->iter.peek() == L"}")
             break;
-        parserCore::stmt(ctx->;
+        that->stmt();
     }
-    ctx->stream << "# Outer Function\n";
+    that->stream << "# Outer Function\n";
 }
 
-void stmtProcessor::Put(parserTypes::parserContext &)
+void stmtProcessor::Put(parserCore *)
 {
 }
 
-void stmtProcessor::Assign(parserCore* that, value _target, std::wstring op, struct expr &val)
+void stmtProcessor::Assign(parserCore *that, value _target, std::wstring op, struct expr &val)
 {
     if (_target.type == value::IDENT)
     {
         std::string target = util::wstr2str(_target.ident);
         // check: is avail variable of target
-        if (ctx->variables.count(target) == 0)
+        if (that->variables.count(target) == 0)
         {
             // check: is [op==equal and not have element]
             if (op == L"=")
@@ -92,35 +92,35 @@ void stmtProcessor::Assign(parserCore* that, value _target, std::wstring op, str
                 // make variable
                 varType var;
 
-                ctx->Asm->stack_offset += 4;
-                var.offset = ctx->Asm->stack_size - ctx->Asm->stack_offset + 4;
+                that->Asm->stack_offset += 4;
+                var.offset = that->Asm->stack_size - that->Asm->stack_offset + 4;
 
-                ctx->variables[target] = var;
+                that->variables[target] = var;
             }
             else
             {
-                processError(ctx->_target.ident + L" is not found", __FILE__, __func__, __LINE__);
+                processError(that, _target.ident + L" is not found", __FILE__, __func__, __LINE__);
             }
         }
     }
     else if (_target.type == value::PTR)
     {
-        eval::Ptr_Addr(ctx->_target.pointer, 13);
+        eval::Ptr_Addr(that, _target.pointer, 13);
     }
     else
     {
-        processError(ctx->std::to_wstring(_target.type) + L" is not implemented...", __FILE__, __func__, __LINE__);
+        processError(that, std::to_wstring(_target.type) + L" is not implemented...", __FILE__, __func__, __LINE__);
     }
     // Load value
-    eval::Expr(ctx->val, 14);
+    eval::Expr(that, val, 14);
 
     if (op == L"++")
     {
-        ctx->Asm->add(1, 14, 14);
+        that->Asm->add(1, 14, 14);
     }
     else if (op == L"--")
     {
-        ctx->Asm->add(-1, 14, 14);
+        that->Asm->add(-1, 14, 14);
     }
     else if (op == L"=")
     {
@@ -130,88 +130,88 @@ void stmtProcessor::Assign(parserCore* that, value _target, std::wstring op, str
         op = op.substr(0, op.length() - 1);
         if (op == L"+")
         {
-            ctx->Asm->addReg(14);
+            that->Asm->addReg(14);
         }
         else if (op == L"-")
         {
-            ctx->Asm->subReg(14);
+            that->Asm->subReg(14);
         }
         else if (op == L"/")
         {
-            ctx->Asm->divReg(14);
+            that->Asm->divReg(14);
         }
         else if (op == L"*")
         {
-            ctx->Asm->mulReg(14);
+            that->Asm->mulReg(14);
         }
         else if (op == L"%")
         {
-            ctx->Asm->modReg(14);
+            that->Asm->modReg(14);
         }
         else if (op == L"<<")
         {
-            ctx->Asm->shtlReg(14);
+            that->Asm->shtlReg(14);
         }
         else if (op == L">>")
         {
-            ctx->Asm->shtrReg(14);
+            that->Asm->shtrReg(14);
         }
         else
         {
-            processError(ctx->L"Unknown operator type: " + op, __FILE__, __func__, __LINE__);
+            processError(that, L"Unknown operator type: " + op, __FILE__, __func__, __LINE__);
         }
     }
     if (_target.type == value::IDENT)
     {
         std::string target = util::wstr2str(_target.ident);
         // check: is avail variable of target
-        ctx->Asm->poke(ctx->variables[target].offset, 1, 14);
+        that->Asm->poke(that->variables[target].offset, 1, 14);
     }
     else if (_target.type == value::PTR)
     {
-        ctx->Asm->poke(0, 13, 14);
+        that->Asm->poke(0, 13, 14);
     }
     else
     {
-        processError(ctx->_target.type + L" is not implemented...", __FILE__, __func__, __LINE__);
+        processError(that, _target.type + L" is not implemented...", __FILE__, __func__, __LINE__);
     }
 }
 
-void stmtProcessor::executeFunction(parserCore* that, ExecFunc call)
+void stmtProcessor::executeFunction(parserCore *that, ExecFunc call)
 {
     //load arguments
     int n = 3;
     for (auto arg : call.args)
     {
-        eval::Expr(ctx->arg, n++);
+        eval::Expr(that, arg, n++);
     }
     //load address
     if (call.type == ExecFunc::ADDRESS)
     {
         // address based
-        ctx->Asm->writeRegister(call.funcAddr, 15);
+        that->Asm->writeRegister(call.funcAddr, 15);
     }
     else if (call.type == ExecFunc::Name)
     {
         // name based
-        if (ctx->variables.count(util::wstr2str(call.funcId)) == 1)
+        if (that->variables.count(util::wstr2str(call.funcId)) == 1)
         {
-            ctx->Asm->pop(ctx->variables[util::wstr2str(call.funcId)].offset, 15);
+            that->Asm->pop(that->variables[util::wstr2str(call.funcId)].offset, 15);
         }
-        else if (ctx->functions.count(util::wstr2str(call.funcId)) == 1)
+        else if (that->functions.count(util::wstr2str(call.funcId)) == 1)
         {
 
-            if (ctx->variables.count(util::wstr2str(call.funcId)) == 0)
+            if (that->variables.count(util::wstr2str(call.funcId)) == 0)
             {
-                processError(ctx->call.funcId + L" is not found", __FILE__, __func__, __LINE__);
+                processError(that, call.funcId + L" is not found", __FILE__, __func__, __LINE__);
             }
-            ctx->Asm->writeRegister(ctx->functions[util::wstr2str(call.funcId)].addr, 15);
+            that->Asm->writeRegister(that->functions[util::wstr2str(call.funcId)].addr, 15);
         }
         else
         {
-            processError(ctx->L"Function not found: " + call.funcId, __FILE__, __func__, __LINE__);
+            processError(that, L"Function not found: " + call.funcId, __FILE__, __func__, __LINE__);
         }
     }
-    ctx->stream << "mtctr r15\n"
-                   "bctrl\n";
+    that->stream << "mtctr r15\n"
+                    "bctrl\n";
 }
