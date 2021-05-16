@@ -2,6 +2,7 @@
 #ifndef PARSER_FUNCTION_H
 #define PARSER_FUNCTION_H
 #include <stddef.h>
+#include <vector>
 namespace parserTypes
 {
   enum funcArgType
