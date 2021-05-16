@@ -35,7 +35,7 @@ class parserCore
 public:
     using streamType = std::wstringstream;
     using iterType = iterator<std::wstring>;
-    using varsType = std::unordered_map<std::string, parserTypes::varType &>;
+    using varsType = std::unordered_map<std::string, parserTypes::varType>;
     // variables
     Assembly *Asm;
     streamType stream;
