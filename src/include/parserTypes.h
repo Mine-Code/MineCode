@@ -12,16 +12,6 @@ class parserWrap;
 
 namespace parserTypes
 {
-    struct varType
-    {
-        enum Type
-        {
-            FLOAT,
-            INT
-        };
-        Type type = INT;
-        size_t offset = 0;
-    };
     using streamType = std::wstringstream;
     using iterType = iterator<std::wstring>;
     using varsType = std::unordered_map<std::string, struct varType>;
