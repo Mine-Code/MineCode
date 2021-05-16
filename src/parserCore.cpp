@@ -66,7 +66,7 @@ void parserCore::stmt()
     {
         if (iter.peekSafe(1) == L"[")
         {
-            stmtProcessor::executeFunction(funcCall());
+            stmtProcessor::executeFunction(this, funcCall());
         }
         else
         {
@@ -87,7 +87,7 @@ void parserCore::stmt()
     }
     else if (text == L"(")
     {
-        stmtProcessor::executeFunction(funcCall());
+        stmtProcessor::executeFunction(this, funcCall());
     }
     else if (isAssignOp(text))
     {
@@ -118,7 +118,7 @@ void parserCore::func()
     // end: read arguments
     assertChar(")");
     assertChar("{");
-    stmtProcessor::Func();
+    stmtProcessor::Func(this, );
     assertChar("}");
 }
 void parserCore::For()
@@ -132,7 +132,7 @@ void parserCore::For()
         stream << " range" << std::endl;
         Range target = range();
         assertChar("{");
-        stmtProcessor::Forr(target.first, target.second);
+        stmtProcessor::Forr(this, target.first, target.second);
     }
     else
     {
@@ -140,7 +140,7 @@ void parserCore::For()
         std::wstring target = ident();
         assertChar("{");
 
-        stmtProcessor::For(varname, target);
+        stmtProcessor::For(this, varname, target);
     }
     assertChar("}");
 }
@@ -272,7 +272,7 @@ void parserCore::assign()
     {
         value = expr();
     }
-    stmtProcessor::Assign(target, op, value);
+    stmtProcessor::Assign(this, target, op, value);
 }
 struct power parserCore::power()
 {
@@ -453,7 +453,7 @@ void parserCore::If()
     struct cond conditional = cond();
     stream << "# if" << std::endl;
     assertChar("{");
-    stmtProcessor::If(conditional());
+    stmtProcessor::If(this, conditional());
     assertChar("}");
     stream << "# fi" << std::endl;
 }
@@ -539,7 +539,7 @@ void parserCore::While()
     struct cond conditional = cond();
     stream << "# while {" << std::endl;
     assertChar("{");
-    stmtProcessor::While(conditional());
+    stmtProcessor::While(this, conditional());
     assertChar("}");
     stream << "# }" << std::endl;
 }
