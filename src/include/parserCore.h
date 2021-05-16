@@ -42,7 +42,7 @@ public:
     iterType iter;
     varsType variables;
     std::unordered_map<std::string, std::string> puts;
-    std::unordered_map<std::string, parserTypes::function &> functions;
+    std::unordered_map<std::string, parserTypes::function> functions;
     parserWrap *wraper;
 
     parserWrap *compiler;                             // used for compile
