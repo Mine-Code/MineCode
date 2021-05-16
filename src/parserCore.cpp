@@ -118,7 +118,7 @@ void parserCore::func()
     // end: read arguments
     assertChar(")");
     assertChar("{");
-    stmtProcessor::Func(this, );
+    stmtProcessor::Func(this);
     assertChar("}");
 }
 void parserCore::For()
