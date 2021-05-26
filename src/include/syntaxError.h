@@ -4,24 +4,20 @@
 
 #include <iostream>
 
-namespace parserTypes
-{
-    class parserContext;
-} // namespace parserTypes
-
+class parserCore;
 namespace synErr
 {
-    enum errorType{
+    enum errorType
+    {
         SYNTAX,
         TOKENIZE,
         PROCESS
     };
-    void ReportError(parserTypes::parserContext&,errorType,std::wstring,const char*,const char*,int);
+    void ReportError(parserCore *, errorType, std::wstring, const char *, const char *, int);
 
-    void   syntaxError(parserTypes::parserContext&,std::wstring,const char*,const char*,int);
-    void tokenizeError(parserTypes::parserContext&,std::wstring,const char*,const char*,int);
-    void  processError(parserTypes::parserContext&,std::wstring,const char*,const char*,int);
+    void syntaxError(parserCore *, std::wstring, const char *, const char *, int);
+    void tokenizeError(parserCore *, std::wstring, const char *, const char *, int);
+    void processError(parserCore *, std::wstring, const char *, const char *, int);
 } // namespace synErr
-
 
 #endif

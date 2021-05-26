@@ -7,16 +7,20 @@
 #include <vector>
 #include <typedIterator.hxx>
 #include <parserTypes.h>
-
-class parserWrap{
+class parserCore;
+class parserWrap
+{
 private:
     std::wstring string;
     std::vector<std::wstring> tokens;
 
     void error_program(iterator<wchar_t> chiter);
+
 public:
-    parserTypes::parserContext ctx;
-    
+    parserWrap();
+    //
+    parserCore &ctx;
+
     void tokenize();
     std::wstring compile();
     std::wstring compile_expr();
