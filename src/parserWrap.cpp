@@ -6,6 +6,11 @@
 #include <parserTypes.h>
 #include <iomanip>
 
+parserWrap::parserWrap()
+    : ctx(*(new parserCore))
+{
+}
+
 void parserWrap::debug()
 {
     std::wcout << "Debug" << std::endl;
@@ -291,7 +296,7 @@ void parserWrap::tokenize()
 std::wstring parserWrap::compile()
 {
     ctx.wraper = this;
-    parserCore::program(ctx);
+    ctx.program();
     std::wstring compiled = ctx.Asm->ss.str();
     ctx.stream.str(L"");
     ctx.stream.clear(std::stringstream::goodbit);
@@ -301,7 +306,7 @@ std::wstring parserWrap::compile()
 std::wstring parserWrap::compile_expr()
 {
     ctx.wraper = this;
-    parserCore::expr(ctx);
+    ctx.expr();
     std::wstring compiled = ctx.Asm->ss.str();
     ctx.stream.str(L"");
     ctx.stream.clear(std::stringstream::goodbit);
@@ -317,7 +322,7 @@ std::wstring parserWrap::compile_full(std::wstring source)
     ctx.Asm->startOfFunction();
     int r14 = ctx.Asm->push(14);
     int r15 = ctx.Asm->push(15);
-    parserCore::program(ctx);
+    ctx.program();
     ctx.stream << "__ret:\n";
 
     ctx.Asm->pop(r14, 14);
