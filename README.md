@@ -4,6 +4,12 @@
 [日本語](https://github.com/yukikamome316/MineCode/blob/main/docs/README-ja.md) ・ [English](https://github.com/yukikamome316/MineCode/blob/main/README.md)
 
 [MineCode](https://github.com/yukikamome316/MineCode/) is a programming language which allows you to make cheat codes easier, faster and emmits PowerPC assembles or something else.
+
+## Requirements
+- [Meson Build System](https://mesonbuild.com/)
+- [stringUtility](https://github.com/syoch/stringUtility/)
+- [Assembler-ppc](https://github.com/syoch/Assembler-ppc)
+
 ## Sample Code
 ~~~
 mcl minecraft
@@ -15,6 +21,16 @@ for player in ServerPlayer.List {
 ptr = [[0x1E4A1220] + 0x12] + 0x144
 [ptr] = 1
 ~~~
+
+## How To Build?
+Run these commands in your shell
+```
+mkdir builddir
+cd builddir
+meson .. .
+ninja
+```
+
 ## Feedback
 - Request a new feature
 - File an issue
