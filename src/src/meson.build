@@ -7,10 +7,10 @@ sources = [
   'src/mcl.cpp', 
   'src/myassert.cpp', 
   'src/optimizer.cpp', 
-  'src/parserCore.cpp', 
   'src/parserTypes.cpp', 
   'src/parserWrap.cpp', 
   'src/stmtProcessor.cpp', 
   'src/syntaxError.cpp', 
   'src/util.cpp'
 ]
+subdir('parser')
