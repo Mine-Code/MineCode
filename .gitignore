@@ -6,6 +6,10 @@
 !.vscode/settings.json
 !.vscode/workspace.code-workspace
 
+# Meson / Ninja
+builddir
+!builddir/.gitkeep
+
 # binary
 MineCode
 
