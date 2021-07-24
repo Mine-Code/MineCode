@@ -2,7 +2,9 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "python3 autotool/auto/autoc.py \"cmake -DCMAKE_BUILD_TYPE=Debug .;make; ./MineCode demo/test\"",
+                // "cmd": "python3 autotool/auto/autoc.py \"make; ./MineCode -c demo/test\"",
+                // "cmd": "meson .. .",
+                "cmd": "ninja",
                 "isAsync": true,
                 "silent": true
             }
