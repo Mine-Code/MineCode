@@ -1,12 +1,3 @@
-[submodule "autotool"]
-	path = autotool
-	url = https://github.com/syoch/autotool
 [submodule "lib/json"]
 	path = lib/json
 	url = https://github.com/nlohmann/json
-[submodule "lib/Assembler"]
-	path = lib/Assembler
-	url = https://github.com/syoch/Assembler-ppc
-[submodule "lib/strutil"]
-	path = lib/strutil
-	url = https://github.com/syoch/stringUtility
