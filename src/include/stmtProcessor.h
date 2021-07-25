@@ -22,7 +22,7 @@ void While(parserCore *that, parserTypes::cond conditional);
 void If(parserCore *that, struct parserTypes::cond conditional);
 void Func(parserCore *that);
 void Put(parserCore *that);
-void Assign(parserCore *that, parserTypes::value::BaseValue target,
+void Assign(parserCore *that, parserTypes::value::BaseValue &target,
             std::wstring op, struct parserTypes::expr &value);
 void executeFunction(parserCore *that, parserTypes::ExecFunc);
 }  // namespace stmtProcessor
