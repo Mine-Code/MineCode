@@ -12,7 +12,7 @@ class Pointer : public BasePrimary {
   ptr pointer;
 
   ~Pointer() override;
-  void eval(parserCore&) override;
+  void eval(parserCore& ctx, int dest) override;
 };
 }  // namespace primary
 }  // namespace parserTypes

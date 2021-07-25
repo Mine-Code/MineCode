@@ -10,7 +10,7 @@ class BasePrimary {
   BasePrimary();
   virtual ~BasePrimary();
 
-  virtual void eval(parserCore&) = 0;
+  virtual void eval(parserCore& ctx, int dest) = 0;
 };
 }  // namespace primary
 }  // namespace parserTypes
