@@ -1,6 +1,8 @@
 #pragma once
 #include <parserCore.h>
 
+#include <expr/ptr.hpp>
+
 #include "value.hpp"
 namespace parserTypes {
 namespace value {
