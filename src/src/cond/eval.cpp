@@ -6,9 +6,11 @@
 #include <syntaxError.h>
 #include <util.h>
 
+#include <value/all.hpp>
+
 using namespace parserTypes;
 
-void condeval::Cond(parserCore *that, cond cond) {
+void condeval::Cond(parserCore* that, cond cond) {
   std::wstring footer = std::to_wstring(that->Asm->make_if_ctr++);
   std::wstring label = L"if_" + footer;
   std::wstring endLabel = L"endif_" + footer;
@@ -18,7 +20,7 @@ void condeval::Cond(parserCore *that, cond cond) {
   that->Asm->Jump(endLabel);
   that->Asm->makeLabel(label);
 }
-void condeval::Cond(parserCore *that, cond cond, std::wstring trueLabel,
+void condeval::Cond(parserCore* that, cond cond, std::wstring trueLabel,
                     std::wstring falseLabel) {
   if (trueLabel == L"" && falseLabel != L"") {
     Cond(that, util::condAnd2cond(util::invertConditional(cond)), falseLabel,
@@ -32,7 +34,7 @@ void condeval::Cond(parserCore *that, cond cond, std::wstring trueLabel,
     that->Asm->Jump(falseLabel);
   }
 }
-void condeval::CondAnd(parserCore *that, condAnd cond, std::wstring target) {
+void condeval::CondAnd(parserCore* that, condAnd cond, std::wstring target) {
   if (cond.conds.size() == 1) {
     CondChild(that, cond.conds[0], target);
   } else {
@@ -44,42 +46,37 @@ void condeval::CondAnd(parserCore *that, condAnd cond, std::wstring target) {
     that->Asm->makeLabel(elseLabel);
   }
 }
-void condeval::CondChild(parserCore *that, condChild cond,
+void condeval::CondChild(parserCore* that, condChild cond,
                          std::wstring target) {
+  using namespace parserTypes::value;
   if (cond.op == condChild::SINGLE || cond.op == condChild::SINGLE_INV) {
     varType var;
     unsigned int compareTarget = 1;
     if (cond.op == condChild::SINGLE_INV) {
       compareTarget = 0;
     }
-
-    switch (cond.single.type) {
-      case value::IDENT:
-        var = that->variables[util::wstr2str(cond.single.ident)];
-        if (var.type == varType::INT) {
-          that->Asm->pop(var.offset);
-          that->Asm->compareImm(13, compareTarget);
-          that->Asm->condJump(Assembly::EQU, 0, target);
-        } else {
-          synErr::processError(
-              that, L"condition variable is must be integer. but this is float",
-              __FILE__, __func__, __LINE__);
-        }
-        break;
-      case value::IMM:
-        if (cond.single.imm == compareTarget) {
-          that->stream << "b " << target << "\n";
-        }
-        break;
-      case value::PTR:
-        eval::Ptr(that, cond.single.pointer);
+    if (Ident* ident = dynamic_cast<Ident*>(cond.single)) {
+      var = that->variables[util::wstr2str(ident->ident)];
+      if (var.type == varType::INT) {
+        that->Asm->pop(var.offset);
         that->Asm->compareImm(13, compareTarget);
-        break;
-      case value::STR:
+        that->Asm->condJump(Assembly::EQU, 0, target);
+      } else {
         synErr::processError(
-            that, L"condition value is must be integer, identity or pointer",
+            that, L"condition variable is must be integer. but this is float",
             __FILE__, __func__, __LINE__);
-        break;
+      }
+    } else if (Immutable* imm = dynamic_cast<Immutable*>(cond.single)) {
+      if (imm->imm == compareTarget) {
+        that->stream << "b " << target << "\n";
+      }
+    } else if (Pointer* ptr = dynamic_cast<Pointer*>(cond.single)) {
+      eval::Ptr(that, ptr->pointer);
+      that->Asm->compareImm(13, compareTarget);
+    } else if (Str* ident = dynamic_cast<Str*>(cond.single)) {
+      synErr::processError(
+          that, L"condition value is must be integer, identity or pointer",
+          __FILE__, __func__, __LINE__);
     }
   } else if (cond.op == condChild::COND) {
     Cond(that, cond.child, target, L"");
