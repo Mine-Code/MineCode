@@ -4,10 +4,10 @@
 #include "value.hpp"
 namespace parserTypes {
 namespace value {
-struct Pointer : BaseValue {
+struct Ident : BaseValue {
   std::wstring ident;
 
-  ~Pointer();
+  ~Ident();
   void eval(parserCore& ctx, int dest) override;
 };
 }  // namespace value
