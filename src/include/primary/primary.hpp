@@ -5,10 +5,12 @@ class parserCore;
 namespace parserTypes {
 namespace primary {
 
-struct BasePrimary {
+class BasePrimary {
+ public:
   BasePrimary();
   virtual ~BasePrimary();
-  virtual void eval(parserCore&);
+
+  virtual void eval(parserCore&) = 0;
 };
 }  // namespace primary
 }  // namespace parserTypes
