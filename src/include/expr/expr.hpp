@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 
+#include "expo.hpp"
 #include "ptr.hpp"
 #include "term.hpp"
 namespace parserTypes {
@@ -21,10 +22,6 @@ struct value {
 
 struct expr {
   std::vector<struct term> parts;
-  bool isSingle();
-};
-struct expo {
-  std::vector<struct power> parts;
   bool isSingle();
 };
 struct expo_wrap {
