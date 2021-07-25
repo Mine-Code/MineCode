@@ -1,0 +1,5 @@
+sources += 'src/value/value.cpp'
+sources += 'src/value/pointer.cpp'
+sources += 'src/value/ident.cpp'
+sources += 'src/value/str.cpp'
+sources += 'src/value/immutable.cpp'
