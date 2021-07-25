@@ -2,5 +2,5 @@
 
 #include <primary/inner.hpp>
 void parserTypes::primary::Inner::eval(parserCore& ctx, int dest) {
-  ::eval::Expr(&ctx, this->inner, 13);
+  ::eval::Expr(&ctx, this->inner, dest);
 }
