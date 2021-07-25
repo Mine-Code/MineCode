@@ -8,6 +8,7 @@ namespace parserTypes {
 namespace primary {
 
 struct Inner : BasePrimary {
+  // TODO: restore name inner -> expr
   expr inner;
 };
 }  // namespace primary
