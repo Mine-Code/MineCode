@@ -144,7 +144,7 @@ parserCore::Arg parserCore::arg() {
   );
 }
 void parserCore::assign() {
-  struct value target = editable();
+  auto target = new value::BaseValue();
   std::wstring op = iter.next();
   struct expr value;
   if (!(op == L"++" || op == L"--")) {

@@ -23,12 +23,15 @@ class cond;
 
 class ExecFunc;
 
-class value;
 class ptr;
 
 class expo;
 class term;
 class expr;
+
+namespace value {
+class BaseValue;
+}
 }  // namespace parserTypes
 
 class parserCore {
@@ -60,9 +63,9 @@ class parserCore {
   Arg arg();
   struct parserTypes::ptr ptr();
 
-  struct parserTypes::value editable();
-  struct parserTypes::value constant();
-  struct parserTypes::value value();
+  parserTypes::value::BaseValue &editable();
+  parserTypes::value::BaseValue &constant();
+  parserTypes::value::BaseValue &value();
 
   struct parserTypes::primary::BasePrimary &power();
   struct parserTypes::expo expo();
