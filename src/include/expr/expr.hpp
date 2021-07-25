@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "expo.hpp"
+#include "expo_wrap.hpp"
 #include "ptr.hpp"
 #include "term.hpp"
 namespace parserTypes {
@@ -23,12 +24,6 @@ struct value {
 struct expr {
   std::vector<struct term> parts;
   bool isSingle();
-};
-struct expo_wrap {
-  enum Type { MUL, DIV, MOD };
-
-  Type type;
-  struct expo value;
 };
 struct power {
   enum Type { IMM, FLT, EXPR, FUNCCALL, VAR, PTR };
