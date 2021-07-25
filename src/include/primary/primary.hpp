@@ -7,7 +7,8 @@ namespace primary {
 
 struct BasePrimary {
   BasePrimary();
-  void eval(parserCore&) = delete;
+  virtual ~BasePrimary();
+  virtual void eval(parserCore&);
 };
 }  // namespace primary
 }  // namespace parserTypes
