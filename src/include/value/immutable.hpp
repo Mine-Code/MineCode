@@ -4,10 +4,10 @@
 #include "value.hpp"
 namespace parserTypes {
 namespace value {
-struct Pointer : BaseValue {
+struct Immutable : BaseValue {
   uint32_t imm;
 
-  ~Pointer();
+  ~Immutable();
   void eval(parserCore& ctx, int dest) override;
 };
 }  // namespace value
