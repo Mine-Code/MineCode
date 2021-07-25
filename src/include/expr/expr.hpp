@@ -8,27 +8,9 @@
 
 #include "expo.hpp"
 #include "expo_wrap.hpp"
+#include "expr.hpp"
+#include "power.hpp"
 #include "ptr.hpp"
 #include "term.hpp"
 #include "value.hpp"
-namespace parserTypes {
-struct expr {
-  std::vector<struct term> parts;
-  bool isSingle();
-};
-struct power {
-  enum Type { IMM, FLT, EXPR, FUNCCALL, VAR, PTR };
-
-  power();
-
-  Type type;
-
-  int imm;
-  float flt;
-  struct expr expr;
-  struct ExecFunc *func;
-  std::wstring var;
-  ptr Pointer;
-};
-}  // namespace parserTypes
 #endif
