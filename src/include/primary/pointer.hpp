@@ -7,8 +7,11 @@
 namespace parserTypes {
 namespace primary {
 
-struct Pointer : BasePrimary {
+class Pointer : BasePrimary {
+ public:
   ptr pointer;
+
+  void eval(parserCore&) override;
 };
 }  // namespace primary
 }  // namespace parserTypes

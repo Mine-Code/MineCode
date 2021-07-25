@@ -5,9 +5,12 @@
 namespace parserTypes {
 namespace primary {
 
-struct Immutable : BasePrimary {
+class Immutable : BasePrimary {
+ public:
   Immutable(int val);
   int value;
+
+  void eval(parserCore&) override;
 };
 }  // namespace primary
 }  // namespace parserTypes
