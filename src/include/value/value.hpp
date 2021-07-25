@@ -1,8 +1,7 @@
 #pragma once
 
+#include <expr/ptr.hpp>
 #include <string>
-
-#include "ptr.hpp"
 namespace parserTypes {
 struct value {
   enum Type { PTR, IDENT, STR, IMM };
