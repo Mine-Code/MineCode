@@ -84,8 +84,7 @@ void stmtProcessor::Assign(parserCore *that, value::BaseValue &_target,
                      __func__, __LINE__);
       }
     }
-  }
-  if (Pointer *pointer = dynamic_cast<Pointer *>(&_target)) {
+  } else if (Pointer *pointer = dynamic_cast<Pointer *>(&_target)) {
     eval::Ptr_Addr(that, pointer->pointer, 13);
   } else {
     processError(
@@ -128,7 +127,7 @@ void stmtProcessor::Assign(parserCore *that, value::BaseValue &_target,
     std::string target = util::wstr2str(ident->ident);
     // check: is avail variable of target
     that->Asm->poke(that->variables[target].offset, 1, 14);
-  } else if (Pointer *pointer = dynamic_cast<Pointer *>(&_target)) {
+  } else if (dynamic_cast<Pointer *>(&_target)) {
     that->Asm->poke(0, 13, 14);
   } else {
     processError(
