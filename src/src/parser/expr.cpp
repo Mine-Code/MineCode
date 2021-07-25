@@ -5,31 +5,33 @@
 #include <util.h>
 
 #include <primary/all.hpp>
-
+#include <value/all.hpp>
 using namespace synErr;
 using namespace parserTypes;
 using namespace util;
 
-struct value parserCore::value() {
-  struct value ret;
+parserTypes::value::BaseValue& parserCore::value() {
   wchar_t ch = iter.peek()[0];
   if (iter.peek() == L"[") {
-    ret.type = value::PTR;
-    ret.pointer = ptr();
+    auto ret = new parserTypes::value::Pointer;
+    ret->pointer = ptr();
+    return *ret;
   } else if (isalpha(ch)) {
-    ret.type = value::IDENT;
-    ret.ident = ident();
+    auto ret = new parserTypes::value::Ident;
+    ret->ident = ident();
+    return *ret;
   } else if (ch == L'"') {
-    ret.type = value::STR;
-    ret.str = iter.next();
+    auto ret = new parserTypes::value::Str;
+    ret->str = iter.next();
+    return *ret;
   } else if (isdigit(ch)) {
-    ret.type = value::IMM;
-    ret.imm = util::toInt(iter.next());
+    auto ret = new parserTypes::value::Immutable;
+    ret->imm = util::toInt(iter.next());
+    return *ret;
   } else {
     syntaxError(this, L"is not value type ", __FILE__, __func__, __LINE__);
     throw "";  // do not call this
   }
-  return ret;
 }
 struct ptr parserCore::ptr() {
   assertChar("[");
@@ -38,16 +40,16 @@ struct ptr parserCore::ptr() {
   assertChar("]");
   return parserTypes::ptr(value);
 }
-struct value parserCore::editable() {
-  struct value ret;
+parserTypes::value::BaseValue& parserCore::editable() {
   if (iter.peek() == L"[") {
-    ret.type = value::PTR;
-    ret.pointer = ptr();
+    auto ret = new parserTypes::value::Pointer;
+    ret->pointer = ptr();
+    return *ret;
   } else {
-    ret.type = value::IDENT;
-    ret.ident = ident();
+    auto ret = new parserTypes::value::Ident;
+    ret->ident = ident();
+    return *ret;
   }
-  return ret;
 }
 std::wstring parserCore::ident() {
   std::wstring text = iter.next();
@@ -62,21 +64,23 @@ std::wstring parserCore::ident() {
   }
   return text;
 }
-struct value parserCore::constant() {
-  struct value ret;
+parserTypes::value::BaseValue& parserCore::constant() {
   std::wstring text = iter.next();
   // check integer?
   if (!isdigit(text[0]) || text[0] != L'"')
     processError(this, L"isn't constant integer", __FILE__, __func__, __LINE__);
 
   if (isdigit(text[0])) {
-    ret.type = value::IMM;
-    ret.imm = util::toInt(text);
+    auto ret = new parserTypes::value::Immutable;
+    ret->imm = util::toInt(text);
+    return *ret;
   } else if (text[0] == '"') {
-    ret.type = value::STR;
-    ret.str = text;
+    auto ret = new parserTypes::value::Str;
+    ret->str = text;
+    return *ret;
+  } else {
+    processError(this, L"unknown error", __FILE__, __func_get, __LINE__);
   }
-  return ret;
 }
 primary::BasePrimary& parserCore::power() {
   if (iter.peekSafe() == L"(") {
