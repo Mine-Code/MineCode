@@ -6,6 +6,7 @@ namespace parserTypes {
 namespace primary {
 
 struct Immutable : BasePrimary {
+  Immutable(int val);
   int value;
 };
 }  // namespace primary
