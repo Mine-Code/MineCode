@@ -63,9 +63,9 @@ class parserCore {
   Arg arg();
   struct parserTypes::ptr ptr();
 
-  parserTypes::value::BaseValue &editable();
-  parserTypes::value::BaseValue &constant();
-  parserTypes::value::BaseValue &value();
+  parserTypes::primary::BasePrimary &editable();
+  parserTypes::primary::BasePrimary &constant();
+  parserTypes::primary::BasePrimary &value();
 
   struct parserTypes::primary::BasePrimary &power();
   struct parserTypes::expo expo();

@@ -4,7 +4,7 @@
 #include <inttypes.h>
 
 #include <expr/expr_t.hpp>
-#include <value/value.hpp>
+#include <primary/primary.hpp>
 #include <vector>
 
 #include "or.hpp"
@@ -25,7 +25,7 @@ struct condChild {
   };
 
   struct cond child;
-  value::BaseValue *single;
+  primary::BasePrimary *single;
 
   expr val1;
   Type op;

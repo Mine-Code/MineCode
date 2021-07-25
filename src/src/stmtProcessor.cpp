@@ -7,7 +7,7 @@
 #include <syntaxError.h>
 #include <util.h>
 
-#include <value/all.hpp>
+#include <primary/all.hpp>
 
 using namespace synErr;
 using namespace parserTypes;
@@ -63,11 +63,11 @@ void stmtProcessor::Func(parserCore *that) {
 
 void stmtProcessor::Put(parserCore *) {}
 
-void stmtProcessor::Assign(parserCore *that, value::BaseValue &_target,
+void stmtProcessor::Assign(parserCore *that, primary::BasePrimary &_target,
                            std::wstring op, struct expr &val) {
-  using namespace parserTypes::value;
-  if (Ident *ident = dynamic_cast<Ident *>(&_target)) {
-    std::string target = util::wstr2str(ident->ident);
+  using namespace parserTypes::primary;
+  if (Variable *ident = dynamic_cast<Variable *>(&_target)) {
+    std::string target = util::wstr2str(ident->name);
     // check: is avail variable of target
     if (that->variables.count(target) == 0) {
       // check: is [op==equal and not have element]
@@ -80,8 +80,8 @@ void stmtProcessor::Assign(parserCore *that, value::BaseValue &_target,
 
         that->variables[target] = var;
       } else {
-        processError(that, ident->ident + L" is not defined", __FILE__,
-                     __func__, __LINE__);
+        processError(that, ident->name + L" is not defined", __FILE__, __func__,
+                     __LINE__);
       }
     }
   } else if (Pointer *pointer = dynamic_cast<Pointer *>(&_target)) {
@@ -123,8 +123,8 @@ void stmtProcessor::Assign(parserCore *that, value::BaseValue &_target,
                    __LINE__);
     }
   }
-  if (Ident *ident = dynamic_cast<Ident *>(&_target)) {
-    std::string target = util::wstr2str(ident->ident);
+  if (Variable *ident = dynamic_cast<Variable *>(&_target)) {
+    std::string target = util::wstr2str(ident->name);
     // check: is avail variable of target
     that->Asm->poke(that->variables[target].offset, 1, 14);
   } else if (dynamic_cast<Pointer *>(&_target)) {
