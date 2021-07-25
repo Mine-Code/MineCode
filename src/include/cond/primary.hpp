@@ -25,7 +25,7 @@ struct condChild {
   };
 
   struct cond child;
-  struct value single;
+  value::BaseValue *single;
 
   expr val1;
   Type op;
