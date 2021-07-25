@@ -7,7 +7,7 @@
 namespace parserTypes {
 namespace primary {
 
-class Pointer : BasePrimary {
+class Pointer : public BasePrimary {
  public:
   ptr pointer;
 
