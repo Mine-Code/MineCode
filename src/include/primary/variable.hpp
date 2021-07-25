@@ -8,7 +8,7 @@ namespace parserTypes {
 namespace primary {
 
 struct Variable : BasePrimary {
-  std::wstring variable_name;
+  std::wstring name;
 };
 }  // namespace primary
 }  // namespace parserTypes
