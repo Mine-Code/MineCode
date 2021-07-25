@@ -2,6 +2,7 @@
 #ifndef PARSER_CORE_H
 #define PARSER_CORE_H
 
+#include <primary/primary.hpp>
 #include <sstream>
 #include <string>
 #include <typedIterator.hxx>
@@ -25,7 +26,6 @@ class ExecFunc;
 class value;
 class ptr;
 
-class primary;
 class expo;
 class term;
 class expr;
@@ -64,7 +64,7 @@ class parserCore {
   struct parserTypes::value constant();
   struct parserTypes::value value();
 
-  struct parserTypes::primary power();
+  struct parserTypes::primary::BasePrimary power();
   struct parserTypes::expo expo();
   struct parserTypes::term term();
   struct parserTypes::expr expr();
