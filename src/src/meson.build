@@ -1,7 +1,5 @@
 sources = [
   'src/asm.cpp', 
-  'src/condeval.cpp', 
-  'src/condutil.cpp', 
   'src/eval.cpp', 
   'src/main.cpp', 
   'src/mcl.cpp', 
@@ -14,3 +12,4 @@ sources = [
   'src/util.cpp'
 ]
 subdir('parser')
+subdir('cond')
