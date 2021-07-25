@@ -6,7 +6,7 @@
 #include <syntaxError.h>
 #include <util.h>
 
-#include <value/all.hpp>
+#include <primary/all.hpp>
 
 using namespace parserTypes;
 
@@ -48,15 +48,15 @@ void condeval::CondAnd(parserCore* that, condAnd cond, std::wstring target) {
 }
 void condeval::CondChild(parserCore* that, condChild cond,
                          std::wstring target) {
-  using namespace parserTypes::value;
+  using namespace parserTypes::primary;
   if (cond.op == condChild::SINGLE || cond.op == condChild::SINGLE_INV) {
     varType var;
     unsigned int compareTarget = 1;
     if (cond.op == condChild::SINGLE_INV) {
       compareTarget = 0;
     }
-    if (Ident* ident = dynamic_cast<Ident*>(cond.single)) {
-      var = that->variables[util::wstr2str(ident->ident)];
+    if (Variable* ident = dynamic_cast<Variable*>(cond.single)) {
+      var = that->variables[util::wstr2str(ident->name)];
       if (var.type == varType::INT) {
         that->Asm->pop(var.offset);
         that->Asm->compareImm(13, compareTarget);
@@ -67,7 +67,7 @@ void condeval::CondChild(parserCore* that, condChild cond,
             __FILE__, __func__, __LINE__);
       }
     } else if (Immutable* imm = dynamic_cast<Immutable*>(cond.single)) {
-      if (imm->imm == compareTarget) {
+      if (imm->value == compareTarget) {
         that->stream << "b " << target << "\n";
       }
     } else if (Pointer* ptr = dynamic_cast<Pointer*>(cond.single)) {

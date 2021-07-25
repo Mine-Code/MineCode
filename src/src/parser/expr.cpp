@@ -10,23 +10,22 @@ using namespace synErr;
 using namespace parserTypes;
 using namespace util;
 
-parserTypes::value::BaseValue& parserCore::value() {
+parserTypes::primary::BasePrimary& parserCore::value() {
   wchar_t ch = iter.peek()[0];
   if (iter.peek() == L"[") {
-    auto ret = new parserTypes::value::Pointer;
+    auto ret = new parserTypes::primary::Pointer;
     ret->pointer = ptr();
     return *ret;
   } else if (isalpha(ch)) {
-    auto ret = new parserTypes::value::Ident;
-    ret->ident = ident();
+    auto ret = new parserTypes::primary::Variable;
+    ret->name = ident();
     return *ret;
   } else if (ch == L'"') {
-    auto ret = new parserTypes::value::Str;
+    auto ret = new parserTypes::primary::Str;
     ret->str = iter.next();
     return *ret;
   } else if (isdigit(ch)) {
-    auto ret = new parserTypes::value::Immutable;
-    ret->imm = util::toInt(iter.next());
+    auto ret = new parserTypes::primary::Immutable(util::toInt(iter.next()));
     return *ret;
   } else {
     syntaxError(this, L"is not value type ", __FILE__, __func__, __LINE__);
@@ -40,14 +39,14 @@ struct ptr parserCore::ptr() {
   assertChar("]");
   return parserTypes::ptr(value);
 }
-parserTypes::value::BaseValue& parserCore::editable() {
+parserTypes::primary::BasePrimary& parserCore::editable() {
   if (iter.peek() == L"[") {
-    auto ret = new parserTypes::value::Pointer;
+    auto ret = new parserTypes::primary::Pointer;
     ret->pointer = ptr();
     return *ret;
   } else {
-    auto ret = new parserTypes::value::Ident;
-    ret->ident = ident();
+    auto ret = new parserTypes::primary::Variable;
+    ret->name = ident();
     return *ret;
   }
 }
@@ -64,18 +63,17 @@ std::wstring parserCore::ident() {
   }
   return text;
 }
-parserTypes::value::BaseValue& parserCore::constant() {
+parserTypes::primary::BasePrimary& parserCore::constant() {
   std::wstring text = iter.next();
   // check integer?
   if (!isdigit(text[0]) || text[0] != L'"')
     processError(this, L"isn't constant integer", __FILE__, __func__, __LINE__);
 
   if (isdigit(text[0])) {
-    auto ret = new parserTypes::value::Immutable;
-    ret->imm = util::toInt(text);
+    auto ret = new parserTypes::primary::Immutable(util::toInt(text));
     return *ret;
   } else if (text[0] == '"') {
-    auto ret = new parserTypes::value::Str;
+    auto ret = new parserTypes::primary::Str();
     ret->str = text;
     return *ret;
   } else {
