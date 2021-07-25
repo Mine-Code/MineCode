@@ -10,17 +10,8 @@
 #include "expo_wrap.hpp"
 #include "ptr.hpp"
 #include "term.hpp"
+#include "value.hpp"
 namespace parserTypes {
-struct value {
-  enum Type { PTR, IDENT, STR, IMM };
-  Type type;
-
-  ptr pointer;
-  std::wstring ident;
-  std::wstring str;
-  uint32_t imm;
-};
-
 struct expr {
   std::vector<struct term> parts;
   bool isSingle();
