@@ -143,10 +143,10 @@ void stmtProcessor::executeFunction(parserCore *that, ExecFunc call) {
     that->Asm->writeRegister(call.funcAddr, 15);
   } else if (call.type == ExecFunc::Name) {
     // name based
-    if (that->variables.count(util::wstr2str(call.funcId)) == 1) {
+    if (util::in(that->variables, util::wstr2str(call.funcId))) {
       that->Asm->pop(that->variables[util::wstr2str(call.funcId)].offset, 15);
-    } else if (that->functions.count(util::wstr2str(call.funcId)) == 1) {
-      if (that->variables.count(util::wstr2str(call.funcId)) == 0) {
+    } else if (util::in(that->functions, util::wstr2str(call.funcId))) {
+      if (!util::in(that->variables, util::wstr2str(call.funcId))) {
         processError(that, call.funcId + L" is not found", __FILE__, __func__,
                      __LINE__);
       }
