@@ -6,7 +6,7 @@
 
 namespace parserTypes {
 namespace primary {
-class FuncCall : BasePrimary {
+class FuncCall : public BasePrimary {
  public:
   ExecFunc* func;
 

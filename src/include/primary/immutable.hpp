@@ -5,7 +5,7 @@
 namespace parserTypes {
 namespace primary {
 
-class Immutable : BasePrimary {
+class Immutable : public BasePrimary {
  public:
   Immutable(int val);
   int value;
