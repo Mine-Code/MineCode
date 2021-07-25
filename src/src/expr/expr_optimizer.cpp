@@ -8,15 +8,15 @@ expr &optimize(expr &val) {
   for (auto _part : val.parts) {
     auto part = optimize(_part);
     if (part.isSingle() && part.parts[0].value.isSingle() &&
-        part.parts[0].value.parts[0].type == power::IMM) {
+        part.parts[0].value.parts[0].type == primary::IMM) {
       immutable += part.parts[0].value.parts[0].imm;
     } else {
       newExpr.parts.emplace_back(part);
     }
   }
   if (immutable != 0) {
-    power value;
-    value.type = power::IMM;
+    primary value;
+    value.type = primary::IMM;
     value.imm = immutable;
 
     expo exponent;

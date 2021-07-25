@@ -76,16 +76,16 @@ struct value parserCore::constant() {
   }
   return ret;
 }
-struct power parserCore::power() {
-  struct power ret;
+struct primary parserCore::power() {
+  struct primary ret;
   if (iter.peekSafe() == L"(") {
-    ret.type = power::EXPR;
+    ret.type = primary::EXPR;
     // inner type
     iter.next();
     ret.expr = expr();
     assertChar(")");
   } else if (isFunccall(iter.peekSafe(), iter.peekSafe(1))) {
-    ret.type = power::FUNCCALL;
+    ret.type = primary::FUNCCALL;
     struct ExecFunc func = funcCall();
     ExecFunc *func2 = new ExecFunc;
     func2->args = func.args;
@@ -94,16 +94,16 @@ struct power parserCore::power() {
     func2->type = func.type;
     ret.func = func2;
   } else if (isInt(iter.peekSafe())) {
-    ret.type = power::IMM;
+    ret.type = primary::IMM;
     ret.imm = Int();
   } else if (isSingle(iter.peek()) && iter.peek() != L"[") {
-    ret.type = power::VAR;
+    ret.type = primary::VAR;
     ret.var = iter.next();
   } else if (iter.peek() == L"[") {
-    ret.type = power::PTR;
+    ret.type = primary::PTR;
     ret.Pointer = ptr();
   } else {
-    ret.type = power::EXPR;
+    ret.type = primary::EXPR;
     ret.expr = expr();
   }
   return ret;
@@ -154,8 +154,8 @@ struct expr parserCore::expr() {
     iter.next();  // read
   } else if (text == L"-") {
     iter.next();  // read
-    struct power pow;
-    pow.type = power::IMM;
+    struct primary pow;
+    pow.type = primary::IMM;
     pow.imm = -1;
 
     struct expo tmp;
@@ -176,8 +176,8 @@ struct expr parserCore::expr() {
 
     part = term();
     if (text == L"-") {
-      struct power pow;
-      pow.type = power::IMM;
+      struct primary pow;
+      pow.type = primary::IMM;
       pow.imm = -1;
 
       struct expo tmp;
