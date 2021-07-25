@@ -12,6 +12,7 @@
     },
     "files.associations": {
         "*.mc": "json",
+        "*.meson": "meson",
         "array": "cpp",
         "atomic": "cpp",
         "hash_map": "cpp",
@@ -79,7 +80,11 @@
         "regex": "cpp",
         "shared_mutex": "cpp",
         "valarray": "cpp",
-        "cassert": "cpp"
+        "cassert": "cpp",
+        "__bit_reference": "cpp",
+        "__functional_base": "cpp",
+        "__memory": "cpp",
+        "filesystem": "cpp"
     },
     "todo-tree.tree.showBadges": true,
     "todo-tree.tree.showCountsInTree": true,
