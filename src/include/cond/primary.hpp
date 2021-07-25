@@ -3,7 +3,8 @@
 
 #include <inttypes.h>
 
-#include <expr/expr.hpp>
+#include <expr/expr_t.hpp>
+#include <expr/value.hpp>
 #include <vector>
 
 #include "or.hpp"
