@@ -12,7 +12,7 @@ class Inner : public BasePrimary {
   // TODO: restore name inner -> expr
   expr inner;
 
-  void eval(parserCore&) override;
+  void eval(parserCore& ctx, int dest) override;
 };
 }  // namespace primary
 }  // namespace parserTypes

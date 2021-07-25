@@ -12,7 +12,7 @@ class Variable : public BasePrimary {
   std::wstring name;
 
   ~Variable() override;
-  void eval(parserCore&) override;
+  void eval(parserCore& ctx, int dest) override;
 };
 }  // namespace primary
 }  // namespace parserTypes

@@ -11,7 +11,7 @@ class FuncCall : public BasePrimary {
   ExecFunc* func;
   ~FuncCall() override;
 
-  void eval(parserCore&) override;
+  void eval(parserCore& ctx, int dest) override;
 };
 }  // namespace primary
 }  // namespace parserTypes
