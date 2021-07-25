@@ -13,3 +13,4 @@ sources = [
 subdir('parser')
 subdir('cond')
 subdir('expr')
+subdir('primary')
