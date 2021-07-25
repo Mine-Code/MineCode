@@ -1,5 +1,6 @@
 #include <parserTypes.h>
 
+#include <primary/immutable.hpp>
 using namespace parserTypes;
 term &optimize(term &);
 expr &optimize(expr &val) {
@@ -8,16 +9,16 @@ expr &optimize(expr &val) {
   for (auto _part : val.parts) {
     auto part = optimize(_part);
     if (part.isSingle() && part.parts[0].value.isSingle() &&
-        part.parts[0].value.parts[0].type == primary::IMM) {
-      immutable += part.parts[0].value.parts[0].imm;
+        typeid(part.parts[0].value.parts[0]) == typeid(primary::Immutable)) {
+      immutable +=
+          dynamic_cast<primary::Immutable *>(part.parts[0].value.parts[0])
+              ->value;
     } else {
       newExpr.parts.emplace_back(part);
     }
   }
   if (immutable != 0) {
-    primary value;
-    value.type = primary::IMM;
-    value.imm = immutable;
+    auto value = new primary::Immutable(immutable);
 
     expo exponent;
     exponent.parts.emplace_back(value);

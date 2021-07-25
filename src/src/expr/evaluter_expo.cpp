@@ -8,11 +8,11 @@ void eval::Expo(parserCore *that, expo obj, int dest) {
   std::vector<int> stackOffsets;
 
   if (obj.isSingle()) {
-    Power(that, obj.parts[0], dest);
+    Power(that, *obj.parts[0], dest);
   } else {
     // write all
     for (auto elem : obj.parts) {
-      Power(that, elem, dest);
+      Power(that, *elem, dest);
       stackOffsets.emplace_back(that->Asm->push(dest));
     }
     // TODO: power all stackOffsets

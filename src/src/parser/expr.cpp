@@ -115,10 +115,10 @@ primary::BasePrimary& parserCore::power() {
 }
 struct expo parserCore::expo() {
   struct expo val;
-  val.parts.emplace_back(power());
+  val.parts.emplace_back(&power());
   while (iter.hasData() && iter.peek() == L"**") {
     assertChar("**");
-    val.parts.emplace_back(power());
+    val.parts.emplace_back(&power());
   }
   return val;
 }
@@ -159,7 +159,7 @@ struct expr parserCore::expr() {
     iter.next();  // read
   } else if (text == L"-") {
     iter.next();  // read
-    primary::Immutable pow(-1);
+    auto pow = new primary::Immutable(-1);
 
     struct expo tmp;
     tmp.parts.emplace_back(pow);
@@ -179,7 +179,7 @@ struct expr parserCore::expr() {
 
     part = term();
     if (text == L"-") {
-      struct primary::Immutable pow(-1);
+      auto pow = new primary::Immutable(-1);
 
       struct expo tmp;
       tmp.parts.emplace_back(pow);
