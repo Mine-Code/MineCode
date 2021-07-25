@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "power.hpp"
+#include "primary.hpp"
 namespace parserTypes {
 struct expo {
   std::vector<struct primary> parts;
