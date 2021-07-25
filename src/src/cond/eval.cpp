@@ -73,7 +73,7 @@ void condeval::CondChild(parserCore* that, condChild cond,
     } else if (Pointer* ptr = dynamic_cast<Pointer*>(cond.single)) {
       eval::Ptr(that, ptr->pointer);
       that->Asm->compareImm(13, compareTarget);
-    } else if (Str* ident = dynamic_cast<Str*>(cond.single)) {
+    } else if (dynamic_cast<Str*>(cond.single)) {
       synErr::processError(
           that, L"condition value is must be integer, identity or pointer",
           __FILE__, __func__, __LINE__);
