@@ -6,10 +6,10 @@
 #include "expr_t.hpp"
 #include "ptr.hpp"
 namespace parserTypes {
-struct power {
+struct primary {
   enum Type { IMM, FLT, EXPR, FUNCCALL, VAR, PTR };
 
-  power();
+  primary();
 
   Type type;
 

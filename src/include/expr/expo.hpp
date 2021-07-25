@@ -5,7 +5,7 @@
 #include "power.hpp"
 namespace parserTypes {
 struct expo {
-  std::vector<struct power> parts;
+  std::vector<struct primary> parts;
   bool isSingle();
 };
 }  // namespace parserTypes

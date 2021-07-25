@@ -8,7 +8,7 @@ term &optimize(term &val) {
   term newTerm;
   // process of mul
   for (auto part : val.parts) {
-    if (part.value.isSingle() && part.value.parts[0].type == power::IMM) {
+    if (part.value.isSingle() && part.value.parts[0].type == primary::IMM) {
       auto imm = part.value.parts[0].imm;
       if (part.type == expo_wrap::MUL)
         immutable_mul *= imm;
@@ -25,8 +25,8 @@ term &optimize(term &val) {
 
   // add mul/div element
   {  // add mul
-    power powerElem;
-    powerElem.type = power::IMM;
+    primary powerElem;
+    powerElem.type = primary::IMM;
     powerElem.imm = immutable_mul;
 
     expo expoElem;
@@ -39,8 +39,8 @@ term &optimize(term &val) {
     val.parts.emplace_back(wrapElem);
   }
   {  // add div
-    power powerElem;
-    powerElem.type = power::IMM;
+    primary powerElem;
+    powerElem.type = primary::IMM;
     powerElem.imm = immutable_div;
 
     expo expoElem;
