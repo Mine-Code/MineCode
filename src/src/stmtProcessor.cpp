@@ -7,6 +7,8 @@
 #include <syntaxError.h>
 #include <util.h>
 
+#include <value/all.hpp>
+
 using namespace synErr;
 using namespace parserTypes;
 
@@ -61,10 +63,11 @@ void stmtProcessor::Func(parserCore *that) {
 
 void stmtProcessor::Put(parserCore *) {}
 
-void stmtProcessor::Assign(parserCore *that, value _target, std::wstring op,
-                           struct expr &val) {
-  if (_target.type == value::IDENT) {
-    std::string target = util::wstr2str(_target.ident);
+void stmtProcessor::Assign(parserCore *that, value::BaseValue &_target,
+                           std::wstring op, struct expr &val) {
+  using namespace parserTypes::value;
+  if (Ident *ident = dynamic_cast<Ident *>(&_target)) {
+    std::string target = util::wstr2str(ident->ident);
     // check: is avail variable of target
     if (that->variables.count(target) == 0) {
       // check: is [op==equal and not have element]
@@ -77,16 +80,18 @@ void stmtProcessor::Assign(parserCore *that, value _target, std::wstring op,
 
         that->variables[target] = var;
       } else {
-        processError(that, _target.ident + L" is not found", __FILE__, __func__,
-                     __LINE__);
+        processError(that, ident->ident + L" is not defined", __FILE__,
+                     __func__, __LINE__);
       }
     }
-  } else if (_target.type == value::PTR) {
-    eval::Ptr_Addr(that, _target.pointer, 13);
+  }
+  if (Pointer *pointer = dynamic_cast<Pointer *>(&_target)) {
+    eval::Ptr_Addr(that, pointer->pointer, 13);
   } else {
-    processError(that,
-                 std::to_wstring(_target.type) + L" is not implemented...",
-                 __FILE__, __func__, __LINE__);
+    processError(
+        that,
+        util::str2wstr(typeid(_target).name()) + L" is not implemented...",
+        __FILE__, __func__, __LINE__);
   }
   // Load value
   eval::Expr(that, val, 14);
@@ -119,15 +124,17 @@ void stmtProcessor::Assign(parserCore *that, value _target, std::wstring op,
                    __LINE__);
     }
   }
-  if (_target.type == value::IDENT) {
-    std::string target = util::wstr2str(_target.ident);
+  if (Ident *ident = dynamic_cast<Ident *>(&_target)) {
+    std::string target = util::wstr2str(ident->ident);
     // check: is avail variable of target
     that->Asm->poke(that->variables[target].offset, 1, 14);
-  } else if (_target.type == value::PTR) {
+  } else if (Pointer *pointer = dynamic_cast<Pointer *>(&_target)) {
     that->Asm->poke(0, 13, 14);
   } else {
-    processError(that, _target.type + L" is not implemented...", __FILE__,
-                 __func__, __LINE__);
+    processError(
+        that,
+        util::str2wstr(typeid(_target).name()) + L" is not implemented...",
+        __FILE__, __func__, __LINE__);
   }
 }
 
