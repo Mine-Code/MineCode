@@ -4,7 +4,8 @@
 #include "value.hpp"
 namespace parserTypes {
 namespace value {
-struct Ident : BaseValue {
+class Ident : public BaseValue {
+ public:
   std::wstring ident;
 
   ~Ident();

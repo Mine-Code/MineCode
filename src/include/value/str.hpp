@@ -4,7 +4,8 @@
 #include "value.hpp"
 namespace parserTypes {
 namespace value {
-struct Str : BaseValue {
+class Str : public BaseValue {
+ public:
   std::wstring str;
 
   ~Str();

@@ -6,7 +6,8 @@
 #include "value.hpp"
 namespace parserTypes {
 namespace value {
-struct Pointer : BaseValue {
+class Pointer : public BaseValue {
+ public:
   ptr pointer;
 
   ~Pointer();

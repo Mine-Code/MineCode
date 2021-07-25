@@ -4,7 +4,8 @@
 #include "value.hpp"
 namespace parserTypes {
 namespace value {
-struct Immutable : BaseValue {
+class Immutable : public BaseValue {
+ public:
   uint32_t imm;
 
   ~Immutable();

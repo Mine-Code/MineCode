@@ -6,6 +6,7 @@ class parserCore;
 namespace parserTypes {
 namespace value {
 class BaseValue {
+ public:
   BaseValue();
   virtual ~BaseValue();
 
