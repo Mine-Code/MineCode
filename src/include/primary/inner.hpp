@@ -8,7 +8,7 @@ namespace parserTypes {
 namespace primary {
 
 struct Inner : BasePrimary {
-  expr expr;
+  expr inner;
 };
 }  // namespace primary
 }  // namespace parserTypes
