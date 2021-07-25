@@ -7,7 +7,6 @@ namespace parserTypes {
 class expr;
 class expo;
 class term;
-class primary;
 
 class ptr;
 }  // namespace parserTypes

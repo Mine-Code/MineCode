@@ -4,7 +4,7 @@
 #include <vector>
 namespace parserTypes {
 struct expo {
-  std::vector<struct primary> parts;
+  std::vector<struct primary::BasePrimary> parts;
   bool isSingle();
 };
 }  // namespace parserTypes
