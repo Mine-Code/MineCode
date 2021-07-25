@@ -7,7 +7,7 @@
 namespace parserTypes {
 namespace primary {
 struct FuncCall : BasePrimary {
-  ExecFunc func;
+  ExecFunc* func;
 };
 }  // namespace primary
 }  // namespace parserTypes
