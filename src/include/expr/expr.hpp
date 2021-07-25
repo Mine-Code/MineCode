@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "ptr.hpp"
+#include "term.hpp"
 namespace parserTypes {
 struct value {
   enum Type { PTR, IDENT, STR, IMM };
@@ -20,10 +21,6 @@ struct value {
 
 struct expr {
   std::vector<struct term> parts;
-  bool isSingle();
-};
-struct term {
-  std::vector<struct expo_wrap> parts;
   bool isSingle();
 };
 struct expo {
