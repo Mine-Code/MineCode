@@ -1,2 +1,2 @@
-sources += 'src/parser/core.cpp'
-sources += 'src/parser/expr.cpp'
+sources += 'src/primary/base.cpp'
+sources += 'src/primary/immutable.cpp'
