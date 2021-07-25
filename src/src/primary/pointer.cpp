@@ -1,3 +1,3 @@
 #include <primary/pointer.hpp>
 parserTypes::primary::Pointer::~Pointer() {}
-void parserTypes::primary::Pointer::eval(parserCore&) {}
+void parserTypes::primary::Pointer::eval(parserCore& ctx, int dest) {}
