@@ -11,6 +11,7 @@ class Pointer : public BasePrimary {
  public:
   ptr pointer;
 
+  ~Pointer() override;
   void eval(parserCore&) override;
 };
 }  // namespace primary

@@ -10,6 +10,8 @@ namespace primary {
 class Variable : public BasePrimary {
  public:
   std::wstring name;
+
+  ~Variable() override;
   void eval(parserCore&) override;
 };
 }  // namespace primary

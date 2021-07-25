@@ -9,6 +9,7 @@ namespace primary {
 class FuncCall : public BasePrimary {
  public:
   ExecFunc* func;
+  ~FuncCall() override;
 
   void eval(parserCore&) override;
 };
