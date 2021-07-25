@@ -1,5 +1,5 @@
-#include <condeval.h>
-#include <condutil.h>
+#include <cond/eval.h>
+#include <cond/util.h>
 #include <eval.h>
 #include <parserCore.h>
 #include <parserTypes.h>
