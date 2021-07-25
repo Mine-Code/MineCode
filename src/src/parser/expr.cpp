@@ -4,6 +4,8 @@
 #include <syntaxError.h>
 #include <util.h>
 
+#include <primary/all.hpp>
+
 using namespace synErr;
 using namespace parserTypes;
 using namespace util;
@@ -31,7 +33,7 @@ struct value parserCore::value() {
 }
 struct ptr parserCore::ptr() {
   assertChar("[");
-  struct expr *value = new struct expr;
+  struct expr* value = new struct expr;
   *value = expr();
   assertChar("]");
   return parserTypes::ptr(value);
@@ -76,37 +78,40 @@ struct value parserCore::constant() {
   }
   return ret;
 }
-struct primary parserCore::power() {
-  struct primary ret;
+primary::BasePrimary& parserCore::power() {
   if (iter.peekSafe() == L"(") {
-    ret.type = primary::EXPR;
+    primary::Inner* ret = new primary::Inner;
     // inner type
     iter.next();
-    ret.expr = expr();
+    ret->inner = expr();
     assertChar(")");
+    return *ret;
   } else if (isFunccall(iter.peekSafe(), iter.peekSafe(1))) {
-    ret.type = primary::FUNCCALL;
+    primary::FuncCall* ret = new primary::FuncCall;
     struct ExecFunc func = funcCall();
-    ExecFunc *func2 = new ExecFunc;
+    ExecFunc* func2 = new ExecFunc;
     func2->args = func.args;
     func2->funcAddr = func.funcAddr;
     func2->funcId = func.funcId;
     func2->type = func.type;
-    ret.func = func2;
+    ret->func = func2;
+    return *ret;
   } else if (isInt(iter.peekSafe())) {
-    ret.type = primary::IMM;
-    ret.imm = Int();
+    primary::Immutable* ret = new primary::Immutable(Int());
+    return *ret;
   } else if (isSingle(iter.peek()) && iter.peek() != L"[") {
-    ret.type = primary::VAR;
-    ret.var = iter.next();
+    primary::Variable* ret = new primary::Variable;
+    ret->name = iter.next();
+    return *ret;
   } else if (iter.peek() == L"[") {
-    ret.type = primary::PTR;
-    ret.Pointer = ptr();
+    primary::Pointer* ret = new primary::Pointer;
+    ret->pointer = ptr();
+    return *ret;
   } else {
-    ret.type = primary::EXPR;
-    ret.expr = expr();
+    primary::Inner* ret = new primary::Inner;
+    ret->inner = expr();
+    return *ret;
   }
-  return ret;
 }
 struct expo parserCore::expo() {
   struct expo val;
@@ -154,9 +159,7 @@ struct expr parserCore::expr() {
     iter.next();  // read
   } else if (text == L"-") {
     iter.next();  // read
-    struct primary pow;
-    pow.type = primary::IMM;
-    pow.imm = -1;
+    primary::Immutable pow(-1);
 
     struct expo tmp;
     tmp.parts.emplace_back(pow);
@@ -176,9 +179,7 @@ struct expr parserCore::expr() {
 
     part = term();
     if (text == L"-") {
-      struct primary pow;
-      pow.type = primary::IMM;
-      pow.imm = -1;
+      struct primary::Immutable pow(-1);
 
       struct expo tmp;
       tmp.parts.emplace_back(pow);
