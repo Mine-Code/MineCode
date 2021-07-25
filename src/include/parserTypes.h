@@ -27,8 +27,6 @@ struct ExecFunc {
   int funcAddr;
   CallType type;
 };
-
-class value;
 }  // namespace parserTypes
 
 #endif
