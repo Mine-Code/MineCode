@@ -1,6 +1,5 @@
 sources = [
   'src/asm.cpp', 
-  'src/eval.cpp', 
   'src/main.cpp', 
   'src/mcl.cpp', 
   'src/myassert.cpp', 
@@ -13,3 +12,4 @@ sources = [
 ]
 subdir('parser')
 subdir('cond')
+subdir('expr')
