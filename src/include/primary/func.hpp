@@ -6,8 +6,11 @@
 
 namespace parserTypes {
 namespace primary {
-struct FuncCall : BasePrimary {
+class FuncCall : BasePrimary {
+ public:
   ExecFunc* func;
+
+  void eval(parserCore&) override;
 };
 }  // namespace primary
 }  // namespace parserTypes
