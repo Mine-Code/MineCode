@@ -1,7 +1,7 @@
 #include <parserTypes.h>
 
 using namespace parserTypes;
-
+term &optimize(term &);
 expr &optimize(expr &val) {
   int immutable = 0;
   expr newExpr;
