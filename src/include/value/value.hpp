@@ -1,7 +1,8 @@
 #pragma once
 
-#include <expr/ptr.hpp>
 #include <string>
+
+class parserCore;
 namespace parserTypes {
 namespace value {
 class BaseValue {
