@@ -7,7 +7,7 @@
 namespace parserTypes {
 namespace primary {
 
-class Inner : BasePrimary {
+class Inner : public BasePrimary {
  public:
   // TODO: restore name inner -> expr
   expr inner;

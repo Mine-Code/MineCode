@@ -7,7 +7,7 @@
 namespace parserTypes {
 namespace primary {
 
-class Variable : BasePrimary {
+class Variable : public BasePrimary {
  public:
   std::wstring name;
   void eval(parserCore&) override;
