@@ -1,6 +1,6 @@
 #pragma once
 
-#include <expr/ptr.hpp>
+#include <string>
 
 #include "primary.hpp"
 
@@ -8,7 +8,7 @@ namespace parserTypes {
 namespace primary {
 
 struct Variable : BasePrimary {
-  ptr pointer;
+  std::wstring name;
 };
 }  // namespace primary
 }  // namespace parserTypes
