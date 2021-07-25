@@ -6,19 +6,8 @@
 #include <memory>
 #include <vector>
 
+#include "ptr.hpp"
 namespace parserTypes {
-class expr;
-class ptr {
-  std::shared_ptr<expr> base;
-
- public:
-  ptr(expr &_base);
-  ptr(expr *_base);
-  ptr();
-
-  expr getBase();
-};
-
 struct value {
   enum Type { PTR, IDENT, STR, IMM };
   Type type;
