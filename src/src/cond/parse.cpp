@@ -55,7 +55,7 @@ struct condChild parserCore::cond_inner() {
     cond.val2 = expr();
   } else {
     cond.op = condChild::SINGLE;
-    cond.single = value();
+    cond.single = &value();
   }
   return cond;
 }
