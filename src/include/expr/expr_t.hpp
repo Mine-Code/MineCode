@@ -2,10 +2,9 @@
 
 #include <vector>
 
-#include "power.hpp"
 namespace parserTypes {
-struct expo {
-  std::vector<struct power> parts;
+struct expr {
+  std::vector<struct term> parts;
   bool isSingle();
 };
 }  // namespace parserTypes
