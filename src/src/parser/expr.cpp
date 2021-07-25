@@ -80,6 +80,7 @@ parserTypes::value::BaseValue& parserCore::constant() {
     return *ret;
   } else {
     processError(this, L"unknown error", __FILE__, __func_get, __LINE__);
+    throw "";
   }
 }
 primary::BasePrimary& parserCore::power() {
