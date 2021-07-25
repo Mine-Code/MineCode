@@ -3,8 +3,8 @@
 parserTypes::ExecFunc::ExecFunc()
     : args(std::vector<expr>()),
       funcId(L"0x00000000"),
-      type(ADDRESS),
-      funcAddr(0) {}
+      funcAddr(0),
+      type(ADDRESS) {}
 
 parserTypes::power::power() : type(power::IMM), imm(0) {}
 
