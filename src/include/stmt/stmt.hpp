@@ -8,7 +8,7 @@ class BaseStmt {
   BaseStmt();
   ~BaseStmt();
 
-  virtual void eval(parserCore& ctx);
+  virtual void exec(parserCore& ctx);
 };
 }  // namespace stmt
 
