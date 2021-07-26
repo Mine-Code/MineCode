@@ -1,15 +1,13 @@
 {
     "name": "Debug",
     "ver": 1,
-    "put":{
-        "Debug":{
-            "type":"asm",
-            "proc":"# < Debug >\n"
+    "put": {
+        "Debug": {
+            "type": "asm",
+            "proc": "# $arg\n"
         }
     },
-    "pointers":{},
-    "basePointers":{},
-    "functions":{
-        
-    }
+    "pointers": {},
+    "basePointers": {},
+    "functions": {}
 }
