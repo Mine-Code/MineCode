@@ -134,9 +134,14 @@ void parserCore::put() {
   }
   iter.index = end;
   assert(puts.count(target) == 1, L"Puts Not found");
+  bool is_minecode = puts_table[target];
   std::wstring source = util::str2wstr(puts[target]);
   source = convPut(source, expression);
-  stream << compiler->compile(source);
+  if (is_minecode) {
+    stream << compiler->compile(source);
+  } else {
+    stream << source;
+  }
 }
 parserCore::Arg parserCore::arg() {
   return std::make_pair(iter.next(),  // type
