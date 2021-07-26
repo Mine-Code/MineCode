@@ -5,6 +5,7 @@
 #include <tinyutil.h>
 
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -166,6 +167,10 @@ bool isIdent(T ch) {
 
 std::string wstr2str(std::wstring str);
 std::wstring str2wstr(std::string str);
+template <typename MapT, typename KeyT>
+bool in(MapT map, KeyT key) {
+  return map.count(key) == 1;
+}
 }  // namespace util
 
 #endif
