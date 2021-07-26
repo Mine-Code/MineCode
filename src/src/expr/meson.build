@@ -1,0 +1,8 @@
+sources += 'src/expr/expr_optimizer.cpp'
+sources += 'src/expr/term_optimizer.cpp'
+sources += 'src/expr/evaluter_pointer.cpp'
+sources += 'src/expr/evaluter_term.cpp'
+sources += 'src/expr/evaluter_power.cpp'
+sources += 'src/expr/evaluter_expr.cpp'
+sources += 'src/expr/evaluter_expo.cpp'
+sources += 'src/expr/evaluter_var.cpp'

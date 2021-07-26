@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
   bool isAssembly = false;
   bool hasSrcFile = false;
   std::string srcfile = "";
-  for (size_t i = 1; i < argc; i++) {
+  for (int i = 1; i < argc; i++) {
     std::string arg(argv[i]);
     if (arg == "-h") {
       std::wcout << "[Usage] " << argv[0]
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
       std::wcout << "C000";
       std::wcout.fill('0');
       std::wcout.width(4);
-      if (size & 1 == 0) {
+      if (size % 2 == 1) {
         std::wcout << insts.size() / 2;
       } else {
         std::wcout << (insts.size() + 1) / 2;

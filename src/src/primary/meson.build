@@ -1,0 +1,7 @@
+sources += 'src/primary/base.cpp'
+sources += 'src/primary/immutable.cpp'
+sources += 'src/primary/expr.cpp'
+sources += 'src/primary/func.cpp'
+sources += 'src/primary/variable.cpp'
+sources += 'src/primary/pointer.cpp'
+sources += 'src/primary/str.cpp'

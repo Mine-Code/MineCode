@@ -2,38 +2,31 @@
 #ifndef PARSER_CONTEXT_H
 #define PARSER_CONTEXT_H
 
+#include <cond/cond.hpp>
+#include <expr/expr.hpp>
 #include <unordered_map>
-#include "typedIterator.hxx"
+
 #include "asm.h"
-#include "types/varType.hpp"
+#include "typedIterator.hxx"
 #include "types/function.hpp"
-#include "types/expr.hpp"
-#include "types/cond.hpp"
+#include "types/varType.hpp"
 
 class parserWrap;
 
-namespace parserTypes
-{
-    using streamType = std::wstringstream;
-    using iterType = iterator<std::wstring>;
-    using varsType = std::unordered_map<std::string, struct varType>;
+namespace parserTypes {
+using streamType = std::wstringstream;
+using iterType = iterator<std::wstring>;
+using varsType = std::unordered_map<std::string, struct varType>;
 
-    struct ExecFunc
-    {
-        enum CallType
-        {
-            ADDRESS,
-            Name
-        };
-        ExecFunc();
+struct ExecFunc {
+  enum CallType { ADDRESS, Name };
+  ExecFunc();
 
-        std::vector<expr> args;
-        std::wstring funcId;
-        int funcAddr;
-        CallType type;
-    };
-
-    class value;
-} // namespace parserCtx
+  std::vector<expr> args;
+  std::wstring funcId;
+  int funcAddr;
+  CallType type;
+};
+}  // namespace parserTypes
 
 #endif
