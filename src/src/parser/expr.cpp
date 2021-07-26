@@ -5,7 +5,7 @@
 #include <util.h>
 
 #include <primary/all.hpp>
-#include <value/all.hpp>
+
 using namespace synErr;
 using namespace parserTypes;
 using namespace util;
