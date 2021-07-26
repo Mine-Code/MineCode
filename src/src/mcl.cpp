@@ -17,7 +17,7 @@ json convertTree2Single_function(json);
 void operator<<(parserWrap &ctx, std::string name) {
   json j;
   std::ifstream jsonin;
-  jsonin.open("mcls/" + name + ".json");
+  jsonin.open("../mcls/" + name + ".json");
   jsonin >> j;
 
   // load datas
@@ -35,6 +35,7 @@ void operator<<(parserWrap &ctx, std::string name) {
   ctx.ctx.stream << "# Lib:" << util::str2wstr(name) << std::endl;
 
   // compile pointers
+  ctx.ctx.compiler->ctx.Asm = new Assembly(ctx.ctx.compiler->ctx.stream);
   ctx.ctx.compiler->ctx.Asm->stack_offset =
       ctx.ctx.Asm->stack_offset;  // copy stack_offset
   for (auto pointer : j["pointers"]) {
