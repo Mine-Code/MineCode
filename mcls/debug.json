@@ -5,6 +5,10 @@
         "Debug": {
             "type": "asm",
             "proc": "# $arg\n"
+        },
+        "DebugHeader": {
+            "type": "asm",
+            "proc": "\n----- $arg -----\n"
         }
     },
     "pointers": {},
