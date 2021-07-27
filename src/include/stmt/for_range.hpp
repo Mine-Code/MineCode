@@ -5,6 +5,7 @@
 namespace parserTypes {
 namespace stmt {
 class ForRange : public BaseFor {
+ public:
   ~ForRange();
 
   int start;
