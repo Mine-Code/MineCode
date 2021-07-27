@@ -35,6 +35,10 @@ class BaseValue;
 namespace stmt {
 class BaseStmt;
 class BaseFor;
+class While;
+class If;
+class Mcl;
+class FuncDef;
 }  // namespace stmt
 }  // namespace parserTypes
 
@@ -84,13 +88,13 @@ class parserCore {
 
   void program();
   parserTypes::stmt::BaseStmt &stmt();
-  void func();
-  void If();
+  parserTypes::stmt::FuncDef &func();
+  parserTypes::stmt::If &If();
   parserTypes::stmt::BaseFor &For();
-  void While();
+  parserTypes::stmt::While &While();
   void put();
   void assign();
-  void mcl();
+  parserTypes::stmt::Mcl &mcl();
 
   struct parserTypes::ExecFunc funcCall();
 };  // namespace parserWrap

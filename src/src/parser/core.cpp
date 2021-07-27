@@ -8,6 +8,7 @@
 #include <util.h>
 
 #include <numeric>
+#include <stmt/all.hpp>
 
 using namespace synErr;
 using namespace parserTypes;
@@ -32,16 +33,16 @@ stmt::BaseStmt& parserCore::stmt() {
   // stmt Switcher
   std::wstring text = iter.peek();
   if (text == L"for") {
-    return For();
+    return (stmt::BaseStmt&)For();
   }
   if (text == L"while") {
-    return While();
+    return (stmt::BaseStmt&)While();
   }
   if (text == L"if") {
-    return If();
+    return (stmt::BaseStmt&)If();
   }
   if (text == L"mcl") {
-    return mcl();
+    return (stmt::BaseStmt&)mcl();
   }
   if (text == L"return") {
     return return_func();
@@ -50,7 +51,7 @@ stmt::BaseStmt& parserCore::stmt() {
     if (iter.peekSafe(1) == L"[") {
       return funcCall();
     } else {
-      return func();
+      return (stmt::BaseStmt&)func();
     }
     return;
   }
@@ -69,11 +70,12 @@ stmt::BaseStmt& parserCore::stmt() {
     return assign();
   }
 }
-void parserCore::func() {
+stmt::FuncDef& parserCore::func() {
+  auto ret = new stmt::FuncDef;
   assertChar("func");
-  std::wstring functionName = iter.next();
+  ret->name = iter.next();
   stream << "# "
-         << "funcName:" << functionName << std::endl;
+         << "funcName:" << ret->name << std::endl;
   assertChar("(");
 
   // read arguments
@@ -81,19 +83,22 @@ void parserCore::func() {
   // args=(type,name)
 
   if (iter.peek() != L")") {
-    args.emplace_back(arg());
+    ret->args.emplace_back(arg());
   }
   while (iter.peek() != L")") {
     assertChar(",");
-    args.emplace_back(arg());
+    ret->args.emplace_back(arg());
   }
   // end: read arguments
   assertChar(")");
   assertChar("{");
-  stmtProcessor::Func(this);
+  while (iter.hasData()) {
+    if (iter.peek() == L"}") break;
+    ret->stmts.emplace_back(&stmt());
+  }
   assertChar("}");
 }
-void parserCore::For() {
+stmt::BaseFor& parserCore::For() {
   assertChar("for");
   std::wstring varname = iter.next();
   assertChar("in");
@@ -101,16 +106,32 @@ void parserCore::For() {
   if (iter.peek(1) == L"...") {
     stream << " range" << std::endl;
     Range target = range();
-    assertChar("{");
-    stmtProcessor::Forr(this, target.first, target.second);
-  } else {
-    stream << " iter " << std::endl;
-    std::wstring target = ident();
-    assertChar("{");
+    auto ret = new stmt::ForRange(target.first, target.second);
 
-    stmtProcessor::For(this, varname, target);
+    assertChar("{");
+    while (iter.hasData()) {
+      if (iter.peek() == L"}") break;
+      ret->stmts.emplace_back(&stmt());
+    }
+    assertChar("}");
+
+    return *ret;
+  } else {
+    auto ret = new stmt::ForIter();
+    ret->target = varname;
+    ret->iter = expr();
+
+    stream << " iter " << std::endl;
+
+    assertChar("{");
+    while (iter.hasData()) {
+      if (iter.peek() == L"}") break;
+      ret->stmts.emplace_back(&stmt());
+    }
+    assertChar("}");
+
+    return *ret;
   }
-  assertChar("}");
 }
 void parserCore::put() {
   std::string target = util::wstr2str(ident());
@@ -152,28 +173,40 @@ void parserCore::assign() {
   stmtProcessor::Assign(this, target, op, value);
 }
 
-void parserCore::If() {
+parserTypes::stmt::If& parserCore::If() {
+  auto ret = new parserTypes::stmt::If();
+
   assertChar("if");
-  struct cond conditional = cond();
+  ret->conditional = cond();
   stream << "# if" << std::endl;
   assertChar("{");
-  stmtProcessor::If(this, conditional);
+  while (iter.hasData()) {
+    if (iter.peek() == L"}") break;
+    ret->stmts.emplace_back(&stmt());
+  }
   assertChar("}");
   stream << "# fi" << std::endl;
+  return *ret;
 }
 
-void parserCore::While() {
+stmt::While& parserCore::While() {
+  auto ret = new stmt::While;
   assertChar("while");
-  struct cond conditional = cond();
+  ret->conditional = cond();
   stream << "# while {" << std::endl;
   assertChar("{");
-  stmtProcessor::While(this, conditional);
+  while (iter.hasData()) {
+    if (iter.peek() == L"}") break;
+    ret->stmts.emplace_back(&stmt());
+  }
   assertChar("}");
   stream << "# }" << std::endl;
 }
-void parserCore::mcl() {
+stmt::Mcl& parserCore::mcl() {
+  auto ret = new stmt::Mcl();
   assertChar("mcl");
-  (*wraper) << util::wstr2str(iter.next());
+  ret->name = util::wstr2str(iter.next());
+  return *ret;
 }
 struct ExecFunc parserCore::funcCall() {
   ExecFunc ret;
