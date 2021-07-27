@@ -6,12 +6,8 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class ForIter : BaseFor {
-  ~ForIter();
-
-  std::wstring target;
-  expr iter;
-  virtual void exec(parserCore& ctx);
+class BaseFor {
+  std::vector<BaseStmt*> stmts;
 };
 }  // namespace stmt
 

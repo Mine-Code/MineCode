@@ -1,10 +1,10 @@
 #pragma once
 
+#include "for.hpp"
 #include "stmt.hpp"
-
 namespace parserTypes {
 namespace stmt {
-class ForRange {
+class ForRange : public BaseFor {
   ~ForRange();
 
   int start;
