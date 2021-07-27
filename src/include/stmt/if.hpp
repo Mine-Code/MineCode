@@ -6,6 +6,7 @@
 namespace parserTypes {
 namespace stmt {
 class If {
+ public:
   ~If();
 
   cond conditional;
