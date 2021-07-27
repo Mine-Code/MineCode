@@ -1,0 +1,8 @@
+sources += 'src/stmt/assign.cpp'
+sources += 'src/stmt/for_iterator.cpp'
+sources += 'src/stmt/for_range.cpp'
+sources += 'src/stmt/funcdef.cpp'
+sources += 'src/stmt/if.cpp'
+sources += 'src/stmt/put.cpp'
+sources += 'src/stmt/stmt.cpp'
+sources += 'src/stmt/while.cpp'
