@@ -7,7 +7,7 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class ForIter : BaseFor {
+class ForIter : public BaseFor {
  public:
   ~ForIter();
 
