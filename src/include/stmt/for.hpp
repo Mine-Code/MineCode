@@ -7,6 +7,7 @@
 namespace parserTypes {
 namespace stmt {
 class BaseFor {
+ public:
   std::vector<BaseStmt*> stmts;
 };
 }  // namespace stmt
