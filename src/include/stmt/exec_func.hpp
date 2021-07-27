@@ -1,17 +1,14 @@
 #pragma once
-#include <expr/expr_t.hpp>
-#include <primary/primary.hpp>
-#include <string>
 
 #include "stmt.hpp"
-namespace parserTypes {
-namespace stmt {
-class Assign {
-  ~Assign();
 
-  primary::BasePrimary& dest;
-  std::wstring op;
-  expr val;
+namespace parserTypes {
+class ExecFunc;
+namespace stmt {
+class ExecFunc {
+  ~ExecFunc();
+
+  ::parserTypes::ExecFunc& func;
   virtual void exec(parserCore& ctx);
 };
 }  // namespace stmt
