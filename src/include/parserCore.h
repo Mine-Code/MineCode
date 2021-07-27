@@ -34,7 +34,8 @@ class BaseValue;
 }
 namespace stmt {
 class BaseStmt;
-}
+class BaseFor;
+}  // namespace stmt
 }  // namespace parserTypes
 
 class parserCore {
@@ -85,7 +86,7 @@ class parserCore {
   parserTypes::stmt::BaseStmt &stmt();
   void func();
   void If();
-  void For();
+  parserTypes::stmt::BaseFor &For();
   void While();
   void put();
   void assign();
