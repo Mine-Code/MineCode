@@ -28,7 +28,7 @@ void parserCore::program() {
     stmt();
   }
 }
-void parserCore::stmt() {
+stmt::BaseStmt& parserCore::stmt() {
   // stmt Switcher
   std::wstring text = iter.peek();
   if (text == L"for") {

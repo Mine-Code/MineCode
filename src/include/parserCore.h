@@ -32,6 +32,9 @@ class expr;
 namespace value {
 class BaseValue;
 }
+namespace stmt {
+class BaseStmt;
+}
 }  // namespace parserTypes
 
 class parserCore {
@@ -79,7 +82,7 @@ class parserCore {
   Range range();
 
   void program();
-  void stmt();
+  parserTypes::stmt::BaseStmt &stmt();
   void func();
   void If();
   void For();
