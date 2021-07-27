@@ -6,6 +6,7 @@
 namespace parserTypes {
 namespace stmt {
 class While {
+ public:
   ~While();
 
   cond conditional;
