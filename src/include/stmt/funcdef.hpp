@@ -1,5 +1,7 @@
 #pragma once
 
+#include <parserCore.h>
+
 #include <string>
 #include <vector>
 
@@ -11,6 +13,7 @@ class FuncDef {
   ~FuncDef();
 
   std::wstring name;
+  std::vector<parserCore::Arg> args;
   std::vector<BaseStmt*> stmts;
   virtual void exec(parserCore& ctx);
 };
