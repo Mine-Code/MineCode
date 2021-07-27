@@ -10,7 +10,7 @@ class FuncDef {
  public:
   ~FuncDef();
 
-  std::string name;
+  std::wstring name;
   std::vector<BaseStmt*> stmts;
   virtual void exec(parserCore& ctx);
 };
