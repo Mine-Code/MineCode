@@ -7,6 +7,7 @@
 namespace parserTypes {
 namespace stmt {
 class FuncDef {
+ public:
   ~FuncDef();
 
   std::string name;
