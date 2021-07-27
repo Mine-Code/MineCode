@@ -32,31 +32,25 @@ stmt::BaseStmt& parserCore::stmt() {
   // stmt Switcher
   std::wstring text = iter.peek();
   if (text == L"for") {
-    For();
-    return;
+    return For();
   }
   if (text == L"while") {
-    While();
-    return;
+    return While();
   }
   if (text == L"if") {
-    If();
-    return;
+    return If();
   }
   if (text == L"mcl") {
-    mcl();
-    return;
+    return mcl();
   }
   if (text == L"return") {
-    iter.next();
-    Asm->Jump(L"__ret");
-    return;
+    return return_func();
   }
   if (text == L"func") {
     if (iter.peekSafe(1) == L"[") {
-      stmtProcessor::executeFunction(this, funcCall());
+      return funcCall();
     } else {
-      func();
+      return func();
     }
     return;
   }
@@ -68,11 +62,11 @@ stmt::BaseStmt& parserCore::stmt() {
   iter.index = backup;
   // done skip and read
   if (text == L"<<") {
-    put();
+    return put();
   } else if (text == L"(") {
-    stmtProcessor::executeFunction(this, funcCall());
+    return funcCall();
   } else if (isAssignOp(text)) {
-    assign();
+    return assign();
   }
 }
 void parserCore::func() {
