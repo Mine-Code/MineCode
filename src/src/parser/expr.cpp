@@ -92,7 +92,7 @@ primary::BasePrimary& parserCore::power() {
     primary::Inner* ret = new primary::Inner;
     // inner type
     iter.next();
-    ret->inner = expr();
+    ret->expr = expr();
     assertChar(")");
     return *ret;
   } else if (isFunccall(iter.peekSafe(), iter.peekSafe(1))) {
@@ -118,7 +118,7 @@ primary::BasePrimary& parserCore::power() {
     return *ret;
   } else {
     primary::Inner* ret = new primary::Inner;
-    ret->inner = expr();
+    ret->expr = expr();
     return *ret;
   }
 }
