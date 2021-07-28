@@ -1,4 +1,3 @@
-#include <mcl.h>
 #include <myassert.h>
 #include <parserCore.h>
 #include <parserTypes.h>
@@ -47,13 +46,8 @@ stmt::BaseStmt& parserCore::stmt() {
   if (text == L"return") {
     return return_func();
   }
-  if (text == L"func") {
-    if (iter.peekSafe(1) == L"[") {
-      return funcCall();
-    } else {
-      return (stmt::BaseStmt&)func();
-    }
-    return;
+  if (text == L"func" && iter.peekSafe(1) != L"[") {
+    return (stmt::BaseStmt&)func();
   }
 
   // skip one 'value' and read one
@@ -64,11 +58,14 @@ stmt::BaseStmt& parserCore::stmt() {
   // done skip and read
   if (text == L"<<") {
     return put();
-  } else if (text == L"(") {
-    return funcCall();
   } else if (isAssignOp(text)) {
     return assign();
   }
+
+  // default = expr
+  auto ret = new parserTypes::stmt::Expr;
+  ret->val = expr();
+  return *ret;
 }
 stmt::FuncDef& parserCore::func() {
   auto ret = new stmt::FuncDef;
