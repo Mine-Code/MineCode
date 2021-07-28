@@ -58,7 +58,7 @@ stmt::BaseStmt& parserCore::stmt() {
   iter.index = backup;
   // done skip and read
   if (text == L"<<") {
-    return put();
+    return (stmt::BaseStmt&)put();
   } else if (isAssignOp(text)) {
     return assign();
   }
@@ -131,30 +131,33 @@ stmt::BaseFor& parserCore::For() {
     return *ret;
   }
 }
-void parserCore::put() {
-  std::string target = util::wstr2str(ident());
+parserTypes::stmt::Put& parserCore::put() {
+  auto ret = new parserTypes::stmt::Put;
+
+  ret->dest = util::wstr2str(ident());
+  assert(puts.count(ret->dest) == 1, L"Puts Not found");
+
   assertChar("<<");
-  // get end
-  auto start = iter.index;
-  struct expr val = expr();
-  auto end = iter.index;
-  iter.index = start;
-  // get end
-  std::wstring expression;
-  iter.index = 0;  // enable absolute get
-  for (size_t i = start; i < end; i++) {
-    expression += iter.peekSafe(i);
+  size_t start, end;
+  {  // get end
+    start = iter.index;
+    expr();  // skip
+    end = iter.index;
+    iter.index = start;
   }
-  iter.index = end;
-  assert(puts.count(target) == 1, L"Puts Not found");
-  bool is_minecode = puts_table[target];
-  std::wstring source = util::str2wstr(puts[target]);
+  std::wstring expression;
+  for (size_t i = 0; i < end - start; i++) {
+    expression += iter.next();
+  }
+  bool is_minecode = puts_table[ret->dest];
+  std::wstring source = util::str2wstr(puts[ret->dest]);
   source = convPut(source, expression);
   if (is_minecode) {
     stream << compiler->compile(source);
   } else {
     stream << source;
   }
+  return *ret;
 }
 parserCore::Arg parserCore::arg() {
   return std::make_pair(iter.next(),  // type

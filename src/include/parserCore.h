@@ -39,6 +39,7 @@ class While;
 class If;
 class Mcl;
 class FuncDef;
+class Put;
 }  // namespace stmt
 }  // namespace parserTypes
 
@@ -92,7 +93,7 @@ class parserCore {
   parserTypes::stmt::If &If();
   parserTypes::stmt::BaseFor &For();
   parserTypes::stmt::While &While();
-  void put();
+  parserTypes::stmt::Put &put();
   void assign();
   parserTypes::stmt::Mcl &mcl();
 
