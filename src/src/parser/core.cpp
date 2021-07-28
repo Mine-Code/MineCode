@@ -166,8 +166,7 @@ parserCore::Arg parserCore::arg() {
   );
 }
 parserTypes::stmt::Assign& parserCore::assign() {
-  auto ret = new parserTypes::stmt::Assign;
-  ret->dest = editable();
+  auto ret = new parserTypes::stmt::Assign(editable());
   ret->op = iter.next();
   struct expr value;
   if (!(ret->op == L"++" || ret->op == L"--")) {

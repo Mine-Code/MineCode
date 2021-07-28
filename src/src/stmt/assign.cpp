@@ -5,6 +5,8 @@
 
 #include <primary/all.hpp>
 #include <stmt/assign.hpp>
+parserTypes::stmt::Assign::Assign(parserTypes::primary::BasePrimary &dest)
+    : dest(dest), op(L"="), val(expr()) {}
 parserTypes::stmt::Assign::~Assign() {}
 void parserTypes::stmt::Assign::exec(parserCore &ctx) {
   using namespace parserTypes::primary;

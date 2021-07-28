@@ -8,7 +8,7 @@ namespace parserTypes {
 namespace stmt {
 class Assign {
  public:
-  Assign();
+  Assign(primary::BasePrimary& dest);
   virtual ~Assign();
 
   primary::BasePrimary& dest;
