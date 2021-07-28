@@ -54,8 +54,7 @@ stmt::FuncDef& parserCore::func() {
   auto ret = new ::stmt::FuncDef;
   assertChar("func");
   ret->name = iter.next();
-  stream << "# "
-         << "funcName:" << ret->name << std::endl;
+
   assertChar("(");
 
   // read arguments
@@ -83,9 +82,7 @@ stmt::BaseFor& parserCore::For() {
   assertChar("for");
   std::wstring varname = iter.next();
   assertChar("in");
-  stream << "# for ";
   if (iter.peek(1) == L"...") {
-    stream << " range" << std::endl;
     Range target = range();
     auto ret = new ::stmt::ForRange(target.first, target.second);
 
@@ -101,8 +98,6 @@ stmt::BaseFor& parserCore::For() {
     auto ret = new ::stmt::ForIter();
     ret->target = varname;
     ret->iter = expr();
-
-    stream << " iter " << std::endl;
 
     assertChar("{");
     while (iter.hasData()) {
