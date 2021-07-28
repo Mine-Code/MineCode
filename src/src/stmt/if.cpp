@@ -6,10 +6,9 @@
 parserTypes::stmt::If::~If() {}
 void parserTypes::stmt::If::exec(parserCore& ctx) {
   condeval::EvalCond(&ctx, conditional);
-
-  while (ctx.iter.hasData()) {
-    if (ctx.iter.peek() == L"}") break;
-    ctx.stmt();
+  std::wcout << this->stmts.size() << std::endl;
+  for (auto&& stmt : this->stmts) {
+    stmt->exec(ctx);
   }
   ctx.Asm->endOfIf();
 }
