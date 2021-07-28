@@ -240,7 +240,7 @@ std::wstring parserWrap::compile_full(std::wstring source) {
   int r14 = ctx.Asm->push(14);
   int r15 = ctx.Asm->push(15);
   ctx.program();
-  ctx.stream << "__ret:\n";
+  ctx.stream << "global_return:\n";
 
   ctx.Asm->pop(r14, 14);
   ctx.Asm->pop(r15, 15);
