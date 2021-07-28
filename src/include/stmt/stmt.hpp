@@ -5,8 +5,9 @@ class parserCore;
 namespace parserTypes {
 namespace stmt {
 class BaseStmt {
+ public:
   BaseStmt();
-  ~BaseStmt();
+  virtual ~BaseStmt();
 
   virtual void exec(parserCore& ctx) = 0;
 };

@@ -25,7 +25,7 @@ void parserCore::program() {
   }
 
   while (iter.hasData()) {
-    stmt();
+    stmt().exec(*this);
   }
 }
 stmt::BaseStmt& parserCore::stmt() {
