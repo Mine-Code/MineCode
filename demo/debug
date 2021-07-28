@@ -1,4 +1,16 @@
-#do once
-a=0
+mcl debug
 
-a+=1
+DebugHeader<<for_range
+for i in 1..10{
+  Debug << inner_for_range_start
+  Debug << inner_for_range_end
+}
+
+DebugHeader<<iftest
+i=0
+if i == 1{
+  Debug << inner_if_start
+  Debug << inner_if_end
+}
+
+DebugHeader<<return
