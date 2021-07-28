@@ -27,6 +27,12 @@ parserTypes::primary::BasePrimary& parserCore::value() {
   } else if (isdigit(ch)) {
     auto ret = new parserTypes::primary::Immutable(util::toInt(iter.next()));
     return *ret;
+  } else if (iter.peekSafe(0) == L"func" && iter.peekSafe(1) == L"[") {
+    auto ret = new parserTypes::primary::FuncCall();
+    auto func = new ExecFunc;
+    *func = funcCall();
+    ret->func = func;
+    return *ret;
   } else {
     syntaxError(this, L"is not value type ", __FILE__, __func__, __LINE__);
     throw "";  // do not call this
