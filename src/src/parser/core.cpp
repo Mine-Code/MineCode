@@ -44,7 +44,8 @@ stmt::BaseStmt& parserCore::stmt() {
     return (stmt::BaseStmt&)mcl();
   }
   if (text == L"return") {
-    return return_func();
+    auto ret = (new stmt::Return);
+    return (stmt::BaseStmt&)*ret;
   }
   if (text == L"func" && iter.peekSafe(1) != L"[") {
     return (stmt::BaseStmt&)func();
