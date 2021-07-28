@@ -2,7 +2,6 @@
 #include <parserCore.h>
 #include <parserTypes.h>
 #include <parserWrap.h>
-#include <stmtProcessor.h>
 #include <syntaxError.h>
 #include <util.h>
 

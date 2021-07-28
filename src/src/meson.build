@@ -6,7 +6,6 @@ sources = [
   'src/optimizer.cpp', 
   'src/parserTypes.cpp', 
   'src/parserWrap.cpp', 
-  'src/stmtProcessor.cpp', 
   'src/syntaxError.cpp', 
   'src/util.cpp'
 ]
