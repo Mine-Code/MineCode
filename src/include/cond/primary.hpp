@@ -24,7 +24,7 @@ struct condChild {
     LE    // >=
   };
 
-  struct cond child;
+  struct Cond child;
   primary::BasePrimary *single;
 
   Expr val1;

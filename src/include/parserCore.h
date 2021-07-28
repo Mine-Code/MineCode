@@ -19,7 +19,7 @@ namespace parserTypes {
 class function;
 class condChild;
 class condAnd;
-class cond;
+class Cond;
 
 class ExecFunc;
 
@@ -83,7 +83,7 @@ class parserCore {
   struct parserTypes::term term();
   struct parserTypes::Expr expr();
 
-  struct parserTypes::cond cond();
+  struct parserTypes::Cond cond();
   struct parserTypes::condAnd condAnd();
   struct parserTypes::condChild cond_inner();
 

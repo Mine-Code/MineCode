@@ -12,7 +12,7 @@ void parserTypes::stmt::While::exec(parserCore& ctx) {
     ctx.stmt();
   }
   std::wstring outerWhile = ctx.Asm->getEnd_While(id);
-  condeval::Cond(&ctx, conditional, L"", outerWhile);
+  condeval::EvalCond(&ctx, conditional, L"", outerWhile);
 
   ctx.Asm->whileEnd(id);
 }

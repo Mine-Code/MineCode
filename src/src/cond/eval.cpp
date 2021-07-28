@@ -10,7 +10,7 @@
 
 using namespace parserTypes;
 
-void condeval::Cond(parserCore* that, cond cond) {
+void condeval::EvalCond(parserCore* that, Cond cond) {
   std::wstring footer = std::to_wstring(that->Asm->make_if_ctr++);
   std::wstring label = L"if_" + footer;
   std::wstring endLabel = L"endif_" + footer;
@@ -20,11 +20,11 @@ void condeval::Cond(parserCore* that, cond cond) {
   that->Asm->Jump(endLabel);
   that->Asm->makeLabel(label);
 }
-void condeval::Cond(parserCore* that, cond cond, std::wstring trueLabel,
-                    std::wstring falseLabel) {
+void condeval::EvalCond(parserCore* that, Cond cond, std::wstring trueLabel,
+                        std::wstring falseLabel) {
   if (trueLabel == L"" && falseLabel != L"") {
-    Cond(that, util::condAnd2cond(util::invertConditional(cond)), falseLabel,
-         L"");
+    EvalCond(that, util::condAnd2cond(util::invertConditional(cond)),
+             falseLabel, L"");
     return;
   }
   for (auto condChild : cond.conds) {
@@ -79,7 +79,7 @@ void condeval::CondChild(parserCore* that, condChild cond,
           __FILE__, __func__, __LINE__);
     }
   } else if (cond.op == condChild::COND) {
-    Cond(that, cond.child, target, L"");
+    EvalCond(that, cond.child, target, L"");
   } else {
     // process val1/2
     eval::Expr(that, cond.val1, 13);

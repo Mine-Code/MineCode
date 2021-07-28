@@ -6,8 +6,8 @@
 using namespace parserTypes;
 using namespace util;
 
-struct cond parserCore::cond() {
-  struct cond ret;
+struct Cond parserCore::cond() {
+  struct Cond ret;
   std::wstring text;
   ret.conds.emplace_back(condAnd());
   while (iter.hasData() && (iter.peek() == L"||")) {

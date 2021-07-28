@@ -4,19 +4,19 @@
 
 #include <string>
 
-namespace parserTypes
-{
-    class cond;
-    class condAnd;
-    class condChild;
-} // namespace parserTypes
+namespace parserTypes {
+class Cond;
+class condAnd;
+class condChild;
+}  // namespace parserTypes
 class parserCore;
-namespace condeval
-{
-    void Cond(parserCore *that, parserTypes::cond cond);
-    void Cond(parserCore *that, parserTypes::cond cond, std::wstring trueLabel, std::wstring falseLabel);
-    void CondAnd(parserCore *that, parserTypes::condAnd cond, std::wstring target);
-    void CondChild(parserCore *that, parserTypes::condChild cond, std::wstring target);
-} // namespace condeval
+namespace condeval {
+void EvalCond(parserCore *that, parserTypes::Cond cond);
+void EvalCond(parserCore *that, parserTypes::Cond cond, std::wstring trueLabel,
+              std::wstring falseLabel);
+void CondAnd(parserCore *that, parserTypes::condAnd cond, std::wstring target);
+void CondChild(parserCore *that, parserTypes::condChild cond,
+               std::wstring target);
+}  // namespace condeval
 
 #endif

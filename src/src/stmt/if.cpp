@@ -5,7 +5,7 @@
 #include <stmt/if.hpp>
 parserTypes::stmt::If::~If() {}
 void parserTypes::stmt::If::exec(parserCore& ctx) {
-  condeval::Cond(&ctx, conditional);
+  condeval::EvalCond(&ctx, conditional);
 
   while (ctx.iter.hasData()) {
     if (ctx.iter.peek() == L"}") break;

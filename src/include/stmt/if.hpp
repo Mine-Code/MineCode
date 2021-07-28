@@ -9,7 +9,7 @@ class If : public BaseStmt {
  public:
   ~If();
 
-  cond conditional;
+  Cond conditional;
   std::vector<BaseStmt*> stmts;
   void exec(parserCore& ctx) override;
 };

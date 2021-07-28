@@ -36,7 +36,7 @@ condChild util::invertConditional(condChild source) {
   }
   return source;
 }
-condAnd util::invertConditional(cond source) {
+condAnd util::invertConditional(Cond source) {
   condAnd ret;
   for (auto part : source.conds) {
     condChild wrap;
@@ -47,8 +47,8 @@ condAnd util::invertConditional(cond source) {
   }
   return ret;
 }
-cond util::invertConditional(condAnd source) {
-  cond ret;
+Cond util::invertConditional(condAnd source) {
+  Cond ret;
   for (auto part : source.conds) {
     condAnd wrap;
     wrap.conds.emplace_back(invertConditional(part));
@@ -58,7 +58,7 @@ cond util::invertConditional(condAnd source) {
   return ret;
 }
 
-condAnd util::cond2condAnd(cond source) {
+condAnd util::cond2condAnd(Cond source) {
   condChild wrap;
   wrap.op = condChild::COND;
   wrap.child = source;
@@ -68,8 +68,8 @@ condAnd util::cond2condAnd(cond source) {
 
   return ret;
 }
-cond util::condAnd2cond(condAnd source) {
-  cond ret;
+Cond util::condAnd2cond(condAnd source) {
+  Cond ret;
   ret.conds.emplace_back(source);
 
   return ret;
