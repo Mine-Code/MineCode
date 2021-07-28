@@ -5,13 +5,13 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class While {
+class While : public BaseStmt {
  public:
-  virtual ~While();
+  ~While();
 
   cond conditional;
   std::vector<BaseStmt*> stmts;
-  virtual void exec(parserCore& ctx);
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

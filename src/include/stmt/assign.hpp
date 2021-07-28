@@ -6,15 +6,15 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class Assign {
+class Assign : public BaseStmt {
  public:
   Assign(primary::BasePrimary& dest);
-  virtual ~Assign();
+  ~Assign();
 
   primary::BasePrimary& dest;
   std::wstring op;
   expr val;
-  virtual void exec(parserCore& ctx);
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

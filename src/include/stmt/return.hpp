@@ -4,9 +4,10 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class Return {
-  virtual ~Return();
-  virtual void exec(parserCore& ctx);
+class Return : public BaseStmt {
+ public:
+  ~Return();
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

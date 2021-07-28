@@ -5,11 +5,11 @@
 namespace parserTypes {
 class ExecFunc;
 namespace stmt {
-class ExecFunc {
+class ExecFunc : public BaseStmt {
   ~ExecFunc();
 
   ::parserTypes::ExecFunc func;
-  virtual void exec(parserCore& ctx);
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

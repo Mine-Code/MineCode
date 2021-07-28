@@ -5,13 +5,13 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class Put {
+class Put : public BaseStmt {
  public:
-  virtual ~Put();
+  ~Put();
 
   std::string dest;
   std::wstring val;
-  virtual void exec(parserCore& ctx);
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

@@ -7,11 +7,11 @@ namespace stmt {
 class ForRange : public BaseFor {
  public:
   ForRange(int begin, int end);
-  virtual ~ForRange();
+  ~ForRange();
 
   int start;
   int end;
-  virtual void exec(parserCore& ctx);
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

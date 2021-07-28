@@ -8,14 +8,14 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class FuncDef {
+class FuncDef : public BaseStmt {
  public:
-  virtual ~FuncDef();
+  ~FuncDef();
 
   std::wstring name;
   std::vector<parserCore::Arg> args;
   std::vector<BaseStmt*> stmts;
-  virtual void exec(parserCore& ctx);
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

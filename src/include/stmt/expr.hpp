@@ -6,12 +6,12 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class Expr {
+class Expr : public BaseStmt {
  public:
-  virtual ~Expr();
+  ~Expr();
 
   expr val;
-  virtual void exec(parserCore& ctx);
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

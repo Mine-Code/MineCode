@@ -5,13 +5,13 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class If {
+class If : public BaseStmt {
  public:
-  virtual ~If();
+  ~If();
 
   cond conditional;
   std::vector<BaseStmt*> stmts;
-  virtual void exec(parserCore& ctx);
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

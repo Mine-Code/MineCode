@@ -6,7 +6,7 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class BaseFor {
+class BaseFor : public BaseStmt {
  public:
   std::vector<BaseStmt*> stmts;
 };

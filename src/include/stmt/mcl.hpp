@@ -4,12 +4,12 @@
 #include "stmt.hpp"
 namespace parserTypes {
 namespace stmt {
-class Mcl {
+class Mcl : public BaseStmt {
  public:
-  virtual ~Mcl();
+  ~Mcl();
 
   std::string name;
-  virtual void exec(parserCore& ctx);
+  void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
 

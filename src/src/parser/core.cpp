@@ -32,23 +32,23 @@ stmt::BaseStmt& parserCore::stmt() {
   // stmt Switcher
   std::wstring text = iter.peek();
   if (text == L"for") {
-    return (stmt::BaseStmt&)For();
+    return For();
   }
   if (text == L"while") {
-    return (stmt::BaseStmt&)While();
+    return While();
   }
   if (text == L"if") {
-    return (stmt::BaseStmt&)If();
+    return If();
   }
   if (text == L"mcl") {
-    return (stmt::BaseStmt&)mcl();
+    return mcl();
   }
   if (text == L"return") {
     auto ret = (new stmt::Return);
-    return (stmt::BaseStmt&)*ret;
+    return *ret;
   }
   if (text == L"func" && iter.peekSafe(1) != L"[") {
-    return (stmt::BaseStmt&)func();
+    return func();
   }
 
   // skip one 'value' and read one
@@ -58,15 +58,15 @@ stmt::BaseStmt& parserCore::stmt() {
   iter.index = backup;
   // done skip and read
   if (text == L"<<") {
-    return (stmt::BaseStmt&)put();
+    return put();
   } else if (isAssignOp(text)) {
-    return (stmt::BaseStmt&)assign();
+    return assign();
   }
 
   // default = expr
   auto ret = new parserTypes::stmt::Expr;
   ret->val = expr();
-  return (stmt::BaseStmt&)*ret;
+  return *ret;
 }
 stmt::FuncDef& parserCore::func() {
   auto ret = new stmt::FuncDef;
@@ -231,27 +231,5 @@ struct ExecFunc parserCore::funcCall() {
     ret.args.emplace_back(expr());
   }
   assertChar(")");
-  return ret;
-}
-
-std::wstring convPut(std::wstring src, std::wstring argument) {
-  std::wstring ret;
-  auto iter = iterator<wchar_t>(util::convToVector<wchar_t, std::wstring>(src));
-  while (iter.hasData()) {
-    wchar_t ch = iter.next();
-    wchar_t ne = iter.peekSafe(1);
-    if (ch == '$' && ne == '$') {
-      ret += '$';
-      iter.next();
-    } else if (ch == '$' && iter.peekSafe(0) == 'a' &&
-               iter.peekSafe(1) == 'r' && iter.peekSafe(2) == 'g') {
-      for (auto ch : argument) {
-        ret += ch;
-      }
-      iter.index += 3;
-    } else {
-      ret += ch;
-    }
-  }
   return ret;
 }
