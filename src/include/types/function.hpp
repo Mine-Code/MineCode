@@ -10,7 +10,7 @@ namespace parserTypes {
 enum funcArgType { INT, CSTR, WSTR, PTR };
 struct funcArg {
   funcArgType type;
-  struct expr defaultValue;
+  struct Expr defaultValue;
 };
 struct function {
   uint32_t addr;

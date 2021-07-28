@@ -5,8 +5,7 @@
 #include "term.hpp"
 
 namespace parserTypes {
-// TODO: rename this to Expr
-struct expr {
+struct Expr {
   std::vector<struct term> parts;
   bool isSingle();
 };

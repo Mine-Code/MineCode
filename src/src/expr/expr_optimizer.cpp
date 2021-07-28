@@ -3,9 +3,9 @@
 #include <primary/immutable.hpp>
 using namespace parserTypes;
 term &optimize(term &);
-expr &optimize(expr &val) {
+Expr &optimize(Expr &val) {
   int immutable = 0;
-  expr newExpr;
+  Expr newExpr;
   for (auto _part : val.parts) {
     auto part = optimize(_part);
     if (part.isSingle() && part.parts[0].value.isSingle() &&

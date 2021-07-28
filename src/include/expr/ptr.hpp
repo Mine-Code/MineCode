@@ -3,15 +3,15 @@
 #include <memory>
 
 namespace parserTypes {
-class expr;
+class Expr;
 class ptr {
-  std::shared_ptr<expr> base;
+  std::shared_ptr<Expr> base;
 
  public:
-  ptr(expr &_base);
-  ptr(expr *_base);
+  ptr(Expr &_base);
+  ptr(Expr *_base);
   ptr();
 
-  expr getBase();
+  Expr getBase();
 };
 }  // namespace parserTypes

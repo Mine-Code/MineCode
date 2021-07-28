@@ -40,7 +40,7 @@ parserTypes::primary::BasePrimary& parserCore::value() {
 }
 struct ptr parserCore::ptr() {
   assertChar("[");
-  struct expr* value = new struct expr;
+  struct Expr* value = new struct Expr;
   *value = expr();
   assertChar("]");
   return parserTypes::ptr(value);
@@ -158,8 +158,8 @@ struct term parserCore::term() {
   }
   return ret;
 }
-struct expr parserCore::expr() {
-  struct expr ret;
+struct Expr parserCore::expr() {
+  struct Expr ret;
   struct term part;
   std::wstring text = iter.peek();
 

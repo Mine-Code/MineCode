@@ -22,7 +22,7 @@ struct ExecFunc {
   enum CallType { ADDRESS, Name };
   ExecFunc();
 
-  std::vector<expr> args;
+  std::vector<Expr> args;
   std::wstring funcId;
   int funcAddr;
   CallType type;

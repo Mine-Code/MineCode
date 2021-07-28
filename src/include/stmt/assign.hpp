@@ -13,7 +13,7 @@ class Assign : public BaseStmt {
 
   primary::BasePrimary& dest;
   std::wstring op;
-  expr val;
+  Expr val;
   void exec(parserCore& ctx) override;
 };
 }  // namespace stmt

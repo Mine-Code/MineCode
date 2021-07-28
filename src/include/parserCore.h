@@ -27,7 +27,7 @@ class ptr;
 
 class expo;
 class term;
-class expr;
+class Expr;
 
 namespace value {
 class BaseValue;
@@ -80,7 +80,7 @@ class parserCore {
   struct parserTypes::primary::BasePrimary &power();
   struct parserTypes::expo expo();
   struct parserTypes::term term();
-  struct parserTypes::expr expr();
+  struct parserTypes::Expr expr();
 
   struct parserTypes::cond cond();
   struct parserTypes::condAnd condAnd();

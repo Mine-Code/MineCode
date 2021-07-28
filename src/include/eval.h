@@ -4,7 +4,7 @@
 #include <string>
 
 namespace parserTypes {
-class expr;
+class Expr;
 class expo;
 class term;
 
@@ -16,7 +16,7 @@ class BasePrimary;
 class parserCore;
 namespace eval {
 using namespace parserTypes;
-void Expr(parserCore *that, expr val, int dest = 13);
+void Expr(parserCore *that, Expr val, int dest = 13);
 void Expo(parserCore *that, expo val, int dest = 13);
 void Term(parserCore *that, term val, int dest = 13);
 void Power(parserCore *that, primary::BasePrimary &val, int dest = 13);
