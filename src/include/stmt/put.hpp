@@ -6,6 +6,7 @@
 namespace parserTypes {
 namespace stmt {
 class Put {
+ public:
   ~Put();
 
   std::string dest;
