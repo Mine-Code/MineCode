@@ -7,7 +7,7 @@ namespace parserTypes {
 namespace stmt {
 class While {
  public:
-  ~While();
+  virtual ~While();
 
   cond conditional;
   std::vector<BaseStmt*> stmts;

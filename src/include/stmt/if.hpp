@@ -7,7 +7,7 @@ namespace parserTypes {
 namespace stmt {
 class If {
  public:
-  ~If();
+  virtual ~If();
 
   cond conditional;
   std::vector<BaseStmt*> stmts;

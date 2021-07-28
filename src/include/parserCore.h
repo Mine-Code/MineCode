@@ -40,6 +40,7 @@ class If;
 class Mcl;
 class FuncDef;
 class Put;
+class Assign;
 }  // namespace stmt
 }  // namespace parserTypes
 
@@ -94,7 +95,7 @@ class parserCore {
   parserTypes::stmt::BaseFor &For();
   parserTypes::stmt::While &While();
   parserTypes::stmt::Put &put();
-  void assign();
+  parserTypes::stmt::Assign &assign();
   parserTypes::stmt::Mcl &mcl();
 
   struct parserTypes::ExecFunc funcCall();

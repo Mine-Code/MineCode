@@ -7,7 +7,9 @@
 namespace parserTypes {
 namespace stmt {
 class Assign {
-  ~Assign();
+ public:
+  Assign();
+  virtual ~Assign();
 
   primary::BasePrimary& dest;
   std::wstring op;

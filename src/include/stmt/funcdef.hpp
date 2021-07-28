@@ -10,7 +10,7 @@ namespace parserTypes {
 namespace stmt {
 class FuncDef {
  public:
-  ~FuncDef();
+  virtual ~FuncDef();
 
   std::wstring name;
   std::vector<parserCore::Arg> args;

@@ -8,7 +8,7 @@ namespace parserTypes {
 namespace stmt {
 class Expr {
  public:
-  ~Expr();
+  virtual ~Expr();
 
   expr val;
   virtual void exec(parserCore& ctx);

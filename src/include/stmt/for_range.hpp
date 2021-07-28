@@ -7,7 +7,7 @@ namespace stmt {
 class ForRange : public BaseFor {
  public:
   ForRange(int begin, int end);
-  ~ForRange();
+  virtual ~ForRange();
 
   int start;
   int end;

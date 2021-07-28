@@ -9,7 +9,7 @@ namespace parserTypes {
 namespace stmt {
 class ForIter : public BaseFor {
  public:
-  ~ForIter();
+  virtual ~ForIter();
 
   std::wstring target;
   expr iter;

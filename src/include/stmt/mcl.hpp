@@ -6,7 +6,7 @@ namespace parserTypes {
 namespace stmt {
 class Mcl {
  public:
-  ~Mcl();
+  virtual ~Mcl();
 
   std::string name;
   virtual void exec(parserCore& ctx);

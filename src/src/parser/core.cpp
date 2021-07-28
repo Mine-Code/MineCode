@@ -60,7 +60,7 @@ stmt::BaseStmt& parserCore::stmt() {
   if (text == L"<<") {
     return (stmt::BaseStmt&)put();
   } else if (isAssignOp(text)) {
-    return assign();
+    return (stmt::BaseStmt&)assign();
   }
 
   // default = expr
@@ -95,6 +95,7 @@ stmt::FuncDef& parserCore::func() {
     ret->stmts.emplace_back(&stmt());
   }
   assertChar("}");
+  return *ret;
 }
 stmt::BaseFor& parserCore::For() {
   assertChar("for");
@@ -164,14 +165,17 @@ parserCore::Arg parserCore::arg() {
                         iter.next()   // name
   );
 }
-void parserCore::assign() {
-  parserTypes::primary::BasePrimary& target = editable();
-  std::wstring op = iter.next();
+parserTypes::stmt::Assign& parserCore::assign() {
+  auto ret = new parserTypes::stmt::Assign;
+  ret->dest = editable();
+  ret->op = iter.next();
   struct expr value;
-  if (!(op == L"++" || op == L"--")) {
-    value = expr();
+  if (!(ret->op == L"++" || ret->op == L"--")) {
+    ret->val = expr();
+  } else {
+    ret->val = *(parserTypes::expr*)nullptr;
   }
-  stmtProcessor::Assign(this, target, op, value);
+  return *ret;
 }
 
 parserTypes::stmt::If& parserCore::If() {
@@ -202,6 +206,7 @@ stmt::While& parserCore::While() {
   }
   assertChar("}");
   stream << "# }" << std::endl;
+  return *ret;
 }
 stmt::Mcl& parserCore::mcl() {
   auto ret = new stmt::Mcl();
