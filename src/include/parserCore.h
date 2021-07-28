@@ -62,6 +62,7 @@ class parserCore {
   std::unordered_map<std::string, bool>
       puts_table;  // true,false = minecode,asm
 
+  std::wstring funcname = L"global";
   // function
 
   using Arg = std::pair<std::wstring, std::wstring>;
