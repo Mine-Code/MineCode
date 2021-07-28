@@ -7,4 +7,5 @@
 #include <stmt/if.hpp>
 #include <stmt/mcl.hpp>
 #include <stmt/put.hpp>
+#include <stmt/return.hpp>
 #include <stmt/while.hpp>
