@@ -7,6 +7,7 @@
 namespace parserTypes {
 namespace stmt {
 class Expr {
+ public:
   ~Expr();
 
   expr val;
