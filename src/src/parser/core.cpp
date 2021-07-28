@@ -66,7 +66,7 @@ stmt::BaseStmt& parserCore::stmt() {
   // default = expr
   auto ret = new parserTypes::stmt::Expr;
   ret->val = expr();
-  return *ret;
+  return (stmt::BaseStmt&)*ret;
 }
 stmt::FuncDef& parserCore::func() {
   auto ret = new stmt::FuncDef;
