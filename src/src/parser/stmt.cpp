@@ -24,7 +24,9 @@ stmt::BaseStmt& parserCore::stmt() {
     return mcl();
   }
   if (text == L"return") {
+    assertChar("return");
     auto ret = new ::stmt::Return;
+
     return *ret;
   }
   if (text == L"func" && iter.peekSafe(1) != L"[") {
