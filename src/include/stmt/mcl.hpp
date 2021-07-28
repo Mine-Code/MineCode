@@ -6,6 +6,8 @@ namespace parserTypes {
 namespace stmt {
 class Mcl : public BaseStmt {
  public:
+  Mcl(std::string name);
+  Mcl(std::wstring name);
   ~Mcl();
 
   std::string name;

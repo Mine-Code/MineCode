@@ -182,8 +182,7 @@ stmt::While& parserCore::While() {
   return *ret;
 }
 stmt::Mcl& parserCore::mcl() {
-  auto ret = new ::stmt::Mcl();
   assertChar("mcl");
-  ret->name = util::wstr2str(iter.next());
+  auto ret = new ::stmt::Mcl(iter.next());
   return *ret;
 }
