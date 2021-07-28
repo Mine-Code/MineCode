@@ -8,7 +8,7 @@ namespace stmt {
 class ExecFunc {
   ~ExecFunc();
 
-  ::parserTypes::ExecFunc& func;
+  ::parserTypes::ExecFunc func;
   virtual void exec(parserCore& ctx);
 };
 }  // namespace stmt
