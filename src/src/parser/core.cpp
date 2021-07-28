@@ -150,14 +150,8 @@ parserTypes::stmt::Put& parserCore::put() {
   for (size_t i = 0; i < end - start; i++) {
     expression += iter.next();
   }
+  ret->val = expression;
   bool is_minecode = puts_table[ret->dest];
-  std::wstring source = util::str2wstr(puts[ret->dest]);
-  source = convPut(source, expression);
-  if (is_minecode) {
-    stream << compiler->compile(source);
-  } else {
-    stream << source;
-  }
   return *ret;
 }
 parserCore::Arg parserCore::arg() {

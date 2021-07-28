@@ -10,7 +10,7 @@ class Put {
   virtual ~Put();
 
   std::string dest;
-  expr val;
+  std::wstring val;
   virtual void exec(parserCore& ctx);
 };
 }  // namespace stmt
