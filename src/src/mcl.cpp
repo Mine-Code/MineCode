@@ -4,8 +4,8 @@
 #include <parserWrap.h>
 #include <util.h>
 
-#include <../../lib/json/single_include/nlohmann/json.hpp>
 #include <fstream>
+#include <nlohmann/json.hpp>
 #include <unordered_map>
 
 using namespace std::literals::string_literals;
