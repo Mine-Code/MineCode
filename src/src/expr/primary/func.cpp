@@ -15,22 +15,26 @@ void parserTypes::primary::FuncCall::eval(parserCore& ctx, int dest) {
   for (auto arg : this->func->args) {
     eval::Expr(&ctx, arg, n++);
   }
-  // load address
-  if (this->func->type == ExecFunc::ADDRESS) {
-    // address based
+
+  // call function
+  if (util::in(ctx.function_list, this->func->funcId)) {
+    ctx.Asm->Jump(this->func->funcId);
+    return;
+  }
+
+  // address based function call
+  auto func_id = util::wstr2str(this->func->funcId);
+  if (this->func->type == ExecFunc::ADDRESS) {  // address based
     ctx.Asm->writeRegister(this->func->funcAddr, 15);
-  } else if (this->func->type == ExecFunc::Name) {
-    // name based
-    if (util::in(ctx.variables, util::wstr2str(this->func->funcId))) {
-      ctx.Asm->pop(ctx.variables[util::wstr2str(this->func->funcId)].offset,
-                   15);
-    } else if (util::in(ctx.functions, util::wstr2str(this->func->funcId))) {
-      if (!util::in(ctx.variables, util::wstr2str(this->func->funcId))) {
+  } else if (this->func->type == ExecFunc::Name) {  // name based
+    if (util::in(ctx.variables, func_id)) {
+      ctx.Asm->pop(ctx.variables[func_id].offset, 15);
+    } else if (util::in(ctx.functions, func_id)) {
+      if (!util::in(ctx.functions, func_id)) {
         processError(&ctx, this->func->funcId + L" is not found", __FILE__,
                      __func__, __LINE__);
       }
-      ctx.Asm->writeRegister(
-          ctx.functions[util::wstr2str(this->func->funcId)].addr, 15);
+      ctx.Asm->writeRegister(ctx.functions[func_id].addr, 15);
     } else {
       processError(&ctx, L"Function not found: " + this->func->funcId, __FILE__,
                    __func__, __LINE__);
