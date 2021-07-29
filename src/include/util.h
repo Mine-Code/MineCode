@@ -7,6 +7,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace util {
@@ -167,8 +168,8 @@ bool isIdent(T ch) {
 
 std::string wstr2str(std::wstring str);
 std::wstring str2wstr(std::string str);
-template <typename MapT, typename KeyT>
-bool in(MapT map, KeyT key) {
+template <typename KeyT, typename ValT>
+bool in(std::unordered_map<KeyT, ValT> map, KeyT key) {
   return map.count(key) == 1;
 }
 }  // namespace util
