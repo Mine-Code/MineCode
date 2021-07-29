@@ -19,4 +19,6 @@ void parserTypes::stmt::FuncDef::exec(parserCore& ctx) {
 
   ctx.stream << "# Outer Function\n";
   ctx.Asm->makeLabel(this->name + L"_return");
+
+  ctx.function_list.emplace_back(this->name);
 }

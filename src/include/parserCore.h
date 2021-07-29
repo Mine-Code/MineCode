@@ -56,6 +56,7 @@ class parserCore {
   varsType variables;
   std::unordered_map<std::string, std::string> puts;
   std::unordered_map<std::string, parserTypes::function> functions;
+  std::vector<std::wstring> function_list;
   parserWrap *wraper;
 
   parserWrap *compiler;  // used for compile
