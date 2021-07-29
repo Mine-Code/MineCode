@@ -172,6 +172,15 @@ template <typename KeyT, typename ValT>
 bool in(std::unordered_map<KeyT, ValT> map, KeyT key) {
   return map.count(key) == 1;
 }
+template <typename ValT>
+bool in(std::vector<ValT> vec, ValT val) {
+  for (auto&& elem : vec) {
+    if (elem == val) {
+      return true;
+    }
+  }
+  return false;
+}
 }  // namespace util
 
 #endif
