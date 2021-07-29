@@ -89,14 +89,14 @@ parserTypes::primary::BasePrimary& parserCore::constant() {
 }
 primary::BasePrimary& parserCore::power() {
   if (iter.peekSafe() == L"(") {
-    primary::Inner* ret = new primary::Inner;
+    auto ret = new primary::Inner;
     // inner type
     iter.next();
     ret->expr = expr();
     assertChar(")");
     return *ret;
   } else if (isFunccall(iter.peekSafe(), iter.peekSafe(1))) {
-    primary::FuncCall* ret = new primary::FuncCall;
+    auto ret = new primary::FuncCall;
     struct ExecFunc func = funcCall();
     ExecFunc* func2 = new ExecFunc;
     func2->args = func.args;
@@ -106,18 +106,18 @@ primary::BasePrimary& parserCore::power() {
     ret->func = func2;
     return *ret;
   } else if (isInt(iter.peekSafe())) {
-    primary::Immutable* ret = new primary::Immutable(Int());
+    auto ret = new primary::Immutable(Int());
     return *ret;
   } else if (isSingle(iter.peek()) && iter.peek() != L"[") {
-    primary::Variable* ret = new primary::Variable;
+    auto ret = new primary::Variable;
     ret->name = iter.next();
     return *ret;
   } else if (iter.peek() == L"[") {
-    primary::Pointer* ret = new primary::Pointer;
+    auto ret = new primary::Pointer;
     ret->pointer = ptr();
     return *ret;
   } else {
-    primary::Inner* ret = new primary::Inner;
+    auto ret = new primary::Inner;
     ret->expr = expr();
     return *ret;
   }
