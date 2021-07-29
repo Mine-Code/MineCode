@@ -9,6 +9,8 @@
 # Meson / Ninja
 builddir
 !builddir/.gitkeep
+/subprojects/*
+!subprojects/*.wrap
 
 # binary
 MineCode
