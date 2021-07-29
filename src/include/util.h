@@ -147,7 +147,7 @@ bool isInt(T text) {
 
 template <typename T>
 bool isFunccall(T text, T next) {
-  return text == L"func" && next == L"[" || next == L"(";
+  return (text == L"func" && next == L"[") || next == L"(";
 }
 
 template <typename T>
