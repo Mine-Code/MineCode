@@ -38,7 +38,7 @@ void parserTypes::stmt::Assign::exec(parserCore &ctx) {
         __FILE__, __func__, __LINE__);
   }
   // Load value
-  eval::Expr(&ctx, val, 14);
+  val.eval(ctx, 14);
 
   if (op == L"++") {
     ctx.Asm->add(1, 14, 14);

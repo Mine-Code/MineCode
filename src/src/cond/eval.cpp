@@ -82,8 +82,8 @@ void condeval::CondChild(parserCore* that, condChild cond,
     EvalCond(that, cond.child, target, L"");
   } else {
     // process val1/2
-    eval::Expr(that, cond.val1, 13);
-    eval::Expr(that, cond.val2, 14);
+    cond.val1.eval(*that, 13);
+    cond.val2.eval(*that, 14);
     that->Asm->compare(13, 14);
     Assembly::condType t;
     switch (cond.op) {

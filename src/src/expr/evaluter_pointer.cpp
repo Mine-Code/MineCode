@@ -6,7 +6,7 @@
 using namespace parserTypes;
 
 void Ptr_AddrBase(parserCore *that, primary::Pointer &obj, int dest) {
-  eval::Expr(that, obj.pointer, dest);
+  obj.pointer.eval(*that, dest);
 }
 
 void eval::Ptr(parserCore *that, primary::Pointer &obj, int dest) {
