@@ -157,7 +157,7 @@ term& parserCore::term() {
   return *ret;
 }
 Expr& parserCore::expr() {
-  struct Expr ret;
+  auto ret = new Expr;
   struct term part;
   std::wstring text = iter.peek();
 
@@ -177,7 +177,7 @@ Expr& parserCore::expr() {
 
     part.parts.emplace_back(wrap);
   }
-  ret.parts.emplace_back(part);
+  ret->parts.emplace_back(part);
   while (iter.hasData() && (iter.peek() == L"+" || iter.peek() == L"-" ||
                             isBitOpFull(iter.peek()))) {
     auto text = iter.next();
@@ -197,9 +197,9 @@ Expr& parserCore::expr() {
 
       part.parts.emplace_back(wrap);
     }
-    ret.parts.emplace_back(part);
+    ret->parts.emplace_back(part);
   }
-  return ret;
+  return *ret;
 }
 parserCore::Range parserCore::range() {
   int start = Int();
