@@ -9,7 +9,9 @@ namespace primary {
 
 class Pointer : public BasePrimary {
  public:
-  std::shared_ptr<Expr> pointer;
+  Expr& pointer;
+
+  Pointer(Expr& pointer);
 
   ~Pointer() override;
   void eval(parserCore& ctx, int dest) override;
