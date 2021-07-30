@@ -7,4 +7,7 @@ sources += 'src/expr/evaluter_expr.cpp'
 sources += 'src/expr/evaluter_expo.cpp'
 sources += 'src/expr/evaluter_var.cpp'
 sources += 'src/expr/expr.cpp'
+sources += 'src/expr/term.cpp'
+sources += 'src/expr/baseexpr.cpp'
+sources += 'src/expr/expo.cpp'
 subdir('primary')
