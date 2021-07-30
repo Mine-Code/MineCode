@@ -13,8 +13,7 @@ using namespace util;
 parserTypes::primary::BasePrimary& parserCore::value() {
   wchar_t ch = iter.peek()[0];
   if (iter.peek() == L"[") {
-    auto ret = new parserTypes::primary::Pointer;
-    ret->pointer = ptr();
+    auto ret = new parserTypes::primary::Pointer(ptr());
     return *ret;
   } else if (isalpha(ch)) {
     auto ret = new parserTypes::primary::Variable;
@@ -47,8 +46,7 @@ Expr& parserCore::ptr() {
 }
 parserTypes::primary::BasePrimary& parserCore::editable() {
   if (iter.peek() == L"[") {
-    auto ret = new parserTypes::primary::Pointer;
-    ret->pointer = ptr();
+    auto ret = new parserTypes::primary::Pointer(ptr());
     return *ret;
   } else {
     auto ret = new parserTypes::primary::Variable;
@@ -113,8 +111,7 @@ primary::BasePrimary& parserCore::power() {
     ret->name = iter.next();
     return *ret;
   } else if (iter.peek() == L"[") {
-    auto ret = new primary::Pointer;
-    ret->pointer = ptr();
+    auto ret = new primary::Pointer(ptr());
     return *ret;
   } else {
     auto ret = new primary::Inner;
