@@ -122,13 +122,13 @@ primary::BasePrimary& parserCore::power() {
   }
 }
 expo& parserCore::expo() {
-  struct expo val;
-  val.parts.emplace_back(&power());
+  auto val = new expr::expo;
+  val->parts.emplace_back(&power());
   while (iter.hasData() && iter.peek() == L"**") {
     assertChar("**");
-    val.parts.emplace_back(&power());
+    val->parts.emplace_back(&power());
   }
-  return val;
+  return *val;
 }
 term& parserCore::term() {
   auto ret = new expr::term;
