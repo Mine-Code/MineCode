@@ -6,6 +6,7 @@
 #include "expo.hpp"
 
 namespace parserTypes {
+namespace expr {
 struct expo_wrap {
   enum Type { MUL, DIV, MOD };
 
@@ -16,7 +17,11 @@ class term : public BaseExpr {
  public:
   std::vector<struct expo_wrap> parts;
 
-  void eval(parserCore& ctx) override;
+  ~term();
+
+  void eval(parserCore& ctx, int) override;
   BaseExpr& optimize() override;
 };
+
+}  // namespace expr
 }  // namespace parserTypes

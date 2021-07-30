@@ -6,4 +6,5 @@ sources += 'src/expr/evaluter_power.cpp'
 sources += 'src/expr/evaluter_expr.cpp'
 sources += 'src/expr/evaluter_expo.cpp'
 sources += 'src/expr/evaluter_var.cpp'
+sources += 'src/expr/expr.cpp'
 subdir('primary')

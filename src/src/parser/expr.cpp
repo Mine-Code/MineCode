@@ -4,10 +4,12 @@
 #include <syntaxError.h>
 #include <util.h>
 
+#include <expr/expr.hpp>
 #include <primary/all.hpp>
 
 using namespace synErr;
 using namespace parserTypes;
+using namespace parserTypes::expr;
 using namespace util;
 
 parserTypes::primary::BasePrimary& parserCore::value() {
@@ -40,7 +42,7 @@ parserTypes::primary::BasePrimary& parserCore::value() {
 Expr& parserCore::ptr() {
   assertChar("[");
   auto ret = new Expr;
-  *ret = expr();
+  expr::*ret = expr();
   assertChar("]");
   return *ret;
 }
@@ -119,7 +121,7 @@ primary::BasePrimary& parserCore::power() {
     return *ret;
   }
 }
-struct expo parserCore::expo() {
+expo parserCore::expo() {
   struct expo val;
   val.parts.emplace_back(&power());
   while (iter.hasData() && iter.peek() == L"**") {
@@ -128,8 +130,8 @@ struct expo parserCore::expo() {
   }
   return val;
 }
-struct term parserCore::term() {
-  struct term ret;
+term& parserCore::term() {
+  auto ret = new expr::term;
   {
     expo_wrap wrap;
     wrap.type = expo_wrap::MUL;
@@ -155,7 +157,7 @@ struct term parserCore::term() {
   }
   return ret;
 }
-struct Expr parserCore::expr() {
+Expr& parserCore::expr() {
   struct Expr ret;
   struct term part;
   std::wstring text = iter.peek();

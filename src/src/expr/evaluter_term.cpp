@@ -16,7 +16,7 @@ void eval::Term(parserCore *that, term obj, int dest) {
   };
   std::vector<struct offset> stackOffsets;
 
-  if (obj.isSingle()) {
+  if (obj.parts.size() == 1) {
     Expo(that, obj.parts[0].value, dest);
   } else {
     // write all

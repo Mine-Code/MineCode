@@ -5,11 +5,15 @@
 
 #include "base.hpp"
 namespace parserTypes {
+namespace expr {
 class expo : public BaseExpr {
  public:
   std::vector<primary::BasePrimary*> parts;
 
-  void eval(parserCore& ctx) override;
+  ~expo();
+
+  void eval(parserCore& ctx, int) override;
   BaseExpr& optimize() override;
 };
+}  // namespace expr
 }  // namespace parserTypes

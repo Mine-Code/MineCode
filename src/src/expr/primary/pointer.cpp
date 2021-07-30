@@ -6,5 +6,5 @@ parserTypes::primary::Pointer::Pointer(Expr& expr)
 
 parserTypes::primary::Pointer::~Pointer() {}
 void parserTypes::primary::Pointer::eval(parserCore& ctx, int dest) {
-  ::eval::Ptr(&ctx, this->pointer, dest);
+  ::eval::Ptr(&ctx, *this, dest);
 }

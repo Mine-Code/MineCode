@@ -7,7 +7,7 @@ void eval::Expo(parserCore *that, expo obj, int dest) {
   int offs = that->Asm->stack_offset;
   std::vector<int> stackOffsets;
 
-  if (obj.isSingle()) {
+  if (obj.parts.size() == 1) {
     Power(that, *obj.parts[0], dest);
   } else {
     // write all

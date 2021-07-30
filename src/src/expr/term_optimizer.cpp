@@ -10,7 +10,7 @@ term &optimize(term &val) {
   term newTerm;
   // process of mul
   for (auto part : val.parts) {
-    if (!part.value.isSingle()) {
+    if (!part.value.parts.size() == 1) {
       newTerm.parts.emplace_back(part);
     }
     if (auto imm = dynamic_cast<primary::Immutable *>(part.value.parts[0])) {

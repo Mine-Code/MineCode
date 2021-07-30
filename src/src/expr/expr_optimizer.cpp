@@ -8,7 +8,7 @@ Expr &optimize(Expr &val) {
   Expr newExpr;
   for (auto _part : val.parts) {
     auto part = optimize(_part);
-    if (part.isSingle() && part.parts[0].value.isSingle() &&
+    if (part.parts.size() == 1 && part.parts[0].value.parts.size() == 1 &&
         typeid(part.parts[0].value.parts[0]) == typeid(primary::Immutable)) {
       immutable +=
           dynamic_cast<primary::Immutable *>(part.parts[0].value.parts[0])
