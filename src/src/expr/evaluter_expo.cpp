@@ -3,7 +3,7 @@
 #include <parserTypes.h>
 using namespace parserTypes;
 
-void eval::Expo(parserCore *that, expo obj, int dest) {
+void eval::Expo(parserCore *that, expr::expo obj, int dest) {
   int offs = that->Asm->stack_offset;
   std::vector<int> stackOffsets;
 

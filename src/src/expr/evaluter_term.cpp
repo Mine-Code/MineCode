@@ -5,7 +5,7 @@
 #include <util.h>
 
 using namespace parserTypes;
-
+using namespace parserTypes::expr;
 void eval::Term(parserCore *that, term obj, int dest) {
   int offs = that->Asm->stack_offset;
   struct offset {

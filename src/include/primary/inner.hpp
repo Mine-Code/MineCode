@@ -9,7 +9,7 @@ namespace primary {
 
 class Inner : public BasePrimary {
  public:
-  Expr expr;
+  expr::Expr expr;
 
   void eval(parserCore& ctx, int dest) override;
 };

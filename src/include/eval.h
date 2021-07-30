@@ -4,9 +4,11 @@
 #include <string>
 
 namespace parserTypes {
+namespace expr {
 class Expr;
 class expo;
 class term;
+}  // namespace expr
 
 class ptr;
 namespace primary {

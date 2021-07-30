@@ -42,7 +42,7 @@ parserTypes::primary::BasePrimary& parserCore::value() {
 Expr& parserCore::ptr() {
   assertChar("[");
   auto ret = new Expr;
-  expr::*ret = expr();
+  *ret = expr();
   assertChar("]");
   return *ret;
 }
@@ -121,7 +121,7 @@ primary::BasePrimary& parserCore::power() {
     return *ret;
   }
 }
-expo parserCore::expo() {
+expo& parserCore::expo() {
   struct expo val;
   val.parts.emplace_back(&power());
   while (iter.hasData() && iter.peek() == L"**") {

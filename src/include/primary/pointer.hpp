@@ -9,9 +9,9 @@ namespace primary {
 
 class Pointer : public BasePrimary {
  public:
-  Expr& pointer;
+  expr::Expr& pointer;
 
-  Pointer(Expr& pointer);
+  Pointer(expr::Expr& pointer);
 
   ~Pointer() override;
   void eval(parserCore& ctx, int dest) override;
