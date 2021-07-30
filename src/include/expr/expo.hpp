@@ -2,9 +2,14 @@
 
 #include <primary/primary.hpp>
 #include <vector>
+
+#include "base.hpp"
 namespace parserTypes {
-struct expo {
+class expo : public BaseExpr {
+ public:
   std::vector<primary::BasePrimary*> parts;
-  bool isSingle();
+
+  void eval(parserCore& ctx) override;
+  BaseExpr& optimize() override;
 };
 }  // namespace parserTypes

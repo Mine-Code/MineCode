@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "base.hpp"
 #include "expo.hpp"
 
 namespace parserTypes {
@@ -9,10 +10,13 @@ struct expo_wrap {
   enum Type { MUL, DIV, MOD };
 
   Type type;
-  struct expo value;
+  expo value;
 };
-struct term {
+class term : public BaseExpr {
+ public:
   std::vector<struct expo_wrap> parts;
-  bool isSingle();
+
+  void eval(parserCore& ctx) override;
+  BaseExpr& optimize() override;
 };
 }  // namespace parserTypes
