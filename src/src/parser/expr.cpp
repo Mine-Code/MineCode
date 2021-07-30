@@ -38,12 +38,12 @@ parserTypes::primary::BasePrimary& parserCore::value() {
     throw "";  // do not call this
   }
 }
-struct ptr parserCore::ptr() {
+Expr& parserCore::ptr() {
   assertChar("[");
-  struct Expr* value = new struct Expr;
-  *value = expr();
+  auto ret = new Expr;
+  *ret = expr();
   assertChar("]");
-  return parserTypes::ptr(value);
+  return *ret;
 }
 parserTypes::primary::BasePrimary& parserCore::editable() {
   if (iter.peek() == L"[") {

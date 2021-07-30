@@ -73,7 +73,7 @@ class parserCore {
   std::wstring ident();
 
   Arg arg();
-  struct parserTypes::ptr ptr();
+  parserTypes::Expr &ptr();
 
   parserTypes::primary::BasePrimary &editable();
   parserTypes::primary::BasePrimary &constant();
