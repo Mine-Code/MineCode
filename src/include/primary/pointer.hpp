@@ -1,7 +1,5 @@
 #pragma once
 
-#include <expr/ptr.hpp>
-
 #include "primary.hpp"
 
 namespace parserTypes {
@@ -9,7 +7,7 @@ namespace primary {
 
 class Pointer : public BasePrimary {
  public:
-  ptr pointer;
+  std::shared_ptr<Expr> pointer;
 
   ~Pointer() override;
   void eval(parserCore& ctx, int dest) override;
