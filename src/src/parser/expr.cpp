@@ -41,8 +41,7 @@ parserTypes::primary::BasePrimary& parserCore::value() {
 }
 Expr& parserCore::ptr() {
   assertChar("[");
-  auto ret = new Expr;
-  *ret = expr();
+  auto ret = &expr();
   assertChar("]");
   return *ret;
 }
