@@ -71,7 +71,7 @@ void condeval::CondChild(parserCore* that, condChild cond,
         that->stream << "b " << target << "\n";
       }
     } else if (Pointer* ptr = dynamic_cast<Pointer*>(cond.single)) {
-      eval::Ptr(that, ptr->pointer);
+      eval::Ptr(that, *ptr);
       that->Asm->compareImm(13, compareTarget);
     } else if (dynamic_cast<Str*>(cond.single)) {
       synErr::processError(

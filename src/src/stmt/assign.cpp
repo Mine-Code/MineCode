@@ -30,7 +30,7 @@ void parserTypes::stmt::Assign::exec(parserCore &ctx) {
       }
     }
   } else if (Pointer *pointer = dynamic_cast<Pointer *>(&this->dest)) {
-    eval::Ptr_Addr(&ctx, pointer->pointer, 13);
+    eval::Ptr_Addr(&ctx, *pointer, 13);
   } else {
     processError(
         &ctx,
