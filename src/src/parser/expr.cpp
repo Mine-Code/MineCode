@@ -136,7 +136,7 @@ term& parserCore::term() {
     expo_wrap wrap;
     wrap.type = expo_wrap::MUL;
     wrap.value = expo();
-    ret.parts.emplace_back(wrap);
+    ret->parts.emplace_back(wrap);
   }
   while (iter.hasData() &&
          (iter.peek() == L"*" || iter.peek() == L"/" || iter.peek() == L"%")) {
@@ -153,9 +153,9 @@ term& parserCore::term() {
       Elem.type = expo_wrap::MOD;
     }
     Elem.value = expo();
-    ret.parts.emplace_back(Elem);
+    ret->parts.emplace_back(Elem);
   }
-  return ret;
+  return *ret;
 }
 Expr& parserCore::expr() {
   struct Expr ret;
