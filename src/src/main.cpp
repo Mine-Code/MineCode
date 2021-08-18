@@ -38,13 +38,13 @@ int main(int argc, char *argv[]) {
       std::exit(0);
     } else if (arg == "-J") {
       if (isAssembly) {
-        std::wcout << "Error: cannnot set Cafecode mode when compile only mode";
+        std::wcout << "Error: cannot set Cafecode mode when compile only mode";
         std::exit(3);
       }
       isCafecode = true;
     } else if (arg == "-c") {
       if (isCafecode) {
-        std::wcout << "Error: cannnot set compile only mode when Cafecode mode";
+        std::wcout << "Error: cannot set compile only mode when Cafecode mode";
         std::exit(3);
       }
       isAssembly = true;
