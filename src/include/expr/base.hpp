@@ -12,6 +12,11 @@ class BaseExpr {
 
   template <typename T>
   bool is() {
+    return this->as<T>() != nullptr;
+  }
+
+  template <typename T>
+  T* as() {
     return dynamic_cast<T*>(this);
   }
 };
