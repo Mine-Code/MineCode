@@ -7,4 +7,5 @@ sources += 'src/expr/expr.cpp'
 sources += 'src/expr/term.cpp'
 sources += 'src/expr/baseexpr.cpp'
 sources += 'src/expr/expo.cpp'
+sources += 'src/expr/inverted.cpp'
 subdir('primary')
