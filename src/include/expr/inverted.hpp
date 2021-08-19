@@ -11,7 +11,6 @@ class Inverted : public BaseExpr {
   void eval(parserCore& ctx, int) override;
   BaseExpr& optimize() override;
 
- private:
   BaseExpr& expr_;
 };
 }  // namespace expr
