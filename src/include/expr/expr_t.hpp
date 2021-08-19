@@ -15,11 +15,6 @@ class Expr : public BaseExpr {
 
   void eval(parserCore& ctx, int) override;
   BaseExpr& optimize() override;
-
-  template <typename T>
-  bool is() {
-    return dynamic_cast<T*>(this);
-  }
 };
 }  // namespace expr
 }  // namespace parserTypes
