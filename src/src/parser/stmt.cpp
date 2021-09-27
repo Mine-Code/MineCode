@@ -139,11 +139,11 @@ parserCore::Arg parserCore::arg() {
 stmt::Assign& parserCore::assign() {
   auto ret = new ::stmt::Assign(editable());
   ret->op = iter.next();
-  struct Expr value;
+  expr::Expr value;
   if (!(ret->op == L"++" || ret->op == L"--")) {
     ret->val = expr();
   } else {
-    ret->val = *(::Expr*)nullptr;
+    ret->val = *(expr::Expr*)nullptr;
   }
   return *ret;
 }

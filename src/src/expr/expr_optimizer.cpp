@@ -2,13 +2,13 @@
 
 #include <primary/immutable.hpp>
 using namespace parserTypes;
-term &optimize(term &);
-Expr &optimize(Expr &val) {
+expr::term &optimize(expr::term &);
+expr::Expr &optimize(expr::Expr &val) {
   int immutable = 0;
-  Expr newExpr;
+  expr::Expr newExpr;
   for (auto _part : val.parts) {
     auto part = optimize(_part);
-    if (part.isSingle() && part.parts[0].value.isSingle() &&
+    if (part.parts.size() == 1 && part.parts[0].value.parts.size() == 1 &&
         typeid(part.parts[0].value.parts[0]) == typeid(primary::Immutable)) {
       immutable +=
           dynamic_cast<primary::Immutable *>(part.parts[0].value.parts[0])
@@ -20,14 +20,14 @@ Expr &optimize(Expr &val) {
   if (immutable != 0) {
     auto value = new primary::Immutable(immutable);
 
-    expo exponent;
+    expr::expo exponent;
     exponent.parts.emplace_back(value);
 
-    expo_wrap wrap;
-    wrap.type = expo_wrap::MUL;
+    expr::expo_wrap wrap;
+    wrap.type = expr::expo_wrap::MUL;
     wrap.value = exponent;
 
-    term Term;
+    expr::term Term;
     Term.parts.emplace_back(wrap);
 
     val.parts.emplace_back(Term);

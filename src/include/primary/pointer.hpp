@@ -1,6 +1,6 @@
 #pragma once
 
-#include <expr/ptr.hpp>
+#include <memory>
 
 #include "primary.hpp"
 
@@ -9,7 +9,9 @@ namespace primary {
 
 class Pointer : public BasePrimary {
  public:
-  ptr pointer;
+  expr::Expr& pointer;
+
+  Pointer(expr::Expr& pointer);
 
   ~Pointer() override;
   void eval(parserCore& ctx, int dest) override;

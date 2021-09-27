@@ -4,17 +4,18 @@
 #include <syntaxError.h>
 #include <util.h>
 
+#include <expr/expr.hpp>
 #include <primary/all.hpp>
 
 using namespace synErr;
 using namespace parserTypes;
+using namespace parserTypes::expr;
 using namespace util;
 
 parserTypes::primary::BasePrimary& parserCore::value() {
   wchar_t ch = iter.peek()[0];
   if (iter.peek() == L"[") {
-    auto ret = new parserTypes::primary::Pointer;
-    ret->pointer = ptr();
+    auto ret = new parserTypes::primary::Pointer(ptr());
     return *ret;
   } else if (isalpha(ch)) {
     auto ret = new parserTypes::primary::Variable;
@@ -38,17 +39,15 @@ parserTypes::primary::BasePrimary& parserCore::value() {
     throw "";  // do not call this
   }
 }
-struct ptr parserCore::ptr() {
+Expr& parserCore::ptr() {
   assertChar("[");
-  struct Expr* value = new struct Expr;
-  *value = expr();
+  auto ret = &expr();
   assertChar("]");
-  return parserTypes::ptr(value);
+  return *ret;
 }
 parserTypes::primary::BasePrimary& parserCore::editable() {
   if (iter.peek() == L"[") {
-    auto ret = new parserTypes::primary::Pointer;
-    ret->pointer = ptr();
+    auto ret = new parserTypes::primary::Pointer(ptr());
     return *ret;
   } else {
     auto ret = new parserTypes::primary::Variable;
@@ -113,8 +112,7 @@ primary::BasePrimary& parserCore::power() {
     ret->name = iter.next();
     return *ret;
   } else if (iter.peek() == L"[") {
-    auto ret = new primary::Pointer;
-    ret->pointer = ptr();
+    auto ret = new primary::Pointer(ptr());
     return *ret;
   } else {
     auto ret = new primary::Inner;
@@ -122,22 +120,22 @@ primary::BasePrimary& parserCore::power() {
     return *ret;
   }
 }
-struct expo parserCore::expo() {
-  struct expo val;
-  val.parts.emplace_back(&power());
+expo& parserCore::expo() {
+  auto val = new expr::expo;
+  val->parts.emplace_back(&power());
   while (iter.hasData() && iter.peek() == L"**") {
     assertChar("**");
-    val.parts.emplace_back(&power());
+    val->parts.emplace_back(&power());
   }
-  return val;
+  return *val;
 }
-struct term parserCore::term() {
-  struct term ret;
+term& parserCore::term() {
+  auto ret = new expr::term;
   {
     expo_wrap wrap;
     wrap.type = expo_wrap::MUL;
     wrap.value = expo();
-    ret.parts.emplace_back(wrap);
+    ret->parts.emplace_back(wrap);
   }
   while (iter.hasData() &&
          (iter.peek() == L"*" || iter.peek() == L"/" || iter.peek() == L"%")) {
@@ -154,12 +152,12 @@ struct term parserCore::term() {
       Elem.type = expo_wrap::MOD;
     }
     Elem.value = expo();
-    ret.parts.emplace_back(Elem);
+    ret->parts.emplace_back(Elem);
   }
-  return ret;
+  return *ret;
 }
-struct Expr parserCore::expr() {
-  struct Expr ret;
+Expr& parserCore::expr() {
+  auto ret = new Expr;
   struct term part;
   std::wstring text = iter.peek();
 
@@ -179,7 +177,7 @@ struct Expr parserCore::expr() {
 
     part.parts.emplace_back(wrap);
   }
-  ret.parts.emplace_back(part);
+  ret->parts.emplace_back(part);
   while (iter.hasData() && (iter.peek() == L"+" || iter.peek() == L"-" ||
                             isBitOpFull(iter.peek()))) {
     auto text = iter.next();
@@ -199,9 +197,9 @@ struct Expr parserCore::expr() {
 
       part.parts.emplace_back(wrap);
     }
-    ret.parts.emplace_back(part);
+    ret->parts.emplace_back(part);
   }
-  return ret;
+  return *ret;
 }
 parserCore::Range parserCore::range() {
   int start = Int();

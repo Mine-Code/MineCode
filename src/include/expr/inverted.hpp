@@ -1,19 +1,17 @@
 #pragma once
 
-#include <primary/primary.hpp>
-#include <vector>
-
 #include "base.hpp"
 namespace parserTypes {
 namespace expr {
-class expo : public BaseExpr {
+class Inverted : public BaseExpr {
  public:
-  std::vector<primary::BasePrimary*> parts;
-
-  ~expo();
+  explicit Inverted(const BaseExpr& expr);
+  ~Inverted();
 
   void eval(parserCore& ctx, int) override;
   BaseExpr& optimize() override;
+
+  BaseExpr& expr_;
 };
 }  // namespace expr
 }  // namespace parserTypes

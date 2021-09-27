@@ -4,22 +4,22 @@
 
 using namespace parserTypes;
 
-term &optimize(term &val) {
+expr::term &optimize(expr::term &val) {
   int immutable_mul = 0;
   int immutable_div = 0;
-  term newTerm;
+  expr::term newTerm;
   // process of mul
   for (auto part : val.parts) {
-    if (!part.value.isSingle()) {
+    if (!part.value.parts.size() == 1) {
       newTerm.parts.emplace_back(part);
     }
     if (auto imm = dynamic_cast<primary::Immutable *>(part.value.parts[0])) {
       auto val = imm->value;
-      if (part.type == expo_wrap::MUL)
+      if (part.type == expr::expo_wrap::MUL)
         immutable_mul *= val;
-      else if (part.type == expo_wrap::DIV)
+      else if (part.type == expr::expo_wrap::DIV)
         immutable_div *= val;
-      else if (part.type == expo_wrap::MOD)
+      else if (part.type == expr::expo_wrap::MOD)
         newTerm.parts.emplace_back(part);
     }
   }
@@ -30,11 +30,11 @@ term &optimize(term &val) {
   {  // add mul
     auto powerElem = new primary::Immutable(immutable_mul);
 
-    expo expoElem;
+    expr::expo expoElem;
     expoElem.parts.emplace_back(powerElem);
 
-    expo_wrap wrapElem;
-    wrapElem.type = expo_wrap::MUL;
+    expr::expo_wrap wrapElem;
+    wrapElem.type = expr::expo_wrap::MUL;
     wrapElem.value = expoElem;
 
     val.parts.emplace_back(wrapElem);
@@ -42,11 +42,11 @@ term &optimize(term &val) {
   {  // add div
     auto powerElem = new primary::Immutable(immutable_div);
 
-    expo expoElem;
+    expr::expo expoElem;
     expoElem.parts.emplace_back(powerElem);
 
-    expo_wrap wrapElem;
-    wrapElem.type = expo_wrap::DIV;
+    expr::expo_wrap wrapElem;
+    wrapElem.type = expr::expo_wrap::DIV;
     wrapElem.value = expoElem;
 
     val.parts.emplace_back(wrapElem);

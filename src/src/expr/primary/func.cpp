@@ -13,7 +13,7 @@ void parserTypes::primary::FuncCall::eval(parserCore& ctx, int dest) {
   int n = 3;
 
   for (auto arg : this->func->args) {
-    eval::Expr(&ctx, arg, n++);
+    arg.eval(ctx, n++);
   }
 
   // call function

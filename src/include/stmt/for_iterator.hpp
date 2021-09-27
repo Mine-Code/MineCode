@@ -12,7 +12,7 @@ class ForIter : public BaseFor {
   virtual ~ForIter();
 
   std::wstring target;
-  ::parserTypes::Expr iter;
+  ::parserTypes::expr::Expr iter;
   virtual void exec(parserCore& ctx);
 };
 }  // namespace stmt

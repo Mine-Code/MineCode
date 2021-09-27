@@ -27,8 +27,8 @@ struct condChild {
   struct Cond child;
   primary::BasePrimary *single;
 
-  Expr val1;
+  expr::Expr val1;
   Type op;
-  Expr val2;
+  expr::Expr val2;
 };
 }  // namespace parserTypes

@@ -6,7 +6,7 @@
 #include <primary/all.hpp>
 #include <stmt/assign.hpp>
 parserTypes::stmt::Assign::Assign(parserTypes::primary::BasePrimary &dest)
-    : dest(dest), op(L"="), val(::parserTypes::Expr()) {}
+    : dest(dest), op(L"="), val(::parserTypes::expr::Expr()) {}
 parserTypes::stmt::Assign::~Assign() {}
 void parserTypes::stmt::Assign::exec(parserCore &ctx) {
   using namespace parserTypes::primary;
@@ -30,7 +30,7 @@ void parserTypes::stmt::Assign::exec(parserCore &ctx) {
       }
     }
   } else if (Pointer *pointer = dynamic_cast<Pointer *>(&this->dest)) {
-    eval::Ptr_Addr(&ctx, pointer->pointer, 13);
+    eval::Ptr_Addr(&ctx, *pointer, 13);
   } else {
     processError(
         &ctx,
@@ -38,7 +38,7 @@ void parserTypes::stmt::Assign::exec(parserCore &ctx) {
         __FILE__, __func__, __LINE__);
   }
   // Load value
-  eval::Expr(&ctx, val, 14);
+  val.eval(ctx, 14);
 
   if (op == L"++") {
     ctx.Asm->add(1, 14, 14);

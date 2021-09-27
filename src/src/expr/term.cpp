@@ -4,10 +4,16 @@
 #include <syntaxError.h>
 #include <util.h>
 
-using namespace parserTypes;
+#include <expr/term.hpp>
 
-void eval::Term(parserCore *that, term obj, int dest) {
-  int offs = that->Asm->stack_offset;
+using namespace parserTypes;
+using namespace parserTypes::expr;
+parserTypes::expr::term::~term() {}
+parserTypes::expr::BaseExpr& parserTypes::expr::term::optimize() {
+  return *this;
+}
+void parserTypes::expr::term::eval(parserCore& ctx, int dest) {
+  int offs = ctx.Asm->stack_offset;
   struct offset {
     enum Type { MUL, DIV, MOD };
 
@@ -16,14 +22,14 @@ void eval::Term(parserCore *that, term obj, int dest) {
   };
   std::vector<struct offset> stackOffsets;
 
-  if (obj.isSingle()) {
-    Expo(that, obj.parts[0].value, dest);
+  if (this->parts.size() == 1) {
+    this->parts[0].value.eval(ctx, dest);
   } else {
     // write all
-    for (auto elem : obj.parts) {
-      Expo(that, elem.value, dest);
+    for (auto elem : this->parts) {
+      elem.value.eval(ctx, dest);
 
-      int offset = that->Asm->push(dest);
+      int offset = ctx.Asm->push(dest);
       offset::Type type;
       switch (elem.type) {
         case expo_wrap::MUL:
@@ -36,7 +42,7 @@ void eval::Term(parserCore *that, term obj, int dest) {
           type = offset::Type::MOD;
           break;
         default:
-          synErr::processError(that, L"Unknown expr_wrap type ", __FILE__,
+          synErr::processError(&ctx, L"Unknown expr_wrap type ", __FILE__,
                                __func__, __LINE__);
           std::terminate();  // dead code
       }
@@ -48,25 +54,25 @@ void eval::Term(parserCore *that, term obj, int dest) {
       stackOffsets.emplace_back(element);
     }
 
-    that->Asm->writeRegister(1, dest);  // init dest
+    ctx.Asm->writeRegister(1, dest);  // init dest
     for (auto a : stackOffsets) {
-      that->Asm->pop(a.offset, 14);
+      ctx.Asm->pop(a.offset, 14);
       switch (a.type) {
         case offset::MUL:
-          that->stream << "mullw r" << dest << ", r" << dest << ", r14"
-                       << std::endl;
+          ctx.stream << "mullw r" << dest << ", r" << dest << ", r14"
+                     << std::endl;
           break;
         case offset::DIV:
-          that->stream << "divw r" << dest << ", r" << dest << ", r14"
-                       << std::endl;
+          ctx.stream << "divw r" << dest << ", r" << dest << ", r14"
+                     << std::endl;
           break;
         case offset::MOD:
-          that->stream << "#mod r" << dest << ", r" << dest << ", r14"
-                       << std::endl;
+          ctx.stream << "#mod r" << dest << ", r" << dest << ", r14"
+                     << std::endl;
           break;
       }
     }
   }
 
-  that->Asm->stack_offset = offs;
+  ctx.Asm->stack_offset = offs;
 }

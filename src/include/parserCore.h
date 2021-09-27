@@ -25,9 +25,11 @@ class ExecFunc;
 
 class ptr;
 
+namespace expr {
 class expo;
 class term;
 class Expr;
+}  // namespace expr
 
 namespace value {
 class BaseValue;
@@ -73,16 +75,16 @@ class parserCore {
   std::wstring ident();
 
   Arg arg();
-  struct parserTypes::ptr ptr();
+  parserTypes::expr::Expr &ptr();
 
   parserTypes::primary::BasePrimary &editable();
   parserTypes::primary::BasePrimary &constant();
   parserTypes::primary::BasePrimary &value();
 
   struct parserTypes::primary::BasePrimary &power();
-  struct parserTypes::expo expo();
-  struct parserTypes::term term();
-  struct parserTypes::Expr expr();
+  parserTypes::expr::expo &expo();
+  parserTypes::expr::term &term();
+  parserTypes::expr::Expr &expr();
 
   struct parserTypes::Cond cond();
   struct parserTypes::condAnd condAnd();

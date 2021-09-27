@@ -10,7 +10,7 @@ class Expr : public BaseStmt {
  public:
   ~Expr();
 
-  ::parserTypes::Expr val;
+  ::parserTypes::expr::Expr val;
   void exec(parserCore& ctx) override;
 };
 }  // namespace stmt
