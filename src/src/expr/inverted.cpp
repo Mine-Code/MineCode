@@ -1,5 +1,7 @@
+#include <myassert.h>
 #include <parserCore.h>
 #include <parserTypes.h>
+#include <syntaxError.h>
 
 #include <expr/inverted.hpp>
 
@@ -15,4 +17,8 @@ BaseExpr& Inverted::optimize() {
 
   return *this;
 }
-void Inverted::eval(parserCore& ctx, int dest) {}
+void Inverted::eval(parserCore& ctx, int dest) {
+  expr_.eval(ctx, dest);
+  synErr::processError(&ctx, L"Not Implemented", __FILE__, __func_get,
+                       __LINE__);
+}
