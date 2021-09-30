@@ -6,19 +6,7 @@
 !.vscode/settings.json
 !.vscode/workspace.code-workspace
 
-# Meson / Ninja
-builddir
-!builddir/.gitkeep
-/subprojects/*
-!subprojects/*.wrap
-
-# binary
-MineCode
-
 # https://github.com/github/gitignore/blob/master/C++.gitignore
-
-# Prerequisites
-*.d
 
 # Compiled Object files
 *.slo
@@ -26,27 +14,12 @@ MineCode
 *.o
 *.obj
 
-# Precompiled Headers
-*.gch
-*.pch
-
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
 # Executables
 *.exe
 *.out
 *.app
-Makefile
