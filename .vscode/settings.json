@@ -2,9 +2,7 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "v run MineCode",
-                "isAsync": true,
-                "silent": true
+                "cmd": "v run MineCode"
             }
         ]
     },
