@@ -1,7 +1,0 @@
-sources += 'src/expr/primary/base.cpp'
-sources += 'src/expr/primary/immutable.cpp'
-sources += 'src/expr/primary/expr.cpp'
-sources += 'src/expr/primary/func.cpp'
-sources += 'src/expr/primary/variable.cpp'
-sources += 'src/expr/primary/pointer.cpp'
-sources += 'src/expr/primary/str.cpp'
