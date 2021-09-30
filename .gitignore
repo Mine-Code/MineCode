@@ -6,6 +6,9 @@
 !.vscode/settings.json
 !.vscode/workspace.code-workspace
 
+# V language
+/vls.log
+
 # https://github.com/github/gitignore/blob/master/C++.gitignore
 
 # Compiled Object files
