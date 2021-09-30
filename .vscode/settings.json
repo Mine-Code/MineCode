@@ -2,12 +2,14 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "v run . ",
+                "cmd": "v run MineCode",
                 "isAsync": true,
                 "silent": true
             }
         ]
     },
+    "v.vls.enable": true,
+    "v.vls.customPath": "/home/syoch/.local/bin/vls",
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
