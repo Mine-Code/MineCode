@@ -8,6 +8,18 @@
             }
         ]
     },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".github": true,
+        "docs": true,
+        "mcls": true,
+        "demo": true
+    },
     "files.associations": {
         "*.mc": "json",
         "*.meson": "meson",
