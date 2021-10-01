@@ -2,7 +2,7 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "v run MineCode"
+                "cmd": "v run ."
             }
         ]
     },
