@@ -22,7 +22,7 @@ str = "\"", {ascii}, "\"";
 
 ```
 ua_asg = lvalue, "++" | "--"
-ub_asg = "++" | "--", value
+ub_asg = "++" | "--", lvalue
 assign = lvalue, operators, "=", rvalue
 subexpr = "(", expr, ")"
 standard= expr, operator, expr
