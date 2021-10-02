@@ -93,7 +93,12 @@ args = arg, {"*", arg}
 
 ## if
 
-`if = "if" , "(" cond, ")", ":"`
+```
+if = \
+  "if", cond, ":", block,
+  {"elif, cond, ":", block},
+  "else, ":", block
+```
 
 ## func
 
