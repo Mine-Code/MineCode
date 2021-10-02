@@ -15,10 +15,15 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
+        ".vscode": true,
+        "vls.log": true,
         ".github": true,
         "docs": true,
         "mcls": true,
-        "demo": true
+        "demo": true,
+        "LICENSE": true,
+        ".gitignore": true,
+        "README.md": true
     },
     "files.associations": {
         "*.mc": "json",
