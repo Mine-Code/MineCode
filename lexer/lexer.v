@@ -7,7 +7,7 @@ struct Lexer {
 	ch            rune
 }
 
-fn new(input string) Lexer {
+pub fn new(input string) Lexer {
 	return Lexer{
 		input: input
 		position: 0
