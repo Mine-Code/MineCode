@@ -15,7 +15,7 @@ pub fn new(input string) Lexer {
 
 fn (mut it Lexer) next_char() {
 	if it.position >= it.input.len {
-		it.ch = 0
+		it.ch = -1
 	} else {
 		it.ch = it.input[it.position]
 	}
@@ -27,9 +27,14 @@ fn (mut it Lexer) next() ?string {
 		return none
 	}
 
-	ch := it.input[it.position]
-	print('${ch:c}')
-	it.position += 1
+	mut ret := ''
 
-	return ''
+	for it.ch != `\n` || it.position >= it.input.len {
+		ret += it.ch.str()
+		it.next_char()
+	}
+
+	it.next_char() // skip endline
+
+	return ret
 }
