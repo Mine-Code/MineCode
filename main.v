@@ -1,2 +1,4 @@
+import lexer
+
 fn main() {
 }
