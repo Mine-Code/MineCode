@@ -13,8 +13,12 @@ pub fn new(input string) Lexer {
 	}
 }
 
+fn (this Lexer) is_out_of_range() bool {
+	return this.position >= this.input.len
+}
+
 fn (mut it Lexer) next_char() {
-	if it.position >= it.input.len {
+	if it.is_out_of_range() {
 		it.ch = -1
 	} else {
 		it.ch = it.input[it.position]
@@ -23,13 +27,13 @@ fn (mut it Lexer) next_char() {
 }
 
 fn (mut it Lexer) next() ?string {
-	if it.position >= it.input.len {
+	if it.is_out_of_range() {
 		return none
 	}
 
 	mut ret := ''
 
-	for it.ch != `\n` || it.position >= it.input.len {
+	for it.ch != `\n` && !it.is_out_of_range() {
 		ret += it.ch.str()
 		it.next_char()
 	}
