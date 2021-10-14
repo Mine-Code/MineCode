@@ -8,7 +8,7 @@ mut:
 	lines []string
 }
 
-fn (mut this Lexer) preprocess() {
+pub fn (mut this Lexer) preprocess() {
 	this.lines = this.input.split('\n')
 }
 
