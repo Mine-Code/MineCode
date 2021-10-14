@@ -1,15 +1,27 @@
 module lexer
 
+struct Line {
+	line   string
+	number int
+	depth  int
+}
+
 pub struct Lexer {
 pub:
 	input string [required]
 mut:
 	pos   int
-	lines []string
+	lines []Line
 }
 
 pub fn (mut this Lexer) preprocess() {
-	this.lines = this.input.split('\n')
+	for i, line in this.input.split('\n') {
+		this.lines << Line{
+			line: line
+			number: i
+			depth: 0
+		}
+	}
 }
 
 fn (mut it Lexer) next() ?Token {
@@ -22,6 +34,6 @@ fn (mut it Lexer) next() ?Token {
 	it.pos += 1
 
 	return IdentifierToken{
-		val: line
+		val: '$line.number| $line.depth> $line.line'
 	}
 }
