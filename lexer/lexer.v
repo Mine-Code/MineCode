@@ -13,7 +13,7 @@ fn (mut this Lexer) preprocess() {
 }
 
 fn (mut it Lexer) next() ?Token {
-	if it.pos > it.lines.len {
+	if it.pos >= it.lines.len {
 		return none
 	}
 
