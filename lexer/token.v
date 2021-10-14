@@ -1,24 +1,40 @@
 module lexer
 
-pub enum TokenKind {
-	// Base Tokens
-	tok_integer
-	tok_float
-	tok_string
-	tok_identifier
-	// Keywords
-	tok_for
-	tok_if
-	tok_else
-	tok_while
-	tok_return
-	tok_break
+pub struct NumberToken {
+pub:
+	val f64
 }
 
-pub struct Token {
+pub struct StringToken {
 pub:
-	kind TokenKind
+	val string
 }
+
+pub struct IdentifierToken {
+pub:
+	val string
+}
+
+pub enum Keyword {
+	kw_for
+	kw_if
+	kw_else
+	kw_while
+	kw_return
+	kw_break
+}
+
+pub struct KeywordToken {
+pub:
+	val Keyword
+}
+
+pub struct OperatorToken {
+pub:
+	val string
+}
+
+type Token = IdentifierToken | KeywordToken | NumberToken | OperatorToken | StringToken
 
 fn a() {
 }
