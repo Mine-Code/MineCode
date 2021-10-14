@@ -1,44 +1,27 @@
 module lexer
 
-struct Lexer {
+pub struct Lexer {
+pub:
+	input string [required]
 mut:
-	input    []rune [required]
-	position usize
-	ch       rune
+	pos   int
+	lines []string
 }
 
-pub fn new(input string) Lexer {
-	return Lexer{
-		input: input.runes()
-	}
+fn (mut this Lexer) preprocess() {
+	this.lines = this.input.split('\n')
 }
 
-fn (this Lexer) is_out_of_range() bool {
-	return this.position >= this.input.len
-}
-
-fn (mut it Lexer) next_char() {
-	if it.is_out_of_range() {
-		it.ch = -1
-	} else {
-		it.ch = it.input[it.position]
-	}
-	it.position += 1
-}
-
-fn (mut it Lexer) next() ?string {
-	if it.is_out_of_range() {
+fn (mut it Lexer) next() ?Token {
+	if it.pos > it.lines.len {
 		return none
 	}
 
-	mut ret := ''
+	line := it.lines[it.pos]
 
-	for it.ch != `\n` && !it.is_out_of_range() {
-		ret += it.ch.str()
-		it.next_char()
+	it.pos += 1
+
+	return IdentifierToken{
+		val: line
 	}
-
-	it.next_char() // skip endline
-
-	return ret
 }
