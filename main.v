@@ -3,7 +3,7 @@ import os
 
 fn main() {
 	src := os.read_file('tests/alltest') or { panic("Can't open file") }
-	lexer := lexer.Lexer{
+	mut lexer := lexer.Lexer{
 		input: src
 	}
 	lexer.preprocess()
