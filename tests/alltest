@@ -1,11 +1,11 @@
 mcl hoge
 func fn():
   for i in 1..10:
-    j = 0
-    while j < i:
+     j = 0
+     while j < i:
       if j == 0:
         print("*", end="")
-    
+                     
       else:
         print(" ", end="")
       j++
