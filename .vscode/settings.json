@@ -2,7 +2,7 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "python3 __main__.py"
+                "cmd": "python3 -m MineCode"
             }
         ]
     },
