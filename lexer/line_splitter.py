@@ -8,7 +8,7 @@ class Line:
         self.depth = depth
 
     def __str__(self):
-        return f"{str(self.line_number).rjust(5)}${str(self.depth).ljust(5)}: {self.line}"
+        return f"{str(self.line_number).rjust(5)}|{str(self.depth).ljust(5)}: {self.line}"
 
 
 def lineSplitter(src: str) -> Iterable[Line]:
