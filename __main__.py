@@ -1,6 +1,8 @@
-from .lexer import token
+from .lexer.lexer import Lexer
+from .lexer.line_splitter import lineSplitter
 
-print(
-    token.NumberToken(1),
-    token.OperatorToken('+'),
-)
+with open("MineCode/tests/alltest", "r") as f:
+    src = f.read()
+
+for line in lineSplitter(src):
+    print(line)
