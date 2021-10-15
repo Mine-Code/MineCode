@@ -2,7 +2,7 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "v run ."
+                "cmd": "python3 __main__.py"
             }
         ]
     },
