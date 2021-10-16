@@ -14,9 +14,11 @@ class Tokenizer:
         self.input_index = 0
 
     def get_char(self):
+        if not self.has_data():
+            return ""
         return self.input_string[self.input_index]
 
-    def read_char(self):
+    def read_char(self) -> str:
         ch = self.get_char()
         self.input_index += 1
         return ch
