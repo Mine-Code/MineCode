@@ -38,7 +38,17 @@ class Tokenizer:
         if self.get_char() in string.digits:
             return self.read_number()
 
+        if self.get_char() in string.ascii_lowercase:
+            return self.read_identifier()
+
         return self.read_char()
+
+    def read_identifier(self) -> Token:
+        value = ""
+        while self.get_char() in string.ascii_lowercase:
+            value += self.read_char()
+
+        return IdentifierToken(value)
 
     def read_string(self) -> Token:
         self.expect('"')
