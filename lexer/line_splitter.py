@@ -1,4 +1,4 @@
-from typing import List, Tuple, Union
+from typing import Iterable, List, Tuple, Union
 
 
 class Line:
@@ -6,17 +6,27 @@ class Line:
         self.line = line
         self.line_number = line_number
         self.indent = indent
-        self.children = []
+        self.children: Iterable[Line] = []
 
-    def __str__(self):
+    def to_str(self, depth: int = 0) -> str:
         line = str(self.line_number).rjust(5)
         indent = str(self.indent).ljust(5)
-        ret = f"{line}|{indent}: {self.line}"
 
-        for child in self.children:
-            ret += "\n" + " " + str(child)
+        lines = []
 
-        return ret
+        lines = [
+            f"{line}|{indent}: {self.line}",
+            *[child.to_str(depth=depth + 1) for child in self.children]
+        ]
+
+        lines = [
+            " "*depth + line
+            for line in lines
+        ]
+        return "\n".join(lines)
+
+    def __str__(self) -> str:
+        return self.to_str()
 
     def is_empty(self) -> bool:
         return self.line == ""
