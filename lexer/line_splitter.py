@@ -72,12 +72,15 @@ class LineSplitter:
 
     def split(self, until=-1) -> Iterable[Line]:
         while self.has_line():
-            line = self.read_line()
+            line = self.peek_line()
             if line.is_empty():
+                self.consume()
                 continue
 
             if line.indent <= until:
                 break
+
+            self.consume()
 
             if self.has_line() and self.peek_line().indent > line.indent:
                 line.children = [*self.split(until=line.indent)]
