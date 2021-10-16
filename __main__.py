@@ -5,5 +5,4 @@ with open("MineCode/tests/alltest", "r") as f:
 
 splitter = LineSplitter(src)
 for line in splitter.split():
-    pass
     print(line)
