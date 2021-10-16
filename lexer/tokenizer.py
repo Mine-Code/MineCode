@@ -33,9 +33,10 @@ class Tokenizer:
         if self.get_char() == "\"":
             return self.read_string()
 
-        return self.read_char()
         if self.get_char() in string.digits:
             return self.read_number()
+
+        return self.read_char()
 
     def read_string(self) -> Token:
         self.expect('"')
@@ -49,7 +50,27 @@ class Tokenizer:
         return StringToken(value)
 
     def read_number(self) -> Token:
-        pass
+        sign = 1
+        value = 0
+        if self.get_char() == '-':
+            sign = -1
+            self.read_char()
+
+        if self.get_char() == '0':
+            self.read_char()
+            mode = self.read_char()
+            if mode == 'x':
+                value = self.read_hex()
+            elif mode == 'o':
+                value = self.read_oct()
+            elif mode == 'b':
+                value = self.read_bin()
+            else:
+                value = self.read_dec()
+        else:
+            value = self.read_dec()
+
+        return NumberToken(value * sign)
 
     def tokenize(self) -> Iterable[Token]:
         while self.has_data():
