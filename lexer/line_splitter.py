@@ -8,22 +8,25 @@ class Line:
         self.indent = indent
         self.children: Iterable[Line] = []
 
-    def to_str(self, depth: int = 0) -> str:
-        lines = []
-
+    def to_str(self) -> str:
         lines = [
-            f"{self.line}",
-            *[child.to_str(depth=depth + 1) for child in self.children]
+            f"{self.line}"
         ]
+        for child in self.children:
+            for line in child.to_str().splitlines():
+                lines.append(line)
 
         lines = [
-            "| "*depth + line
+            "| " + line
             for line in lines
         ]
         return "\n".join(lines)
 
     def __str__(self) -> str:
         return self.to_str()
+
+    def __repr__(self) -> str:
+        return f"Line({self.line})"
 
     def is_empty(self) -> bool:
         return self.line == ""
