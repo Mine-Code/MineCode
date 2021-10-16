@@ -2,6 +2,25 @@ from typing import Iterable
 from .token import *
 import string
 
+OPERATORS = [
+    "==",
+    "!=",
+    "<",
+    ">",
+    "<=",
+    ">=",
+    "+",
+    "-",
+    "*",
+    "/",
+    "%",
+    "<<",
+    ">>",
+    "&",
+    "^",
+    "|"
+]
+
 
 class Tokenizer:
     def __init__(self):
