@@ -2,13 +2,17 @@ from typing import Iterable
 from .token import OperatorToken, IdentifierToken, NumberToken, StringToken, Token
 import string
 
-OPERATORS = [
+COND_OPERATORS = [
     "==",
     "!=",
     "<",
     ">",
     "<=",
     ">=",
+]
+COND_OPERATOR_PREFIXES = [operator[0] for operator in COND_OPERATORS]
+
+MATH_OPERATORS = [
     "+",
     "-",
     "*",
@@ -20,20 +24,11 @@ OPERATORS = [
     "^",
     "|"
 ]
-OPERATOR_PREFIXES = [
-    "=",
-    "!",
-    "<",
-    ">",
-    "+",
-    "-",
-    "*",
-    "/",
-    "%",
-    "&",
-    "^",
-    "|"
-]
+
+MATH_OPERATOR_PREFIXES = [operator[0] for operator in MATH_OPERATORS]
+
+OPERATOR = [*COND_OPERATOR_PREFIXES, *MATH_OPERATOR_PREFIXES]
+OPERATOR_PREFIXES = [operator[0] for operator in OPERATOR]
 
 
 class Tokenizer:
@@ -73,8 +68,12 @@ class Tokenizer:
 
         if ch in string.ascii_lowercase:
             return self.read_identifier()
+        if ch in OPERATOR_PREFIXES:
+            return self.read_operator()
 
         return self.read_char()
+
+    def read_operator(self) -> OperatorToken:
 
     def read_identifier(self) -> Token:
         value = ""
