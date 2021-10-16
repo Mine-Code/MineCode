@@ -1,9 +1,12 @@
 from typing import Iterable
 
+from .token import Token
+
 
 class Line:
     def __init__(self, line: str, line_number: int, indent: int):
         self.line = line
+        self.tokens: Token = []
         self.line_number = line_number
         self.indent = indent
         self.children: Iterable[Line] = []
