@@ -61,7 +61,7 @@ class LineSplitter:
         line, ident = count_indent(self.peek())
         return Line(line, self.line_number, ident)
 
-    def split(self, *) -> List[Line]:
+    def split(self) -> List[Line]:
         lines = []
         while self.has_line():
             line = self.read_line()
