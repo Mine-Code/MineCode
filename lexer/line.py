@@ -12,9 +12,11 @@ class Line:
         self.children: Iterable[Line] = []
 
     def to_str(self) -> str:
-        lines = [
-            f"{self.line}"
-        ]
+        lines = []
+        if self.tokens:
+            lines.append(", ".join([str(x) for x in self.tokens]))
+        else:
+            lines.append(self.line)
         for child in self.children:
             for line in child.to_str().splitlines():
                 lines.append(line)
