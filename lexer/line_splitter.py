@@ -9,18 +9,17 @@ class Line:
         self.children: Iterable[Line] = []
 
     def to_str(self, depth: int = 0) -> str:
-        line = str(self.line_number).rjust(5)
-        indent = str(self.indent).ljust(5)
+        line = str(self.line_number).ljust(2)
 
         lines = []
 
         lines = [
-            f"{line}|{indent}: {self.line}",
+            f"{line}: {self.line}",
             *[child.to_str(depth=depth + 1) for child in self.children]
         ]
 
         lines = [
-            " "*depth + line
+            "| "*depth + line
             for line in lines
         ]
         return "\n".join(lines)
@@ -71,13 +70,16 @@ class LineSplitter:
         line, ident = count_indent(self.peek())
         return Line(line, self.line_number, ident)
 
-    def split(self) -> List[Line]:
-        lines = []
+    def split(self, until=-1) -> Iterable[Line]:
         while self.has_line():
             line = self.read_line()
             if line.is_empty():
                 continue
 
-            lines.append(line)
+            if line.indent <= until:
+                break
 
-        return lines
+            if self.has_line() and self.peek_line().indent > line.indent:
+                line.children = [*self.split(until=line.indent)]
+
+            yield line
