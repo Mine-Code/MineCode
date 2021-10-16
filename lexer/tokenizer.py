@@ -51,7 +51,7 @@ class Tokenizer:
 
     def read_number(self) -> Token:
         sign = 1
-        value = 0
+        base = 10
         if self.get_char() == '-':
             sign = -1
             self.read_char()
@@ -60,22 +60,18 @@ class Tokenizer:
             self.read_char()
             mode = self.read_char()
             if mode == 'x':
-                value = self.read_hex()
+                base = 16
             elif mode == 'o':
-                value = self.read_oct()
+                base = 8
             elif mode == 'b':
-                value = self.read_bin()
-            else:
-                value = self.read_dec()
-        else:
-            value = self.read_dec()
+                base = 2
 
-        return NumberToken(value * sign)
+        return NumberToken(self._read_number(base) * sign)
 
-    def read_dec(self) -> int:
+    def _read_number(self, base=10) -> int:
         value = 0
         while self.get_char() in string.digits:
-            value = value * 10 + int(self.read_char())
+            value = value * base + int(self.read_char())
         return value
 
     def tokenize(self) -> Iterable[Token]:
