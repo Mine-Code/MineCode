@@ -11,6 +11,14 @@ class NumberToken:
         return f"Number({self.value})"
 
 
+class StringToken:
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return f"String({self.value})"
+
+
 class OperatorToken:
     def __init__(self, value):
         self.value = value
