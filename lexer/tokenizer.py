@@ -32,13 +32,14 @@ class Tokenizer:
         return self.input_index < len(self.input_string)
 
     def read_token(self) -> Token:
-        if self.get_char() == "\"":
+        ch = self.get_char()
+        if ch == "\"":
             return self.read_string()
 
-        if self.get_char() in string.digits:
+        if ch in string.digits:
             return self.read_number()
 
-        if self.get_char() in string.ascii_lowercase:
+        if ch in string.ascii_lowercase:
             return self.read_identifier()
 
         return self.read_char()
