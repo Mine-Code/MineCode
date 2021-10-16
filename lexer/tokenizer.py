@@ -72,8 +72,12 @@ class Tokenizer:
 
     def _read_number(self, base=10) -> int:
         value = 0
-        while self.get_char() in string.digits:
-            value = value * base + int(self.read_char())
+        while self.get_char() in string.hexdigits and self.has_data():
+            ch = self.read_char()
+            if ch in string.digits:
+                value = value * base + ord(ch) - ord('0')
+            elif ch in string.ascii_lowercase:
+                value = value * base + ord(ch) - ord('a') + 10
         return value
 
     def tokenize(self) -> Iterable[Token]:
