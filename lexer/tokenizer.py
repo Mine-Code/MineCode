@@ -98,7 +98,7 @@ class Tokenizer:
 
     def read_identifier(self) -> Token:
         value = ""
-        while self.get_char() in string.ascii_lowercase:
+        while self.get_char() in string.ascii_lowercase and self.has_data():
             value += self.read_char()
 
         return IdentifierToken(value)
