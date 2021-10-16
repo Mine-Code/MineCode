@@ -1,21 +1,28 @@
 mcl hoge
 func fn():
   for i in 1..10:
-     j = 0
-     while j < i:
-      if j == 0:
-        print("*", end="")
-
-      else:
-        print(" ", end="")
-        print(" ", end="")
-      if j == i-1:
-        print("*", end="")
-      j++
-    if j == i:
+      j = 0
+      while j < i:
+        if 1 == 1:
+          print("")
+        else:
+          if 1 == 1:
+            print("")
+            if 1 == 1:
+              print("")
+              if 1 == 1:
+                print("")
+          print("")
+          print("")
+        if 1 == 1:
+          print("")
+        j++
+      if 1 == 1:
+        print("")
+    if 1 == 1:
       print("")
   if 1 == 1:
-    print("hoge")
+    print("")
   
   a = 1
   a *= 2 ^ 2 * 2 + 2 < 2 == ++a ^ 3 * 4 >> a++ | 2 - 2 < 2 ^ 2 * 2 + 2 + (2 * 2 ^ 2 + 2 << 2 | 2)
