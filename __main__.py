@@ -1,4 +1,3 @@
-from .lexer.lexer import Lexer
 from .lexer.line_splitter import LineSplitter
 
 with open("MineCode/tests/alltest", "r") as f:

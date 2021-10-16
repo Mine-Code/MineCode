@@ -1,4 +1,4 @@
-from typing import Iterable, List, Tuple, Union
+from typing import List, Tuple, Union
 
 
 class Line:
@@ -61,7 +61,7 @@ class LineSplitter:
         line, ident = count_indent(self.peek())
         return Line(line, self.line_number, ident)
 
-    def split(self, *, depth=0) -> List[Line]:
+    def split(self, *) -> List[Line]:
         lines = []
         while self.has_line():
             line = self.read_line()
