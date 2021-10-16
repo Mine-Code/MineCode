@@ -72,6 +72,12 @@ class Tokenizer:
 
         return NumberToken(value * sign)
 
+    def read_dec(self) -> int:
+        value = 0
+        while self.get_char() in string.digits:
+            value = value * 10 + int(self.read_char())
+        return value
+
     def tokenize(self) -> Iterable[Token]:
         while self.has_data():
             yield self.read_token()
