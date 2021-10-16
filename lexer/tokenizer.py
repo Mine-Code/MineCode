@@ -21,19 +21,23 @@ class Tokenizer:
         self.input_index += 1
         return ch
 
+    def expect(self, ch: str):
+        if self.get_char() != ch:
+            raise Exception("Expected '{}'".format(ch))
+        self.read_char()
+
     def has_data(self):
         return self.input_index < len(self.input_string)
 
     def read_token(self) -> Token:
-        return self.read_char()
         if self.get_char() == "\"":
             return self.read_string()
 
+        return self.read_char()
         if self.get_char() in string.digits:
             return self.read_number()
 
     def read_string(self) -> Token:
-        pass
 
     def read_number(self) -> Token:
         pass
