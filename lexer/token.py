@@ -19,6 +19,14 @@ class StringToken:
         return f"String({self.value})"
 
 
+class IdentifierToken:
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return f"Identifier({self.value})"
+
+
 class OperatorToken:
     def __init__(self, value):
         self.value = value
