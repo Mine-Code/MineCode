@@ -38,6 +38,15 @@ class Tokenizer:
             return self.read_number()
 
     def read_string(self) -> Token:
+        self.expect('"')
+
+        value = ""
+        while self.get_char() != '"':
+            value += self.read_char()
+
+        self.expect('"')
+
+        return StringToken(value)
 
     def read_number(self) -> Token:
         pass
