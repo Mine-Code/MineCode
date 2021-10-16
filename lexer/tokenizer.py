@@ -1,5 +1,5 @@
 from typing import Iterable
-from .token import *
+from .token import OperatorToken, IdentifierToken, NumberToken, StringToken, Token
 import string
 
 OPERATORS = [
@@ -26,7 +26,6 @@ class Tokenizer:
     def __init__(self):
         self.input_string: str = ""
         self.input_index: int = 0
-        self.is_on_new_line: bool = True
 
     def set_input(self, input_string):
         self.input_string = input_string
