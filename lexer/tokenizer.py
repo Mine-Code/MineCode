@@ -67,17 +67,20 @@ class Tokenizer:
                 base = 8
             elif mode == 'b':
                 base = 2
-
-        return NumberToken(self._read_number(base) * sign)
+        value = self._read_number(base)
+        return NumberToken(value * sign)
 
     def _read_number(self, base=10) -> int:
         value = 0
         while self.get_char() in string.hexdigits and self.has_data():
             ch = self.read_char()
+
             if ch in string.digits:
-                value = value * base + ord(ch) - ord('0')
+                digit = ord(ch) - ord('0')
             elif ch in string.ascii_lowercase:
-                value = value * base + ord(ch) - ord('a') + 10
+                digit = ord(ch) - ord('a') + 10
+
+            value = value * base + digit
         return value
 
     def tokenize(self) -> Iterable[Token]:
