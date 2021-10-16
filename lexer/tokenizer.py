@@ -16,7 +16,16 @@ class Tokenizer:
     def get_char(self):
         return self.input_string[self.input_index]
 
+    def read_char(self):
+        ch = self.get_char()
+        self.input_index += 1
+        return ch
+
+    def has_data(self):
+        return self.input_index < len(self.input_string)
+
     def read_token(self) -> Token:
+        return self.read_char()
         if self.get_char() == "\"":
             return self.read_string()
 
@@ -28,3 +37,7 @@ class Tokenizer:
 
     def read_number(self) -> Token:
         pass
+
+    def tokenize(self) -> Iterable[Token]:
+        while self.has_data():
+            yield self.read_token()
