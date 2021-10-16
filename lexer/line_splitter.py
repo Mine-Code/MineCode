@@ -9,12 +9,10 @@ class Line:
         self.children: Iterable[Line] = []
 
     def to_str(self, depth: int = 0) -> str:
-        line = str(self.line_number).ljust(2)
-
         lines = []
 
         lines = [
-            f"{line}: {self.line}",
+            f"{self.line}",
             *[child.to_str(depth=depth + 1) for child in self.children]
         ]
 
