@@ -32,6 +32,14 @@ class NewLineToken:
         return "NewLine"
 
 
+class IndentToken:
+    def __init__(self, depth: int):
+        self.depth = depth
+
+    def __repr__(self) -> str:
+        return f"Indent({self.depth})"
+
+
 class OperatorToken:
     def __init__(self, value):
         self.value = value
