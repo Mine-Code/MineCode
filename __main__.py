@@ -8,6 +8,6 @@ from .lexer.tokenizer import Tokenizer
 #     print(line)
 
 tokenizer = Tokenizer()
-tokenizer.set_input('"hello" 123 1.23 0.123 0x123 0o123 0b110')
+tokenizer.set_input('"hello" 123 0x123 0o123 0b110')
 for token in tokenizer.tokenize():
     print(token)
