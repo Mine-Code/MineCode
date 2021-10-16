@@ -5,12 +5,20 @@ func fn():
      while j < i:
       if j == 0:
         print("*", end="")
-                     
+
       else:
         print(" ", end="")
+        print(" ", end="")
+      if j == i-1:
+        print("*", end="")
       j++
+    if j == i:
+      print("")
+  if 1 == 1:
+    print("hoge")
   
   a = 1
   a *= 2 ^ 2 * 2 + 2 < 2 == ++a ^ 3 * 4 >> a++ | 2 - 2 < 2 ^ 2 * 2 + 2 + (2 * 2 ^ 2 + 2 << 2 | 2)
 
+print("a")
 print("a")
