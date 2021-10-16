@@ -2,32 +2,44 @@ from typing import Iterable
 from .token import OperatorToken, IdentifierToken, NumberToken, StringToken, Token
 import string
 
-COND_OPERATORS = [
+OPERATOR = [
     "==",
     "!=",
-    "<",
-    ">",
     "<=",
     ">=",
-]
-COND_OPERATOR_PREFIXES = [operator[0] for operator in COND_OPERATORS]
-
-MATH_OPERATORS = [
+    "<<",
+    ">>",
+    "<",
+    ">",
+    "++",
+    "--",
     "+",
     "-",
     "*",
     "/",
     "%",
-    "<<",
-    ">>",
     "&",
     "^",
-    "|"
+    "|",
+
+    "+=",
+    "-=",
+    "*=",
+    "/=",
+    "%=",
+    "&=",
+    "^=",
+    "|=",
+    "<<=",
+    ">>=",
+
+    "=",
+    "(",
+    ")",
+    "..",
+    ":"
 ]
 
-MATH_OPERATOR_PREFIXES = [operator[0] for operator in MATH_OPERATORS]
-
-OPERATOR = [*COND_OPERATOR_PREFIXES, *MATH_OPERATOR_PREFIXES]
 OPERATOR_PREFIXES = [operator[0] for operator in OPERATOR]
 
 
@@ -71,9 +83,18 @@ class Tokenizer:
         if ch in OPERATOR_PREFIXES:
             return self.read_operator()
 
+        if ch in string.whitespace:
+            self.read_char()
+            return None
         return self.read_char()
 
     def read_operator(self) -> OperatorToken:
+        inp = self.input_string[self.input_index:]
+        for operator in OPERATOR:
+            if inp.startswith(operator):
+                self.input_index += len(operator)
+                return OperatorToken(operator)
+        raise Exception("Unknown operator")
 
     def read_identifier(self) -> Token:
         value = ""
@@ -127,4 +148,8 @@ class Tokenizer:
 
     def tokenize(self) -> Iterable[Token]:
         while self.has_data():
-            yield self.read_token()
+            token = self.read_token()
+            if not token:
+                continue
+
+            yield token
