@@ -27,6 +27,11 @@ class IdentifierToken:
         return f"Identifier({self.value})"
 
 
+class NewLineToken:
+    def __repr__(self):
+        return "NewLine"
+
+
 class OperatorToken:
     def __init__(self, value):
         self.value = value
