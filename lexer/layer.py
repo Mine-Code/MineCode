@@ -7,9 +7,9 @@ class Element:
 
 
 class Layer(Element):
-    def __init__(self) -> None:
+    def __init__(self, elements: List[Element]) -> None:
         super().__init__()
-        self.tokens: List[Element] = []
+        self.tokens: List[Element] = elements
 
 
 class Token(Element):
