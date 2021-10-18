@@ -1,6 +1,7 @@
-from typing import Iterable
+from typing import Iterable, List
 
 from .token import Token
+from . import layer
 
 
 class Line:
@@ -32,3 +33,14 @@ class Line:
 
     def is_empty(self) -> bool:
         return self.line == ""
+
+    def to_element(self) -> List[layer.Element]:
+        ret = [layer.Token(tok) for tok in self.tokens]
+
+        tmp: List[layer.Element] = []
+        for child in self.children:
+            tmp.extend(child.to_element())
+
+        ret.append(layer.Layer(tmp))
+
+        return ret
