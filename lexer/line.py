@@ -28,7 +28,7 @@ class Line:
         return "\n".join(lines)
 
     def __repr__(self) -> str:
-        return f"({self.tokens})[{self.children}]"
+        return f"({self.tokens}){self.children}"
 
     def is_empty(self) -> bool:
         return self.line == ""
