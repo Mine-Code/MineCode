@@ -17,4 +17,9 @@ def _lex(lines: Iterable[Line]) -> Iterable[Line]:
 
 def lex(src: str) -> Iterable[Line]:
     lines = LineSplitter(src).split()
-    return _lex(lines)
+    lexed = _lex(lines)
+
+    ret = []
+    for line in lexed:
+        ret.extend(line.to_element())
+    return ret
