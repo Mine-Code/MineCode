@@ -41,6 +41,7 @@ class Line:
         for child in self.children:
             tmp.extend(child.to_element())
 
-        ret.append(layer.Layer(tmp))
+        if tmp:
+            ret.append(layer.Layer(tmp))
 
         return ret
