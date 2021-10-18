@@ -1,7 +1,9 @@
 from .lexer.lexer import lex
+from .parser.parser import Parser
 
 with open("MineCode/tests/flowtest", "r") as f:
     src = f.read()
 
-for line in lex(src):
-    print(line)
+parser = Parser(lex(src))
+
+parser.parse()
