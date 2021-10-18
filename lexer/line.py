@@ -11,14 +11,14 @@ class Line:
         self.indent = indent
         self.children: Iterable[Line] = []
 
-    def to_str(self) -> str:
+    def __str__(self) -> str:
         lines = []
         if self.tokens:
             lines.append(", ".join([str(x) for x in self.tokens]))
         else:
             lines.append(self.line)
         for child in self.children:
-            for line in child.to_str().splitlines():
+            for line in str(child).splitlines():
                 lines.append(line)
 
         lines = [
@@ -27,11 +27,8 @@ class Line:
         ]
         return "\n".join(lines)
 
-    def __str__(self) -> str:
-        return self.to_str()
-
     def __repr__(self) -> str:
-        return f"Line({self.line})"
+        return f"({self.tokens})[{self.children}]"
 
     def is_empty(self) -> bool:
         return self.line == ""
