@@ -1,0 +1,6 @@
+func fn():
+    for i in 1..10:
+        j = 0
+        i = 0
+
+print("a")
