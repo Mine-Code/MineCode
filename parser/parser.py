@@ -19,16 +19,6 @@ class Parser:
 
         return element
 
-    def check(self, tok: str, consume=True):
-        self.peek()
-        if self.peek() != tok:
-            return False
-
-        if consume:
-            self.next()
-
-        return True
-
     def expect_token(self, token_type: type, consume=True) -> Union[int, str]:
         tok = self.peek(consume)
 
