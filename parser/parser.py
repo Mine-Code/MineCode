@@ -29,7 +29,7 @@ class Parser:
 
         return True
 
-    def expect_token(self, consume=True, *, token_type: type):
+    def expect_token(self, token_type: type, consume=True):
         tok = self.peek(consume)
 
         if not isinstance(tok, Token):
