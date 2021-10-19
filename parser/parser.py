@@ -52,7 +52,7 @@ class Parser:
         ret = Program()
 
         stmt = self.parse_stmt()
-        while stmt:
+        while self.has_elements():
             ret.add_stmt(stmt)
             stmt = self.parse_stmt()
 
