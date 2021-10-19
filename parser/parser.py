@@ -37,9 +37,7 @@ class Parser:
     def expect_string(self, consume=True) -> str:
         return self.expect_token(token.StringToken, consume)
 
-    def expect_identifier(self, consume=True) -> str:
-        return self.expect_token(token.IdentifierToken, consume)
-
-    def expect(self, tok: str, consume=True):
-        if not self.check(tok, consume):
-            raise Exception(f"Expected {tok}")
+    def expect_identifier(self, expected: str, consume=True):
+        test = self.expect_token(token.IdentifierToken, consume)
+        if test != expected:
+            raise Exception(f"Expected {expected}, got {test}")
