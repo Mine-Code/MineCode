@@ -17,7 +17,7 @@ class Parser:
 
     def check(self, tok: str, consume=True):
         self.peek()
-        if self.peek(). != tok:
+        if self.peek() != tok:
             return False
 
         if consume:
