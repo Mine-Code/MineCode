@@ -1,5 +1,8 @@
 from typing import Iterable, List, Optional, Union
 
+from .stmt.program import Program
+
+
 from ..lexer import token
 from ..lexer.layer import Element, Token
 
@@ -41,3 +44,13 @@ class Parser:
         test = self.expect_token(token.IdentifierToken, consume)
         if test != expected:
             raise Exception(f"Expected {expected}, got {test}")
+
+    def parse(self) -> Program:
+        ret = Program()
+
+        stmt = self.parse_stmt()
+        while stmt:
+            ret.add_stmt(stmt)
+            stmt = self.parse_stmt()
+
+        return ret
