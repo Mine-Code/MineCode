@@ -1,6 +1,6 @@
-from typing import Iterable, List, Optional
+from typing import Iterable, List, Optional, Union
 
-from ..lexer.token import NumberToken
+from ..lexer import token
 from ..lexer.layer import Element, Token
 
 
@@ -29,7 +29,7 @@ class Parser:
 
         return True
 
-    def expect_token(self, token_type: type, consume=True):
+    def expect_token(self, token_type: type, consume=True) -> Union[int, str]:
         tok = self.peek(consume)
 
         if not isinstance(tok, Token):
@@ -40,6 +40,15 @@ class Parser:
             raise Exception(f"Expected {token_type}, got {tok}")
 
         return token.value
+
+    def expect_number(self, consume=True) -> int:
+        return self.expect_token(token.NumberToken, consume)
+
+    def expect_string(self, consume=True) -> str:
+        return self.expect_token(token.StringToken, consume)
+
+    def expect_identifier(self, consume=True) -> str:
+        return self.expect_token(token.IdentifierToken, consume)
 
     def expect(self, tok: str, consume=True):
         if not self.check(tok, consume):
