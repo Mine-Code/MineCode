@@ -35,10 +35,11 @@ class Parser:
         if not isinstance(tok, Token):
             raise Exception(f"Expected {token_type}, got {tok}")
 
-        if not isinstance(tok.token, token_type):
+        token = tok.token
+        if not isinstance(token, token_type):
             raise Exception(f"Expected {token_type}, got {tok}")
 
-        return tok.token.value
+        return token.value
 
     def expect(self, tok: str, consume=True):
         if not self.check(tok, consume):
