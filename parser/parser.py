@@ -6,14 +6,16 @@ class Parser:
     def __init__(self, elements: Iterable[Element]):
         self.elements = elements
 
-    def next(self) -> Element:
-        return self.element.pop(0)
-
-    def peek(self) -> Optional[Element]:
+    def peek(self, consume=True) -> Optional[Element]:
         if not self.element:
             return None
 
-        return self.element[0]
+        element = self.element[0]
+
+        if consume:
+            self.elements.pop(0)
+
+        return element
 
     def check(self, tok: str, consume=True):
         self.peek()
