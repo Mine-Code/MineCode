@@ -1,6 +1,6 @@
 from typing import Iterable, List, Optional
 
-from lexer.token import NumberToken
+from ..lexer.token import NumberToken
 from ..lexer.layer import Element, Token
 
 
