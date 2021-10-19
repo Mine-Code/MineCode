@@ -22,6 +22,9 @@ class Parser:
 
         return element
 
+    def has_elements(self) -> bool:
+        return len(self.elements) > 0
+
     def expect_token(self, token_type: type, consume=True) -> Union[int, str]:
         tok = self.peek(consume)
 
