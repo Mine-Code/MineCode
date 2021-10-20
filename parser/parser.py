@@ -56,6 +56,16 @@ class Parser:
 
         raise Exception(f"Expected {expected}, got {test}")
 
+    def expect_operator(self, expected: str = "", consume=True):
+        test = self.expect_token(token.OperatorToken, consume)
+        if expected == "":
+            return test
+
+        if test == expected:
+            return test
+
+        raise Exception(f"Expected {expected}, got {test}")
+
     def read_block(self) -> Iterable[Stmt]:
         elm = self.peek(False)
         if not elm:
