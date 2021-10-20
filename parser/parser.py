@@ -1,6 +1,6 @@
-from typing import Iterable, List, Optional, Union
+from typing import Iterable, Optional, Union
 
-from parser.stmt.stmt import Stmt
+from .stmt.stmt import Stmt
 
 from .stmt.program import Program
 
@@ -14,10 +14,10 @@ class Parser:
         self.elements = elements
 
     def peek(self, consume=True) -> Optional[Element]:
-        if not self.element:
+        if not self.elements:
             return None
 
-        element = self.element[0]
+        element = self.elements[0]
 
         if consume:
             self.elements.pop(0)
