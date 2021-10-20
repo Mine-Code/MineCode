@@ -1,6 +1,6 @@
 from typing import Iterable, Optional, Union
 
-from parser.stmt.func import Func
+from .stmt.func import Func
 
 from .stmt.stmt import Stmt
 from .stmt.mcl import Mcl
@@ -78,7 +78,7 @@ class Parser:
             raise Exception("Unexpected end of file")
 
         if not isinstance(elm, Layer):
-            raise Exception("Expected layer, got {elm}")
+            raise Exception(f"Expected layer, got {elm}")
 
         self.elements.pop(0)
 
@@ -124,9 +124,14 @@ class Parser:
 
     def parse_stmt_func(self) -> Func:
         name = self.expect_identifier()
+
+        args: Iterable[str] = []
         self.expect_operator("(")
-        if self.expect
-        self.expect_operator(")")
+        while not self.expect_operator(")", exception=False, consume=True):
+            args.append(self.expect_identifier())
+
+        self.expect_operator(":")
+
         body = self.read_block()
 
         return Func(name, args, body)
