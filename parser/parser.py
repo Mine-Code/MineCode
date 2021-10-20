@@ -43,10 +43,15 @@ class Parser:
     def expect_string(self, consume=True) -> str:
         return self.expect_token(token.StringToken, consume)
 
-    def expect_identifier(self, expected: str, consume=True):
+    def expect_identifier(self, expected: str = "", consume=True):
         test = self.expect_token(token.IdentifierToken, consume)
-        if test != expected:
-            raise Exception(f"Expected {expected}, got {test}")
+        if expected == "":
+            return test
+
+        if test == expected:
+            return test
+
+        raise Exception(f"Expected {expected}, got {test}")
 
     def parse(self) -> Program:
         ret = Program()
