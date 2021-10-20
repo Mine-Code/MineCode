@@ -1,6 +1,7 @@
 from typing import Iterable, Optional, Union
 
 from .stmt.stmt import Stmt
+from .stmt.mcl import Mcl
 
 from .stmt.program import Program
 
@@ -87,3 +88,7 @@ class Parser:
             return self.parse_stmt_return()
 
         return self.parse_stmt_expr()
+
+    def parse_stmt_mcl(self) -> Mcl:
+        mcl = self.expect_identifier()
+        return Mcl(mcl)
