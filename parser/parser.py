@@ -1,5 +1,7 @@
 from typing import Iterable, Optional, Union
 
+from parser.stmt.func import Func
+
 from .stmt.stmt import Stmt
 from .stmt.mcl import Mcl
 
@@ -28,26 +30,30 @@ class Parser:
     def has_elements(self) -> bool:
         return len(self.elements) > 0
 
-    def expect_token(self, token_type: type, consume=True) -> Union[int, str]:
+    def expect_token(self, token_type: type, exception=True, consume=True) -> Union[int, str, None]:
         tok = self.peek(consume)
 
         if not isinstance(tok, Token):
+            if not exception:
+                return None
             raise Exception(f"Expected {token_type}, got {tok}")
 
         token = tok.token
         if not isinstance(token, token_type):
+            if not exception:
+                return None
             raise Exception(f"Expected {token_type}, got {tok}")
 
         return token.value
 
-    def expect_number(self, consume=True) -> int:
-        return self.expect_token(token.NumberToken, consume)
+    def expect_number(self, exception=True, consume=True) -> int:
+        return self.expect_token(token.NumberToken, exception, consume)
 
-    def expect_string(self, consume=True) -> str:
-        return self.expect_token(token.StringToken, consume)
+    def expect_string(self, exception=True, consume=True) -> str:
+        return self.expect_token(token.StringToken, exception, consume)
 
-    def expect_identifier(self, expected: str = "", consume=True) -> str:
-        test = self.expect_token(token.IdentifierToken, consume)
+    def expect_identifier(self, expected: str = "", exception=True, consume=True) -> str:
+        test = self.expect_token(token.IdentifierToken, exception, consume)
         if expected == "":
             return test
 
@@ -56,8 +62,8 @@ class Parser:
 
         raise Exception(f"Expected {expected}, got {test}")
 
-    def expect_operator(self, expected: str = "", consume=True):
-        test = self.expect_token(token.OperatorToken, consume)
+    def expect_operator(self, expected: str = "", exception=True, consume=True):
+        test = self.expect_token(token.OperatorToken, exception, consume)
         if expected == "":
             return test
 
@@ -115,3 +121,12 @@ class Parser:
     def parse_stmt_mcl(self) -> Mcl:
         mcl = self.expect_identifier()
         return Mcl(mcl)
+
+    def parse_stmt_func(self) -> Func:
+        name = self.expect_identifier()
+        self.expect_operator("(")
+        if self.expect
+        self.expect_operator(")")
+        body = self.read_block()
+
+        return Func(name, args, body)
