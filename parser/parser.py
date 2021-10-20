@@ -1,5 +1,7 @@
 from typing import Iterable, List, Optional, Union
 
+from parser.stmt.stmt import Stmt
+
 from .stmt.program import Program
 
 
@@ -62,3 +64,26 @@ class Parser:
             stmt = self.parse_stmt()
 
         return ret
+
+    def parse_stmt(self) -> Stmt:
+        tok = self.expect_identifier()
+
+        if tok == "for":
+            return self.parse_stmt_for()
+
+        if tok == "while":
+            return self.parse_stmt_while()
+
+        if tok == "if":
+            return self.parse_stmt_if()
+
+        if tok == "func":
+            return self.parse_stmt_func()
+
+        if tok == "mcl":
+            return self.parse_stmt_mcl()
+
+        if tok == "return":
+            return self.parse_stmt_return()
+
+        return self.parse_stmt_expr()
