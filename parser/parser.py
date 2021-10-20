@@ -7,7 +7,7 @@ from .stmt.program import Program
 
 
 from ..lexer import token
-from ..lexer.layer import Element, Token
+from ..lexer.layer import Element, Layer, Token
 
 
 class Parser:
@@ -55,6 +55,19 @@ class Parser:
             return test
 
         raise Exception(f"Expected {expected}, got {test}")
+
+    def read_block(self) -> Iterable[Stmt]:
+        elm = self.peek(False)
+        if not elm:
+            raise Exception("Unexpected end of file")
+
+        if not isinstance(elm, Layer):
+            raise Exception("Expected layer, got {elm}")
+
+        self.elements.pop(0)
+
+        parser = Parser(elm.tokens)
+        return parser.parse().stmts
 
     def parse(self) -> Program:
         ret = Program()
