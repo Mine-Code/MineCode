@@ -43,7 +43,7 @@ class Parser:
     def expect_string(self, consume=True) -> str:
         return self.expect_token(token.StringToken, consume)
 
-    def expect_identifier(self, expected: str = "", consume=True):
+    def expect_identifier(self, expected: str = "", consume=True) -> str:
         test = self.expect_token(token.IdentifierToken, consume)
         if expected == "":
             return test
