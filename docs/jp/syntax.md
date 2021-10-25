@@ -58,7 +58,9 @@ put = lvalue , "<<", expr;
 ## others
 
 ```
-range = imm, "...", imm;
+_range = ptr | ident | attribute
+       | imm | funccall | put
+range = value, "...", value
 ```
 
 ## funccall
@@ -83,34 +85,28 @@ args = arg, {"*", arg}
 
 # stmt
 
-## for
-
-`for = "for" , "(" ident, "in", value|range, ") ", ":"`
-
-## while
-
-`while = "while", "(" cond, ")", ":"`
-
-## if
-
 ```
-if = \
+for
+  "for", "(",
+    ident, "in", value|range,
+  ")", ":",
+  block
+
+while = "while", "(" cond, ")", ":"
+
+if
   "if", cond, ":", block,
   {"elif, cond, ":", block},
   "else, ":", block
+
+func
+  "func", "(", ident?, {",", ident}, ")", ":",
+  block
+
+mcl = "mcl", str
+
+stmt_expr = expr
 ```
-
-## func
-
-`func = "func" , "(",args,")", ":"`
-
-## mcl
-
-`mcl = "mcl", str`
-
-## expr
-
-`stmt_expr = expr`
 
 # program
 
