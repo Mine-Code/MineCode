@@ -25,7 +25,12 @@ ua_asg = lvalue, "++" | "--"
 ub_asg = "++" | "--", lvalue
 assign = lvalue, operators, "=", rvalue
 subexpr = "(", expr, ")"
-standard= expr, operator, expr
+equ_neq = expr, "==" | "!=", expr
+inequal = expr, "<" | ">" | "<=" | ">=", expr
+add_sub = expr, "+" | "-", expr
+mul_div = expr, "*" | "/" | "%", expr
+sht_sht = expr, "<<" | ">>", expr
+bit_ope = expr, "|" | "&" | "^", expr
 primary = value
 ```
 
