@@ -15,7 +15,6 @@
         "**/Thumbs.db": true,
         ".vscode": true,
         ".github": true,
-        "docs": true,
         "mcls": true,
         "demo": true,
         "LICENSE": true,
