@@ -55,7 +55,7 @@ rvalue = str | imm | funccall | put;
 ## base
 
 ```
-ptr = "[", value, [ "+", imm ], "]";
+ptr = "[", expr, "]";
 attribute = ident, {".", ident};
 put = lvalue , "<<", expr;
 ```

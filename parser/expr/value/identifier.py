@@ -1,7 +1,8 @@
+from .value import Value
 from typing import List
 
 
-class Identifier:
+class Identifier(Value):
     def __init__(self, name: str, attributes: List[str]):
         self.name = name
         self.attributes = attributes

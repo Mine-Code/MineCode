@@ -13,10 +13,10 @@ MineCode1.0.0では単一のjsonファイルを使用していましたが
 
 基本的な構造(markdownでみたほうがわかりやすいかもしれません)
 
-## MineCode/mcls/:name
+## MineCode/mcls/{name}
 
-mcl.json\
-`**/*.mcl`
+- mcl.json
+- `**/*.mcl`
 
 ### mcl.json
 
@@ -26,16 +26,16 @@ mcl.jsonではmclの基本情報を記します
 {
   "displayname": "表示名",
   "version": "MCLのバージョン",
-  "mclversion": 1 // 構造バージョン
+  "ver": 2 // 前方互換性のため
 }
 ```
 
 ### *.mcl
 
 ```
-class ClassName {
-  members;
-}
+class ClassName
+  [offset, ":"], name type
+  [offset, ":"], name type
 
 Type ClassName::MethodName [MethodAddress](ArgumentList)
 ```
