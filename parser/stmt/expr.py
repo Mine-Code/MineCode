@@ -1,7 +1,8 @@
+from .stmt import Stmt
 from ..expr.exprbase import ExprBase
 
 
-class Stmt:
+class StmtExpr(Stmt):
     def __init__(self, expr: ExprBase):
         self.expr = expr
 
