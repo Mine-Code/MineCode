@@ -25,7 +25,12 @@ ua_asg = lvalue, "++" | "--"
 ub_asg = "++" | "--", lvalue
 assign = lvalue, operators, "=", rvalue
 subexpr = "(", expr, ")"
-standard= expr, operator, expr
+equ_neq = expr, "==" | "!=", expr
+inequal = expr, "<" | ">" | "<=" | ">=", expr
+add_sub = expr, "+" | "-", expr
+mul_div = expr, "*" | "/" | "%", expr
+sht_sht = expr, "<<" | ">>", expr
+bit_ope = expr, "|" | "&" | "^", expr
 primary = value
 ```
 
@@ -50,7 +55,7 @@ rvalue = str | imm | funccall | put;
 ## base
 
 ```
-ptr = "[", value, [ "+", imm ], "]";
+ptr = "[", expr, "]";
 attribute = ident, {".", ident};
 put = lvalue , "<<", expr;
 ```
@@ -58,7 +63,9 @@ put = lvalue , "<<", expr;
 ## others
 
 ```
-range = imm, "...", imm;
+_range = ptr | ident | attribute
+       | imm | funccall | put
+range = value, "...", value
 ```
 
 ## funccall
@@ -83,34 +90,28 @@ args = arg, {"*", arg}
 
 # stmt
 
-## for
-
-`for = "for" , "(" ident, "in", value|range, ") ", ":"`
-
-## while
-
-`while = "while", "(" cond, ")", ":"`
-
-## if
-
 ```
-if = \
+for
+  "for", "(",
+    ident, "in", value|range,
+  ")", ":",
+  block
+
+while = "while", "(" cond, ")", ":"
+
+if
   "if", cond, ":", block,
   {"elif, cond, ":", block},
   "else, ":", block
+
+func
+  "func", "(", ident?, {",", ident}, ")", ":",
+  block
+
+mcl = "mcl", str
+
+stmt_expr = expr
 ```
-
-## func
-
-`func = "func" , "(",args,")", ":"`
-
-## mcl
-
-`mcl = "mcl", str`
-
-## expr
-
-`stmt_expr = expr`
 
 # program
 
