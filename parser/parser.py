@@ -1,10 +1,9 @@
 from typing import Iterable, Optional, Union
 
+from .stmt.s_for import For
 from .stmt.func import Func
-
 from .stmt.stmt import Stmt
 from .stmt.mcl import Mcl
-
 from .stmt.program import Program
 
 
@@ -135,3 +134,8 @@ class Parser:
         body = self.read_block()
 
         return Func(name, args, body)
+
+    def parse_stmt_for(self) -> For:
+        print(self.elements[0:5])
+        exit()
+        pass
