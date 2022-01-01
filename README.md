@@ -6,7 +6,7 @@
 [MineCode](https://github.com/yukikamome316/MineCode/) is a programming language which allows you to make cheat codes easier, faster and emmits PowerPC assembles or something else.
 
 ## Announcement
-MineCode2.0.0 is still at the considing syntax and some program flow
+MineCode2.0.0 is still at the considering syntax and some program flow
 The main branch is MineCode1.x.x
 
 ## Requirements
