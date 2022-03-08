@@ -42,7 +42,7 @@ ninja
 ## License
 Copyright (c) MineCode Corporation. All rights reserved.
 
-Licensed under the [MIT](https://github.com/yukikamome316/MineCode/LICENSE) license.
+Licensed under the [MIT](https://github.com/Mine-Code/MineCode/LICENSE) license.
 
 ## Credit
 <a href="https://github.com/yukikamome316">
