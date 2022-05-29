@@ -4,6 +4,10 @@
 #include <string>
 #include "./basetoken.hpp"
 
+namespace std {
+std::string to_string(char c) { return std::string(1, c); }
+}  // namespace std
+
 namespace minecode::tokenizer {
 
 template <typename T>

@@ -19,7 +19,8 @@ class BaseToken {
   int GetColumn() const { return column; }
 
   inline std::string ToString() const {
-    return "[" + this->ValueToString() + ":" + std::to_string(column) + "]";
+    return this->ValueToString() + "(" + std::to_string(line) + ":" +
+           std::to_string(column) + ")";
   }
   virtual std::string ValueToString() const = 0;
 };

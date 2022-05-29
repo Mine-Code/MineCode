@@ -1,27 +1,18 @@
 #pragma once
 
-#include "./basetoken.hpp"
 #include <sstream>
 #include <vector>
+#include "./basetoken.hpp"
+#include "./primitivetoken.hpp"
 
 namespace minecode::tokenizer {
 template <typename CharT>
 class Tokenizer {
  private:
-  std::basic_stringstream<CharT> src;
+  std::basic_istringstream<CharT> src;
 
- private:
+ public:
   Tokenizer(const std::basic_string<CharT> &src) : src(src) {}
-
-  BaseToken *GetNextToken() {
-    while (src.peek() != EOF) {
-      if (src.peek() == ' ' || src.peek() == '\t' || src.peek() == '\n') {
-        char d;
-        src >> d;
-        continue;
-      }
-    }
-  }
 
   std::vector<BaseToken *> Tokenize() {
     std::vector<BaseToken *> tokens;
@@ -32,6 +23,11 @@ class Tokenizer {
       }
     }
     return tokens;
+  }
+
+ private:
+  BaseToken *GetNextToken() {
+    return new _PrimitiveToken<char>(src.get(), 0, 0);
   }
 };
 }  // namespace minecode::tokenizer
