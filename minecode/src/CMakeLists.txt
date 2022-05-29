@@ -1,1 +1,3 @@
-add_executable(minecode main.cpp)
+target_sources(minecode PRIVATE
+  main.cpp
+)

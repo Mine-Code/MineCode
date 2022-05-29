@@ -15,6 +15,8 @@ enum OtherKeywords {
   kReturn,
   kTrue,
   kFalse,
+  kMcl,
+  kLet
 };
 enum BracketKeywords {
   kParenthesisOpen,

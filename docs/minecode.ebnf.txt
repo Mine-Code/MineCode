@@ -1,0 +1,39 @@
+expr
+  value
+    ["@"], ident
+    "(", expr, ")"
+    "[", expr, "]"
+    int, ".", int
+    str
+    $suffix
+      as = "as", ident
+      subscript = "[", expr, "]"
+      attribute = ".", ident
+      call = "(", [expr, {",", expr}], ")"
+      range = "...", value
+  $order
+    "++"|"--"
+    << >>
+    | ^ &
+    **
+    * / %
+    + -
+    < > <= >=
+    == !=
+    and
+    or
+    <assign>
+
+stmt
+  for = "for", "(", ident, "in", expr, ")", block
+  while = "while", "(", conditional, ")", block
+  if = "if", "(", conditional, ")", block,
+    {"elif", "(", conditional, ")", block}
+     "else", block
+  func_def = "func", "(", [ident, {",", ident}], ")", block
+  mcl = "mcl", ident, {".", ident}
+  expr = ::expr
+  declare_variable = "let" | ident, ident, ["@", int],
+                     {ident, "(", expr, ")"}, "=", expr
+
+program = {stmt}
