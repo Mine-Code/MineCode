@@ -3,10 +3,10 @@
 #include <vector>
 #include <string>
 #include "./primitivetoken.hpp"
+#include <map>
 
 namespace minecode::tokenizer {
-namespace keywords {
-enum OtherKeywords {
+enum Keyword {
   kFor,
   kIf,
   kElif,
@@ -16,9 +16,11 @@ enum OtherKeywords {
   kTrue,
   kFalse,
   kMcl,
-  kLet
-};
-enum BracketKeywords {
+  kLet,
+  kFunc,
+  kRange,
+  kIn,
+
   kParenthesisOpen,
   kParenthesisClose,
 
@@ -27,8 +29,7 @@ enum BracketKeywords {
 
   kSquareBracketOpen,
   kSquareBracketClose,
-};
-enum ExpressionKeywords {
+
   kPlus,
   kMinus,
   kMultiply,
@@ -46,43 +47,122 @@ enum ExpressionKeywords {
   kBooleanAnd,
   kBooleanOr,
   kBooleanNot,
-};
-enum ComparisonKeywords {
+
+  kAssign,
+
+  kPlusAssign,
+  kMinusAssign,
+  kMultiplyAssign,
+  kDivideAssign,
+  kModuloAssign,
+  kPowerAssign,
+
+  kBitwiseAndAssign,
+  kBitwiseOrAssign,
+  kBitwiseXorAssign,
+  kBitwiseNotAssign,
+  kBitwiseLeftShiftAssign,
+  kBitwiseRightShiftAssign,
+
+  kBooleanAndAssign,
+  kBooleanOrAssign,
+
   kEqual,
   kNotEqual,
   kLessThan,
   kLessThanOrEqual,
   kGreaterThan,
   kGreaterThanOrEqual,
+
+  kDot,
+  kNewLine,
+  kInvalid
 };
 
-}  // namespace keywords
+std::map<Keyword, std::string> kKeywordMap = {
+    {kFor, "for"},
+    {kIf, "if"},
+    {kElif, "elif"},
+    {kElse, "else"},
+    {kWhile, "while"},
+    {kReturn, "return"},
+    {kTrue, "true"},
+    {kFalse, "false"},
+    {kMcl, "mcl"},
+    {kLet, "let"},
+    {kFunc, "func"},
+    {kIn, "in"},
+    {kRange, "..."},
+    {kParenthesisOpen, "("},
+    {kParenthesisClose, ")"},
+    {kCurlyBracketOpen, "{"},
+    {kCurlyBracketClose, "}"},
+    {kSquareBracketOpen, "["},
+    {kSquareBracketClose, "]"},
+    {kPlus, "+"},
+    {kMinus, "-"},
+    {kMultiply, "*"},
+    {kDivide, "/"},
+    {kModulo, "%"},
+    {kPower, "**"},
+    {kBitwiseAnd, "&"},
+    {kBitwiseOr, "|"},
+    {kBitwiseXor, "^"},
+    {kBitwiseNot, "~"},
+    {kBitwiseLeftShift, "<<"},
+    {kBitwiseRightShift, ">>"},
+    {kBooleanAnd, "&&"},
+    {kBooleanOr, "||"},
+    {kBooleanNot, "!"},
+    {kAssign, "="},
+    {kPlusAssign, "+="},
+    {kMinusAssign, "-="},
+    {kMultiplyAssign, "*="},
+    {kDivideAssign, "/="},
+    {kModuloAssign, "%="},
+    {kPowerAssign, "**="},
+    {kBitwiseAndAssign, "&="},
+    {kBitwiseOrAssign, "|="},
+    {kBitwiseXorAssign, "^="},
+    {kBitwiseNotAssign, "~="},
+    {kBitwiseLeftShiftAssign, "<<="},
+    {kBitwiseRightShiftAssign, ">>="},
+    {kBooleanAndAssign, "&&="},
+    {kBooleanOrAssign, "||="},
+    {kEqual, "=="},
+    {kNotEqual, "!="},
+    {kLessThan, "<"},
+    {kLessThanOrEqual, "<="},
+    {kGreaterThan, ">"},
+    {kGreaterThanOrEqual, ">="},
 
-template <typename T>
-class _KeywordToken : public _PrimitiveToken<T> {
- private:
-  const T keyword;
+    {kDot, "."},
+    {kNewLine, "\\n"},
+    {kInvalid, "<?>"},
+};
 
+inline Keyword ResolveKeyword(const std::string &keyword) {
+  for (auto &kv : kKeywordMap) {
+    if (kv.second == keyword) {
+      return kv.first;
+    }
+  }
+  return Keyword::kInvalid;
+}
+
+class KeywordToken : public _PrimitiveToken<Keyword> {
  public:
-  _KeywordToken(T keyword, int line, int column)
-      : keyword(keyword), BaseToken(line, column) {}
-  T GetValue() const { return keyword; }
+  KeywordToken(Keyword keyword, int line, int column)
+      : _PrimitiveToken(keyword, line, column) {}
 
-  T GetKeyword() const { return keyword; }
   std::string ValueToString() const override {
-    return std::to_string(this->keyword);
+    return "{'" + kKeywordMap[this->GetValue()] + "'}";
   }
 };
-
-using KeywordKeywordToken = _KeywordToken<keywords::OtherKeywords>;
-using BracketKeywordToken = _KeywordToken<keywords::BracketKeywords>;
-using ExpressionKeywordToken = _KeywordToken<keywords::ExpressionKeywords>;
-using ComparisonKeywordToken = _KeywordToken<keywords::ComparisonKeywords>;
-
-class AssignExpressionKeywordToken : public ExpressionKeywordToken {
+class AssignExpressionKeywordToken : public KeywordToken {
  public:
   std::string ValueToString() const override {
-    return "Assign(" + std::to_string(this->GetKeyword()) + ")";
+    return "Assign(" + std::to_string(this->GetValue()) + ")";
   }
 };
 

@@ -6,6 +6,7 @@
 
 namespace std {
 std::string to_string(char c) { return std::string(1, c); }
+std::string to_string(const std::string &s) { return s; }
 }  // namespace std
 
 namespace minecode::tokenizer {

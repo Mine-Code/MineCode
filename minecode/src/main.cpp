@@ -1,19 +1,23 @@
 #include <iostream>
 #include <tokenizer/tokenizer.hpp>
+#include <preprocessor/preprocessor.hpp>
 #include <fstream>
 
 int main(int, char**) {
   using namespace minecode::tokenizer;
+  using namespace minecode::preprocessor;
 
   std::ifstream ifs("demo/mc2.mc");
+  std::string src((std::istreambuf_iterator<char>(ifs)),
+                  (std::istreambuf_iterator<char>()));
 
-  Tokenizer<char> tokenizer{
-      "int main(int argc, char **argv) {\n"
-      "  return 0;\n"
-      "}\n"};
-  auto tokens = tokenizer.Tokenize();
+  PreProcessor<char> pp(src);
+  std::string preprocessed = pp.PreProcess();
+
+  Tokenizer<char> tk(preprocessed);
+  auto tokens = tk.Tokenize();
 
   for (auto token : tokens) {
-    std::cout << token->ToString() << std::endl;
+    std::cout << token->ValueToString() << " ";
   }
 }
