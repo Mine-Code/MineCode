@@ -4,6 +4,7 @@
 #include <vector>
 #include "./basetoken.hpp"
 #include "./primitivetoken.hpp"
+#include "./strlitteraltoken.hpp"
 #include "keywordtoken.hpp"
 
 namespace minecode::tokenizer {
@@ -80,6 +81,16 @@ class Tokenizer {
     return ret;
   }
 
+  String ReadStrLiteral() {
+    String ret;
+    src.get();
+    while (src.good() && src.peek() != '"') {
+      ret += src.get();
+    }
+    src.get();
+    return ret;
+  }
+
   BaseToken *GetNextToken() {
     this->SkipLeadingWhitespace();
     if (!src.good()) {
@@ -105,6 +116,11 @@ class Tokenizer {
 
     if (isdigit(c)) {
       return new _PrimitiveToken<int>(this->ReadInt(), src.tellg(), 0);
+    }
+
+    if (c == '"') {
+      return new StrLiteralToken<String>(this->ReadStrLiteral(), src.tellg(),
+                                         0);
     }
 
     if (c == '(') {
