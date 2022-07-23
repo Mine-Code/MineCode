@@ -25,12 +25,12 @@ expr
     <assign>
 
 stmt
-  for = "for", "(", ident, "in", expr, ")", block
-  while = "while", "(", conditional, ")", block
-  if = "if", "(", conditional, ")", block,
-    {"elif", "(", conditional, ")", block}
+  for = "for", ident, "in", expr, block
+  while = "while", conditional, block
+  if = "if", conditional, block,
+    {"elif", conditional, block}
      "else", block
-  func_def = "func", "(", [ident, {",", ident}], ")", block
+  func_def = "func", ident, "(", [ident, {",", ident}], ")", block
   mcl = "mcl", ident, {".", ident}
   expr = ::expr
   declare_variable = "let" | ident, ident, ["@", int],

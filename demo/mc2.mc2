@@ -25,3 +25,23 @@ print_text("Hello world!")
 for player in ServerPlayer.List {
     Local.Console << player.name
 }
+
+server = [0x109CD8FC]
+if server != 0 {
+    players = func[0x03225F74](server)
+    if players != 0 {
+        msg = "Hello, world!"
+        w_msg = func[0x020B08D4](0, msg)
+        if w_msg != 0 {
+            packet = func[0x021B7408](0, packet, 0, 0)
+            my_listener = [[players + 0x4] + 0x86c]
+            if my_listener != 0 {
+                func[0x03249FB4](my_listener, packet)
+            }
+        }
+    }
+}
+
+i=0
+i=(i++)+1-1*2/2+1|2^3&2**4+4%4+1<<2+2>>3
+i<1 and i>0 or i<=0 and i>=0
