@@ -13,9 +13,5 @@ pub fn ident(input: &str) -> IResult<&str, String> {
 }
 
 pub fn symbol(ch: char) -> impl Fn(&str) -> IResult<&str, char> {
-    move |input| {
-        let (input, _) =
-            delimited(multispace0, nom::character::complete::char(ch), multispace0)(input)?;
-        Ok((input, ch))
-    }
+    move |input| delimited(multispace0, nom::character::complete::char(ch), multispace0)(input)
 }

@@ -1,23 +1,91 @@
+use std::fmt::Write;
+use std::str::FromStr;
+
 use nom::bytes::complete::take_until;
 use nom::character::complete;
 use nom::combinator::opt;
 use nom::sequence::delimited;
-use nom::{branch, multi, IResult};
+use nom::{branch, IResult, Parser};
 
 use crate::basic::{self, ident, symbol};
 
 #[derive(Debug)]
-pub enum ExprData {
+pub enum UnaryOp {
+    Minus,
+    BooleanNot,
+    LogicalNot,
+}
+
+#[derive(Debug)]
+pub enum BinaryOp {
+    Add,                // +
+    Sub,                // -
+    Mul,                // *
+    Div,                // /
+    Mod,                // %
+    LogicalOr,          // ||
+    LogicalAnd,         // &&
+    BitwiseOr,          // |
+    BitwiseAnd,         // &
+    BitwiseXor,         // ^
+    ShiftLeft,          // <<
+    ShiftRight,         // >>
+    Equal,              // ==
+    NotEqual,           // !=
+    LessThan,           // <
+    LessThanOrEqual,    // <=
+    GreaterThan,        // >
+    GreaterThanOrEqual, // >=
+}
+
+impl std::fmt::Display for BinaryOp {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Add => write!(f, "+"),
+            Self::Sub => write!(f, "-"),
+            Self::Mul => write!(f, "*"),
+            Self::Div => write!(f, "/"),
+            Self::Mod => write!(f, "%"),
+            Self::LogicalOr => write!(f, "||"),
+            Self::LogicalAnd => write!(f, "&&"),
+            Self::BitwiseOr => write!(f, "|"),
+            Self::BitwiseAnd => write!(f, "&"),
+            Self::BitwiseXor => write!(f, "^"),
+            Self::ShiftLeft => write!(f, "<<"),
+            Self::ShiftRight => write!(f, ">>"),
+            Self::Equal => write!(f, "=="),
+            Self::NotEqual => write!(f, "!="),
+            Self::LessThan => write!(f, "<"),
+            Self::LessThanOrEqual => write!(f, "<="),
+            Self::GreaterThan => write!(f, ">"),
+            Self::GreaterThanOrEqual => write!(f, ">="),
+        }
+    }
+}
+
+impl FromStr for BinaryOp {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {}
+}
+
+#[derive(Debug)]
+pub enum Primary {
     Num(i32),
     Ident(String),
     String(String),
-    FuncCall(String, Vec<SingleExpr>),
+    FuncCall(String, Vec<Box<Primary>>),
+
+    Ranged(Box<Primary>, Box<Primary>),
+    Pointer(Box<Primary>),
+    CompileTime(Box<Primary>),
+
+    Unary(UnaryOp, Box<Primary>),
+    Binary(BinaryOp, Box<Primary>, Box<Primary>),
 }
 
-impl ExprData {
+impl Primary {
     pub fn num_expr(input: &str) -> IResult<&str, Self> {
         let (input, num) = complete::digit1(input)?;
-        Ok((input, ExprData::Num(num.parse().unwrap())))
+        Ok((input, Self::Num(num.parse().unwrap())))
     }
 
     pub fn ident(input: &str) -> IResult<&str, Self> {
@@ -50,7 +118,7 @@ impl ExprData {
             ident,
             nom::sequence::delimited(
                 basic::symbol('('),
-                nom::multi::separated_list0(basic::symbol(','), SingleExpr::read),
+                nom::multi::separated_list0(basic::symbol(','), Self::read.map(Box::new)),
                 basic::symbol(')'),
             ),
         ))(input)?;
@@ -66,57 +134,35 @@ impl ExprData {
     }
 
     pub fn read(input: &str) -> IResult<&str, Self> {
-        let (input, expr) = branch::alt((
+        println!("[EXPR] Reading: {:?}", input);
+
+        let (input, comptime_flag) = opt(basic::symbol('@'))(input)?;
+
+        let (input, mut expr) = branch::alt((
+            // []
+            nom::sequence::delimited(
+                basic::symbol('['),
+                Self::read.map(Box::new),
+                basic::symbol(']'),
+            )
+            .map(|e| Primary::Pointer(e)),
+            //
             Self::num_expr,
             Self::string,
             Self::call_function,
             Self::ident,
         ))(input)?;
 
-        Ok((input, expr))
-    }
-}
-
-#[derive(Debug)]
-pub enum SingleExpr {
-    CompileTime(ExprData),
-    RunTime(ExprData),
-}
-
-impl SingleExpr {
-    pub fn read(input: &str) -> IResult<&str, Self> {
-        let (input, a) = opt(basic::symbol('@'))(input)?;
-
-        let (input, expr) = ExprData::read(input)?;
-
-        if a.is_none() {
-            Ok((input, Self::RunTime(expr)))
-        } else {
-            Ok((input, Self::CompileTime(expr)))
+        if comptime_flag.is_some() {
+            expr = Self::CompileTime(Box::new(expr));
         }
-    }
-}
 
-#[derive(Debug)]
-pub enum Expr {
-    Single(SingleExpr),
-    Ranged(SingleExpr, SingleExpr),
-}
+        if input.starts_with("...") {
+            let (input, _) = nom::bytes::complete::tag("...")(input)?;
+            let (input, expr2) = Self::read(input)?;
+            return Ok((input, Self::Ranged(Box::new(expr), Box::new(expr2))));
+        }
 
-impl Expr {
-    pub fn read_ranged(input: &str) -> IResult<&str, Self> {
-        let (input, lhs) = SingleExpr::read(input)?;
-        let (input, _) = nom::bytes::complete::tag("...")(input)?;
-        let (input, rhs) = SingleExpr::read(input)?;
-        Ok((input, Self::Ranged(lhs, rhs)))
-    }
-
-    pub fn read_single(input: &str) -> IResult<&str, Self> {
-        let (input, expr) = SingleExpr::read(input)?;
-        Ok((input, Self::Single(expr)))
-    }
-
-    pub fn read(input: &str) -> IResult<&str, Self> {
-        branch::alt((Self::read_ranged, Self::read_single))(input)
+        Ok((input, expr))
     }
 }

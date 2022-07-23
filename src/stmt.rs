@@ -1,8 +1,8 @@
 use crate::basic;
 
-use crate::expr::Expr;
+use crate::expr::Primary;
 
-use nom::character::complete::{self, multispace0};
+use nom::character::complete::multispace0;
 use nom::IResult;
 
 #[derive(Debug)]
@@ -10,33 +10,37 @@ pub enum Stmt {
     LoadModule {
         module: String,
     },
-    Expression(Expr),
+    Expression(Primary),
     FuncDef {
         name: String,
         args: Vec<String>,
         body: Vec<Stmt>,
     },
     For {
-        name: Expr,
-        iter: Expr,
+        name: Primary,
+        iter: Primary,
         body: Vec<Stmt>,
     },
 }
 
 impl Stmt {
     pub fn read(input: &str) -> IResult<&str, Stmt> {
-        let (sub_input, t) = basic::ident(input)?;
+        let tmp = basic::ident(input);
+
+        let (input, t) = if tmp.is_err() {
+            (input, "".to_string())
+        } else {
+            tmp.unwrap()
+        };
 
         let a = match t.as_str() {
-            "mcl" => stmt_mcl(sub_input),
-            "func" => stmt_func(sub_input),
-            "for" => stmt_for(sub_input),
+            "mcl" => stmt_mcl(input),
+            "func" => stmt_func(input),
+            "for" => stmt_for(input),
             _ => stmt_expr(input),
         };
-        let a = a.unwrap();
-        println!("[Stmt] => {:?}", a.1);
 
-        return Ok(a);
+        a
     }
 }
 
@@ -46,7 +50,8 @@ fn stmt_mcl(input: &str) -> IResult<&str, Stmt> {
 }
 
 fn stmt_expr(input: &str) -> IResult<&str, Stmt> {
-    let (input, expr) = Expr::read(input)?;
+    let (input, expr) = Primary::read(input)?;
+
     Ok((input, Stmt::Expression(expr)))
 }
 
@@ -70,11 +75,11 @@ fn stmt_func(input: &str) -> IResult<&str, Stmt> {
 
 fn stmt_for(input: &str) -> IResult<&str, Stmt> {
     let (input, (name, _, _, _, iter, body)) = nom::branch::permutation((
-        Expr::read,
+        Primary::read,
         multispace0,
         nom::bytes::complete::tag_no_case("in"),
         multispace0,
-        Expr::read,
+        Primary::read,
         nom::sequence::delimited(
             basic::symbol('{'),
             nom::multi::many0(Stmt::read),
