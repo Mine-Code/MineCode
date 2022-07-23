@@ -1,37 +1,86 @@
-use crate::basic::ident;
+use crate::basic;
 
 use crate::expr::Expr;
 
+use nom::character::complete::{self, multispace0};
 use nom::IResult;
 
 #[derive(Debug)]
 pub enum Stmt {
-    LoadModule { module: String },
+    LoadModule {
+        module: String,
+    },
     Expression(Expr),
+    FuncDef {
+        name: String,
+        args: Vec<String>,
+        body: Vec<Stmt>,
+    },
+    For {
+        name: Expr,
+        iter: Expr,
+        body: Vec<Stmt>,
+    },
 }
 
 impl Stmt {
     pub fn read(input: &str) -> IResult<&str, Stmt> {
-        let (input, t) = ident(input)?;
+        let (sub_input, t) = basic::ident(input)?;
 
         let a = match t.as_str() {
-            "mcl" => stmt_mcl(input),
+            "mcl" => stmt_mcl(sub_input),
+            "func" => stmt_func(sub_input),
+            "for" => stmt_for(sub_input),
             _ => stmt_expr(input),
         };
-
         let a = a.unwrap();
-        println!("{:?}", a.1);
+        println!("[Stmt] => {:?}", a.1);
 
         return Ok(a);
     }
 }
 
 fn stmt_mcl(input: &str) -> IResult<&str, Stmt> {
-    let (input, name) = ident(input)?;
+    let (input, name) = basic::ident(input)?;
     Ok((input, Stmt::LoadModule { module: name }))
 }
 
 fn stmt_expr(input: &str) -> IResult<&str, Stmt> {
     let (input, expr) = Expr::read(input)?;
     Ok((input, Stmt::Expression(expr)))
+}
+
+fn stmt_func(input: &str) -> IResult<&str, Stmt> {
+    let (input, (name, args, body)) = nom::branch::permutation((
+        basic::ident,
+        nom::sequence::delimited(
+            basic::symbol('('),
+            nom::multi::separated_list0(basic::symbol(','), basic::ident),
+            basic::symbol(')'),
+        ),
+        nom::sequence::delimited(
+            basic::symbol('{'),
+            nom::multi::many0(Stmt::read),
+            basic::symbol('}'),
+        ),
+    ))(input)?;
+
+    Ok((input, Stmt::FuncDef { name, args, body }))
+}
+
+fn stmt_for(input: &str) -> IResult<&str, Stmt> {
+    let (input, (name, _, _, _, iter, body)) = nom::branch::permutation((
+        Expr::read,
+        multispace0,
+        nom::bytes::complete::tag_no_case("in"),
+        multispace0,
+        Expr::read,
+        nom::sequence::delimited(
+            basic::symbol('{'),
+            nom::multi::many0(Stmt::read),
+            basic::symbol('}'),
+        ),
+    ))(input)?;
+
+    Ok((input, Stmt::For { name, iter, body }))
 }

@@ -11,3 +11,11 @@ pub fn ident(input: &str) -> IResult<&str, String> {
 
     Ok((input, module.into_iter().collect()))
 }
+
+pub fn symbol(ch: char) -> impl Fn(&str) -> IResult<&str, char> {
+    move |input| {
+        let (input, _) =
+            delimited(multispace0, nom::character::complete::char(ch), multispace0)(input)?;
+        Ok((input, ch))
+    }
+}
