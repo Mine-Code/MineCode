@@ -1,16 +1,18 @@
 mcl minecraft
 # Loads minecraft mcl file
 
-0x10000000 + i
+2 * 1 + 1 * 2
 
-# [0x10000000 + i] = text[i]
+# for i in 0...text.length {
+#   [0x10000000 + i] = text{i}
+# }
 
 # @print("Hello world")
-# # Print "Hello world" in compile time
-#
+# Print "Hello world" in compile time
+
 # func print_text(text) {
 #   for i in 0...text.length {
-#     [0x10000000 + i] = text[i]
+#     [0x10000000 + i] = text{i}
 #   }
 #   func[0x02000000](0x10000000)
 # }

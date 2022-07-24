@@ -27,20 +27,18 @@ impl Stmt {
     pub fn read(input: &str) -> IResult<&str, Stmt> {
         let tmp = basic::ident(input);
 
-        let (input, t) = if tmp.is_err() {
+        let (sub_input, t) = if tmp.is_err() {
             (input, "".to_string())
         } else {
-            tmp.unwrap()
+            tmp?
         };
 
-        let a = match t.as_str() {
-            "mcl" => stmt_mcl(input),
-            "func" => stmt_func(input),
-            "for" => stmt_for(input),
+        match t.as_str() {
+            "mcl" => stmt_mcl(sub_input),
+            "func" => stmt_func(sub_input),
+            "for" => stmt_for(sub_input),
             _ => stmt_expr(input),
-        };
-
-        a
+        }
     }
 }
 

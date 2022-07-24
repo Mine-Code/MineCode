@@ -20,6 +20,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let prog = program(&prog).unwrap();
 
     println!("{:?}", prog.0);
+    println!("{:?}", prog.1);
 
     Ok(())
 }
