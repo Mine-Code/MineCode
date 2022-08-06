@@ -6,7 +6,7 @@ use nom::branch::permutation;
 use nom::bytes::complete::tag;
 use nom::character::complete::multispace0;
 use nom::combinator::opt;
-use nom::multi::{many0, separated_list0};
+use nom::multi::separated_list0;
 use nom::sequence::delimited;
 use nom::{IResult, Parser};
 
