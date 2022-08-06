@@ -9,7 +9,7 @@ use ast::Stmt;
 use nom::{multi::many0, IResult};
 
 fn program(input: &str) -> IResult<&str, Vec<Stmt>> {
-    many0(Stmt::read)(input)
+    many0(parser::stmt)(input)
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
