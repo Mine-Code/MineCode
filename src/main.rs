@@ -5,8 +5,6 @@ mod expr;
 mod preprocess;
 mod stmt;
 
-use std::fmt::Display;
-
 use stmt::Stmt;
 
 use nom::{multi, IResult};
