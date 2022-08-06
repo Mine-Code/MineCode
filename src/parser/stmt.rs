@@ -1,6 +1,6 @@
-use crate::basic;
+use super::basic;
 
-use crate::expr::Expr;
+use super::expr::Expr;
 
 use nom::branch::permutation;
 use nom::bytes::complete::tag;

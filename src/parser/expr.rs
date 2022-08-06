@@ -10,7 +10,7 @@ use nom::multi::{many0, separated_list0, separated_list1};
 use nom::sequence::{delimited, preceded};
 use nom::{IResult, Parser};
 
-use crate::basic::{self, ident, symbol};
+use super::basic::{self, ident, symbol};
 
 #[derive(Debug, EnumString, strum_macros::Display)]
 pub enum BinaryOp {

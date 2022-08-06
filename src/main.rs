@@ -1,13 +1,10 @@
 extern crate nom;
 
-mod basic;
-mod expr;
+mod parser;
 mod preprocess;
-mod stmt;
-
-use stmt::Stmt;
 
 use nom::{multi::many0, IResult};
+use parser::Stmt;
 
 fn program(input: &str) -> IResult<&str, Vec<Stmt>> {
     many0(Stmt::read)(input)
