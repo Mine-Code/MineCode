@@ -1,6 +1,7 @@
 use crate::ast::{Expr, Stmt};
 
 use super::basic;
+use super::expr::expr;
 
 use nom::branch::permutation;
 use nom::bytes::complete::tag;
@@ -37,7 +38,7 @@ fn stmt_mcl(input: &str) -> IResult<&str, Stmt> {
 }
 
 fn stmt_expr(input: &str) -> IResult<&str, Stmt> {
-    let (input, expr) = Expr::read(input)?;
+    let (input, expr) = expr(input)?;
 
     Ok((input, Stmt::Expression(expr)))
 }
