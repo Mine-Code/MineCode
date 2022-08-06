@@ -1,10 +1,14 @@
 extern crate nom;
 
+mod ast;
+mod optimizer;
 mod parser;
 mod preprocess;
 
+use ast::Stmt;
 use nom::{multi::many0, IResult};
-use parser::Stmt;
+
+use crate::optimizer::Optimize;
 
 fn program(input: &str) -> IResult<&str, Vec<Stmt>> {
     many0(Stmt::read)(input)
@@ -21,6 +25,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "{}",
         prog.1
             .iter()
+            .map(|x| x.optimize())
             .map(|x| format!("{}\n", x))
             .fold("".to_string(), |a, c| a + &c)
     );

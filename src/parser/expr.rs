@@ -1,7 +1,5 @@
 use std::str::FromStr;
 
-use strum_macros::EnumString;
-
 use nom::branch::{alt, permutation};
 use nom::bytes::complete::{tag, take_till1, take_until};
 use nom::character::complete::multispace0;
@@ -10,85 +8,9 @@ use nom::multi::{many0, separated_list0, separated_list1};
 use nom::sequence::{delimited, preceded};
 use nom::{IResult, Parser};
 
+use crate::ast::{BinaryOp, Expr};
+
 use super::basic::{self, ident, symbol};
-
-#[derive(Debug, EnumString, strum_macros::Display)]
-pub enum BinaryOp {
-    #[strum(serialize = "+")]
-    Add,
-    #[strum(serialize = "-")]
-    Sub,
-    #[strum(serialize = "*")]
-    Mul,
-    #[strum(serialize = "/")]
-    Div,
-    #[strum(serialize = "%")]
-    Mod,
-    #[strum(serialize = "**")]
-    Power,
-    #[strum(serialize = "||")]
-    LogicalOr,
-    #[strum(serialize = "&&")]
-    LogicalAnd,
-    #[strum(serialize = "|")]
-    BitwiseOr,
-    #[strum(serialize = "&")]
-    BitwiseAnd,
-    #[strum(serialize = "^")]
-    BitwiseXor,
-    #[strum(serialize = "<<")]
-    ShiftLeft,
-    #[strum(serialize = ">>")]
-    ShiftRight,
-    #[strum(serialize = "==")]
-    Equal,
-    #[strum(serialize = "!=")]
-    NotEqual,
-    #[strum(serialize = "<")]
-    LessThan,
-    #[strum(serialize = "<=")]
-    LessThanOrEqual,
-    #[strum(serialize = ">")]
-    GreaterThan,
-    #[strum(serialize = ">=")]
-    GreaterThanOrEqual,
-    #[strum(serialize = "=")]
-    Assignment,
-}
-
-#[derive(Debug)]
-pub enum Expr {
-    Num(i32),
-    Ident(String),
-    String(String),
-    FuncCall(Box<Expr>, Vec<Expr>),
-
-    Ranged(Box<Expr>, Box<Expr>),
-    Pointer(Box<Expr>),
-    CompileTime(Box<Expr>),
-
-    ApplyOperator(BinaryOp, Box<Expr>, Box<Expr>),
-    SubExpr(Box<Expr>),
-
-    LogicalNot(Box<Expr>),
-    BitwiseNot(Box<Expr>),
-    Negative(Box<Expr>),
-
-    Subscript(Box<Expr>, Box<Expr>),
-
-    If {
-        branches: Vec<(Expr, Expr)>,
-        fallback: Option<Box<Expr>>,
-    },
-    For {
-        name: Box<Expr>,
-        iter: Box<Expr>,
-        body: Box<Expr>,
-        value: Option<Box<Expr>>,
-    },
-
-    Exprs(Vec<Expr>),
-}
 
 impl std::fmt::Display for Expr {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

@@ -1,6 +1,6 @@
-use super::basic;
+use crate::ast::{Expr, Stmt};
 
-use super::expr::Expr;
+use super::basic;
 
 use nom::branch::permutation;
 use nom::bytes::complete::tag;
@@ -9,19 +9,6 @@ use nom::combinator::opt;
 use nom::multi::separated_list0;
 use nom::sequence::delimited;
 use nom::{IResult, Parser};
-
-#[derive(Debug)]
-pub enum Stmt {
-    LoadModule {
-        module: String,
-    },
-    Expression(Expr),
-    FuncDef {
-        name: String,
-        args: Vec<String>,
-        body: Box<Stmt>,
-    },
-}
 
 impl std::fmt::Display for Stmt {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
