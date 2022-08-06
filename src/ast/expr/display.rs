@@ -5,7 +5,7 @@ impl std::fmt::Display for Expr {
         let s = match self {
             Self::Num(x) => x.to_string(),
             Self::Ident(x) => x.to_string(),
-            Self::String(x) => format!("{}", x.escape_default()),
+            Self::String(x) => format!("\"{}\"", x.escape_default()),
             Self::FuncCall(func, args) => format!(
                 "{}({})",
                 func,
