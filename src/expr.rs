@@ -100,38 +100,37 @@ impl std::fmt::Display for Primary {
 impl Primary {
     fn _num_hex(input: &str) -> IResult<&str, Self> {
         let (input, _) = tag("0x")(input)?;
-        let (input, num) = many1(one_of("0123456789abcdefABCDEFxX"))(input)?;
+        let (input, num) = take_till1(|c: char| !c.is_digit(16))(input)?;
 
-        let num = num.iter().collect::<String>();
         Ok((input, Primary::Num(i32::from_str_radix(&num, 16).unwrap())))
     }
     fn _num_oct(input: &str) -> IResult<&str, Self> {
         let (input, _) = tag("0o")(input)?;
-        let (input, num) = many1(one_of("01234567"))(input)?;
+        let (input, num) = take_till1(|c: char| !c.is_digit(8))(input)?;
 
-        let num = num.iter().collect::<String>();
         Ok((input, Primary::Num(i32::from_str_radix(&num, 8).unwrap())))
     }
     fn _num_dec(input: &str) -> IResult<&str, Self> {
-        let (input, num) = many1(digit1)(input)?;
-
-        let num = num.join("");
+        let (input, num) = take_till1(|c: char| !c.is_digit(10))(input)?;
         Ok((input, Primary::Num(i32::from_str(&num).unwrap())))
     }
     fn _num_bin(input: &str) -> IResult<&str, Self> {
         let (input, _) = tag("0b")(input)?;
-        let (input, num) = many1(one_of("01"))(input)?;
+        let (input, num) = take_till1(|c: char| !c.is_digit(2))(input)?;
 
-        let num = num.iter().collect::<String>();
         Ok((input, Primary::Num(i32::from_str_radix(&num, 2).unwrap())))
     }
     fn _num(input: &str) -> IResult<&str, Self> {
-        alt((
-            Self::_num_hex,
-            Self::_num_oct,
-            Self::_num_dec,
-            Self::_num_bin,
-        ))(input)
+        delimited(
+            multispace0,
+            alt((
+                Self::_num_hex,
+                Self::_num_oct,
+                Self::_num_dec,
+                Self::_num_bin,
+            )),
+            multispace0,
+        )(input)
     }
     fn _ident(input: &str) -> IResult<&str, Self> {
         let (mut input, mut num) = ident(input)?;
