@@ -2,8 +2,13 @@ use crate::basic;
 
 use crate::expr::Primary;
 
+use nom::branch::permutation;
+use nom::bytes::complete::tag;
 use nom::character::complete::multispace0;
-use nom::IResult;
+use nom::combinator::opt;
+use nom::multi::{many0, separated_list0};
+use nom::sequence::delimited;
+use nom::{IResult, Parser};
 
 #[derive(Debug)]
 pub enum Stmt {
@@ -14,13 +19,14 @@ pub enum Stmt {
     FuncDef {
         name: String,
         args: Vec<String>,
-        body: Vec<Stmt>,
+        body: Box<Stmt>,
     },
     For {
         name: Primary,
         iter: Primary,
-        body: Vec<Stmt>,
+        body: Box<Stmt>,
     },
+    Stmts(Vec<Stmt>),
 }
 
 impl std::fmt::Display for Stmt {
@@ -29,27 +35,18 @@ impl std::fmt::Display for Stmt {
             Self::LoadModule { module } => write!(f, "Load {}", module),
             Self::Expression(expr) => write!(f, "{}", expr),
             Self::FuncDef { name, args, body } => {
-                write!(
-                    f,
-                    "def {}({}) {{{}}}",
-                    name,
-                    args.join(","),
-                    body.iter()
-                        .map(|x| format!("{}; ", x))
-                        .fold("".to_string(), |a, c| a + &c)
-                )
+                write!(f, "def {}({}) {{{}}}", name, args.join(","), body)
             }
             Self::For { name, iter, body } => {
-                write!(
-                    f,
-                    "for {} in {} {{{}}}",
-                    name,
-                    iter,
-                    body.iter()
-                        .map(|x| format!("{}; ", x))
-                        .fold("".to_string(), |a, c| a + &c)
-                )
+                write!(f, "for {} in {} {}", name, iter, body)
             }
+            Self::Stmts(body) => write!(
+                f,
+                "{{{}}}",
+                body.iter()
+                    .map(|x| format!("{}; ", x))
+                    .fold("".to_string(), |a, c| a + &c)
+            ),
         }
     }
 }
@@ -64,12 +61,21 @@ impl Stmt {
             tmp?
         };
 
-        match t.as_str() {
+        let stmt = match t.as_str() {
             "mcl" => stmt_mcl(sub_input),
-            "func" => stmt_func(sub_input),
+            "fn" => stmt_func(sub_input),
             "for" => stmt_for(sub_input),
-            _ => stmt_expr(input),
-        }
+            _ => {
+                if input.trim().starts_with("{") {
+                    stmt_stmts(input)
+                } else {
+                    stmt_expr(input)
+                }
+            }
+        };
+        let (i, stmt) = stmt?;
+        let (i, _) = opt(tag(";"))(i)?;
+        Ok((i, stmt))
     }
 }
 
@@ -83,38 +89,35 @@ fn stmt_expr(input: &str) -> IResult<&str, Stmt> {
 
     Ok((input, Stmt::Expression(expr)))
 }
+pub fn stmt_stmts(input: &str) -> IResult<&str, Stmt> {
+    delimited(basic::symbol('{'), many0(Stmt::read), basic::symbol('}'))
+        .map(|x| Stmt::Stmts(x))
+        .parse(input)
+}
 
 fn stmt_func(input: &str) -> IResult<&str, Stmt> {
-    let (input, (name, args, body)) = nom::branch::permutation((
+    permutation((
         basic::ident,
-        nom::sequence::delimited(
+        delimited(
             basic::symbol('('),
-            nom::multi::separated_list0(basic::symbol(','), basic::ident),
+            separated_list0(basic::symbol(','), basic::ident),
             basic::symbol(')'),
         ),
-        nom::sequence::delimited(
-            basic::symbol('{'),
-            nom::multi::many0(Stmt::read),
-            basic::symbol('}'),
-        ),
-    ))(input)?;
-
-    Ok((input, Stmt::FuncDef { name, args, body }))
+        Stmt::read.map(Box::new),
+    ))
+    .map(|(name, args, body)| Stmt::FuncDef { name, args, body })
+    .parse(input)
 }
 
 fn stmt_for(input: &str) -> IResult<&str, Stmt> {
-    let (input, (name, _, _, _, iter, body)) = nom::branch::permutation((
+    permutation((
         Primary::read,
         multispace0,
-        nom::bytes::complete::tag_no_case("in"),
+        tag("in"),
         multispace0,
         Primary::read,
-        nom::sequence::delimited(
-            basic::symbol('{'),
-            nom::multi::many0(Stmt::read),
-            basic::symbol('}'),
-        ),
-    ))(input)?;
-
-    Ok((input, Stmt::For { name, iter, body }))
+        Stmt::read.map(Box::new),
+    ))
+    .map(|(name, _, _, _, iter, body)| Stmt::For { name, iter, body })
+    .parse(input)
 }

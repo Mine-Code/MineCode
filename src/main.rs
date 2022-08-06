@@ -7,10 +7,13 @@ mod stmt;
 
 use stmt::Stmt;
 
-use nom::{multi, IResult};
+use nom::{
+    multi::{self, many0},
+    IResult,
+};
 
 fn program(input: &str) -> IResult<&str, Vec<Stmt>> {
-    multi::many0(Stmt::read)(input)
+    many0(Stmt::read)(input)
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

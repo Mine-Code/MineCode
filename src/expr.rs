@@ -3,10 +3,10 @@ use std::str::FromStr;
 use strum_macros::EnumString;
 
 use nom::branch::{alt, permutation};
-use nom::bytes::complete::{tag, take_until};
-use nom::character::complete::{digit1, multispace0, one_of};
+use nom::bytes::complete::{tag, take_till1, take_until};
+use nom::character::complete::multispace0;
 use nom::combinator::opt;
-use nom::multi::{many0, many1, separated_list0};
+use nom::multi::{many0, separated_list0};
 use nom::sequence::{delimited, preceded};
 use nom::{IResult, Parser};
 
@@ -61,7 +61,7 @@ pub enum Primary {
     Num(i32),
     Ident(String),
     String(String),
-    FuncCall(String, Vec<Primary>),
+    FuncCall(Box<Primary>, Vec<Primary>),
 
     Ranged(Box<Primary>, Box<Primary>),
     Pointer(Box<Primary>),
@@ -82,11 +82,17 @@ impl std::fmt::Display for Primary {
             Self::Num(x) => format!("{}", x),
             Self::Ident(x) => format!("{}", x),
             Self::String(x) => format!("{}", x.escape_default()),
-            Self::FuncCall(func, args) => format!("{}({:?})", func, args),
+            Self::FuncCall(func, args) => format!(
+                "{}({:?})",
+                func,
+                args.iter()
+                    .map(|x| format!("{x}"))
+                    .fold("".to_string(), |a, c| a + &c)
+            ),
             Self::Ranged(begin, end) => format!("Range<{} -> {}>", begin, end),
             Self::Pointer(x) => format!("Ptr<{}>", x),
             Self::CompileTime(x) => format!("CompileTime<{}>", x),
-            Self::ApplyOperator(op, r, l) => format!("{} {} {}", op, r, l),
+            Self::ApplyOperator(op, r, l) => format!("{} {} {}", r, op, l),
             Self::LogicalNot(x) => format!("!{}", x),
             Self::BitwiseNot(x) => format!("~{}", x),
             Self::Negative(x) => format!("-{}", x),
@@ -156,18 +162,6 @@ impl Primary {
 
         Ok((input, Self::Ident(num)))
     }
-    fn _call_function(input: &str) -> IResult<&str, Self> {
-        let (input, f) = permutation((
-            ident,
-            delimited(
-                basic::symbol('('),
-                separated_list0(basic::symbol(','), Self::read),
-                basic::symbol(')'),
-            ),
-        ))(input)?;
-
-        Ok((input, Self::FuncCall(f.0, f.1)))
-    }
     fn _string(input: &str) -> IResult<&str, Self> {
         let (input, s) =
             delimited(basic::symbol('"'), take_until("\""), basic::symbol('"'))(input)?;
@@ -183,7 +177,12 @@ impl Primary {
         mut parser: impl FnMut(&'a str) -> IResult<&'a str, Primary> + Copy,
     ) -> IResult<&'a str, Primary> {
         let (i, mut r) = parser(i)?;
-        let _ = joiner(i)?;
+
+        let b = joiner(i);
+        if b.is_err() {
+            return Ok((i, r));
+        }
+
         let (i, parts) = many0(permutation((
             delimited(multispace0, joiner, multispace0),
             parser,
@@ -196,14 +195,7 @@ impl Primary {
     }
 
     fn _primary(input: &str) -> IResult<&str, Self> {
-        println!(
-            "Primary: {}, {}",
-            std::time::SystemTime::now()
-                .duration_since(std::time::UNIX_EPOCH)
-                .unwrap()
-                .as_nanos(),
-            input.escape_default()
-        );
+        let _input = input.clone();
         if input.trim().is_empty() {
             return Err(nom::Err::Error(nom::error::Error::new(
                 input,
@@ -226,10 +218,10 @@ impl Primary {
             //
             Self::_num,
             Self::_string,
-            Self::_call_function,
             Self::_ident,
         ));
-        let parser = permutation((parser, opt(delimited(symbol('{'), Self::read, symbol('}')))))
+
+        let parser = permutation((parser, opt(delimited(symbol('['), Self::read, symbol(']')))))
             .map(|(array, index)| {
                 if index.is_none() {
                     array
@@ -238,7 +230,7 @@ impl Primary {
                 }
             });
 
-        let mut parser =
+        let parser =
             permutation((parser, opt(preceded(tag("..."), Self::_primary)))).map(|(begin, end)| {
                 if end.is_some() {
                     Self::Ranged(Box::new(begin), Box::new(end.unwrap()))
@@ -246,17 +238,23 @@ impl Primary {
                     begin
                 }
             });
+        let mut parser = permutation((
+            parser,
+            opt(delimited(
+                basic::symbol('('),
+                separated_list0(basic::symbol(','), Self::read),
+                basic::symbol(')'),
+            )),
+        ))
+        .map(|(p, a)| {
+            if a.is_some() {
+                Self::FuncCall(Box::new(p), a.unwrap())
+            } else {
+                p
+            }
+        });
 
-        let (input, expr) = parser.parse(input)?;
-
-        let (input, expr) = if input.starts_with("...") {
-            let (input, _) = tag("...")(input)?;
-            let (input, expr2) = Self::read(input)?;
-            (input, Self::Ranged(Box::new(expr), Box::new(expr2)))
-        } else {
-            (input, expr)
-        };
-        Ok((input, expr))
+        parser.parse(input)
     }
 
     fn _pow(input: &str) -> IResult<&str, Self> {
@@ -299,7 +297,6 @@ impl Primary {
     }
     pub fn read(input: &str) -> IResult<&str, Self> {
         let a = Self::_assignment(input);
-
         a
     }
 }
