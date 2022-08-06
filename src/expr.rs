@@ -68,6 +68,7 @@ pub enum Primary {
     CompileTime(Box<Primary>),
 
     ApplyOperator(BinaryOp, Box<Primary>, Box<Primary>),
+    SubExpr(Box<Primary>),
 
     LogicalNot(Box<Primary>),
     BitwiseNot(Box<Primary>),
@@ -120,6 +121,7 @@ impl std::fmt::Display for Primary {
                     .iter()
                     .fold("".to_string(), |a, c| a + &format!("{}; ", c)),
             ),
+            Self::SubExpr(expr) => format!("({})", expr),
         };
 
         write!(f, "{}", s)
@@ -269,6 +271,13 @@ impl Primary {
                 basic::symbol(']'),
             )
             .map(|e| Self::Pointer(e)),
+            // SubExpr
+            delimited(
+                basic::symbol('('),
+                Self::read.map(Box::new),
+                basic::symbol(')'),
+            )
+            .map(|e| Self::SubExpr(e)),
             //
             Self::_num,
             Self::_if,
@@ -335,7 +344,7 @@ impl Primary {
     fn _size_comp(input: &str) -> IResult<&str, Self> {
         Self::_binary_op(
             input,
-            alt((tag("<"), tag(">"), tag("<="), tag(">="))),
+            alt((tag("<="), tag(">="), tag("<"), tag(">"))),
             Self::_math_expr,
         )
     }
