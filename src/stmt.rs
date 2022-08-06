@@ -35,7 +35,7 @@ impl std::fmt::Display for Stmt {
             Self::LoadModule { module } => write!(f, "Load {}", module),
             Self::Expression(expr) => write!(f, "{}", expr),
             Self::FuncDef { name, args, body } => {
-                write!(f, "def {}({}) {{{}}}", name, args.join(","), body)
+                write!(f, "def {}({}) {}", name, args.join(","), body)
             }
             Self::For { name, iter, body } => {
                 write!(f, "for {} in {} {}", name, iter, body)

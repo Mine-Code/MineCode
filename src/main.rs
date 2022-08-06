@@ -7,10 +7,7 @@ mod stmt;
 
 use stmt::Stmt;
 
-use nom::{
-    multi::{self, many0},
-    IResult,
-};
+use nom::{multi::many0, IResult};
 
 fn program(input: &str) -> IResult<&str, Vec<Stmt>> {
     many0(Stmt::read)(input)

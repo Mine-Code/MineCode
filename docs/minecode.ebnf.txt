@@ -1,4 +1,5 @@
 expr
+  if {value, "=>", value} ["_", "=>", value]
   value
     ["@"], ident
     "(", expr, ")"
@@ -28,9 +29,6 @@ expr
 stmt
   for = "for", ident, "in", expr, block
   while = "while", conditional, block
-  if = "if", conditional, block,
-    {"elif", conditional, block}
-     "else", block
   func_def = "func", ident, "(", [ident, {",", ident}], ")", block
   mcl = "mcl", ident, {".", ident}
   expr = ::expr

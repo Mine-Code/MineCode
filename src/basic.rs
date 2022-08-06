@@ -1,15 +1,25 @@
-use nom::{character::complete::multispace0, multi, sequence::delimited, IResult};
+use nom::{
+    character::complete::{anychar, multispace0},
+    combinator::verify,
+    multi::many0,
+    sequence::delimited,
+    IResult, Parser,
+};
 
 pub fn ident(input: &str) -> IResult<&str, String> {
-    let (input, module) = delimited(
-        multispace0,
-        multi::many1(nom::character::complete::one_of(
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789@",
-        )),
-        multispace0,
-    )(input)?;
+    let (input, _) = multispace0(input)?;
+    let (input, a) = verify(anychar, |x: &char| x.is_alphanumeric() || x == &'@')(input)?;
+    let (input, b) = many0(verify(anychar, |x: &char| {
+        x.is_alphanumeric() || x == &'@' || x == &'_'
+    }))
+    .map(|x| {
+        x.iter()
+            .fold("".to_string(), |a, c| a.to_string() + &c.to_string())
+    })
+    .parse(input)?;
 
-    Ok((input, module.into_iter().collect()))
+    let ret = a.to_string() + &b;
+    Ok((input, ret))
 }
 
 pub fn symbol(ch: char) -> impl Fn(&str) -> IResult<&str, char> {

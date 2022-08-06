@@ -6,7 +6,7 @@ use nom::branch::{alt, permutation};
 use nom::bytes::complete::{tag, take_till1, take_until};
 use nom::character::complete::multispace0;
 use nom::combinator::opt;
-use nom::multi::{many0, separated_list0};
+use nom::multi::{many0, many1, separated_list0, separated_list1};
 use nom::sequence::{delimited, preceded};
 use nom::{IResult, Parser};
 
@@ -74,6 +74,11 @@ pub enum Primary {
     Negative(Box<Primary>),
 
     Subscript(Box<Primary>, Box<Primary>),
+
+    If {
+        branches: Vec<(Primary, Primary)>,
+        fallback: Option<Box<Primary>>,
+    },
 }
 
 impl std::fmt::Display for Primary {
@@ -97,6 +102,17 @@ impl std::fmt::Display for Primary {
             Self::BitwiseNot(x) => format!("~{}", x),
             Self::Negative(x) => format!("-{}", x),
             Self::Subscript(arr, ind) => format!("{}[{}]", arr, ind),
+            Self::If { branches, fallback } => format!(
+                "if {}{}",
+                branches
+                    .iter()
+                    .fold("".to_string(), |a, (c, e)| a + &format!("{} => {}, ", c, e)),
+                if let Some(fallback) = fallback {
+                    format!("_ => {}", fallback)
+                } else {
+                    "".to_string()
+                }
+            ),
         };
 
         write!(f, "{}", s)
@@ -168,6 +184,38 @@ impl Primary {
 
         Ok((input, Self::String(s.to_string())))
     }
+    fn _if(input: &str) -> IResult<&str, Self> {
+        let (input, _) = tag("if")(input)?;
+
+        fn t(input: &str) -> IResult<&str, ()> {
+            println!("input: \"{}\"", input.escape_default());
+            Ok((input, ()))
+        }
+        permutation((
+            multispace0,
+            t,
+            separated_list1(
+                tag(","),
+                permutation((Self::read, multispace0, tag("=>"), multispace0, Self::read))
+                    .map(|(a, _, _, _, c)| (a, c)),
+            ),
+            opt(permutation((
+                permutation((
+                    multispace0,
+                    tag(","),
+                    multispace0,
+                    tag("_"),
+                    multispace0,
+                    tag("=>"),
+                    multispace0,
+                )),
+                Self::read.map(Box::new),
+            ))
+            .map(|(_, a)| a)),
+        ))
+        .map(|(_, _, branches, fallback)| Self::If { branches, fallback })
+        .parse(input)
+    }
 }
 
 impl Primary {
@@ -195,7 +243,6 @@ impl Primary {
     }
 
     fn _primary(input: &str) -> IResult<&str, Self> {
-        let _input = input.clone();
         if input.trim().is_empty() {
             return Err(nom::Err::Error(nom::error::Error::new(
                 input,
@@ -217,6 +264,7 @@ impl Primary {
             .map(|e| Self::Pointer(e)),
             //
             Self::_num,
+            Self::_if,
             Self::_string,
             Self::_ident,
         ));
