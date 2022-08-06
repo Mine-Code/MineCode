@@ -17,6 +17,7 @@ pub fn ident(input: &str) -> IResult<&str, String> {
             .fold("".to_string(), |a, c| a.to_string() + &c.to_string())
     })
     .parse(input)?;
+    let (input, _) = multispace0(input)?;
 
     let ret = a.to_string() + &b;
     Ok((input, ret))
