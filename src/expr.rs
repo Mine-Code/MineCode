@@ -6,7 +6,7 @@ use nom::branch::{alt, permutation};
 use nom::bytes::complete::{tag, take_till1, take_until};
 use nom::character::complete::multispace0;
 use nom::combinator::opt;
-use nom::multi::{many0, many1, separated_list0, separated_list1};
+use nom::multi::{many0, separated_list0, separated_list1};
 use nom::sequence::{delimited, preceded};
 use nom::{IResult, Parser};
 
@@ -187,13 +187,8 @@ impl Primary {
     fn _if(input: &str) -> IResult<&str, Self> {
         let (input, _) = tag("if")(input)?;
 
-        fn t(input: &str) -> IResult<&str, ()> {
-            println!("input: \"{}\"", input.escape_default());
-            Ok((input, ()))
-        }
         permutation((
             multispace0,
-            t,
             separated_list1(
                 tag(","),
                 permutation((Self::read, multispace0, tag("=>"), multispace0, Self::read))
@@ -213,7 +208,7 @@ impl Primary {
             ))
             .map(|(_, a)| a)),
         ))
-        .map(|(_, _, branches, fallback)| Self::If { branches, fallback })
+        .map(|(_, branches, fallback)| Self::If { branches, fallback })
         .parse(input)
     }
 }
