@@ -79,6 +79,7 @@ pub enum Primary {
         branches: Vec<(Primary, Primary)>,
         fallback: Option<Box<Primary>>,
     },
+    Exprs(Vec<Primary>),
 }
 
 impl std::fmt::Display for Primary {
@@ -112,6 +113,12 @@ impl std::fmt::Display for Primary {
                 } else {
                     "".to_string()
                 }
+            ),
+            Self::Exprs(exprs) => format!(
+                "{{{}}}",
+                exprs
+                    .iter()
+                    .fold("".to_string(), |a, c| a + &format!("{}; ", c)),
             ),
         };
 
@@ -211,6 +218,11 @@ impl Primary {
         .map(|(_, branches, fallback)| Self::If { branches, fallback })
         .parse(input)
     }
+    fn _exprs(input: &str) -> IResult<&str, Self> {
+        delimited(symbol('{'), many0(Self::read), symbol('}'))
+            .map(|x| Self::Exprs(x))
+            .parse(input)
+    }
 }
 
 impl Primary {
@@ -262,6 +274,7 @@ impl Primary {
             Self::_if,
             Self::_string,
             Self::_ident,
+            Self::_exprs,
         ));
 
         let parser = permutation((parser, opt(delimited(symbol('['), Self::read, symbol(']')))))
@@ -339,7 +352,8 @@ impl Primary {
         Self::_binary_op(input, tag("="), Self::_logical_or)
     }
     pub fn read(input: &str) -> IResult<&str, Self> {
-        let a = Self::_assignment(input);
-        a
+        let (i, a) = Self::_assignment(input)?;
+        let (i, _) = opt(tag(";"))(i)?;
+        Ok((i, a))
     }
 }

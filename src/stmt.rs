@@ -26,7 +26,6 @@ pub enum Stmt {
         iter: Primary,
         body: Box<Stmt>,
     },
-    Stmts(Vec<Stmt>),
 }
 
 impl std::fmt::Display for Stmt {
@@ -40,13 +39,6 @@ impl std::fmt::Display for Stmt {
             Self::For { name, iter, body } => {
                 write!(f, "for {} in {} {}", name, iter, body)
             }
-            Self::Stmts(body) => write!(
-                f,
-                "{{{}}}",
-                body.iter()
-                    .map(|x| format!("{}; ", x))
-                    .fold("".to_string(), |a, c| a + &c)
-            ),
         }
     }
 }
@@ -65,13 +57,7 @@ impl Stmt {
             "mcl" => stmt_mcl(sub_input),
             "fn" => stmt_func(sub_input),
             "for" => stmt_for(sub_input),
-            _ => {
-                if input.trim().starts_with("{") {
-                    stmt_stmts(input)
-                } else {
-                    stmt_expr(input)
-                }
-            }
+            _ => stmt_expr(input),
         };
         let (i, stmt) = stmt?;
         let (i, _) = opt(tag(";"))(i)?;
@@ -88,11 +74,6 @@ fn stmt_expr(input: &str) -> IResult<&str, Stmt> {
     let (input, expr) = Primary::read(input)?;
 
     Ok((input, Stmt::Expression(expr)))
-}
-pub fn stmt_stmts(input: &str) -> IResult<&str, Stmt> {
-    delimited(basic::symbol('{'), many0(Stmt::read), basic::symbol('}'))
-        .map(|x| Stmt::Stmts(x))
-        .parse(input)
 }
 
 fn stmt_func(input: &str) -> IResult<&str, Stmt> {
