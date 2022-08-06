@@ -1,4 +1,4 @@
-use super::BinaryOp;
+use crate::ast::BinaryOp;
 
 #[derive(Debug, Clone)]
 pub enum Expr {
@@ -12,6 +12,8 @@ pub enum Expr {
     CompileTime(Box<Expr>),
 
     ApplyOperator(BinaryOp, Box<Expr>, Box<Expr>),
+
+    // TODO: Remove this
     SubExpr(Box<Expr>),
 
     LogicalNot(Box<Expr>),
@@ -25,6 +27,7 @@ pub enum Expr {
         fallback: Option<Box<Expr>>,
     },
     For {
+        // TODO: Change this type to String
         name: Box<Expr>,
         iter: Box<Expr>,
         body: Box<Expr>,

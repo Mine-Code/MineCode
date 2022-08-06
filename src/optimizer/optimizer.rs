@@ -62,8 +62,6 @@ impl Optimize for Expr {
 
             if *op == BinaryOp::Add || *op == BinaryOp::Sub {
                 let terms = expr._collect_terms();
-            } else {
-                expr
             }
 
             return expr;

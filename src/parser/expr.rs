@@ -12,69 +12,6 @@ use crate::ast::{BinaryOp, Expr};
 
 use super::basic::{self, ident, symbol};
 
-impl std::fmt::Display for Expr {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let s = match self {
-            Self::Num(x) => x.to_string(),
-            Self::Ident(x) => x.to_string(),
-            Self::String(x) => format!("{}", x.escape_default()),
-            Self::FuncCall(func, args) => format!(
-                "{}({:?})",
-                func,
-                args.iter()
-                    .map(|x| format!("{x}"))
-                    .fold("".to_string(), |a, c| a + &c)
-            ),
-            Self::Ranged(begin, end) => format!("Range<{} -> {}>", begin, end),
-            Self::Pointer(x) => format!("Ptr<{}>", x),
-            Self::CompileTime(x) => format!("CompileTime<{}>", x),
-            Self::ApplyOperator(op, r, l) => format!("{} {} {}", r, op, l),
-            Self::LogicalNot(x) => format!("!{}", x),
-            Self::BitwiseNot(x) => format!("~{}", x),
-            Self::Negative(x) => format!("-{}", x),
-            Self::Subscript(arr, ind) => format!("{}[{}]", arr, ind),
-            Self::If { branches, fallback } => format!(
-                "if {}{}",
-                branches
-                    .iter()
-                    .fold("".to_string(), |a, (c, e)| a + &format!("{} => {}, ", c, e)),
-                if let Some(fallback) = fallback {
-                    format!("_ => {}", fallback)
-                } else {
-                    "".to_string()
-                }
-            ),
-            Self::Exprs(exprs) => format!(
-                "{{{}}}",
-                exprs
-                    .iter()
-                    .fold("".to_string(), |a, c| a + &format!("{}; ", c)),
-            ),
-            Self::SubExpr(expr) => format!("({})", expr),
-            Self::For {
-                name,
-                iter,
-                body,
-                value,
-            } => {
-                format!(
-                    "for {} in {}: [{}] {}",
-                    name,
-                    iter,
-                    body,
-                    if let Some(x) = value {
-                        format!("=> {}", x)
-                    } else {
-                        "".to_string()
-                    }
-                )
-            }
-        };
-
-        write!(f, "{}", s)
-    }
-}
-
 impl Expr {
     fn _num_hex(input: &str) -> IResult<&str, Self> {
         let (input, _) = tag("0x")(input)?;

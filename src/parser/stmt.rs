@@ -10,18 +10,6 @@ use nom::multi::separated_list0;
 use nom::sequence::delimited;
 use nom::{IResult, Parser};
 
-impl std::fmt::Display for Stmt {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::LoadModule { module } => write!(f, "Load {}", module),
-            Self::Expression(expr) => write!(f, "{}", expr),
-            Self::FuncDef { name, args, body } => {
-                write!(f, "def {}({}) {}", name, args.join(","), body)
-            }
-        }
-    }
-}
-
 impl Stmt {
     pub fn read(input: &str) -> IResult<&str, Stmt> {
         let tmp = basic::ident(input);
