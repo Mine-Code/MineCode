@@ -179,6 +179,12 @@ impl Primary {
     }
 
     fn _primary(input: &str) -> IResult<&str, Self> {
+        if input.trim().is_empty() {
+            return Err(nom::Err::Error(nom::error::Error::new(
+                input,
+                nom::error::ErrorKind::Eof,
+            )));
+        }
         let parser = alt((
             preceded(basic::symbol('-'), Self::read.map(Box::new)).map(|e| Self::Negative(e)),
             preceded(basic::symbol('~'), Self::read.map(Box::new)).map(|e| Self::BitwiseNot(e)),
@@ -267,6 +273,8 @@ impl Primary {
         Self::_binary_op(input, tag("="), Self::_logical_or)
     }
     pub fn read(input: &str) -> IResult<&str, Self> {
-        Self::_assignment(input)
+        let a = Self::_assignment(input);
+
+        a
     }
 }
