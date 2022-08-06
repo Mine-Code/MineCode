@@ -12,10 +12,7 @@ pub fn ident(input: &str) -> IResult<&str, String> {
     let (input, b) = many0(verify(anychar, |x: &char| {
         x.is_alphanumeric() || x == &'@' || x == &'_'
     }))
-    .map(|x| {
-        x.iter()
-            .fold("".to_string(), |a, c| a.to_string() + &c.to_string())
-    })
+    .map(|x| x.iter().fold("".to_string(), |a, c| a + &c.to_string()))
     .parse(input)?;
     let (input, _) = multispace0(input)?;
 

@@ -1,6 +1,6 @@
 use crate::basic;
 
-use crate::expr::Primary;
+use crate::expr::Expr;
 
 use nom::branch::permutation;
 use nom::bytes::complete::tag;
@@ -15,15 +15,15 @@ pub enum Stmt {
     LoadModule {
         module: String,
     },
-    Expression(Primary),
+    Expression(Expr),
     FuncDef {
         name: String,
         args: Vec<String>,
         body: Box<Stmt>,
     },
     For {
-        name: Primary,
-        iter: Primary,
+        name: Expr,
+        iter: Expr,
         body: Box<Stmt>,
     },
 }
@@ -71,7 +71,7 @@ fn stmt_mcl(input: &str) -> IResult<&str, Stmt> {
 }
 
 fn stmt_expr(input: &str) -> IResult<&str, Stmt> {
-    let (input, expr) = Primary::read(input)?;
+    let (input, expr) = Expr::read(input)?;
 
     Ok((input, Stmt::Expression(expr)))
 }
@@ -92,11 +92,11 @@ fn stmt_func(input: &str) -> IResult<&str, Stmt> {
 
 fn stmt_for(input: &str) -> IResult<&str, Stmt> {
     permutation((
-        Primary::read,
+        Expr::read,
         multispace0,
         tag("in"),
         multispace0,
-        Primary::read,
+        Expr::read,
         Stmt::read.map(Box::new),
     ))
     .map(|(name, _, _, _, iter, body)| Stmt::For { name, iter, body })

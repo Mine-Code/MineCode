@@ -57,37 +57,37 @@ pub enum BinaryOp {
 }
 
 #[derive(Debug)]
-pub enum Primary {
+pub enum Expr {
     Num(i32),
     Ident(String),
     String(String),
-    FuncCall(Box<Primary>, Vec<Primary>),
+    FuncCall(Box<Expr>, Vec<Expr>),
 
-    Ranged(Box<Primary>, Box<Primary>),
-    Pointer(Box<Primary>),
-    CompileTime(Box<Primary>),
+    Ranged(Box<Expr>, Box<Expr>),
+    Pointer(Box<Expr>),
+    CompileTime(Box<Expr>),
 
-    ApplyOperator(BinaryOp, Box<Primary>, Box<Primary>),
-    SubExpr(Box<Primary>),
+    ApplyOperator(BinaryOp, Box<Expr>, Box<Expr>),
+    SubExpr(Box<Expr>),
 
-    LogicalNot(Box<Primary>),
-    BitwiseNot(Box<Primary>),
-    Negative(Box<Primary>),
+    LogicalNot(Box<Expr>),
+    BitwiseNot(Box<Expr>),
+    Negative(Box<Expr>),
 
-    Subscript(Box<Primary>, Box<Primary>),
+    Subscript(Box<Expr>, Box<Expr>),
 
     If {
-        branches: Vec<(Primary, Primary)>,
-        fallback: Option<Box<Primary>>,
+        branches: Vec<(Expr, Expr)>,
+        fallback: Option<Box<Expr>>,
     },
-    Exprs(Vec<Primary>),
+    Exprs(Vec<Expr>),
 }
 
-impl std::fmt::Display for Primary {
+impl std::fmt::Display for Expr {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s = match self {
-            Self::Num(x) => format!("{}", x),
-            Self::Ident(x) => format!("{}", x),
+            Self::Num(x) => x.to_string(),
+            Self::Ident(x) => x.to_string(),
             Self::String(x) => format!("{}", x.escape_default()),
             Self::FuncCall(func, args) => format!(
                 "{}({:?})",
@@ -128,28 +128,28 @@ impl std::fmt::Display for Primary {
     }
 }
 
-impl Primary {
+impl Expr {
     fn _num_hex(input: &str) -> IResult<&str, Self> {
         let (input, _) = tag("0x")(input)?;
-        let (input, num) = take_till1(|c: char| !c.is_digit(16))(input)?;
+        let (input, num) = take_till1(|c: char| !c.is_ascii_hexdigit())(input)?;
 
-        Ok((input, Primary::Num(i32::from_str_radix(&num, 16).unwrap())))
+        Ok((input, Expr::Num(i32::from_str_radix(num, 16).unwrap())))
     }
     fn _num_oct(input: &str) -> IResult<&str, Self> {
         let (input, _) = tag("0o")(input)?;
         let (input, num) = take_till1(|c: char| !c.is_digit(8))(input)?;
 
-        Ok((input, Primary::Num(i32::from_str_radix(&num, 8).unwrap())))
+        Ok((input, Expr::Num(i32::from_str_radix(num, 8).unwrap())))
     }
     fn _num_dec(input: &str) -> IResult<&str, Self> {
-        let (input, num) = take_till1(|c: char| !c.is_digit(10))(input)?;
-        Ok((input, Primary::Num(i32::from_str(&num).unwrap())))
+        let (input, num) = take_till1(|c: char| !c.is_ascii_digit())(input)?;
+        Ok((input, Expr::Num(i32::from_str(num).unwrap())))
     }
     fn _num_bin(input: &str) -> IResult<&str, Self> {
         let (input, _) = tag("0b")(input)?;
         let (input, num) = take_till1(|c: char| !c.is_digit(2))(input)?;
 
-        Ok((input, Primary::Num(i32::from_str_radix(&num, 2).unwrap())))
+        Ok((input, Expr::Num(i32::from_str_radix(num, 2).unwrap())))
     }
     fn _num(input: &str) -> IResult<&str, Self> {
         delimited(
@@ -174,7 +174,7 @@ impl Primary {
 
             let tmp = ret.unwrap();
             input = tmp.0;
-            num.push_str(".");
+            num.push('.');
 
             let ret = ident(input);
             if ret.is_err() {
@@ -222,17 +222,17 @@ impl Primary {
     }
     fn _exprs(input: &str) -> IResult<&str, Self> {
         delimited(symbol('{'), many0(Self::read), symbol('}'))
-            .map(|x| Self::Exprs(x))
+            .map(Self::Exprs)
             .parse(input)
     }
 }
 
-impl Primary {
+impl Expr {
     fn _binary_op<'a>(
         i: &'a str,
         mut joiner: impl FnMut(&'a str) -> IResult<&'a str, &'a str>,
-        mut parser: impl FnMut(&'a str) -> IResult<&'a str, Primary> + Copy,
-    ) -> IResult<&'a str, Primary> {
+        mut parser: impl FnMut(&'a str) -> IResult<&'a str, Expr> + Copy,
+    ) -> IResult<&'a str, Expr> {
         let (i, mut r) = parser(i)?;
 
         let b = joiner(i);
@@ -259,25 +259,25 @@ impl Primary {
             )));
         }
         let parser = alt((
-            preceded(basic::symbol('-'), Self::read.map(Box::new)).map(|e| Self::Negative(e)),
-            preceded(basic::symbol('~'), Self::read.map(Box::new)).map(|e| Self::BitwiseNot(e)),
-            preceded(basic::symbol('!'), Self::read.map(Box::new)).map(|e| Self::LogicalNot(e)),
+            preceded(basic::symbol('-'), Self::read.map(Box::new)).map(Self::Negative),
+            preceded(basic::symbol('~'), Self::read.map(Box::new)).map(Self::BitwiseNot),
+            preceded(basic::symbol('!'), Self::read.map(Box::new)).map(Self::LogicalNot),
             // CompileTime
-            preceded(basic::symbol('@'), Self::read.map(Box::new)).map(|e| Self::CompileTime(e)),
+            preceded(basic::symbol('@'), Self::read.map(Box::new)).map(Self::CompileTime),
             // []
             delimited(
                 basic::symbol('['),
                 Self::read.map(Box::new),
                 basic::symbol(']'),
             )
-            .map(|e| Self::Pointer(e)),
+            .map(Self::Pointer),
             // SubExpr
             delimited(
                 basic::symbol('('),
                 Self::read.map(Box::new),
                 basic::symbol(')'),
             )
-            .map(|e| Self::SubExpr(e)),
+            .map(Self::SubExpr),
             //
             Self::_num,
             Self::_if,
@@ -288,17 +288,17 @@ impl Primary {
 
         let parser = permutation((parser, opt(delimited(symbol('['), Self::read, symbol(']')))))
             .map(|(array, index)| {
-                if index.is_none() {
-                    array
+                if let Some(x) = index {
+                    Self::Subscript(Box::new(array), Box::new(x))
                 } else {
-                    Self::Subscript(Box::new(array), Box::new(index.unwrap()))
+                    array
                 }
             });
 
         let parser =
             permutation((parser, opt(preceded(tag("..."), Self::_primary)))).map(|(begin, end)| {
-                if end.is_some() {
-                    Self::Ranged(Box::new(begin), Box::new(end.unwrap()))
+                if let Some(x) = end {
+                    Self::Ranged(Box::new(begin), Box::new(x))
                 } else {
                     begin
                 }
@@ -312,8 +312,8 @@ impl Primary {
             )),
         ))
         .map(|(p, a)| {
-            if a.is_some() {
-                Self::FuncCall(Box::new(p), a.unwrap())
+            if let Some(x) = a {
+                Self::FuncCall(Box::new(p), x)
             } else {
                 p
             }
