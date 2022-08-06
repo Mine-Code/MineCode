@@ -5,6 +5,8 @@ mod expr;
 mod preprocess;
 mod stmt;
 
+use std::fmt::Display;
+
 use stmt::Stmt;
 
 use nom::{multi, IResult};
@@ -20,7 +22,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let prog = program(&prog).unwrap();
 
     println!("{:?}", prog.0);
-    println!("{:?}", prog.1);
+    println!(
+        "{}",
+        prog.1
+            .iter()
+            .map(|x| format!("{}\n", x))
+            .fold("".to_string(), |a, c| a + &c)
+    );
 
     Ok(())
 }

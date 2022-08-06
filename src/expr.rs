@@ -76,6 +76,27 @@ pub enum Primary {
     Subscript(Box<Primary>, Box<Primary>),
 }
 
+impl std::fmt::Display for Primary {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let s = match self {
+            Self::Num(x) => format!("{}", x),
+            Self::Ident(x) => format!("{}", x),
+            Self::String(x) => format!("{}", x.escape_default()),
+            Self::FuncCall(func, args) => format!("{}({:?})", func, args),
+            Self::Ranged(begin, end) => format!("Range<{} -> {}>", begin, end),
+            Self::Pointer(x) => format!("Ptr<{}>", x),
+            Self::CompileTime(x) => format!("CompileTime<{}>", x),
+            Self::ApplyOperator(op, r, l) => format!("{} {} {}", op, r, l),
+            Self::LogicalNot(x) => format!("!{}", x),
+            Self::BitwiseNot(x) => format!("~{}", x),
+            Self::Negative(x) => format!("-{}", x),
+            Self::Subscript(arr, ind) => format!("{}[{}]", arr, ind),
+        };
+
+        write!(f, "{}", s)
+    }
+}
+
 impl Primary {
     fn _num_hex(input: &str) -> IResult<&str, Self> {
         let (input, _) = tag("0x")(input)?;
@@ -159,26 +180,31 @@ impl Primary {
 impl Primary {
     fn _binary_op<'a>(
         i: &'a str,
-        joiner: impl FnMut(&'a str) -> IResult<&'a str, &'a str>,
-        parser: impl FnMut(&'a str) -> IResult<&'a str, Primary> + Copy,
+        mut joiner: impl FnMut(&'a str) -> IResult<&'a str, &'a str>,
+        mut parser: impl FnMut(&'a str) -> IResult<&'a str, Primary> + Copy,
     ) -> IResult<&'a str, Primary> {
-        permutation((
-            parser.clone(),
-            many0(permutation((
-                delimited(multispace0, joiner, multispace0),
-                parser,
-            ))),
-        ))
-        .map(|(mut r, parts)| {
-            for (op, x) in parts {
-                r = Self::ApplyOperator(BinaryOp::from_str(op).unwrap(), Box::new(r), Box::new(x));
-            }
-            r
-        })
-        .parse(i)
+        let (i, mut r) = parser(i)?;
+        let _ = joiner(i)?;
+        let (i, parts) = many0(permutation((
+            delimited(multispace0, joiner, multispace0),
+            parser,
+        )))(i)?;
+
+        for (op, x) in parts {
+            r = Self::ApplyOperator(BinaryOp::from_str(op).unwrap(), Box::new(r), Box::new(x));
+        }
+        Ok((i, r))
     }
 
     fn _primary(input: &str) -> IResult<&str, Self> {
+        println!(
+            "Primary: {}, {}",
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos(),
+            input.escape_default()
+        );
         if input.trim().is_empty() {
             return Err(nom::Err::Error(nom::error::Error::new(
                 input,
