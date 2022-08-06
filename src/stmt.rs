@@ -21,11 +21,6 @@ pub enum Stmt {
         args: Vec<String>,
         body: Box<Stmt>,
     },
-    For {
-        name: Expr,
-        iter: Expr,
-        body: Box<Stmt>,
-    },
 }
 
 impl std::fmt::Display for Stmt {
@@ -35,9 +30,6 @@ impl std::fmt::Display for Stmt {
             Self::Expression(expr) => write!(f, "{}", expr),
             Self::FuncDef { name, args, body } => {
                 write!(f, "def {}({}) {}", name, args.join(","), body)
-            }
-            Self::For { name, iter, body } => {
-                write!(f, "for {} in {} {}", name, iter, body)
             }
         }
     }
@@ -56,7 +48,6 @@ impl Stmt {
         let stmt = match t.as_str() {
             "mcl" => stmt_mcl(sub_input),
             "fn" => stmt_func(sub_input),
-            "for" => stmt_for(sub_input),
             _ => stmt_expr(input),
         };
         let (i, stmt) = stmt?;
@@ -87,18 +78,5 @@ fn stmt_func(input: &str) -> IResult<&str, Stmt> {
         Stmt::read.map(Box::new),
     ))
     .map(|(name, args, body)| Stmt::FuncDef { name, args, body })
-    .parse(input)
-}
-
-fn stmt_for(input: &str) -> IResult<&str, Stmt> {
-    permutation((
-        Expr::read,
-        multispace0,
-        tag("in"),
-        multispace0,
-        Expr::read,
-        Stmt::read.map(Box::new),
-    ))
-    .map(|(name, _, _, _, iter, body)| Stmt::For { name, iter, body })
     .parse(input)
 }

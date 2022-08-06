@@ -80,6 +80,13 @@ pub enum Expr {
         branches: Vec<(Expr, Expr)>,
         fallback: Option<Box<Expr>>,
     },
+    For {
+        name: Box<Expr>,
+        iter: Box<Expr>,
+        body: Box<Expr>,
+        value: Option<Box<Expr>>,
+    },
+
     Exprs(Vec<Expr>),
 }
 
@@ -122,6 +129,24 @@ impl std::fmt::Display for Expr {
                     .fold("".to_string(), |a, c| a + &format!("{}; ", c)),
             ),
             Self::SubExpr(expr) => format!("({})", expr),
+            Self::For {
+                name,
+                iter,
+                body,
+                value,
+            } => {
+                format!(
+                    "for {} in {}: [{}] {}",
+                    name,
+                    iter,
+                    body,
+                    if let Some(x) = value {
+                        format!("=> {}", x)
+                    } else {
+                        "".to_string()
+                    }
+                )
+            }
         };
 
         write!(f, "{}", s)
@@ -205,10 +230,8 @@ impl Expr {
             ),
             opt(permutation((
                 permutation((
-                    multispace0,
-                    tag(","),
-                    multispace0,
-                    tag("_"),
+                    symbol(','),
+                    symbol('_'),
                     multispace0,
                     tag("=>"),
                     multispace0,
@@ -218,6 +241,33 @@ impl Expr {
             .map(|(_, a)| a)),
         ))
         .map(|(_, branches, fallback)| Self::If { branches, fallback })
+        .parse(input)
+    }
+    fn _for(input: &str) -> IResult<&str, Self> {
+        let (input, _) = tag("for")(input)?;
+
+        permutation((
+            Self::read.map(Box::new),
+            multispace0,
+            tag("in"),
+            multispace0,
+            Self::read.map(Box::new),
+            multispace0,
+            Self::read.map(Box::new),
+            opt(permutation((
+                multispace0,
+                tag("=>"),
+                multispace0,
+                Self::read.map(Box::new),
+            ))
+            .map(|(_, _, _, a)| a)),
+        ))
+        .map(|(name, _, _, _, iter, _, body, value)| Self::For {
+            name,
+            iter,
+            body,
+            value,
+        })
         .parse(input)
     }
     fn _exprs(input: &str) -> IResult<&str, Self> {
@@ -280,6 +330,7 @@ impl Expr {
             .map(Self::SubExpr),
             //
             Self::_num,
+            Self::_for,
             Self::_if,
             Self::_string,
             Self::_ident,

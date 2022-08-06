@@ -1,5 +1,6 @@
 expr
-  if {value, "=>", value} ["_", "=>", value]
+  "if" {value, "=>", value} ["_", "=>", value]
+  "for", ident, "in", expr, expr, ["=>", expr]
   value
     ["@"], ident
     "(", expr, ")"
@@ -27,7 +28,6 @@ expr
     <assign>
 
 stmt
-  for = "for", ident, "in", expr, block
   while = "while", conditional, block
   func_def = "func", ident, "(", [ident, {",", ident}], ")", block
   mcl = "mcl", ident, {".", ident}
