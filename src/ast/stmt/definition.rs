@@ -9,7 +9,7 @@ pub enum Stmt {
     FuncDef {
         name: String,
         args: Vec<String>,
-        // Change this type to Expr
+        // TODO: Change this type to Expr
         body: Box<Stmt>,
     },
 }
