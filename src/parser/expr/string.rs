@@ -7,3 +7,13 @@ pub fn _string(input: &str) -> IResult<&str, Expr> {
 
     Ok((input, Expr::String(s.to_string())))
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_expr_string() {
+        assert_eq!(_string("\"a\""), Ok(("", Expr::String("a".to_string()))));
+    }
+}

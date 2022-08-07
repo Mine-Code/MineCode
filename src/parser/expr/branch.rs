@@ -31,3 +31,42 @@ pub fn _if(input: &str) -> IResult<&str, Expr> {
     .map(|(_, branches, fallback)| Expr::If { branches, fallback })
     .parse(input)
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_if() {
+        assert_eq!(
+            _if("if a => d, b => e, c => f"),
+            Ok((
+                "",
+                Expr::If {
+                    branches: vec![
+                        (Expr::Ident("a".to_string()), Expr::Ident("d".to_string())),
+                        (Expr::Ident("b".to_string()), Expr::Ident("e".to_string())),
+                        (Expr::Ident("c".to_string()), Expr::Ident("f".to_string())),
+                    ],
+                    fallback: None,
+                }
+            ))
+        );
+    }
+    #[test]
+    fn test_if_with_fallback() {
+        assert_eq!(
+            _if("if a => d, b => e, c => f, _ => g"),
+            Ok((
+                "",
+                Expr::If {
+                    branches: vec![
+                        (Expr::Ident("a".to_string()), Expr::Ident("d".to_string())),
+                        (Expr::Ident("b".to_string()), Expr::Ident("e".to_string())),
+                        (Expr::Ident("c".to_string()), Expr::Ident("f".to_string())),
+                    ],
+                    fallback: Some(Box::new(Expr::Ident("g".to_string()))),
+                }
+            ))
+        );
+    }
+}

@@ -71,3 +71,106 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
 
     parser.parse(input)
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_primary_plain() {
+        assert_eq!(_primary("a"), Ok(("", Expr::Ident("a".to_string()))));
+    }
+
+    #[test]
+    fn test_primary_negative() {
+        assert_eq!(
+            _primary("-a"),
+            Ok(("", Expr::Negative(Box::new(Expr::Ident("a".to_string())))))
+        );
+    }
+
+    #[test]
+    fn test_primary_bitwise_not() {
+        assert_eq!(
+            _primary("~a"),
+            Ok(("", Expr::BitwiseNot(Box::new(Expr::Ident("a".to_string())))))
+        );
+    }
+
+    #[test]
+    fn test_primary_logical_not() {
+        assert_eq!(
+            _primary("!a"),
+            Ok(("", Expr::LogicalNot(Box::new(Expr::Ident("a".to_string())))))
+        );
+    }
+
+    #[test]
+    fn test_primary_compile_time() {
+        assert_eq!(
+            _primary("@a"),
+            Ok((
+                "",
+                Expr::CompileTime(Box::new(Expr::Ident("a".to_string())))
+            ))
+        );
+    }
+
+    #[test]
+    fn test_primary_pointer() {
+        assert_eq!(
+            _primary("[a]"),
+            Ok(("", Expr::Pointer(Box::new(Expr::Ident("a".to_string())))))
+        );
+    }
+
+    #[test]
+    fn test_primary_sub_expr() {
+        assert_eq!(
+            _primary("(a)"),
+            Ok(("", Expr::SubExpr(Box::new(Expr::Ident("a".to_string())))))
+        );
+    }
+
+    #[test]
+    fn test_primary_func_call() {
+        assert_eq!(
+            _primary("a(b, c)"),
+            Ok((
+                "",
+                Expr::FuncCall(
+                    Box::new(Expr::Ident("a".to_string())),
+                    vec![Expr::Ident("b".to_string()), Expr::Ident("c".to_string())],
+                )
+            ))
+        );
+    }
+
+    #[test]
+    fn test_primary_subscript() {
+        assert_eq!(
+            _primary("a[b]"),
+            Ok((
+                "",
+                Expr::Subscript(
+                    Box::new(Expr::Ident("a".to_string())),
+                    Box::new(Expr::Ident("b".to_string())),
+                )
+            ))
+        );
+    }
+
+    #[test]
+    fn test_primary_ranged() {
+        assert_eq!(
+            _primary("a...b"),
+            Ok((
+                "",
+                Expr::Ranged(
+                    Box::new(Expr::Ident("a".to_string())),
+                    Box::new(Expr::Ident("b".to_string())),
+                )
+            ))
+        );
+    }
+}

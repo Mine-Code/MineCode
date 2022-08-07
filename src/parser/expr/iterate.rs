@@ -31,3 +31,39 @@ pub fn _for(input: &str) -> IResult<&str, Expr> {
     })
     .parse(input)
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_for() {
+        assert_eq!(
+            _for("for a in b c"),
+            Ok((
+                "",
+                Expr::For {
+                    name: Box::new(Expr::Ident("a".to_string())),
+                    iter: Box::new(Expr::Ident("b".to_string())),
+                    body: Box::new(Expr::Ident("c".to_string())),
+                    value: None,
+                }
+            ))
+        );
+    }
+    #[test]
+    fn test_for_with_value() {
+        assert_eq!(
+            _for("for a in b c => d"),
+            Ok((
+                "",
+                Expr::For {
+                    name: Box::new(Expr::Ident("a".to_string())),
+                    iter: Box::new(Expr::Ident("b".to_string())),
+                    body: Box::new(Expr::Ident("c".to_string())),
+                    value: Some(Box::new(Expr::Ident("d".to_string()))),
+                }
+            ))
+        );
+    }
+}
