@@ -1,6 +1,6 @@
 use crate::ast::Expr;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Stmt {
     LoadModule {
         module: String,
@@ -9,6 +9,7 @@ pub enum Stmt {
     FuncDef {
         name: String,
         args: Vec<String>,
+        // Change this type to Expr
         body: Box<Stmt>,
     },
 }

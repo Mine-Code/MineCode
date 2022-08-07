@@ -8,3 +8,21 @@ pub fn mcl(input: &str) -> IResult<&str, Stmt> {
         .map(|(_, _, _, name)| Stmt::LoadModule { module: name })
         .parse(input)
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test() {
+        assert_eq!(
+            mcl("mcl test"),
+            Ok((
+                "",
+                Stmt::LoadModule {
+                    module: "test".to_string()
+                }
+            ))
+        );
+    }
+}

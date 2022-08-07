@@ -21,3 +21,30 @@ pub fn func_def(input: &str) -> IResult<&str, Stmt> {
     .map(|(name, args, body)| Stmt::FuncDef { name, args, body })
     .parse(input)
 }
+
+#[cfg(test)]
+mod test {
+
+    use crate::ast::Expr;
+
+    use super::*;
+
+    #[test]
+    fn test() {
+        assert_eq!(
+            func_def("fn test() { a; b; c }"),
+            Ok((
+                "",
+                Stmt::FuncDef {
+                    name: "test".to_string(),
+                    args: vec![],
+                    body: Box::new(Stmt::Expression(Expr::Exprs(vec![
+                        Expr::Ident("a".to_string()),
+                        Expr::Ident("b".to_string()),
+                        Expr::Ident("c".to_string()),
+                    ])))
+                }
+            ))
+        );
+    }
+}
