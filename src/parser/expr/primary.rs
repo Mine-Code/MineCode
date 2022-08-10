@@ -1,5 +1,4 @@
-use nom::branch::{alt, permutation};
-use nom::bytes::complete::tag;
+use nom::branch::alt;
 use nom::combinator::opt;
 use nom::multi::separated_list0;
 use nom::sequence::{delimited, preceded};

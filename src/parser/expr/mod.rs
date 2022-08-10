@@ -14,6 +14,5 @@ use ident::_ident;
 use iterate::_for;
 use num::_num;
 pub use parser::expr;
-use primary::_primary;
 use range::range;
 use string::_string;
