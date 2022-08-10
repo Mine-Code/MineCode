@@ -7,7 +7,7 @@ use nom::{
 
 use crate::ast::{BinaryOp, Expr};
 
-use super::_primary;
+use super::range;
 
 fn _binary_op<'a>(
     i: &'a str,
@@ -33,7 +33,7 @@ fn _binary_op<'a>(
 }
 
 fn _pow(input: &str) -> IResult<&str, Expr> {
-    _binary_op(input, tag("**"), _primary)
+    _binary_op(input, tag("**"), range)
 }
 fn _level_shift(input: &str) -> IResult<&str, Expr> {
     _binary_op(input, alt((tag("<<"), tag(">>"))), _pow)

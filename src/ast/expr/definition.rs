@@ -3,7 +3,9 @@ use crate::ast::BinaryOp;
 #[derive(Debug, Clone, PartialEq)]
 pub enum Expr {
     Num(i32),
-    // TODO: Make Attribute(Expr, String)
+
+    Attribute(Box<Expr>, String),
+
     Ident(String),
     String(String),
     FuncCall(Box<Expr>, Vec<Expr>),

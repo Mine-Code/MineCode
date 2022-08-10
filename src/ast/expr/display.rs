@@ -14,6 +14,7 @@ impl std::fmt::Display for Expr {
                     .collect::<Vec<String>>()
                     .join(", ")
             ),
+            Self::Attribute(r, l) => format!("{}.{}", r, l),
             Self::Ranged(begin, end) => format!("Range<{} -> {}>", begin, end),
             Self::Pointer(x) => format!("Ptr<{}>", x),
             Self::CompileTime(x) => format!("CompileTime<{}>", x),
