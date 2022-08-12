@@ -56,13 +56,6 @@ impl Expr {
         }
         ret
     }
-    fn _from_factors(root: Expr, factors: Vec<Expr>) -> Expr {
-        let mut ret = root;
-        for factor in factors {
-            ret = Expr::ApplyOperator(BinaryOp::Mul, Box::new(ret), Box::new(factor));
-        }
-        ret
-    }
     fn from_factors(factors: Vec<Expr>) -> Expr {
         if factors.is_empty() {
             Expr::Num(1)
