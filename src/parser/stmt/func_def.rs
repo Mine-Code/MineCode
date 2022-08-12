@@ -1,7 +1,10 @@
 use super::stmt;
 use crate::{
     ast::Stmt,
-    parser::basic::{ident, symbol},
+    parser::{
+        basic::{ident, symbol},
+        expr::expr,
+    },
 };
 use nom::bytes::complete::tag;
 use nom::{branch::permutation, multi::separated_list0, sequence::delimited, IResult};
@@ -16,7 +19,7 @@ pub fn func_def(input: &str) -> IResult<&str, Stmt> {
             separated_list0(symbol(','), ident),
             symbol(')'),
         ),
-        stmt.map(Box::new),
+        expr,
     ))
     .map(|(name, args, body)| Stmt::FuncDef { name, args, body })
     .parse(input)
