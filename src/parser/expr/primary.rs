@@ -122,10 +122,7 @@ mod test {
 
     #[test]
     fn test_primary_sub_expr() {
-        assert_eq!(
-            _primary("(a)"),
-            Ok(("", Expr::SubExpr(Box::new(Expr::Ident("a".to_string())))))
-        );
+        assert_eq!(_primary("(a)"), Ok(("", Expr::Ident("a".to_string()))));
     }
 
     #[test]
