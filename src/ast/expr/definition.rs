@@ -27,8 +27,7 @@ pub enum Expr {
         fallback: Option<Box<Expr>>,
     },
     For {
-        // TODO: Change this type to String
-        name: Box<Expr>,
+        name: String,
         iter: Box<Expr>,
         body: Box<Expr>,
         value: Option<Box<Expr>>,

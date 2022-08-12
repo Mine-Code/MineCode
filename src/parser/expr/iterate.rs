@@ -1,4 +1,5 @@
 use crate::ast::Expr;
+use crate::parser::basic::ident;
 use nom::branch::permutation;
 use nom::bytes::complete::tag;
 use nom::character::complete::multispace0;
@@ -11,7 +12,7 @@ pub fn _for(input: &str) -> IResult<&str, Expr> {
     let (input, _) = tag("for")(input)?;
 
     permutation((
-        expr.map(Box::new),
+        ident,
         multispace0,
         tag("in"),
         multispace0,
