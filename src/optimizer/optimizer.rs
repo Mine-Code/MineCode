@@ -1,11 +1,7 @@
 use crate::ast::{BinaryOp, Expr, Stmt};
 
-pub trait Optimize {
-    fn optimize(&self) -> Self;
-}
-
-impl Optimize for Stmt {
-    fn optimize(&self) -> Self {
+impl Stmt {
+    pub fn optimize(&self) -> Self {
         match self {
             Stmt::Expression(expr) => Stmt::Expression(expr.optimize()),
             _ => (*self).clone(),
@@ -139,8 +135,8 @@ fn div(a: i32, b: i32) -> (i32, i32) {
     (a, b)
 }
 
-impl Optimize for Expr {
-    fn optimize(&self) -> Self {
+impl Expr {
+    pub fn optimize(&self) -> Self {
         if let Expr::ApplyOperator(op, _, _) = self {
             if *op == BinaryOp::Add || *op == BinaryOp::Sub {
                 let terms = self

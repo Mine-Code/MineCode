@@ -7,7 +7,6 @@ mod preprocess;
 
 use ast::Stmt;
 use nom::{multi::many0, IResult};
-use optimizer::Optimize;
 
 fn program(input: &str) -> IResult<&str, Vec<Stmt>> {
     many0(parser::stmt)(input)
