@@ -1,4 +1,3 @@
-use super::stmt;
 use crate::{
     ast::Stmt,
     parser::{
@@ -41,11 +40,11 @@ mod test {
                 Stmt::FuncDef {
                     name: "test".to_string(),
                     args: vec![],
-                    body: Box::new(Stmt::Expression(Expr::Exprs(vec![
+                    body: Expr::Exprs(vec![
                         Expr::Ident("a".to_string()),
                         Expr::Ident("b".to_string()),
                         Expr::Ident("c".to_string()),
-                    ])))
+                    ])
                 }
             ))
         );

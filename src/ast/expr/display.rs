@@ -158,7 +158,7 @@ mod test {
     #[test]
     fn test_for_display() {
         let expr = Expr::For {
-            name: Box::new(Expr::Ident("x".to_string())),
+            name: "x".to_string(),
             iter: Box::new(Expr::Ident("y".to_string())),
             body: Box::new(Expr::Num(0)),
             value: Some(Box::new(Expr::Num(1))),

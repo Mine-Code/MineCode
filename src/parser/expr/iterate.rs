@@ -44,7 +44,7 @@ mod test {
             Ok((
                 "",
                 Expr::For {
-                    name: Box::new(Expr::Ident("a".to_string())),
+                    name: "a".to_string(),
                     iter: Box::new(Expr::Ident("b".to_string())),
                     body: Box::new(Expr::Ident("c".to_string())),
                     value: None,
@@ -59,7 +59,7 @@ mod test {
             Ok((
                 "",
                 Expr::For {
-                    name: Box::new(Expr::Ident("a".to_string())),
+                    name: "a".to_string(),
                     iter: Box::new(Expr::Ident("b".to_string())),
                     body: Box::new(Expr::Ident("c".to_string())),
                     value: Some(Box::new(Expr::Ident("d".to_string()))),

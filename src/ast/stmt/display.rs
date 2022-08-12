@@ -37,7 +37,7 @@ mod test {
         let stmt = Stmt::FuncDef {
             name: "test".to_string(),
             args: vec!["a".to_string(), "b".to_string()],
-            body: Box::new(Stmt::Expression(Expr::Num(1))),
+            body: Expr::Num(1),
         };
         assert_eq!(stmt.to_string(), "def test(a,b) 1");
     }
