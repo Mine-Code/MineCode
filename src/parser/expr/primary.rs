@@ -26,7 +26,7 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
         // []
         delimited(symbol('['), _primary.map(Box::new), symbol(']')).map(Expr::Pointer),
         // SubExpr
-        delimited(symbol('('), _primary.map(Box::new), symbol(')')).map(Expr::SubExpr),
+        delimited(symbol('('), expr, symbol(')')),
         //
         super::_num,
         super::_for,
