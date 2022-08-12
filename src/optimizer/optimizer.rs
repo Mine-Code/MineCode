@@ -1,13 +1,4 @@
-use crate::ast::{BinaryOp, Expr, Stmt};
-
-impl Stmt {
-    pub fn optimize(&self) -> Self {
-        match self {
-            Stmt::Expression(expr) => Stmt::Expression(expr.optimize()),
-            _ => (*self).clone(),
-        }
-    }
-}
+use crate::ast::{BinaryOp, Expr};
 
 impl Expr {
     fn _collect_terms(&self, invert: bool) -> Vec<(bool, &Expr)> {
