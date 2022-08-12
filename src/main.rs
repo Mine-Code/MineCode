@@ -4,6 +4,7 @@ mod ast;
 mod optimizer;
 mod parser;
 mod preprocess;
+mod walker;
 
 use ast::Stmt;
 use nom::{multi::many0, IResult};
