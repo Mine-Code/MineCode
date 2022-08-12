@@ -16,9 +16,6 @@ pub enum Expr {
 
     ApplyOperator(BinaryOp, Box<Expr>, Box<Expr>),
 
-    // TODO: Remove this
-    SubExpr(Box<Expr>),
-
     LogicalNot(Box<Expr>),
     BitwiseNot(Box<Expr>),
     Negative(Box<Expr>),

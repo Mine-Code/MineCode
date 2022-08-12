@@ -40,7 +40,7 @@ impl std::fmt::Display for Expr {
                     .iter()
                     .fold("".to_string(), |a, c| a + &format!("{}; ", c)),
             ),
-            Self::SubExpr(expr) => format!("({})", expr),
+
             Self::For {
                 name,
                 iter,
