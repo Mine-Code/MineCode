@@ -70,7 +70,7 @@ impl Expr {
             factors[0].clone()
         } else {
             let mut ret = factors[0].clone();
-            for factor in factors[1..].to_vec() {
+            for factor in factors[1..].iter().cloned() {
                 ret = Expr::ApplyOperator(BinaryOp::Mul, Box::new(ret), Box::new(factor));
             }
             ret
