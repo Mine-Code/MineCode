@@ -1,11 +1,11 @@
+use crate::ast::Expr;
+use crate::parser::basic::{ident, symbol};
 use nom::branch::alt;
+use nom::bytes::complete::tag;
 use nom::combinator::opt;
 use nom::multi::separated_list0;
 use nom::sequence::{delimited, preceded};
 use nom::{IResult, Parser};
-
-use crate::ast::Expr;
-use crate::parser::basic::{ident, symbol};
 
 use super::parser::expr;
 
@@ -65,6 +65,12 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
         }
         break;
     }
+
+    let (input, range_end) = opt(preceded(tag("..."), _primary))(input)?;
+    if let Some(end) = range_end {
+        ret = Expr::Ranged(Box::new(ret), Box::new(end));
+    }
+
     Ok((input, ret))
 }
 
