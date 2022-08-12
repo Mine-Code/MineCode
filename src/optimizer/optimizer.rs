@@ -69,7 +69,11 @@ impl Expr {
         } else if factors.len() == 1 {
             factors[0].clone()
         } else {
-            Expr::_from_factors(factors[0].clone(), factors[1..].to_vec())
+            let mut ret = factors[0].clone();
+            for factor in factors[1..].to_vec() {
+                ret = Expr::ApplyOperator(BinaryOp::Mul, Box::new(ret), Box::new(factor));
+            }
+            ret
         }
     }
     fn multiply(coefficient: i32, value: Expr) -> Expr {
