@@ -1,10 +1,27 @@
-use crate::ast::{BinaryOp, Expr};
+use crate::ast::{BinaryOp, Expr, Stmt};
 
 use super::core_trait::Walker;
 
 pub struct ByteCodeWalker {}
 
-impl Walker<Vec<u8>, Vec<u8>> for ByteCodeWalker {
+impl ByteCodeWalker {
+    pub fn new() -> ByteCodeWalker {
+        ByteCodeWalker {}
+    }
+}
+
+impl Walker for ByteCodeWalker {
+    type StmtT = Vec<u8>;
+    type ExprT = Vec<u8>;
+
+    fn walk_stmt(stmt: Stmt) -> Self::StmtT {
+        match stmt {
+            Stmt::Expression(expr) => Self::walk_expr(expr),
+            Stmt::LoadModule { module } => Self::walk_load_module(module),
+            Stmt::FuncDef { name, args, body } => Self::walk_func_def(name, args, body),
+        }
+    }
+
     fn walk_load_module(module_name: String) -> Vec<u8> {
         let mut ret = vec![0u8];
         ret.extend(module_name.as_bytes().to_vec());
