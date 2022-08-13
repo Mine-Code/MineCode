@@ -1,6 +1,6 @@
 use crate::ast::{BinaryOp, Expr};
 
-trait Walker<StmtT, ExprT> {
+pub trait Walker<StmtT, ExprT> {
     fn walk_load_module(module_name: String) -> StmtT;
     fn walk_expr(expr: Expr) -> StmtT;
     fn walk_func_def(name: String, args: Vec<String>, body: Expr) -> StmtT;
@@ -8,7 +8,7 @@ trait Walker<StmtT, ExprT> {
     fn walk_num(num: i32) -> ExprT;
     fn walk_ident(ident: String) -> ExprT;
     fn walk_string(string: String) -> ExprT;
-    fn walk_func_call(func_name: String, args: Vec<Expr>) -> ExprT;
+    fn walk_func_call(func_name: Expr, args: Vec<Expr>) -> ExprT;
     fn walk_ranged(start: Expr, end: Expr) -> ExprT;
     fn walk_pointer(expr: Expr) -> ExprT;
     fn walk_compile_time(expr: Expr) -> ExprT;
