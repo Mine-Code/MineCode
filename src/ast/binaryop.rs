@@ -51,22 +51,22 @@ impl Into<u8> for BinaryOp {
             BinaryOp::Sub => 1,
             BinaryOp::Mul => 2,
             BinaryOp::Div => 3,
-            BinaryOp::Mod => 4,
-            BinaryOp::Power => 5,
-            BinaryOp::LogicalOr => 6,
-            BinaryOp::LogicalAnd => 7,
-            BinaryOp::BitwiseOr => 8,
-            BinaryOp::BitwiseAnd => 9,
+            BinaryOp::LessThan => 4,
+            BinaryOp::LessThanOrEqual => 5,
+            BinaryOp::GreaterThan => panic!("Please use LessThan insted of GreaterThan"),
+            BinaryOp::GreaterThanOrEqual => {
+                panic!("Please use LessThanOrEqual insted of GreaterThanOrEqual")
+            }
+            BinaryOp::Equal => 6,
+            BinaryOp::NotEqual => 7,
+            BinaryOp::BitwiseAnd | BinaryOp::LogicalAnd => 8,
+            BinaryOp::BitwiseOr | BinaryOp::LogicalOr => 9,
             BinaryOp::BitwiseXor => 10,
-            BinaryOp::ShiftLeft => 11,
-            BinaryOp::ShiftRight => 12,
-            BinaryOp::Equal => 13,
-            BinaryOp::NotEqual => 14,
-            BinaryOp::LessThan => 15,
-            BinaryOp::LessThanOrEqual => 16,
-            BinaryOp::GreaterThan => 17,
-            BinaryOp::GreaterThanOrEqual => 18,
-            BinaryOp::Assignment => 19,
+            BinaryOp::Mod => 11,
+            BinaryOp::Power => panic!("Please use Pow() insted of **"),
+            BinaryOp::ShiftLeft => 12,
+            BinaryOp::ShiftRight => 13,
+            BinaryOp::Assignment => panic!("[Assignment] can't be opcode"),
         }
     }
 }
