@@ -18,7 +18,7 @@ impl std::fmt::Display for Expr {
             Self::Ranged(begin, end) => format!("Range<{} -> {}>", begin, end),
             Self::Pointer(x) => format!("Ptr<{}>", x),
             Self::CompileTime(x) => format!("CompileTime<{}>", x),
-            Self::ApplyOperator(op, r, l) => format!("{} {} {}", r, op, l),
+            Self::ApplyOperator(op, r, l) => format!("({} {} {})", r, op, l),
             Self::LogicalNot(x) => format!("!{}", x),
             Self::BitwiseNot(x) => format!("~{}", x),
             Self::Negative(x) => format!("-{}", x),

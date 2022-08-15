@@ -24,7 +24,7 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
         // CompileTime
         preceded(symbol('@'), _primary.map(Box::new)).map(Expr::CompileTime),
         // []
-        delimited(symbol('['), _primary.map(Box::new), symbol(']')).map(Expr::Pointer),
+        delimited(symbol('['), expr.map(Box::new), symbol(']')).map(Expr::Pointer),
         // SubExpr
         delimited(symbol('('), expr, symbol(')')),
         //

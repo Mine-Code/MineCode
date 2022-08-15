@@ -88,24 +88,43 @@ impl Walker for ByteCodeWalker {
         ret
     }
     fn walk_ident(ident: String) -> Vec<u8> {
-        unimplemented!()
+        // TODO: Make Identifier listup phase and fix this.
+        let mut ret = vec![0xf5u8];
+        ret.extend(ident.as_bytes().to_vec());
+        ret.push(0u8);
+        ret
     }
     fn walk_string(string: String) -> Vec<u8> {
-        unimplemented!()
+        let mut ret = vec![0x94u8];
+        ret.extend(string.as_bytes().to_vec());
+        ret.push(0u8);
+        ret
     }
     fn walk_func_call(func_name: Expr, args: Vec<Expr>) -> Vec<u8> {
-        unimplemented!()
+        // TODO: FIX THIS! for 'func[x](y...)'
+        let mut ret = vec![0xf6u8];
+        ret.extend(Self::walk_expr(func_name));
+        ret.extend(Self::walk_exprs(args));
+        ret
     }
     fn walk_ranged(start: Expr, end: Expr) -> Vec<u8> {
         unimplemented!()
     }
     fn walk_pointer(expr: Expr) -> Vec<u8> {
-        unimplemented!()
+        let mut ret = vec![0x9du8];
+        ret.extend(Self::walk_expr(expr));
+        ret
     }
     fn walk_compile_time(expr: Expr) -> Vec<u8> {
         unimplemented!()
     }
     fn walk_apply_operator(op: BinaryOp, left: Expr, right: Expr) -> Vec<u8> {
+        if op == BinaryOp::Assignment {
+            let mut ret = vec![0xf4u8];
+            ret.extend(Self::walk_expr(left));
+            ret.extend(Self::walk_expr(right));
+            return ret;
+        }
         let mut ret = vec![op.into()];
         ret.extend(Self::walk_expr(left));
         ret.extend(Self::walk_expr(right));
@@ -121,7 +140,10 @@ impl Walker for ByteCodeWalker {
         unimplemented!()
     }
     fn walk_subscript(expr: Expr, index: Expr) -> Vec<u8> {
-        unimplemented!()
+        let mut ret = vec![0x9bu8];
+        ret.extend(Self::walk_expr(expr));
+        ret.extend(Self::walk_expr(index));
+        ret
     }
     fn walk_attribute(expr: Expr, attr: String) -> Vec<u8> {
         unimplemented!()
@@ -133,7 +155,12 @@ impl Walker for ByteCodeWalker {
         unimplemented!()
     }
     fn walk_exprs(exprs: Vec<Expr>) -> Vec<u8> {
-        unimplemented!()
+        let mut ret = vec![0xf6u8];
+        for expr in exprs {
+            ret.extend(Self::walk_expr(expr));
+        }
+        ret.push(0xff);
+        ret
     }
     fn walk_func_def(name: String, args: Vec<String>, body: Expr) -> Vec<u8> {
         unimplemented!()

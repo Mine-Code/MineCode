@@ -29,8 +29,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .iter()
             .cloned()
             .map(|x| x.optimize())
-            .map(|x| ByteCodeWalker::walk_stmt(x))
-            .map(|x| format!("{:?}\n", x))
+            // .map(|x| ByteCodeWalker::walk_stmt(x))
+            // .map(|x| x
+            //     .iter()
+            //     .map(|x| format!("{:02x}", x))
+            //     .collect::<Vec<_>>()
+            //     .join(" "))
+            .map(|x| x.to_string() + "\n")
             .fold("".to_string(), |a, c| a + &c)
     );
 
