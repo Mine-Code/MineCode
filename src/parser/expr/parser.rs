@@ -11,20 +11,18 @@ use super::range;
 
 fn _binary_op<'a>(
     i: &'a str,
-    mut joiner: impl FnMut(&'a str) -> IResult<&'a str, &'a str>,
+    joiner: impl FnMut(&'a str) -> IResult<&'a str, &'a str>,
     mut parser: impl FnMut(&'a str) -> IResult<&'a str, Expr> + Copy,
 ) -> IResult<&'a str, Expr> {
+    let mut joiner = delimited(multispace0, joiner, multispace0);
+    let part = move |i: &'a str| {
+        let (i, op) = joiner(i)?;
+        let (i, expr) = parser(i)?;
+        Ok((i, (op, expr)))
+    };
+
     let (i, mut r) = parser(i)?;
-
-    let b = joiner(i);
-    if b.is_err() {
-        return Ok((i, r));
-    }
-
-    let (i, parts) = many0(permutation((
-        delimited(multispace0, joiner, multispace0),
-        parser,
-    )))(i)?;
+    let (i, parts) = many0(part)(i)?;
 
     for (op, x) in parts {
         r = Expr::ApplyOperator(BinaryOp::from_str(op).unwrap(), Box::new(r), Box::new(x));
