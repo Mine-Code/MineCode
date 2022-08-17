@@ -1,12 +1,23 @@
+use std::collections::HashMap;
+
 use crate::ast::{BinaryOp, Expr, Stmt};
 
 use super::core_trait::Walker;
 
-pub struct PreExecutingWalker {}
+struct CachedVariable {
+    flushed: bool,
+    value: Expr,
+}
+
+pub struct PreExecutingWalker {
+    virtual_variables: HashMap<String, CachedVariable>,
+}
 
 impl PreExecutingWalker {
     pub fn new() -> PreExecutingWalker {
-        PreExecutingWalker {}
+        PreExecutingWalker {
+            virtual_variables: HashMap::new(),
+        }
     }
 }
 
@@ -14,7 +25,7 @@ impl Walker for PreExecutingWalker {
     type StmtT = Stmt;
     type ExprT = Expr;
 
-    fn walk_stmt(&self, stmt: Stmt) -> Self::StmtT {
+    fn walk_stmt(&mut self, stmt: Stmt) -> Self::StmtT {
         match stmt {
             Stmt::Expression(expr) => self.walk_expr(expr),
             Stmt::LoadModule { module } => self.walk_load_module(module),
@@ -22,10 +33,10 @@ impl Walker for PreExecutingWalker {
         }
     }
 
-    fn walk_load_module(&self, module_name: String) -> Stmt {
+    fn walk_load_module(&mut self, module_name: String) -> Stmt {
         unimplemented!()
     }
-    fn walk_expr(&self, expr: Expr) -> Stmt {
+    fn walk_expr(&mut self, expr: Expr) -> Stmt {
         let expr = match expr {
             Expr::Num(x) => self.walk_num(x),
             Expr::Ident(x) => self.walk_ident(x),
@@ -55,55 +66,68 @@ impl Walker for PreExecutingWalker {
         Stmt::Expression(expr)
     }
 
-    fn walk_num(&self, num: i32) -> Expr {
+    fn walk_num(&mut self, num: i32) -> Expr {
         unimplemented!()
     }
-    fn walk_ident(&self, ident: String) -> Expr {
+    fn walk_ident(&mut self, ident: String) -> Expr {
         unimplemented!()
     }
-    fn walk_string(&self, string: String) -> Expr {
+    fn walk_string(&mut self, string: String) -> Expr {
         unimplemented!()
     }
-    fn walk_func_call(&self, func_name: Expr, args: Vec<Expr>) -> Expr {
+    fn walk_func_call(&mut self, func_name: Expr, args: Vec<Expr>) -> Expr {
         unimplemented!()
     }
-    fn walk_ranged(&self, start: Expr, end: Expr) -> Expr {
+    fn walk_ranged(&mut self, start: Expr, end: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_pointer(&self, expr: Expr) -> Expr {
+    fn walk_pointer(&mut self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_compile_time(&self, expr: Expr) -> Expr {
+    fn walk_compile_time(&mut self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_apply_operator(&self, op: BinaryOp, left: Expr, right: Expr) -> Expr {
+    fn walk_apply_operator(&mut self, op: BinaryOp, left: Expr, right: Expr) -> Expr {
+        if op == BinaryOp::Assignment {
+            if let Expr::Ident(x) = left {
+                self.virtual_variables.insert(
+                    x,
+                    CachedVariable {
+                        flushed: false,
+                        value: right,
+                    },
+                );
+            } else {
+                unimplemented!()
+            }
+        }
         unimplemented!()
     }
-    fn walk_logical_not(&self, expr: Expr) -> Expr {
+    fn walk_logical_not(&mut self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_bitwise_not(&self, expr: Expr) -> Expr {
+    fn walk_bitwise_not(&mut self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_negative(&self, expr: Expr) -> Expr {
+    fn walk_negative(&mut self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_subscript(&self, expr: Expr, index: Expr) -> Expr {
+    fn walk_subscript(&mut self, expr: Expr, index: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_attribute(&self, expr: Expr, attr: String) -> Expr {
+    fn walk_attribute(&mut self, expr: Expr, attr: String) -> Expr {
         unimplemented!()
     }
-    fn walk_if(&self, branches: Vec<(Expr, Expr)>, fallback: Option<Expr>) -> Expr {
+    fn walk_if(&mut self, branches: Vec<(Expr, Expr)>, fallback: Option<Expr>) -> Expr {
         unimplemented!()
     }
-    fn walk_for(&self, name: String, iter: Expr, body: Expr, value: Option<Expr>) -> Expr {
+    fn walk_for(&mut self, name: String, iter: Expr, body: Expr, value: Option<Expr>) -> Expr {
         unimplemented!()
     }
-    fn walk_exprs(&self, exprs: Vec<Expr>) -> Expr {
+    fn walk_exprs(&mut self, exprs: Vec<Expr>) -> Expr {
         unimplemented!()
     }
-    fn walk_func_def(&self, name: String, args: Vec<String>, body: Expr) -> Stmt {
+    fn walk_func_def(&mut self, name: String, args: Vec<String>, body: Expr) -> Stmt {
         unimplemented!()
     }
 }

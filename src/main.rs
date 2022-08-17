@@ -23,20 +23,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let (remained_src, stmts) = program(&prog).unwrap();
 
+    let mut pre_executing_walker = PreExecutingWalker::new();
+    let mut byte_code_walker = ByteCodeWalker::new();
+
+    let stmts = stmts.iter().cloned();
+    let stmts = stmts.map(|x| x.optimize());
+    let stmts = stmts.map(|x| pre_executing_walker.walk_stmt(x));
+    let stmts = stmts.map(|x| byte_code_walker.walk_stmt(x)).map(|x| {
+        x.iter()
+            .map(|x| format!("{:02x}", x))
+            .collect::<Vec<_>>()
+            .join(" ")
+    });
+
     println!("{:?}", remained_src);
     println!(
         "{}",
         stmts
-            .iter()
-            .cloned()
-            .map(|x| x.optimize())
-            .map(|x| PreExecutingWalker::new().walk_stmt(x))
-            .map(|x| ByteCodeWalker::new().walk_stmt(x))
-            .map(|x| x
-                .iter()
-                .map(|x| format!("{:02x}", x))
-                .collect::<Vec<_>>()
-                .join(" "))
             .map(|x| x.to_string() + "\n")
             .fold("".to_string(), |a, c| a + &c)
     );
