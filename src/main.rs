@@ -30,8 +30,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .iter()
             .cloned()
             .map(|x| x.optimize())
-            .map(|x| PreExecutingWalker::new()::walk_stmt(x))
-            .map(|x| ByteCodeWalker::new()::walk_stmt(x))
+            .map(|x| PreExecutingWalker::new().walk_stmt(x))
+            .map(|x| ByteCodeWalker::new().walk_stmt(x))
             .map(|x| x
                 .iter()
                 .map(|x| format!("{:02x}", x))

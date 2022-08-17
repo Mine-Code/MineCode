@@ -14,96 +14,96 @@ impl Walker for PreExecutingWalker {
     type StmtT = Stmt;
     type ExprT = Expr;
 
-    fn walk_stmt(stmt: Stmt) -> Self::StmtT {
+    fn walk_stmt(&self, stmt: Stmt) -> Self::StmtT {
         match stmt {
-            Stmt::Expression(expr) => Self::walk_expr(expr),
-            Stmt::LoadModule { module } => Self::walk_load_module(module),
-            Stmt::FuncDef { name, args, body } => Self::walk_func_def(name, args, body),
+            Stmt::Expression(expr) => self.walk_expr(expr),
+            Stmt::LoadModule { module } => self.walk_load_module(module),
+            Stmt::FuncDef { name, args, body } => self.walk_func_def(name, args, body),
         }
     }
 
-    fn walk_load_module(module_name: String) -> Stmt {
+    fn walk_load_module(&self, module_name: String) -> Stmt {
         unimplemented!()
     }
-    fn walk_expr(expr: Expr) -> Stmt {
+    fn walk_expr(&self, expr: Expr) -> Stmt {
         let expr = match expr {
-            Expr::Num(x) => Self::walk_num(x),
-            Expr::Ident(x) => Self::walk_ident(x),
-            Expr::String(x) => Self::walk_string(x),
-            Expr::FuncCall(x, y) => Self::walk_func_call(*x, y),
+            Expr::Num(x) => self.walk_num(x),
+            Expr::Ident(x) => self.walk_ident(x),
+            Expr::String(x) => self.walk_string(x),
+            Expr::FuncCall(x, y) => self.walk_func_call(*x, y),
 
-            Expr::Ranged(x, y) => Self::walk_ranged(*x, *y),
-            Expr::Pointer(x) => Self::walk_pointer(*x),
-            Expr::CompileTime(x) => Self::walk_compile_time(*x),
-            Expr::ApplyOperator(x, y, z) => Self::walk_apply_operator(x, *y, *z),
-            Expr::LogicalNot(x) => Self::walk_logical_not(*x),
+            Expr::Ranged(x, y) => self.walk_ranged(*x, *y),
+            Expr::Pointer(x) => self.walk_pointer(*x),
+            Expr::CompileTime(x) => self.walk_compile_time(*x),
+            Expr::ApplyOperator(x, y, z) => self.walk_apply_operator(x, *y, *z),
+            Expr::LogicalNot(x) => self.walk_logical_not(*x),
 
-            Expr::BitwiseNot(x) => Self::walk_bitwise_not(*x),
-            Expr::Negative(x) => Self::walk_negative(*x),
-            Expr::Subscript(x, y) => Self::walk_subscript(*x, *y),
-            Expr::Attribute(x, y) => Self::walk_attribute(*x, y),
-            Expr::If { branches, fallback } => Self::walk_if(branches, fallback.map(|x| *x)),
+            Expr::BitwiseNot(x) => self.walk_bitwise_not(*x),
+            Expr::Negative(x) => self.walk_negative(*x),
+            Expr::Subscript(x, y) => self.walk_subscript(*x, *y),
+            Expr::Attribute(x, y) => self.walk_attribute(*x, y),
+            Expr::If { branches, fallback } => self.walk_if(branches, fallback.map(|x| *x)),
             Expr::For {
                 name,
                 iter,
                 body,
                 value,
-            } => Self::walk_for(name, *iter, *body, value.map(|x| *x)),
-            Expr::Exprs(x) => Self::walk_exprs(x),
+            } => self.walk_for(name, *iter, *body, value.map(|x| *x)),
+            Expr::Exprs(x) => self.walk_exprs(x),
         };
 
         Stmt::Expression(expr)
     }
 
-    fn walk_num(num: i32) -> Expr {
+    fn walk_num(&self, num: i32) -> Expr {
         unimplemented!()
     }
-    fn walk_ident(ident: String) -> Expr {
+    fn walk_ident(&self, ident: String) -> Expr {
         unimplemented!()
     }
-    fn walk_string(string: String) -> Expr {
+    fn walk_string(&self, string: String) -> Expr {
         unimplemented!()
     }
-    fn walk_func_call(func_name: Expr, args: Vec<Expr>) -> Expr {
+    fn walk_func_call(&self, func_name: Expr, args: Vec<Expr>) -> Expr {
         unimplemented!()
     }
-    fn walk_ranged(start: Expr, end: Expr) -> Expr {
+    fn walk_ranged(&self, start: Expr, end: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_pointer(expr: Expr) -> Expr {
+    fn walk_pointer(&self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_compile_time(expr: Expr) -> Expr {
+    fn walk_compile_time(&self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_apply_operator(op: BinaryOp, left: Expr, right: Expr) -> Expr {
+    fn walk_apply_operator(&self, op: BinaryOp, left: Expr, right: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_logical_not(expr: Expr) -> Expr {
+    fn walk_logical_not(&self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_bitwise_not(expr: Expr) -> Expr {
+    fn walk_bitwise_not(&self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_negative(expr: Expr) -> Expr {
+    fn walk_negative(&self, expr: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_subscript(expr: Expr, index: Expr) -> Expr {
+    fn walk_subscript(&self, expr: Expr, index: Expr) -> Expr {
         unimplemented!()
     }
-    fn walk_attribute(expr: Expr, attr: String) -> Expr {
+    fn walk_attribute(&self, expr: Expr, attr: String) -> Expr {
         unimplemented!()
     }
-    fn walk_if(branches: Vec<(Expr, Expr)>, fallback: Option<Expr>) -> Expr {
+    fn walk_if(&self, branches: Vec<(Expr, Expr)>, fallback: Option<Expr>) -> Expr {
         unimplemented!()
     }
-    fn walk_for(name: String, iter: Expr, body: Expr, value: Option<Expr>) -> Expr {
+    fn walk_for(&self, name: String, iter: Expr, body: Expr, value: Option<Expr>) -> Expr {
         unimplemented!()
     }
-    fn walk_exprs(exprs: Vec<Expr>) -> Expr {
+    fn walk_exprs(&self, exprs: Vec<Expr>) -> Expr {
         unimplemented!()
     }
-    fn walk_func_def(name: String, args: Vec<String>, body: Expr) -> Stmt {
+    fn walk_func_def(&self, name: String, args: Vec<String>, body: Expr) -> Stmt {
         unimplemented!()
     }
 }
