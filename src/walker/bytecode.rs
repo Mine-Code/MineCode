@@ -89,7 +89,7 @@ impl Walker for ByteCodeWalker {
     }
     fn walk_ident(ident: String) -> Vec<u8> {
         // TODO: Make Identifier listup phase and fix this.
-        let mut ret = vec![0xf5u8];
+        let mut ret = vec![0xfdu8];
         ret.extend(ident.as_bytes().to_vec());
         ret.push(0u8);
         ret
@@ -102,7 +102,7 @@ impl Walker for ByteCodeWalker {
     }
     fn walk_func_call(func_name: Expr, args: Vec<Expr>) -> Vec<u8> {
         // TODO: FIX THIS! for 'func[x](y...)'
-        let mut ret = vec![0xf6u8];
+        let mut ret = vec![0xfcu8];
         ret.extend(Self::walk_expr(func_name));
         ret.extend(Self::walk_exprs(args));
         ret
@@ -149,7 +149,20 @@ impl Walker for ByteCodeWalker {
         unimplemented!()
     }
     fn walk_if(branches: Vec<(Expr, Expr)>, fallback: Option<Expr>) -> Vec<u8> {
-        unimplemented!()
+        // TODO: Optimize for the case where there is only one branch.
+        // TODO: Optimize for the following case: if a == b => c
+        let mut ret = vec![0xf5u8];
+        for (cond, body) in branches {
+            ret.extend(Self::walk_expr(cond));
+            ret.extend(Self::walk_expr(body));
+        }
+        if let Some(fallback) = fallback {
+            ret.extend(Self::walk_expr(fallback));
+        } else {
+            ret.push(0xf7u8);
+        }
+
+        ret
     }
     fn walk_for(name: String, iter: Expr, body: Expr, value: Option<Expr>) -> Vec<u8> {
         unimplemented!()
