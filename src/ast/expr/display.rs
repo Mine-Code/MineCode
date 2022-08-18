@@ -24,15 +24,11 @@ impl std::fmt::Display for Expr {
             Self::Negative(x) => format!("-{}", x),
             Self::Subscript(arr, ind) => format!("{}[{}]", arr, ind),
             Self::If { branches, fallback } => format!(
-                "if {}{}",
+                "if {}=> {}",
                 branches
                     .iter()
                     .fold("".to_string(), |a, (c, e)| a + &format!("{} => {}, ", c, e)),
-                if let Some(fallback) = fallback {
-                    format!("_ => {}", fallback)
-                } else {
-                    "".to_string()
-                }
+                fallback
             ),
             Self::Exprs(exprs) => format!(
                 "{{{}}}",
@@ -47,18 +43,10 @@ impl std::fmt::Display for Expr {
                 body,
                 value,
             } => {
-                format!(
-                    "for {} in {}: [{}] {}",
-                    name,
-                    iter,
-                    body,
-                    if let Some(x) = value {
-                        format!("=> {}", x)
-                    } else {
-                        "".to_string()
-                    }
-                )
+                format!("for {} in {}: [{}] => {}", name, iter, body, value)
             }
+
+            Self::Nil => "nil".to_string(),
         };
 
         write!(f, "{}", s)
@@ -151,7 +139,7 @@ mod test {
                 (Expr::Ident("x".to_string()), Expr::Num(0)),
                 (Expr::Ident("y".to_string()), Expr::Num(1)),
             ],
-            fallback: Some(Box::new(Expr::Num(2))),
+            fallback: Box::new(Expr::Num(2)),
         };
         assert_eq!(expr.to_string(), "if x => 0, y => 1, _ => 2");
     }
@@ -161,7 +149,7 @@ mod test {
             name: "x".to_string(),
             iter: Box::new(Expr::Ident("y".to_string())),
             body: Box::new(Expr::Num(0)),
-            value: Some(Box::new(Expr::Num(1))),
+            value: Box::new(Expr::Num(1)),
         };
         assert_eq!(expr.to_string(), "for x in y: [0] => 1");
     }

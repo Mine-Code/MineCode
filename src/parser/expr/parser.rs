@@ -1,8 +1,8 @@
 use std::str::FromStr;
 
 use nom::{
-    branch::alt, branch::permutation, bytes::complete::tag, character::complete::multispace0,
-    combinator::opt, multi::many0, sequence::delimited, IResult,
+    branch::alt, bytes::complete::tag, character::complete::multispace0, combinator::opt,
+    multi::many0, sequence::delimited, IResult,
 };
 
 use crate::ast::{BinaryOp, Expr};

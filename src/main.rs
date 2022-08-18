@@ -28,8 +28,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let stmts = stmts.iter().cloned();
     let stmts = stmts.map(|x| x.optimize());
-    let stmts = stmts.map(|x| pre_executing_walker.walk_stmt(x));
-    let stmts = stmts.map(|x| byte_code_walker.walk_stmt(x)).map(|x| {
+
+    let stmts = stmts
+        .map(|x| pre_executing_walker.walk_stmt(&x))
+        .filter(|x| x.is_some())
+        .map(|x| x.unwrap());
+
+    let stmts = stmts.map(|x| byte_code_walker.walk_stmt(&x)).map(|x| {
         x.iter()
             .map(|x| format!("{:02x}", x))
             .collect::<Vec<_>>()

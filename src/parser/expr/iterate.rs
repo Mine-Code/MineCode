@@ -22,7 +22,8 @@ pub fn _for(input: &str) -> IResult<&str, Expr> {
         opt(
             permutation((multispace0, tag("=>"), multispace0, expr.map(Box::new)))
                 .map(|(_, _, _, a)| a),
-        ),
+        )
+        .map(|x| x.unwrap_or(Box::new(Expr::Nil))),
     ))
     .map(|(name, _, _, _, iter, _, body, value)| Expr::For {
         name,
@@ -47,7 +48,7 @@ mod test {
                     name: "a".to_string(),
                     iter: Box::new(Expr::Ident("b".to_string())),
                     body: Box::new(Expr::Ident("c".to_string())),
-                    value: None,
+                    value: Box::new(Expr::Nil),
                 }
             ))
         );
@@ -62,7 +63,7 @@ mod test {
                     name: "a".to_string(),
                     iter: Box::new(Expr::Ident("b".to_string())),
                     body: Box::new(Expr::Ident("c".to_string())),
-                    value: Some(Box::new(Expr::Ident("d".to_string()))),
+                    value: Box::new(Expr::Ident("d".to_string())),
                 }
             ))
         );

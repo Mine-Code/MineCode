@@ -24,14 +24,15 @@ pub enum Expr {
 
     If {
         branches: Vec<(Expr, Expr)>,
-        fallback: Option<Box<Expr>>,
+        fallback: Box<Expr>,
     },
     For {
         name: String,
         iter: Box<Expr>,
         body: Box<Expr>,
-        value: Option<Box<Expr>>,
+        value: Box<Expr>,
     },
 
     Exprs(Vec<Expr>),
+    Nil,
 }

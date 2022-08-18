@@ -26,7 +26,8 @@ pub fn _if(input: &str) -> IResult<&str, Expr> {
             )),
             expr.map(Box::new),
         ))
-        .map(|(_, a)| a)),
+        .map(|(_, a)| a))
+        .map(|x| x.unwrap_or(Box::new(Expr::Nil))),
     ))
     .map(|(_, branches, fallback)| Expr::If { branches, fallback })
     .parse(input)
@@ -47,7 +48,7 @@ mod test {
                         (Expr::Ident("b".to_string()), Expr::Ident("e".to_string())),
                         (Expr::Ident("c".to_string()), Expr::Ident("f".to_string())),
                     ],
-                    fallback: None,
+                    fallback: Box::new(Expr::Nil),
                 }
             ))
         );
@@ -64,7 +65,7 @@ mod test {
                         (Expr::Ident("b".to_string()), Expr::Ident("e".to_string())),
                         (Expr::Ident("c".to_string()), Expr::Ident("f".to_string())),
                     ],
-                    fallback: Some(Box::new(Expr::Ident("g".to_string()))),
+                    fallback: Box::new(Expr::Ident("g".to_string())),
                 }
             ))
         );
