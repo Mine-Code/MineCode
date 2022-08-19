@@ -4,9 +4,14 @@ use crate::ast::{BinaryOp, Expr, Stmt};
 
 use super::core_trait::Walker;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 struct Storage {
     index: usize,
+}
+impl Storage {
+    fn identifier(&self) -> String {
+        format!("s{}", self.index)
+    }
 }
 
 #[derive(Debug)]
@@ -15,9 +20,23 @@ struct CachedVariable {
     value: Expr,
 }
 
+impl CachedVariable {
+    fn get_assign_expr(&self) -> Expr {
+        match &self.storage {
+            Some(storage) => Expr::ApplyOperator(
+                BinaryOp::Assignment,
+                Box::new(Expr::Ident(format!("s{}", storage.index))),
+                Box::new(self.value.clone()), // TODO: Fix this for performance
+            ),
+            None => panic!("Cached variable has no storage"),
+        }
+    }
+}
+
 pub struct PreExecutingWalker {
     virtual_variables: HashMap<String, CachedVariable>,
     last_used_storage_index: usize,
+    stmts: Vec<Stmt>,
 }
 
 impl PreExecutingWalker {
@@ -25,12 +44,13 @@ impl PreExecutingWalker {
         PreExecutingWalker {
             virtual_variables: HashMap::new(),
             last_used_storage_index: 0,
+            stmts: Vec::new(),
         }
     }
 }
 
 impl PreExecutingWalker {
-    pub fn expr_const_evaluative(&self, expr: &Expr) -> Option<bool> {
+    fn expr_const_evaluative(&self, expr: &Expr) -> Option<bool> {
         match expr {
             Expr::ApplyOperator(_op, l, r) => {
                 let l_const_evaluative = self.expr_const_evaluative(&**l);
@@ -131,10 +151,55 @@ impl PreExecutingWalker {
             Expr::Nil => Some(true),
         }
     }
+
+    fn resolve_identifier_from_storage(&self, storage_name: String) -> Option<String> {
+        if storage_name.len() < 2 {
+            return None;
+        }
+        let index = storage_name[1..].parse::<usize>();
+        if index.is_err() {
+            return None;
+        }
+        let index = index.unwrap();
+
+        for (k, v) in &self.virtual_variables {
+            if v.storage == Some(Storage { index: index }) {
+                return Some(k.clone());
+            }
+        }
+        None
+    }
+
+    fn resolve_identifier(&self, ident: String) -> Option<String> {
+        if self.virtual_variables.contains_key(&ident) {
+            return Some(ident);
+        }
+        self.resolve_identifier_from_storage(ident)
+    }
+
+    fn resolve_variable(&mut self, ident: String) -> Option<&mut CachedVariable> {
+        let ident = self.resolve_identifier(ident);
+        if ident.is_none() {
+            return None;
+        }
+        self.virtual_variables.get_mut(&ident.unwrap())
+    }
+    fn get_new_storage(&mut self) -> Storage {
+        let index = self.last_used_storage_index;
+        self.last_used_storage_index += 1;
+        Storage { index: index }
+    }
 }
 impl Walker for PreExecutingWalker {
     type StmtT = Option<Stmt>;
     type ExprT = Option<Expr>;
+
+    fn add_stmt(&mut self, stmt: crate::ast::Stmt) {
+        self.stmts.push(stmt);
+    }
+    fn get_stmts(&self) -> &Vec<Stmt> {
+        &self.stmts
+    }
 
     fn walk_load_module(&mut self, _module_name: String) -> Option<Stmt> {
         unimplemented!()
@@ -152,28 +217,20 @@ impl Walker for PreExecutingWalker {
         Some(Expr::Num(num))
     }
     fn walk_ident(&mut self, ident: String) -> Self::ExprT {
-        if !self.virtual_variables.contains_key(&ident) {
+        let variable = self.resolve_variable(ident);
+        if variable.is_none() {
             // TODO: Error
             panic!("Undefined variable")
         }
 
-        let variable = self.virtual_variables.get_mut(&ident).unwrap();
-        if let Some(storage) = &variable.storage {
-            return Some(Expr::Ident(format!("s{}", storage.index)));
-        } else {
-            let index = self.last_used_storage_index;
-            self.last_used_storage_index += 1;
-            variable.storage = Some(Storage { index });
-
-            return Some(Expr::Exprs(vec![
-                Expr::ApplyOperator(
-                    BinaryOp::Assignment,
-                    Box::new(Expr::Ident(format!("s{}", index))),
-                    Box::new(variable.value.clone()), // TODO: Fix this for performance
-                ),
-                Expr::Ident(format!("s{}", index)),
-            ]));
+        let variable = variable.unwrap();
+        if variable.storage == None {
+            let storage = self.get_new_storage();
+            variable.storage = Some(storage);
+            let assigner = Stmt::Expression(variable.get_assign_expr());
+            self.add_stmt(assigner);
         }
+        return Some(Expr::Ident(variable.storage.unwrap().identifier()));
     }
     fn walk_string(&mut self, _string: String) -> Self::ExprT {
         unimplemented!()
@@ -207,7 +264,6 @@ impl Walker for PreExecutingWalker {
                         },
                     },
                 );
-                println!("{:?}", self.virtual_variables);
                 return None;
             } else {
                 println!("Assignment operator can only be used with identifiers");
@@ -217,6 +273,7 @@ impl Walker for PreExecutingWalker {
         } else if op == BinaryOp::Add {
             let l = self.walk_expr(left);
             let r = self.walk_expr(right);
+            println!("{:?}", self.virtual_variables);
             println!("+ {:?} {:?}", l, r);
             unimplemented!()
         } else if op == BinaryOp::Sub {

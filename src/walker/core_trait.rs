@@ -4,6 +4,17 @@ pub trait Walker {
     type StmtT;
     type ExprT;
 
+    fn add_stmt(&mut self, stmt: Stmt);
+
+    fn get_stmts(&self) -> &Vec<Stmt>;
+
+    fn walk(&mut self, code: &Vec<Stmt>) -> &Vec<Stmt> {
+        for stmt in code {
+            self.walk_stmt(stmt);
+        }
+        self.get_stmts()
+    }
+
     fn walk_stmt(&mut self, stmt: &Stmt) -> Self::StmtT {
         match stmt {
             Stmt::Expression(expr) => self.walk_stmt_expr(expr),
