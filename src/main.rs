@@ -10,6 +10,7 @@ use ast::Stmt;
 use nom::{multi::many0, IResult};
 
 use crate::walker::ByteCodeWalker;
+use crate::walker::IdentNormalizeWalker;
 // use crate::walker::PreExecutingWalker;
 use crate::walker::Walker;
 
@@ -23,28 +24,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let (remained_src, stmts) = program(&prog).unwrap();
 
-    // let mut pre_executing_walker = PreExecutingWalker::new();
-    let mut byte_code_walker = ByteCodeWalker::new();
+    let mut stmts = stmts;
+    for stmt in stmts.iter_mut() {
+        stmt.optimize();
+    }
 
-    let stmts = stmts.iter().cloned();
-    let stmts = stmts.map(|x| x.optimize());
+    let mut ident_walker = IdentNormalizeWalker::new();
+    let stmts = ident_walker.walk(stmts);
 
-    // let stmts = stmts
-    //     .map(|x| pre_executing_walker.walk_stmt(&x))
-    //     .filter(|x| x.is_some())
-    //     .map(|x| x.unwrap());
-
-    let stmts = byte_code_walker.walk(stmts).iter().map(|x| {
-        x.iter()
-            .map(|x| format!("{:02x}", x))
-            .collect::<Vec<_>>()
-            .join(" ")
-    });
+    // let mut byte_code_walker = ByteCodeWalker::new();
+    // let stmts = byte_code_walker.walk_ref(stmts).iter().map(|x| {
+    //     x.iter()
+    //         .map(|x| format!("{:02x}", x))
+    //         .collect::<Vec<_>>()
+    //         .join(" ")
+    // });
 
     println!("{:?}", remained_src);
     println!(
         "{}",
         stmts
+            .iter()
             .map(|x| x.to_string() + "\n")
             .fold("".to_string(), |a, c| a + &c)
     );

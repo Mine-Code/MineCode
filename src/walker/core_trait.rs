@@ -8,9 +8,15 @@ pub trait Walker {
 
     fn get_stmts(&self) -> &Vec<Self::StmtT>;
 
-    fn walk<T: Iterator<Item = Stmt>>(&mut self, code: T) -> &Vec<Self::StmtT> {
+    fn walk<T: IntoIterator<Item = Stmt>>(&mut self, code: T) -> &Vec<Self::StmtT> {
         for stmt in code {
             self.walk_stmt(&stmt);
+        }
+        self.get_stmts()
+    }
+    fn walk_ref<'a, T: IntoIterator<Item = &'a Stmt>>(&mut self, code: T) -> &Vec<Self::StmtT> {
+        for stmt in code {
+            self.walk_stmt(stmt);
         }
         self.get_stmts()
     }
