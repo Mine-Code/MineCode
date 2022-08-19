@@ -42,6 +42,7 @@ impl Walker for IdentNormalizeWalker {
     }
     fn walk_func_def(&mut self, name: String, args: Vec<String>, body: &Expr) {
         let body = self.walk_expr(body);
+
         self.add_stmt(Stmt::FuncDef { name, args, body });
     }
     fn walk_direct_func_call(&mut self, addr: u64, args: &Vec<Expr>) -> Self::ExprT {
@@ -67,6 +68,14 @@ impl Walker for IdentNormalizeWalker {
         Expr::String(string)
     }
     fn walk_func_call(&mut self, func_name: &Expr, args: &Vec<Expr>) -> Self::ExprT {
+        if let Expr::Subscript(array, index) = func_name {
+            if **array == Expr::Ident("func".to_string()) {
+                if let Expr::Num(addr) = **index {
+                    return self.walk_direct_func_call(addr as u64, args);
+                }
+            }
+        }
+
         let func_name = self.walk_expr(func_name);
         let args = args.iter().map(|x| self.walk_expr(x)).collect();
         Expr::FuncCall(Box::new(func_name), args)
