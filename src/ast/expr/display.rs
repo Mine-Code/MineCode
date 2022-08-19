@@ -16,7 +16,7 @@ impl std::fmt::Display for Expr {
                     .join(", ")
             ),
             Self::DirectFuncCall(addr, args) => format!(
-                "${}({})",
+                "$0x{:08x}({})",
                 addr,
                 args.iter()
                     .map(|x| format!("{x}"))
