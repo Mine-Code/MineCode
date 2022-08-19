@@ -1,4 +1,4 @@
-use crate::ast::{BinaryOp, Expr, Stmt};
+use crate::ast::{BinaryOp, Expr};
 
 use super::core_trait::Walker;
 
@@ -7,9 +7,9 @@ pub struct ByteCodeWalker {
 }
 
 impl ByteCodeWalker {
-    pub fn new() -> ByteCodeWalker {
-        ByteCodeWalker { stmts: Vec::new() }
-    }
+    // pub fn new() -> ByteCodeWalker {
+    //     ByteCodeWalker { stmts: Vec::new() }
+    // }
 }
 
 impl Walker for ByteCodeWalker {
@@ -46,7 +46,7 @@ impl Walker for ByteCodeWalker {
             ret.push((num >> 8) as u8);
             ret.push(num as u8);
         } else
-        /* if num < 0x100000000 */
+        //if num < 0x100000000
         {
             ret.push(0x92u8);
             ret.push((num >> 24) as u8);
@@ -68,7 +68,7 @@ impl Walker for ByteCodeWalker {
         } */
         ret
     }
-    fn walk_ident(&mut self, ident: String) -> Vec<u8> {
+    fn walk_ident(&mut self, _ident: String) -> Vec<u8> {
         panic!("walk_ident is not allowed in bytecode")
     }
     fn walk_storage(&mut self, index: usize) -> Self::ExprT {
@@ -83,10 +83,10 @@ impl Walker for ByteCodeWalker {
         ret.push(0u8);
         ret
     }
-    fn walk_func_call(&mut self, func_name: &Expr, args: &Vec<Expr>) -> Vec<u8> {
+    fn walk_func_call(&mut self, _func_name: &Expr, _args: &[Expr]) -> Vec<u8> {
         panic!("walk_func_call is not allowed in bytecode")
     }
-    fn walk_direct_func_call(&mut self, addr: u64, args: &Vec<Expr>) -> Vec<u8> {
+    fn walk_direct_func_call(&mut self, addr: u64, args: &[Expr]) -> Vec<u8> {
         let mut ret = vec![0xfcu8];
         ret.push((addr >> 0x38) as u8);
         ret.push((addr >> 0x30) as u8);
@@ -95,7 +95,7 @@ impl Walker for ByteCodeWalker {
         ret.push((addr >> 0x18) as u8);
         ret.push((addr >> 0x10) as u8);
         ret.push((addr >> 0x08) as u8);
-        ret.push((addr >> 0x00) as u8);
+        ret.push(addr as u8);
         ret.extend(self.walk_exprs(args));
         ret
     }
@@ -140,25 +140,25 @@ impl Walker for ByteCodeWalker {
     fn walk_attribute(&mut self, _expr: &Expr, _attr: String) -> Vec<u8> {
         unimplemented!()
     }
-    fn walk_if(&mut self, branches: &Vec<(Expr, Expr)>, fallback: &Expr) -> Vec<u8> {
+    fn walk_if(&mut self, branches: &[(Expr, Expr)], fallback: &Expr) -> Vec<u8> {
         // TODO: Optimize for the case where there is only one branch.
         // TODO: Optimize for the following case: if a == b => c
         let mut ret = vec![0xf5u8];
         for (cond, body) in branches {
-            ret.extend(self.walk_expr(&cond));
-            ret.extend(self.walk_expr(&body));
+            ret.extend(self.walk_expr(cond));
+            ret.extend(self.walk_expr(body));
         }
-        ret.extend(self.walk_expr(&fallback));
+        ret.extend(self.walk_expr(fallback));
 
         ret
     }
     fn walk_for(&mut self, _name: String, _iter: &Expr, _body: &Expr, _value: &Expr) -> Vec<u8> {
         unimplemented!()
     }
-    fn walk_exprs(&mut self, exprs: &Vec<Expr>) -> Vec<u8> {
+    fn walk_exprs(&mut self, exprs: &[Expr]) -> Vec<u8> {
         let mut ret = vec![0xf6u8];
         for expr in exprs {
-            ret.extend(self.walk_expr(&expr));
+            ret.extend(self.walk_expr(expr));
         }
         ret.push(0xff);
         ret

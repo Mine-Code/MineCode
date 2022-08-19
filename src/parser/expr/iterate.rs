@@ -23,7 +23,7 @@ pub fn _for(input: &str) -> IResult<&str, Expr> {
             permutation((multispace0, tag("=>"), multispace0, expr.map(Box::new)))
                 .map(|(_, _, _, a)| a),
         )
-        .map(|x| x.unwrap_or(Box::new(Expr::Nil))),
+        .map(|x| x.unwrap_or_else(|| Box::new(Expr::Nil))),
     ))
     .map(|(name, _, _, _, iter, _, body, value)| Expr::For {
         name,

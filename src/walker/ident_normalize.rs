@@ -45,7 +45,7 @@ impl Walker for IdentNormalizeWalker {
 
         self.add_stmt(Stmt::FuncDef { name, args, body });
     }
-    fn walk_direct_func_call(&mut self, addr: u64, args: &Vec<Expr>) -> Self::ExprT {
+    fn walk_direct_func_call(&mut self, addr: u64, args: &[Expr]) -> Self::ExprT {
         let args = args.iter().map(|x| self.walk_expr(x)).collect();
         Expr::DirectFuncCall(addr, args)
     }
@@ -67,7 +67,7 @@ impl Walker for IdentNormalizeWalker {
     fn walk_string(&mut self, string: String) -> Self::ExprT {
         Expr::String(string)
     }
-    fn walk_func_call(&mut self, func_name: &Expr, args: &Vec<Expr>) -> Self::ExprT {
+    fn walk_func_call(&mut self, func_name: &Expr, args: &[Expr]) -> Self::ExprT {
         if let Expr::Subscript(array, index) = func_name {
             if **array == Expr::Ident("func".to_string()) {
                 if let Expr::Num(addr) = **index {
@@ -119,7 +119,7 @@ impl Walker for IdentNormalizeWalker {
         let expr = self.walk_expr(expr);
         Expr::Attribute(Box::new(expr), attr)
     }
-    fn walk_if(&mut self, branches: &Vec<(Expr, Expr)>, fallback: &Expr) -> Self::ExprT {
+    fn walk_if(&mut self, branches: &[(Expr, Expr)], fallback: &Expr) -> Self::ExprT {
         let branches = branches
             .iter()
             .map(|(cond, body)| (self.walk_expr(cond), self.walk_expr(body)))
@@ -141,7 +141,7 @@ impl Walker for IdentNormalizeWalker {
             value: Box::new(value),
         }
     }
-    fn walk_exprs(&mut self, exprs: &Vec<Expr>) -> Self::ExprT {
+    fn walk_exprs(&mut self, exprs: &[Expr]) -> Self::ExprT {
         let exprs = exprs.iter().map(|x| self.walk_expr(x)).collect();
         Expr::Exprs(exprs)
     }

@@ -9,7 +9,7 @@ mod walker;
 use ast::Stmt;
 use nom::{multi::many0, IResult};
 
-use crate::walker::ByteCodeWalker;
+//use crate::walker::ByteCodeWalker;
 use crate::walker::IdentNormalizeWalker;
 // use crate::walker::PreExecutingWalker;
 use crate::walker::Walker;

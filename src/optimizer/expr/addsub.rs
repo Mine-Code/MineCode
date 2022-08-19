@@ -47,5 +47,5 @@ pub fn optimize_terms(expr: &Expr) -> Expr {
         }
     }
 
-    return Expr::from_terms(Expr::Num(constant), new_terms);
+    Expr::from_terms(Expr::Num(constant), new_terms)
 }

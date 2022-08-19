@@ -44,9 +44,9 @@ pub enum BinaryOp {
     Assignment,
 }
 
-impl Into<u8> for BinaryOp {
-    fn into(self) -> u8 {
-        match self {
+impl From<BinaryOp> for u8 {
+    fn from(a: BinaryOp) -> Self {
+        match a {
             BinaryOp::Add => 0,
             BinaryOp::Sub => 1,
             BinaryOp::Mul => 2,

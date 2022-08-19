@@ -69,8 +69,8 @@ pub trait Walker {
     fn walk_ident(&mut self, ident: String) -> Self::ExprT;
     fn walk_storage(&mut self, index: usize) -> Self::ExprT;
     fn walk_string(&mut self, string: String) -> Self::ExprT;
-    fn walk_func_call(&mut self, func_name: &Expr, args: &Vec<Expr>) -> Self::ExprT;
-    fn walk_direct_func_call(&mut self, addr: u64, args: &Vec<Expr>) -> Self::ExprT;
+    fn walk_func_call(&mut self, func_name: &Expr, args: &[Expr]) -> Self::ExprT;
+    fn walk_direct_func_call(&mut self, addr: u64, args: &[Expr]) -> Self::ExprT;
     fn walk_ranged(&mut self, start: &Expr, end: &Expr) -> Self::ExprT;
     fn walk_pointer(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_compile_time(&mut self, expr: &Expr) -> Self::ExprT;
@@ -80,8 +80,8 @@ pub trait Walker {
     fn walk_negative(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_subscript(&mut self, expr: &Expr, index: &Expr) -> Self::ExprT;
     fn walk_attribute(&mut self, expr: &Expr, attr: String) -> Self::ExprT;
-    fn walk_if(&mut self, branches: &Vec<(Expr, Expr)>, fallback: &Expr) -> Self::ExprT;
+    fn walk_if(&mut self, branches: &[(Expr, Expr)], fallback: &Expr) -> Self::ExprT;
     fn walk_for(&mut self, name: String, iter: &Expr, body: &Expr, value: &Expr) -> Self::ExprT;
-    fn walk_exprs(&mut self, exprs: &Vec<Expr>) -> Self::ExprT;
+    fn walk_exprs(&mut self, exprs: &[Expr]) -> Self::ExprT;
     fn walk_nil(&mut self) -> Self::ExprT;
 }

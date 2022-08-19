@@ -94,8 +94,8 @@ pub fn optimize_terms(expr: &Expr) -> Expr {
     let denom = Expr::multiply(coeff_denom, Expr::from_factors(denom));
 
     if denom == Expr::Num(1) {
-        return numer;
+        numer
     } else {
-        return Expr::ApplyOperator(BinaryOp::Div, Box::new(numer), Box::new(denom));
+        Expr::ApplyOperator(BinaryOp::Div, Box::new(numer), Box::new(denom))
     }
 }

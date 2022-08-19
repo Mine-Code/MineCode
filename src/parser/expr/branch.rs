@@ -27,7 +27,7 @@ pub fn _if(input: &str) -> IResult<&str, Expr> {
             expr.map(Box::new),
         ))
         .map(|(_, a)| a))
-        .map(|x| x.unwrap_or(Box::new(Expr::Nil))),
+        .map(|x| x.unwrap_or_else(|| Box::new(Expr::Nil))),
     ))
     .map(|(_, branches, fallback)| Expr::If { branches, fallback })
     .parse(input)
