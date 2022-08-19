@@ -3,7 +3,7 @@ use crate::ast::{BinaryOp, Expr, Stmt};
 use super::core_trait::Walker;
 
 pub struct ByteCodeWalker {
-    stmts: Vec<Stmt>,
+    stmts: Vec<Vec<u8>>,
 }
 
 impl ByteCodeWalker {
@@ -16,20 +16,24 @@ impl Walker for ByteCodeWalker {
     type StmtT = Vec<u8>;
     type ExprT = Vec<u8>;
 
-    fn add_stmt(&mut self, stmt: crate::ast::Stmt) {
+    fn add_stmt(&mut self, stmt: Self::StmtT) {
         self.stmts.push(stmt);
     }
-    fn get_stmts(&self) -> &Vec<Stmt> {
+    fn get_stmts(&self) -> &Vec<Self::StmtT> {
         &self.stmts
     }
 
-    fn walk_load_module(&mut self, module_name: String) -> Vec<u8> {
+    fn walk_load_module(&mut self, module_name: String) {
         let mut ret = vec![0u8];
         ret.extend(module_name.as_bytes().to_vec());
-        ret
+        self.add_stmt(ret)
     }
-    fn walk_stmt_expr(&mut self, expr: &Expr) -> Vec<u8> {
-        self.walk_expr(expr)
+    fn walk_stmt_expr(&mut self, expr: &Expr) {
+        let expr = self.walk_expr(expr);
+        self.add_stmt(expr)
+    }
+    fn walk_func_def(&mut self, _name: String, _args: Vec<String>, _body: &Expr) {
+        unimplemented!()
     }
 
     fn walk_num(&mut self, num: i32) -> Vec<u8> {
@@ -148,9 +152,7 @@ impl Walker for ByteCodeWalker {
         ret.push(0xff);
         ret
     }
-    fn walk_func_def(&mut self, _name: String, _args: Vec<String>, _body: &Expr) -> Vec<u8> {
-        unimplemented!()
-    }
+
     fn walk_nil(&mut self) -> Self::ExprT {
         vec![0xf7u8]
     }

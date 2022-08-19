@@ -1,11 +1,11 @@
 use crate::ast::{BinaryOp, Expr, Stmt};
 
 use super::Walker;
-pub struct SkeletonWalker {
+pub struct IdentNormalizeWalker {
     stmts: Vec<Stmt>,
 }
 
-impl Walker for SkeletonWalker {
+impl Walker for IdentNormalizeWalker {
     type StmtT = Stmt;
     type ExprT = Expr;
 

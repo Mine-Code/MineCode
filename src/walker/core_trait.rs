@@ -4,18 +4,18 @@ pub trait Walker {
     type StmtT;
     type ExprT;
 
-    fn add_stmt(&mut self, stmt: Stmt);
+    fn add_stmt(&mut self, stmt: Self::StmtT);
 
-    fn get_stmts(&self) -> &Vec<Stmt>;
+    fn get_stmts(&self) -> &Vec<Self::StmtT>;
 
-    fn walk(&mut self, code: &Vec<Stmt>) -> &Vec<Stmt> {
+    fn walk<T: Iterator<Item = Stmt>>(&mut self, code: T) -> &Vec<Self::StmtT> {
         for stmt in code {
-            self.walk_stmt(stmt);
+            self.walk_stmt(&stmt);
         }
         self.get_stmts()
     }
 
-    fn walk_stmt(&mut self, stmt: &Stmt) -> Self::StmtT {
+    fn walk_stmt(&mut self, stmt: &Stmt) {
         match stmt {
             Stmt::Expression(expr) => self.walk_stmt_expr(expr),
             Stmt::LoadModule { module } => self.walk_load_module(module.clone()),
@@ -25,9 +25,9 @@ pub trait Walker {
         }
     }
 
-    fn walk_load_module(&mut self, module_name: String) -> Self::StmtT;
-    fn walk_stmt_expr(&mut self, expr: &Expr) -> Self::StmtT;
-    fn walk_func_def(&mut self, name: String, args: Vec<String>, body: &Expr) -> Self::StmtT;
+    fn walk_load_module(&mut self, module_name: String);
+    fn walk_stmt_expr(&mut self, expr: &Expr);
+    fn walk_func_def(&mut self, name: String, args: Vec<String>, body: &Expr);
 
     fn walk_expr(&mut self, expr: &Expr) -> Self::ExprT {
         match expr {
