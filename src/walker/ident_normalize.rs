@@ -44,6 +44,10 @@ impl Walker for IdentNormalizeWalker {
         let body = self.walk_expr(body);
         self.add_stmt(Stmt::FuncDef { name, args, body });
     }
+    fn walk_direct_func_call(&mut self, addr: u64, args: &Vec<Expr>) -> Self::ExprT {
+        let args = args.iter().map(|x| self.walk_expr(x)).collect();
+        Expr::DirectFuncCall(addr, args)
+    }
 
     fn walk_num(&mut self, num: i32) -> Self::ExprT {
         Expr::Num(num)

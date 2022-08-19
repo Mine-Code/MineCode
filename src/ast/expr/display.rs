@@ -15,6 +15,14 @@ impl std::fmt::Display for Expr {
                     .collect::<Vec<String>>()
                     .join(", ")
             ),
+            Self::DirectFuncCall(addr, args) => format!(
+                "${}({})",
+                addr,
+                args.iter()
+                    .map(|x| format!("{x}"))
+                    .collect::<Vec<String>>()
+                    .join(", ")
+            ),
             Self::Attribute(r, l) => format!("{}.{}", r, l),
             Self::Ranged(begin, end) => format!("Range<{} -> {}>", begin, end),
             Self::Pointer(x) => format!("Ptr<{}>", x),
@@ -166,5 +174,11 @@ mod test {
     fn test_storage_display() {
         let expr = Expr::Storage(0);
         assert_eq!(expr.to_string(), "storage0");
+    }
+
+    #[test]
+    fn test_direct_function_call() {
+        let expr = Expr::DirectFuncCall(0x1122334411223344, vec![Expr::Num(0), Expr::Num(1)]);
+        assert_eq!(expr.to_string(), "$0x1122334411223344(0, 1)");
     }
 }

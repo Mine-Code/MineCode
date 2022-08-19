@@ -42,6 +42,7 @@ pub trait Walker {
             Expr::Storage(x) => self.walk_storage(*x),
             Expr::String(x) => self.walk_string(x.clone()),
             Expr::FuncCall(x, y) => self.walk_func_call(&**x, y),
+            Expr::DirectFuncCall(addr, args) => self.walk_direct_func_call(*addr, args),
 
             Expr::Ranged(x, y) => self.walk_ranged(&**x, &**y),
             Expr::Pointer(x) => self.walk_pointer(&**x),
@@ -69,6 +70,7 @@ pub trait Walker {
     fn walk_storage(&mut self, index: usize) -> Self::ExprT;
     fn walk_string(&mut self, string: String) -> Self::ExprT;
     fn walk_func_call(&mut self, func_name: &Expr, args: &Vec<Expr>) -> Self::ExprT;
+    fn walk_direct_func_call(&mut self, addr: u64, args: &Vec<Expr>) -> Self::ExprT;
     fn walk_ranged(&mut self, start: &Expr, end: &Expr) -> Self::ExprT;
     fn walk_pointer(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_compile_time(&mut self, expr: &Expr) -> Self::ExprT;

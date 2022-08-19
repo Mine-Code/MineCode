@@ -84,9 +84,18 @@ impl Walker for ByteCodeWalker {
         ret
     }
     fn walk_func_call(&mut self, func_name: &Expr, args: &Vec<Expr>) -> Vec<u8> {
-        // TODO: FIX THIS! for 'func[x](y...)'
+        panic!("walk_func_call is not allowed in bytecode")
+    }
+    fn walk_direct_func_call(&mut self, addr: u64, args: &Vec<Expr>) -> Vec<u8> {
         let mut ret = vec![0xfcu8];
-        ret.extend(self.walk_expr(func_name));
+        ret.push((addr >> 0x38) as u8);
+        ret.push((addr >> 0x30) as u8);
+        ret.push((addr >> 0x28) as u8);
+        ret.push((addr >> 0x20) as u8);
+        ret.push((addr >> 0x18) as u8);
+        ret.push((addr >> 0x10) as u8);
+        ret.push((addr >> 0x08) as u8);
+        ret.push((addr >> 0x00) as u8);
         ret.extend(self.walk_exprs(args));
         ret
     }

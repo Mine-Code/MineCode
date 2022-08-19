@@ -11,6 +11,7 @@ pub enum Expr {
     String(String),
 
     FuncCall(Box<Expr>, Vec<Expr>),
+    DirectFuncCall(u64, Vec<Expr>),
 
     Ranged(Box<Expr>, Box<Expr>),
     Pointer(Box<Expr>),
