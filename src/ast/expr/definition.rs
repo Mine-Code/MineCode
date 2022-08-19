@@ -7,7 +7,9 @@ pub enum Expr {
     Attribute(Box<Expr>, String),
 
     Ident(String),
+    Storage(usize),
     String(String),
+
     FuncCall(Box<Expr>, Vec<Expr>),
 
     Ranged(Box<Expr>, Box<Expr>),

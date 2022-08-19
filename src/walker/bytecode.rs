@@ -69,9 +69,11 @@ impl Walker for ByteCodeWalker {
         ret
     }
     fn walk_ident(&mut self, ident: String) -> Vec<u8> {
-        // TODO: Make Identifier listup phase and fix this.
+        panic!("walk_ident is not allowed in bytecode")
+    }
+    fn walk_storage(&mut self, index: usize) -> Self::ExprT {
         let mut ret = vec![0xfdu8];
-        ret.extend(ident.as_bytes().to_vec());
+        ret.push(index.try_into().unwrap());
         ret.push(0u8);
         ret
     }

@@ -39,6 +39,7 @@ pub trait Walker {
         match expr {
             Expr::Num(x) => self.walk_num(*x),
             Expr::Ident(x) => self.walk_ident(x.clone()),
+            Expr::Storage(x) => self.walk_storage(*x),
             Expr::String(x) => self.walk_string(x.clone()),
             Expr::FuncCall(x, y) => self.walk_func_call(&**x, y),
 
@@ -65,6 +66,7 @@ pub trait Walker {
     }
     fn walk_num(&mut self, num: i32) -> Self::ExprT;
     fn walk_ident(&mut self, ident: String) -> Self::ExprT;
+    fn walk_storage(&mut self, index: usize) -> Self::ExprT;
     fn walk_string(&mut self, string: String) -> Self::ExprT;
     fn walk_func_call(&mut self, func_name: &Expr, args: &Vec<Expr>) -> Self::ExprT;
     fn walk_ranged(&mut self, start: &Expr, end: &Expr) -> Self::ExprT;

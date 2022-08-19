@@ -5,8 +5,8 @@ use crate::ast::{BinaryOp, Expr, Stmt};
 use super::Walker;
 pub struct IdentNormalizeWalker {
     stmts: Vec<Stmt>,
-    variable_replacement: HashMap<String, String>,
-    last_used_index: i32,
+    variable_replacement: HashMap<String, usize>,
+    last_used_index: usize,
 }
 
 impl IdentNormalizeWalker {
@@ -50,11 +50,14 @@ impl Walker for IdentNormalizeWalker {
     }
     fn walk_ident(&mut self, ident: String) -> Self::ExprT {
         if !self.variable_replacement.contains_key(&ident) {
-            let new_ident = format!("__{}", self.last_used_index);
             self.last_used_index += 1;
-            self.variable_replacement.insert(ident.clone(), new_ident);
+            self.variable_replacement
+                .insert(ident.clone(), self.last_used_index);
         }
-        Expr::Ident(self.variable_replacement[&ident].clone())
+        Expr::Storage(self.variable_replacement[&ident])
+    }
+    fn walk_storage(&mut self, index: usize) -> Self::ExprT {
+        Expr::Storage(index)
     }
     fn walk_string(&mut self, string: String) -> Self::ExprT {
         Expr::String(string)

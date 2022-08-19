@@ -5,6 +5,7 @@ impl std::fmt::Display for Expr {
         let s = match self {
             Self::Num(x) => x.to_string(),
             Self::Ident(x) => x.to_string(),
+            Self::Storage(x) => format!("storage{}", x),
             Self::String(x) => format!("\"{}\"", x.escape_default()),
             Self::FuncCall(func, args) => format!(
                 "{}({})",
@@ -159,5 +160,11 @@ mod test {
         let expr = Expr::Exprs(vec![Expr::Num(0), Expr::Num(1), Expr::Num(2)]);
 
         assert_eq!(expr.to_string(), "{0; 1; 2; }");
+    }
+
+    #[test]
+    fn test_storage_display() {
+        let expr = Expr::Storage(0);
+        assert_eq!(expr.to_string(), "storage0");
     }
 }
