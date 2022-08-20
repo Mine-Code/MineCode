@@ -131,6 +131,9 @@ impl Walker for PreExecutingWalker {
                     return;
                 }
             }
+            if let Expr::Storage(_) = e {
+                return;
+            }
         }
         self.stmts.push(stmt);
     }
