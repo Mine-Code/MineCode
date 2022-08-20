@@ -33,7 +33,7 @@ impl std::fmt::Display for Expr {
             Self::Negative(x) => format!("-{}", x),
             Self::Subscript(arr, ind) => format!("{}[{}]", arr, ind),
             Self::If { branches, fallback } => format!(
-                "if {}=> {}",
+                "if {}_ => {}",
                 branches
                     .iter()
                     .fold("".to_string(), |a, (c, e)| a + &format!("{} => {}, ", c, e)),
@@ -116,7 +116,7 @@ mod test {
             Box::new(Expr::Num(0)),
             Box::new(Expr::Num(1)),
         );
-        assert_eq!(expr.to_string(), "0 + 1");
+        assert_eq!(expr.to_string(), "(0 + 1)");
     }
     #[test]
     fn test_logicalnot_display() {
@@ -173,7 +173,7 @@ mod test {
     #[test]
     fn test_storage_display() {
         let expr = Expr::Storage(0);
-        assert_eq!(expr.to_string(), "storage0");
+        assert_eq!(expr.to_string(), "#0");
     }
 
     #[test]
