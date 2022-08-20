@@ -164,7 +164,7 @@ impl Walker for PreExecutingWalker {
         if self.virtual_variables.contains_key(&index) {
             self.virtual_variables[&index].clone()
         } else {
-            panic!("{} is not a virtual variable", index);
+            panic!("#{} is not defined", index);
         }
     }
     fn walk_string(&mut self, _string: String) -> Self::ExprT {
