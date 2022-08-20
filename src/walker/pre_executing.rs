@@ -126,6 +126,11 @@ impl Walker for PreExecutingWalker {
             if let Expr::Num(_) = e {
                 return;
             }
+            if let Expr::Pointer(e) = e {
+                if let Expr::Num(_) = **e {
+                    return;
+                }
+            }
         }
         self.stmts.push(stmt);
     }
@@ -153,7 +158,11 @@ impl Walker for PreExecutingWalker {
         panic!("walk_ident is not allowed in PreExecutingWalker");
     }
     fn walk_storage(&mut self, index: usize) -> Self::ExprT {
-        Expr::Storage(index)
+        if self.virtual_variables.contains_key(&index) {
+            self.virtual_variables[&index].clone()
+        } else {
+            panic!("{} is not a virtual variable", index);
+        }
     }
     fn walk_string(&mut self, _string: String) -> Self::ExprT {
         unimplemented!()
@@ -168,7 +177,7 @@ impl Walker for PreExecutingWalker {
         unimplemented!()
     }
     fn walk_pointer(&mut self, _expr: &Expr) -> Self::ExprT {
-        unimplemented!()
+        Expr::Pointer(Box::new(self.walk_expr(_expr)))
     }
     fn walk_compile_time(&mut self, _expr: &Expr) -> Self::ExprT {
         unimplemented!()
@@ -178,11 +187,11 @@ impl Walker for PreExecutingWalker {
             if let Expr::Storage(storage_index) = left {
                 let a = self.walk_expr(&right);
 
-                self.virtual_variables.insert(*storage_index, a.clone());
-
                 if self.expr_const_evaluative(&a) == Some(true) {
+                    self.virtual_variables.insert(*storage_index, a.clone());
                     return a;
                 } else {
+                    self.virtual_variables.insert(*storage_index, left.clone());
                     self.add_stmt(Stmt::Expression(Expr::ApplyOperator(
                         BinaryOp::Assignment,
                         Box::new(left.clone()),
@@ -190,8 +199,17 @@ impl Walker for PreExecutingWalker {
                     )));
                     return left.clone();
                 }
+            } else if let Expr::Pointer(_) = left {
+                let left = self.walk_expr(&left);
+                let right = self.walk_expr(&right);
+                self.add_stmt(Stmt::Expression(Expr::ApplyOperator(
+                    BinaryOp::Assignment,
+                    Box::new(left.clone()),
+                    Box::new(right),
+                )));
+                return left;
             } else {
-                println!("Assignment operator can only be used with identifiers");
+                println!("Assignment operator can only be used with storage");
                 println!("{:?}", left);
                 unimplemented!()
             }
