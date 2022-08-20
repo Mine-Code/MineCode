@@ -46,7 +46,7 @@ impl PreExecutingWalker {
                     _ => None,
                 }
             }
-            Expr::Pointer(p) => self.expr_const_evaluative(&**p),
+            Expr::Pointer(p) => Some(false), // TODO: Optimize this ([x] as const)
             Expr::CompileTime(_s) => Some(true),
             Expr::LogicalNot(e) => self.expr_const_evaluative(&**e),
             Expr::BitwiseNot(e) => self.expr_const_evaluative(&**e),
@@ -185,17 +185,17 @@ impl Walker for PreExecutingWalker {
     fn walk_apply_operator(&mut self, op: BinaryOp, left: &Expr, right: &Expr) -> Self::ExprT {
         if op == BinaryOp::Assignment {
             if let Expr::Storage(storage_index) = left {
-                let a = self.walk_expr(right);
+                let right = self.walk_expr(right);
 
-                if self.expr_const_evaluative(&a) == Some(true) {
-                    self.virtual_variables.insert(*storage_index, a.clone());
-                    return a;
+                if self.expr_const_evaluative(&right) == Some(true) {
+                    self.virtual_variables.insert(*storage_index, right.clone());
+                    return right;
                 } else {
                     self.virtual_variables.insert(*storage_index, left.clone());
                     self.add_stmt(Stmt::Expression(Expr::ApplyOperator(
                         BinaryOp::Assignment,
                         Box::new(left.clone()),
-                        Box::new(a),
+                        Box::new(right),
                     )));
                     return left.clone();
                 }
@@ -216,7 +216,7 @@ impl Walker for PreExecutingWalker {
         }
         let l = self.walk_expr(left);
         let l = if let Expr::Storage(x) = l {
-            self.virtual_variables.get(&x).unwrap().clone()
+            self.walk_expr(&self.virtual_variables.get(&x).unwrap().clone())
         } else {
             l
         };
@@ -313,16 +313,7 @@ impl Walker for PreExecutingWalker {
             });
         }
 
-        println!(
-            "{:?} {:?}[{:?}] {:?}[{:?}]",
-            op,
-            left,
-            self.expr_const_evaluative(left),
-            right,
-            self.expr_const_evaluative(right)
-        );
-        unimplemented!();
-        // Expr::ApplyOperator(op, Box::new(l), Box::new(r));
+        Expr::ApplyOperator(op, Box::new(l), Box::new(r))
     }
     fn walk_logical_not(&mut self, _expr: &Expr) -> Self::ExprT {
         unimplemented!()
@@ -339,8 +330,29 @@ impl Walker for PreExecutingWalker {
     fn walk_attribute(&mut self, _expr: &Expr, _attr: String) -> Self::ExprT {
         unimplemented!()
     }
-    fn walk_if(&mut self, _branches: &[(Expr, Expr)], _fallback: &Expr) -> Self::ExprT {
-        unimplemented!()
+    fn walk_if(&mut self, branches: &[(Expr, Expr)], fallback: &Expr) -> Self::ExprT {
+        let mut all_cond_are_not_passed = true;
+        for (cond, expr) in branches {
+            let cond = self.walk_expr(cond);
+
+            if let Expr::Num(x) = cond {
+                if x != 0 {
+                    return self.walk_expr(expr);
+                } else {
+                    all_cond_are_not_passed = false;
+                }
+            } else {
+                all_cond_are_not_passed = false;
+            }
+        }
+        if all_cond_are_not_passed {
+            return self.walk_expr(fallback);
+        }
+
+        Expr::If {
+            branches: branches.to_vec(),
+            fallback: Box::from(fallback.clone()),
+        }
     }
     fn walk_for(
         &mut self,
