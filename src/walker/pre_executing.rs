@@ -74,7 +74,7 @@ impl PreExecutingWalker {
                     }
                 }
 
-                let fallback_const_evaluative = self.expr_const_evaluative(&fallback);
+                let fallback_const_evaluative = self.expr_const_evaluative(fallback);
                 if fallback_const_evaluative != Some(true) {
                     return None;
                 }
@@ -146,7 +146,7 @@ impl Walker for PreExecutingWalker {
     }
 
     fn walk_stmt_expr(&mut self, expr: &Expr) {
-        let expr = self.walk_expr(&expr);
+        let expr = self.walk_expr(expr);
 
         self.add_stmt(Stmt::Expression(expr));
     }
@@ -185,7 +185,7 @@ impl Walker for PreExecutingWalker {
     fn walk_apply_operator(&mut self, op: BinaryOp, left: &Expr, right: &Expr) -> Self::ExprT {
         if op == BinaryOp::Assignment {
             if let Expr::Storage(storage_index) = left {
-                let a = self.walk_expr(&right);
+                let a = self.walk_expr(right);
 
                 if self.expr_const_evaluative(&a) == Some(true) {
                     self.virtual_variables.insert(*storage_index, a.clone());
@@ -200,8 +200,8 @@ impl Walker for PreExecutingWalker {
                     return left.clone();
                 }
             } else if let Expr::Pointer(_) = left {
-                let left = self.walk_expr(&left);
-                let right = self.walk_expr(&right);
+                let left = self.walk_expr(left);
+                let right = self.walk_expr(right);
                 self.add_stmt(Stmt::Expression(Expr::ApplyOperator(
                     BinaryOp::Assignment,
                     Box::new(left.clone()),
@@ -218,7 +218,7 @@ impl Walker for PreExecutingWalker {
         let l = if let Expr::Storage(x) = l {
             self.virtual_variables.get(&x).unwrap().clone()
         } else {
-            l.clone()
+            l
         };
 
         let r = self.walk_expr(right);
@@ -322,7 +322,7 @@ impl Walker for PreExecutingWalker {
             self.expr_const_evaluative(right)
         );
         unimplemented!();
-        return Expr::ApplyOperator(op, Box::new(l), Box::new(r));
+        // Expr::ApplyOperator(op, Box::new(l), Box::new(r));
     }
     fn walk_logical_not(&mut self, _expr: &Expr) -> Self::ExprT {
         unimplemented!()

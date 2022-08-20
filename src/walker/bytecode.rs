@@ -45,9 +45,8 @@ impl Walker for ByteCodeWalker {
             ret.push(0x91u8);
             ret.push((num >> 8) as u8);
             ret.push(num as u8);
-        } else
-        //if num < 0x100000000
-        {
+        } else {
+            //if num < 0x100000000
             ret.push(0x92u8);
             ret.push((num >> 24) as u8);
             ret.push((num >> 16) as u8);
