@@ -6,7 +6,6 @@ use super::core_trait::Walker;
 
 pub struct PreExecutingWalker {
     virtual_variables: HashMap<usize, Expr>,
-    last_used_storage_index: usize,
     stmts: Vec<Stmt>,
 }
 
@@ -14,7 +13,6 @@ impl PreExecutingWalker {
     pub fn new() -> PreExecutingWalker {
         PreExecutingWalker {
             virtual_variables: HashMap::new(),
-            last_used_storage_index: 0,
             stmts: Vec::new(),
         }
     }
@@ -135,7 +133,7 @@ impl Walker for PreExecutingWalker {
         &self.stmts
     }
 
-    fn walk_load_module(&mut self, module_name: String) {
+    fn walk_load_module(&mut self, _module_name: String) {
         unimplemented!()
     }
     fn walk_func_def(&mut self, _name: String, _args: Vec<String>, _body: &Expr) {
@@ -160,7 +158,7 @@ impl Walker for PreExecutingWalker {
     fn walk_string(&mut self, _string: String) -> Self::ExprT {
         unimplemented!()
     }
-    fn walk_func_call(&mut self, _func_name: &Expr, args: &[Expr]) -> Self::ExprT {
+    fn walk_func_call(&mut self, _func_name: &Expr, _args: &[Expr]) -> Self::ExprT {
         unimplemented!()
     }
     fn walk_direct_func_call(&mut self, addr: u64, args: &[Expr]) -> Self::ExprT {
