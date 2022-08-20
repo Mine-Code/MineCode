@@ -4,37 +4,8 @@ use crate::ast::{BinaryOp, Expr, Stmt};
 
 use super::core_trait::Walker;
 
-#[derive(Debug, PartialEq)]
-struct Storage {
-    index: usize,
-}
-impl Storage {
-    fn identifier(&self) -> String {
-        format!("s{}", self.index)
-    }
-}
-
-#[derive(Debug)]
-struct CachedVariable {
-    storage: Option<Storage>,
-    value: Expr,
-}
-
-impl CachedVariable {
-    fn get_assign_expr(&self) -> Expr {
-        match &self.storage {
-            Some(storage) => Expr::ApplyOperator(
-                BinaryOp::Assignment,
-                Box::new(Expr::Ident(format!("s{}", storage.index))),
-                Box::new(self.value.clone()), // TODO: Fix this for performance
-            ),
-            None => panic!("Cached variable has no storage"),
-        }
-    }
-}
-
 pub struct PreExecutingWalker {
-    virtual_variables: HashMap<String, CachedVariable>,
+    virtual_variables: HashMap<usize, Expr>,
     last_used_storage_index: usize,
     stmts: Vec<Stmt>,
 }
@@ -62,15 +33,11 @@ impl PreExecutingWalker {
                     _ => None,
                 }
             }
-            Expr::Num(_) => Some(true),
-            Expr::Ident(name) => self
-                .virtual_variables
-                .get(name)
-                .map(|v| self.expr_const_evaluative(&v.value))
-                .unwrap_or(Some(false)),
-            Expr::String(_) => Some(true),
+            Expr::Ident(name) => panic!("{} is not a constant expression", name),
+            Expr::Storage(a) => self.expr_const_evaluative(&self.virtual_variables[a]),
             Expr::Attribute(b, _) => self.expr_const_evaluative(&**b),
-            Expr::FuncCall(_b, _args) => None, // TODO: Impl this
+            Expr::FuncCall(_b, _args) => None,  // TODO: Impl this
+            Expr::DirectFuncCall(_, _) => None, // TODO: Impl this
             Expr::Ranged(s, e) => {
                 let s_const_evaluative = self.expr_const_evaluative(&**s);
                 let e_const_evaluative = self.expr_const_evaluative(&**e);
@@ -148,95 +115,56 @@ impl PreExecutingWalker {
                 Some(true)
             }
 
-            Expr::Nil => Some(true),
+            Expr::Nil | Expr::Num(_) | Expr::String(_) => Some(true),
         }
-    }
-
-    fn resolve_identifier_from_storage(&self, storage_name: String) -> Option<String> {
-        if storage_name.len() < 2 {
-            return None;
-        }
-        let index = storage_name[1..].parse::<usize>();
-        if index.is_err() {
-            return None;
-        }
-        let index = index.unwrap();
-
-        for (k, v) in &self.virtual_variables {
-            if v.storage == Some(Storage { index: index }) {
-                return Some(k.clone());
-            }
-        }
-        None
-    }
-
-    fn resolve_identifier(&self, ident: String) -> Option<String> {
-        if self.virtual_variables.contains_key(&ident) {
-            return Some(ident);
-        }
-        self.resolve_identifier_from_storage(ident)
-    }
-
-    fn resolve_variable(&mut self, ident: String) -> Option<&mut CachedVariable> {
-        let ident = self.resolve_identifier(ident);
-        if ident.is_none() {
-            return None;
-        }
-        self.virtual_variables.get_mut(&ident.unwrap())
-    }
-    fn get_new_storage(&mut self) -> Storage {
-        let index = self.last_used_storage_index;
-        self.last_used_storage_index += 1;
-        Storage { index: index }
     }
 }
 impl Walker for PreExecutingWalker {
-    type StmtT = Option<Stmt>;
-    type ExprT = Option<Expr>;
+    type StmtT = Stmt;
+    type ExprT = Expr;
 
-    fn add_stmt(&mut self, stmt: crate::ast::Stmt) {
+    fn add_stmt(&mut self, stmt: Stmt) {
+        if let Stmt::Expression(ref e) = stmt {
+            if let Expr::Num(_) = e {
+                return;
+            }
+        }
         self.stmts.push(stmt);
     }
     fn get_stmts(&self) -> &Vec<Stmt> {
         &self.stmts
     }
 
-    fn walk_load_module(&mut self, _module_name: String) -> Option<Stmt> {
+    fn walk_load_module(&mut self, module_name: String) {
+        unimplemented!()
+    }
+    fn walk_func_def(&mut self, _name: String, _args: Vec<String>, _body: &Expr) {
         unimplemented!()
     }
 
-    fn walk_stmt_expr(&mut self, expr: &Expr) -> Option<Stmt> {
+    fn walk_stmt_expr(&mut self, expr: &Expr) {
         let expr = self.walk_expr(&expr);
-        if expr.is_none() {
-            return None;
-        }
-        Some(Stmt::Expression(expr.unwrap()))
+
+        self.add_stmt(Stmt::Expression(expr));
     }
 
     fn walk_num(&mut self, num: i32) -> Self::ExprT {
-        Some(Expr::Num(num))
+        Expr::Num(num)
     }
-    fn walk_ident(&mut self, ident: String) -> Self::ExprT {
-        let variable = self.resolve_variable(ident);
-        if variable.is_none() {
-            // TODO: Error
-            panic!("Undefined variable")
-        }
-
-        let variable = variable.unwrap();
-        if variable.storage == None {
-            let storage = self.get_new_storage();
-            variable.storage = Some(storage);
-            let assigner = Stmt::Expression(variable.get_assign_expr());
-            self.add_stmt(assigner);
-        }
-        return Some(Expr::Ident(variable.storage.unwrap().identifier()));
+    fn walk_ident(&mut self, _ident: String) -> Self::ExprT {
+        panic!("walk_ident is not allowed in PreExecutingWalker");
+    }
+    fn walk_storage(&mut self, index: usize) -> Self::ExprT {
+        Expr::Storage(index)
     }
     fn walk_string(&mut self, _string: String) -> Self::ExprT {
         unimplemented!()
     }
-    fn walk_func_call(&mut self, _func_name: &Expr, _args: &Vec<Expr>) -> Self::ExprT {
+    fn walk_func_call(&mut self, _func_name: &Expr, args: &[Expr]) -> Self::ExprT {
         unimplemented!()
+    }
+    fn walk_direct_func_call(&mut self, addr: u64, args: &[Expr]) -> Self::ExprT {
+        Expr::DirectFuncCall(addr, args.to_vec())
     }
     fn walk_ranged(&mut self, _start: &Expr, _end: &Expr) -> Self::ExprT {
         unimplemented!()
@@ -249,39 +177,126 @@ impl Walker for PreExecutingWalker {
     }
     fn walk_apply_operator(&mut self, op: BinaryOp, left: &Expr, right: &Expr) -> Self::ExprT {
         if op == BinaryOp::Assignment {
-            if let Expr::Ident(x) = left {
+            if let Expr::Storage(storage_index) = left {
                 let a = self.walk_expr(&right);
 
-                self.virtual_variables.insert(
-                    x.clone(),
-                    CachedVariable {
-                        storage: None,
-                        value: if a.is_none() {
-                            // TODO: Fix this for performance
-                            right.clone()
-                        } else {
-                            a.unwrap()
-                        },
-                    },
-                );
-                return None;
+                self.virtual_variables.insert(*storage_index, a.clone());
+
+                if self.expr_const_evaluative(&a) == Some(true) {
+                    return a;
+                } else {
+                    self.add_stmt(Stmt::Expression(Expr::ApplyOperator(
+                        BinaryOp::Assignment,
+                        Box::new(left.clone()),
+                        Box::new(a),
+                    )));
+                    return left.clone();
+                }
             } else {
                 println!("Assignment operator can only be used with identifiers");
                 println!("{:?}", left);
                 unimplemented!()
             }
-        } else if op == BinaryOp::Add {
-            let l = self.walk_expr(left);
-            let r = self.walk_expr(right);
-            println!("{:?}", self.virtual_variables);
-            println!("+ {:?} {:?}", l, r);
-            unimplemented!()
-        } else if op == BinaryOp::Sub {
-            let l = self.walk_expr(left);
-            let r = self.walk_expr(right);
-            println!("+ {:?} {:?}", l, r);
-            unimplemented!()
         }
+        let l = self.walk_expr(left);
+        let l = if let Expr::Storage(x) = l {
+            self.virtual_variables.get(&x).unwrap().clone()
+        } else {
+            l.clone()
+        };
+
+        let r = self.walk_expr(right);
+
+        if let (Expr::Num(l), Expr::Num(r)) = (&l, &r) {
+            return Expr::Num(if op == BinaryOp::Add {
+                *l + *r
+            } else if op == BinaryOp::Sub {
+                *l - *r
+            } else if op == BinaryOp::Mul {
+                *l * *r
+            } else if op == BinaryOp::Div {
+                *l / *r
+            } else if op == BinaryOp::Mod {
+                *l % *r
+            } else if op == BinaryOp::BitwiseOr {
+                *l | *r
+            } else if op == BinaryOp::BitwiseAnd {
+                *l & *r
+            } else if op == BinaryOp::BitwiseXor {
+                *l ^ *r
+            } else if op == BinaryOp::ShiftLeft {
+                *l << *r
+            } else if op == BinaryOp::ShiftRight {
+                *l >> *r
+            } else if op == BinaryOp::Power {
+                if *r < 0 {
+                    println!("Power operator can only be used with positive numbers");
+                    println!("{:?}", right);
+                    unimplemented!()
+                }
+                l.pow(*(r) as u32)
+            } else if op == BinaryOp::LessThan {
+                if *l < *r {
+                    1
+                } else {
+                    0
+                }
+            } else if op == BinaryOp::LessThanOrEqual {
+                if *l <= *r {
+                    1
+                } else {
+                    0
+                }
+            } else if op == BinaryOp::GreaterThan {
+                if *l > *r {
+                    1
+                } else {
+                    0
+                }
+            } else if op == BinaryOp::GreaterThanOrEqual {
+                if *l >= *r {
+                    1
+                } else {
+                    0
+                }
+            } else if op == BinaryOp::Equal {
+                if *l == *r {
+                    1
+                } else {
+                    0
+                }
+            } else if op == BinaryOp::NotEqual {
+                if *l != *r {
+                    1
+                } else {
+                    0
+                }
+            } else if op == BinaryOp::LogicalOr {
+                if *l != 0 || *r != 0 {
+                    1
+                } else {
+                    0
+                }
+            } else if op == BinaryOp::LogicalAnd {
+                if *l != 0 && *r != 0 {
+                    1
+                } else {
+                    0
+                }
+            } else {
+                println!("{:?}", self.virtual_variables);
+                println!(
+                    "{:?} {:?}[{:?}] {:?}[{:?}]",
+                    op,
+                    l,
+                    self.expr_const_evaluative(left),
+                    r,
+                    self.expr_const_evaluative(right)
+                );
+                unimplemented!();
+            });
+        }
+
         println!(
             "{:?} {:?}[{:?}] {:?}[{:?}]",
             op,
@@ -290,7 +305,8 @@ impl Walker for PreExecutingWalker {
             right,
             self.expr_const_evaluative(right)
         );
-        unimplemented!()
+        unimplemented!();
+        return Expr::ApplyOperator(op, Box::new(l), Box::new(r));
     }
     fn walk_logical_not(&mut self, _expr: &Expr) -> Self::ExprT {
         unimplemented!()
@@ -307,7 +323,7 @@ impl Walker for PreExecutingWalker {
     fn walk_attribute(&mut self, _expr: &Expr, _attr: String) -> Self::ExprT {
         unimplemented!()
     }
-    fn walk_if(&mut self, _branches: &Vec<(Expr, Expr)>, _fallback: &Expr) -> Self::ExprT {
+    fn walk_if(&mut self, _branches: &[(Expr, Expr)], _fallback: &Expr) -> Self::ExprT {
         unimplemented!()
     }
     fn walk_for(
@@ -319,10 +335,7 @@ impl Walker for PreExecutingWalker {
     ) -> Self::ExprT {
         unimplemented!()
     }
-    fn walk_exprs(&mut self, _exprs: &Vec<Expr>) -> Self::ExprT {
-        unimplemented!()
-    }
-    fn walk_func_def(&mut self, _name: String, _args: Vec<String>, _body: &Expr) -> Option<Stmt> {
+    fn walk_exprs(&mut self, _exprs: &[Expr]) -> Self::ExprT {
         unimplemented!()
     }
     fn walk_nil(&mut self) -> Self::ExprT {

@@ -11,7 +11,7 @@ use nom::{multi::many0, IResult};
 
 //use crate::walker::ByteCodeWalker;
 use crate::walker::IdentNormalizeWalker;
-// use crate::walker::PreExecutingWalker;
+use crate::walker::PreExecutingWalker;
 use crate::walker::Walker;
 
 fn program(input: &str) -> IResult<&str, Vec<Stmt>> {
@@ -29,8 +29,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         stmt.optimize();
     }
 
-    let mut ident_walker = IdentNormalizeWalker::new();
-    let stmts = ident_walker.walk(stmts);
+    let mut walker = IdentNormalizeWalker::new();
+    let stmts = walker.walk(stmts);
+
+    let mut walker = PreExecutingWalker::new();
+    let stmts = walker.walk_ref(stmts);
 
     // let mut byte_code_walker = ByteCodeWalker::new();
     // let stmts = byte_code_walker.walk_ref(stmts).iter().map(|x| {
