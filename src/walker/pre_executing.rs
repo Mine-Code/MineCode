@@ -46,7 +46,7 @@ impl PreExecutingWalker {
                     _ => None,
                 }
             }
-            Expr::Pointer(p) => Some(false), // TODO: Optimize this ([x] as const)
+            Expr::Pointer(_) => Some(false), // TODO: Optimize this ([x] as const)
             Expr::CompileTime(_s) => Some(true),
             Expr::LogicalNot(e) => self.expr_const_evaluative(&**e),
             Expr::BitwiseNot(e) => self.expr_const_evaluative(&**e),
