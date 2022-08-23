@@ -170,14 +170,22 @@ impl Walker for PreExecutingWalker {
     fn walk_string(&mut self, _string: String) -> Self::ExprT {
         unimplemented!()
     }
-    fn walk_func_call(&mut self, _func_name: &Expr, _args: &[Expr]) -> Self::ExprT {
-        unimplemented!()
+    fn walk_func_call(&mut self, func: &Expr, args: &[Expr]) -> Self::ExprT {
+        // TODO: impl this (funccall)
+        Expr::FuncCall(
+            Box::new(self.walk_expr(func)),
+            args.iter().map(|e| self.walk_expr(e)).collect(),
+        )
     }
     fn walk_direct_func_call(&mut self, addr: u64, args: &[Expr]) -> Self::ExprT {
         Expr::DirectFuncCall(addr, args.to_vec())
     }
-    fn walk_ranged(&mut self, _start: &Expr, _end: &Expr) -> Self::ExprT {
-        unimplemented!()
+    fn walk_ranged(&mut self, start: &Expr, end: &Expr) -> Self::ExprT {
+        // TODO: impl this(ranged)
+        Expr::Ranged(
+            Box::new(self.walk_expr(start)),
+            Box::new(self.walk_expr(end)),
+        )
     }
     fn walk_pointer(&mut self, _expr: &Expr) -> Self::ExprT {
         Expr::Pointer(Box::new(self.walk_expr(_expr)))
@@ -357,19 +365,20 @@ impl Walker for PreExecutingWalker {
             fallback: Box::from(fallback.clone()),
         }
     }
-    fn walk_for(
-        &mut self,
-        _name: String,
-        _iter: &Expr,
-        _body: &Expr,
-        _value: &Expr,
-    ) -> Self::ExprT {
-        unimplemented!()
+    fn walk_for(&mut self, name: String, iter: &Expr, body: &Expr, value: &Expr) -> Self::ExprT {
+        // TODO: impl this (for)
+        Expr::For {
+            name,
+            iter: Box::from(self.walk_expr(iter)),
+            body: Box::from(self.walk_expr(body)),
+            value: Box::from(self.walk_expr(value)),
+        }
     }
-    fn walk_exprs(&mut self, _exprs: &[Expr]) -> Self::ExprT {
-        unimplemented!()
+    fn walk_exprs(&mut self, exprs: &[Expr]) -> Self::ExprT {
+        // TODO: impl this (exprs)
+        Expr::Exprs(exprs.iter().map(|x| self.walk_expr(x)).collect::<Vec<_>>())
     }
     fn walk_nil(&mut self) -> Self::ExprT {
-        unimplemented!()
+        Expr::Nil
     }
 }
