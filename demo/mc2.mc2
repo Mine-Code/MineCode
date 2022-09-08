@@ -1,53 +1,7 @@
-mcl minecraft
-# Loads minecraft mcl file
+[2] = 0
+[2] as u8 = 0
+[2] as u16 = 0
+[2] as u32 = 0
 
-2 * 1 + 1 * 2
-
-# for i in 0...text.length {
-#   [0x10000000 + i] = text{i}
-# }
-
-# @print("Hello world")
-# Print "Hello world" in compile time
-
-# func print_text(text) {
-#   for i in 0...text.length {
-#     [0x10000000 + i] = text{i}
-#   }
-#   func[0x02000000](0x10000000)
-# }
-
-#   print_text("Hello world!")
-#   #   bl _print_text
-#
-#   @print_text("Hello world!")
-#   #   r3 <- 0x10000000
-#   #   r3 + 0x00 <- 0x48656c6c
-#   #   r3 + 0x04 <- 0x6f20776f
-#   #   r3 + 0x08 <- 0x726C6421
-#   #   r3 + 0x0C <- 0x00
-#   #   goto 0x02000000
-#
-#   for player in ServerPlayer.List {
-#       Local.Console << player.name
-#   }
-#
-#   server = [0x109CD8FC]
-#   if server != 0 {
-#       players = func[0x03225F74](server)
-#       if players != 0 {
-#           msg = "Hello, world!"
-#           w_msg = func[0x020B08D4](0, msg)
-#           if w_msg != 0 {
-#               packet = func[0x021B7408](0, packet, 0, 0)
-#               my_listener = [[players + 0x4] + 0x86c]
-#               if my_listener != 0 {
-#                   func[0x03249FB4](my_listener, packet)
-#               }
-#           }
-#       }
-#   }
-#
-#   i=0
-#   i=(i++)+1-1*2/2+1|2^3&2**4+4%4+1<<2+2>>3
-#   i<1 and i>0 or i<=0 and i>=0
+#    [num] as T
+# -> [num unsafe_as T*]
