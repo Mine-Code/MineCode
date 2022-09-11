@@ -113,12 +113,6 @@ impl Walker for ByteCodeWalker {
         unimplemented!()
     }
     fn walk_apply_operator(&mut self, op: BinaryOp, left: &Expr, right: &Expr) -> Vec<u8> {
-        if op == BinaryOp::Assignment {
-            let mut ret = vec![0xf4u8];
-            ret.extend(self.walk_expr(left));
-            ret.extend(self.walk_expr(right));
-            return ret;
-        }
         let mut ret = vec![op.into()];
         ret.extend(self.walk_expr(left));
         ret.extend(self.walk_expr(right));
@@ -176,5 +170,12 @@ impl Walker for ByteCodeWalker {
 
     fn walk_any_type(&mut self) -> Self::ExprT {
         unimplemented!()
+    }
+
+    fn walk_assignment(&mut self, a: &Expr, b: &Expr) -> Self::ExprT {
+        let mut ret = vec![0xf4u8];
+        ret.extend(self.walk_expr(a));
+        ret.extend(self.walk_expr(b));
+        return ret;
     }
 }

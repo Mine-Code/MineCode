@@ -162,4 +162,12 @@ impl Walker for IdentNormalizeWalker {
     fn walk_any_type(&mut self) -> Self::ExprT {
         Expr::AnyType
     }
+
+    fn walk_assignment(&mut self, a: &Expr, b: &Expr) -> Self::ExprT {
+        // TODO: make type hint for assignment
+
+        let a = self.walk_expr(a);
+        let b = self.walk_expr(b);
+        Expr::Assignment(Box::new(a), Box::new(b))
+    }
 }

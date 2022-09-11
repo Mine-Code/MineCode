@@ -40,4 +40,6 @@ pub enum Expr {
     Exprs(Vec<Expr>),
     Nil,
     AnyType,
+
+    Assignment(Box<Expr>, Box<Expr>),
 }

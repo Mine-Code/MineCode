@@ -117,6 +117,7 @@ impl PreExecutingWalker {
             Expr::Nil | Expr::Num(_) | Expr::String(_) => Some(true),
             Expr::As(v, _) => self.expr_const_evaluative(&**v),
             Expr::AnyType => Some(true),
+            Expr::Assignment(_, _) => Some(false), // TODO: Itsuka yaru.
         }
     }
 }
@@ -204,38 +205,36 @@ impl Walker for PreExecutingWalker {
     fn walk_compile_time(&mut self, _expr: &Expr) -> Self::ExprT {
         unimplemented!()
     }
-    fn walk_apply_operator(&mut self, op: BinaryOp, left: &Expr, right: &Expr) -> Self::ExprT {
-        if op == BinaryOp::Assignment {
-            if let Expr::Storage(storage_index) = left {
-                let right = self.walk_expr(right);
+    fn walk_assignment(&mut self, left: &Expr, right: &Expr) -> Self::ExprT {
+        if let Expr::Storage(storage_index) = left {
+            let right = self.walk_expr(right);
 
-                if self.expr_const_evaluative(&right) == Some(true) {
-                    self.virtual_variables.insert(*storage_index, right.clone());
-                    return right;
-                } else {
-                    self.virtual_variables.insert(*storage_index, left.clone());
-                    self.add_stmt(Stmt::Expression(Expr::ApplyOperator(
-                        BinaryOp::Assignment,
-                        Box::new(left.clone()),
-                        Box::new(right),
-                    )));
-                    return left.clone();
-                }
-            } else if let Expr::DeReference(_) = left {
-                let left = self.walk_expr(left);
-                let right = self.walk_expr(right);
-                self.add_stmt(Stmt::Expression(Expr::ApplyOperator(
-                    BinaryOp::Assignment,
+            if self.expr_const_evaluative(&right) == Some(true) {
+                self.virtual_variables.insert(*storage_index, right.clone());
+                return right;
+            } else {
+                self.virtual_variables.insert(*storage_index, left.clone());
+                self.add_stmt(Stmt::Expression(Expr::Assignment(
                     Box::new(left.clone()),
                     Box::new(right),
                 )));
-                return left;
-            } else {
-                println!("Assignment operator can only be used with storage");
-                println!("{:?}", left);
-                unimplemented!()
+                return left.clone();
             }
+        } else if let Expr::DeReference(_) = left {
+            let left = self.walk_expr(left);
+            let right = self.walk_expr(right);
+            self.add_stmt(Stmt::Expression(Expr::Assignment(
+                Box::new(left.clone()),
+                Box::new(right),
+            )));
+            return left;
+        } else {
+            println!("Assignment operator can only be used with storage");
+            println!("{:?}", left);
+            unimplemented!()
         }
+    }
+    fn walk_apply_operator(&mut self, op: BinaryOp, left: &Expr, right: &Expr) -> Self::ExprT {
         let l = self.walk_expr(left);
         let l = if let Expr::Storage(x) = l {
             self.walk_expr(&self.virtual_variables.get(&x).unwrap().clone())

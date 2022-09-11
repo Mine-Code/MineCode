@@ -25,7 +25,11 @@ fn _binary_op<'a>(
     let (i, parts) = many0(part)(i)?;
 
     for (op, x) in parts {
-        r = Expr::ApplyOperator(BinaryOp::from_str(op).unwrap(), Box::new(r), Box::new(x));
+        if op == "=" {
+            r = Expr::Assignment(Box::new(r), Box::new(x));
+        } else {
+            r = Expr::ApplyOperator(BinaryOp::from_str(op).unwrap(), Box::new(r), Box::new(x));
+        }
     }
     Ok((i, r))
 }

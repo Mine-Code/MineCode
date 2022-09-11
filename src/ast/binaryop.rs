@@ -40,8 +40,6 @@ pub enum BinaryOp {
     GreaterThan,
     #[strum(serialize = ">=")]
     GreaterThanOrEqual,
-    #[strum(serialize = "=")]
-    Assignment,
 }
 
 impl From<BinaryOp> for u8 {
@@ -66,7 +64,6 @@ impl From<BinaryOp> for u8 {
             BinaryOp::Power => panic!("Please use Pow() insted of **"),
             BinaryOp::ShiftLeft => 12,
             BinaryOp::ShiftRight => 13,
-            BinaryOp::Assignment => panic!("[Assignment] can't be opcode"),
         }
     }
 }

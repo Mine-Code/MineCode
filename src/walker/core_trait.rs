@@ -66,6 +66,7 @@ pub trait Walker {
             Expr::Nil => self.walk_nil(),
             Expr::AnyType => self.walk_any_type(),
             Expr::As(x, y) => self.walk_as(&**x, &**y),
+            Expr::Assignment(a, b) => self.walk_assignment(&**a, &**b),
         }
     }
     fn walk_num(&mut self, num: i32) -> Self::ExprT;
@@ -88,6 +89,7 @@ pub trait Walker {
     fn walk_if(&mut self, branches: &[(Expr, Expr)], fallback: &Expr) -> Self::ExprT;
     fn walk_for(&mut self, name: String, iter: &Expr, body: &Expr, value: &Expr) -> Self::ExprT;
     fn walk_exprs(&mut self, exprs: &[Expr]) -> Self::ExprT;
+    fn walk_assignment(&mut self, a: &Expr, b: &Expr) -> Self::ExprT;
     fn walk_nil(&mut self) -> Self::ExprT;
     fn walk_any_type(&mut self) -> Self::ExprT;
 }
