@@ -46,7 +46,8 @@ impl PreExecutingWalker {
                     _ => None,
                 }
             }
-            Expr::Pointer(_) => Some(false), // TODO: Optimize this ([x] as const)
+            Expr::DeReference(_) => Some(false), // TODO: Optimize this ([x] as const -> true)
+            Expr::Reference(x) => self.expr_const_evaluative(&**x),
             Expr::CompileTime(_s) => Some(true),
             Expr::LogicalNot(e) => self.expr_const_evaluative(&**e),
             Expr::BitwiseNot(e) => self.expr_const_evaluative(&**e),
@@ -114,6 +115,8 @@ impl PreExecutingWalker {
             }
 
             Expr::Nil | Expr::Num(_) | Expr::String(_) => Some(true),
+            Expr::As(v, _) => self.expr_const_evaluative(&**v),
+            Expr::AnyType => Some(true),
         }
     }
 }
@@ -126,7 +129,12 @@ impl Walker for PreExecutingWalker {
             if let Expr::Num(_) = e {
                 return;
             }
-            if let Expr::Pointer(e) = e {
+            if let Expr::Reference(e) = e {
+                if let Expr::Num(_) = **e {
+                    return;
+                }
+            }
+            if let Expr::DeReference(e) = e {
                 if let Expr::Num(_) = **e {
                     return;
                 }
@@ -187,8 +195,11 @@ impl Walker for PreExecutingWalker {
             Box::new(self.walk_expr(end)),
         )
     }
-    fn walk_pointer(&mut self, _expr: &Expr) -> Self::ExprT {
-        Expr::Pointer(Box::new(self.walk_expr(_expr)))
+    fn walk_reference(&mut self, _expr: &Expr) -> Self::ExprT {
+        Expr::Reference(Box::new(self.walk_expr(_expr)))
+    }
+    fn walk_dereference(&mut self, _expr: &Expr) -> Self::ExprT {
+        Expr::DeReference(Box::new(self.walk_expr(_expr)))
     }
     fn walk_compile_time(&mut self, _expr: &Expr) -> Self::ExprT {
         unimplemented!()
@@ -210,7 +221,7 @@ impl Walker for PreExecutingWalker {
                     )));
                     return left.clone();
                 }
-            } else if let Expr::Pointer(_) = left {
+            } else if let Expr::DeReference(_) = left {
                 let left = self.walk_expr(left);
                 let right = self.walk_expr(right);
                 self.add_stmt(Stmt::Expression(Expr::ApplyOperator(
@@ -380,5 +391,15 @@ impl Walker for PreExecutingWalker {
     }
     fn walk_nil(&mut self) -> Self::ExprT {
         Expr::Nil
+    }
+
+    fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {
+        let v = self.walk_expr(v);
+        let t = self.walk_expr(t);
+        Expr::As(Box::new(v), Box::new(t))
+    }
+
+    fn walk_any_type(&mut self) -> Self::ExprT {
+        Expr::AnyType
     }
 }

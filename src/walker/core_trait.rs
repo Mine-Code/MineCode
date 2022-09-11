@@ -45,7 +45,8 @@ pub trait Walker {
             Expr::DirectFuncCall(addr, args) => self.walk_direct_func_call(*addr, args),
 
             Expr::Ranged(x, y) => self.walk_ranged(&**x, &**y),
-            Expr::Pointer(x) => self.walk_pointer(&**x),
+            Expr::Reference(x) => self.walk_reference(&**x),
+            Expr::DeReference(x) => self.walk_dereference(&**x),
             Expr::CompileTime(x) => self.walk_compile_time(&**x),
             Expr::ApplyOperator(x, y, z) => self.walk_apply_operator(x.clone(), &**y, &**z),
             Expr::LogicalNot(x) => self.walk_logical_not(&**x),
@@ -63,6 +64,8 @@ pub trait Walker {
             } => self.walk_for(name.clone(), &**iter, &**body, &**value),
             Expr::Exprs(x) => self.walk_exprs(x),
             Expr::Nil => self.walk_nil(),
+            Expr::AnyType => self.walk_any_type(),
+            Expr::As(x, y) => self.walk_as(&**x, &**y),
         }
     }
     fn walk_num(&mut self, num: i32) -> Self::ExprT;
@@ -72,9 +75,11 @@ pub trait Walker {
     fn walk_func_call(&mut self, func_name: &Expr, args: &[Expr]) -> Self::ExprT;
     fn walk_direct_func_call(&mut self, addr: u64, args: &[Expr]) -> Self::ExprT;
     fn walk_ranged(&mut self, start: &Expr, end: &Expr) -> Self::ExprT;
-    fn walk_pointer(&mut self, expr: &Expr) -> Self::ExprT;
+    fn walk_reference(&mut self, expr: &Expr) -> Self::ExprT;
+    fn walk_dereference(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_compile_time(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_apply_operator(&mut self, op: BinaryOp, left: &Expr, right: &Expr) -> Self::ExprT;
+    fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT;
     fn walk_logical_not(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_bitwise_not(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_negative(&mut self, expr: &Expr) -> Self::ExprT;
@@ -84,4 +89,5 @@ pub trait Walker {
     fn walk_for(&mut self, name: String, iter: &Expr, body: &Expr, value: &Expr) -> Self::ExprT;
     fn walk_exprs(&mut self, exprs: &[Expr]) -> Self::ExprT;
     fn walk_nil(&mut self) -> Self::ExprT;
+    fn walk_any_type(&mut self) -> Self::ExprT;
 }

@@ -29,14 +29,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         stmt.optimize();
     }
 
-    println!(
-        "{}",
-        stmts
-            .iter()
-            .map(|x| x.to_string())
-            .collect::<Vec<_>>()
-            .join("\n")
-    );
     let mut walker = IdentNormalizeWalker::new();
     let stmts = walker.walk(stmts);
 
@@ -52,6 +44,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // });
 
     println!("{:?}", remained_src);
+    println!("Stmts: ");
     println!(
         "{}",
         stmts

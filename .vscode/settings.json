@@ -109,4 +109,5 @@
     "cSpell.words": [
         "minecode"
     ],
+    "rust-analyzer.inlayHints.chainingHints.enable": false,
 }

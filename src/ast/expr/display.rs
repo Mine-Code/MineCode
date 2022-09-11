@@ -25,7 +25,8 @@ impl std::fmt::Display for Expr {
             ),
             Self::Attribute(r, l) => format!("{}.{}", r, l),
             Self::Ranged(begin, end) => format!("Range<{} -> {}>", begin, end),
-            Self::Pointer(x) => format!("Ptr<{}>", x),
+            Self::Reference(r) => format!("&{}", r),
+            Self::DeReference(r) => format!("*{}", r),
             Self::CompileTime(x) => format!("CompileTime<{}>", x),
             Self::ApplyOperator(op, r, l) => format!("({} {} {})", r, op, l),
             Self::LogicalNot(x) => format!("!{}", x),
@@ -54,6 +55,8 @@ impl std::fmt::Display for Expr {
             } => {
                 format!("for {} in {}: [{}] => {}", name, iter, body, value)
             }
+            Self::As(v, t) => format!("{} as {}", v, t),
+            Self::AnyType => "AnyType".to_string(),
 
             Self::Nil => "nil".to_string(),
         };
@@ -97,9 +100,24 @@ mod test {
         assert_eq!(expr.to_string(), "Range<0 -> 1>");
     }
     #[test]
-    fn test_pointer_display() {
-        let expr = Expr::Pointer(Box::new(Expr::Num(1000)));
-        assert_eq!(expr.to_string(), "Ptr<1000>");
+    fn test_reference_display() {
+        let expr = Expr::Reference(Box::new(Expr::Num(1000)));
+        assert_eq!(expr.to_string(), "&1000");
+    }
+    #[test]
+    fn test_dereference_display() {
+        let expr = Expr::DeReference(Box::new(Expr::Num(1000)));
+        assert_eq!(expr.to_string(), "*1000");
+    }
+    #[test]
+    fn test_any_type_display() {
+        let expr = Expr::AnyType;
+        assert_eq!(expr.to_string(), "AnyType");
+    }
+    #[test]
+    fn test_as_display() {
+        let expr = Expr::As(Box::new(Expr::Num(1000)), Box::new(Expr::Num(1000)));
+        assert_eq!(expr.to_string(), "1000 as 1000");
     }
     #[test]
     fn test_compiletime_display() {

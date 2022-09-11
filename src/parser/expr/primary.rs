@@ -2,6 +2,7 @@ use crate::ast::Expr;
 use crate::parser::basic::{ident, symbol};
 use nom::branch::alt;
 use nom::bytes::complete::tag;
+use nom::character::complete::multispace0;
 use nom::combinator::opt;
 use nom::multi::separated_list0;
 use nom::sequence::{delimited, preceded};
@@ -24,7 +25,12 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
         // CompileTime
         preceded(symbol('@'), _primary.map(Box::new)).map(Expr::CompileTime),
         // []
-        delimited(symbol('['), expr.map(Box::new), symbol(']')).map(Expr::Pointer),
+        delimited(symbol('['), expr.map(Box::new), symbol(']')).map(|x| {
+            Expr::DeReference(Box::new(Expr::As(
+                x,
+                Box::new(Expr::Reference(Box::new(Expr::AnyType))),
+            )))
+        }),
         // SubExpr
         delimited(symbol('('), expr, symbol(')')),
         //
@@ -47,6 +53,16 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
 
         let a: Option<String>;
         (input, a) = opt(preceded(symbol('.'), ident))(input)?;
+        if let Some(name) = a {
+            ret = Expr::Attribute(Box::new(ret), name);
+            continue;
+        }
+
+        let a: Option<String>;
+        (input, a) = opt(preceded(
+            delimited(multispace0, tag("as"), multispace0),
+            ident,
+        ))(input)?;
         if let Some(name) = a {
             ret = Expr::Attribute(Box::new(ret), name);
             continue;
@@ -122,7 +138,13 @@ mod test {
     fn test_primary_pointer() {
         assert_eq!(
             _primary("[a]"),
-            Ok(("", Expr::Pointer(Box::new(Expr::Ident("a".to_string())))))
+            Ok((
+                "",
+                Expr::DeReference(Box::new(Expr::As(
+                    Box::new(Expr::Ident("a".to_string())),
+                    Box::new(Expr::Reference(Box::new(Expr::AnyType))),
+                )))
+            ))
         );
     }
 

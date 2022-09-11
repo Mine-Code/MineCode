@@ -85,9 +85,13 @@ impl Walker for IdentNormalizeWalker {
         let end = self.walk_expr(end);
         Expr::Ranged(Box::new(start), Box::new(end))
     }
-    fn walk_pointer(&mut self, expr: &Expr) -> Self::ExprT {
+    fn walk_reference(&mut self, expr: &Expr) -> Self::ExprT {
         let expr = self.walk_expr(expr);
-        Expr::Pointer(Box::new(expr))
+        Expr::Reference(Box::new(expr))
+    }
+    fn walk_dereference(&mut self, expr: &Expr) -> Self::ExprT {
+        let expr = self.walk_expr(expr);
+        Expr::DeReference(Box::new(expr))
     }
     fn walk_compile_time(&mut self, expr: &Expr) -> Self::ExprT {
         let expr = self.walk_expr(expr);
@@ -147,5 +151,15 @@ impl Walker for IdentNormalizeWalker {
     }
     fn walk_nil(&mut self) -> Self::ExprT {
         Expr::Nil
+    }
+
+    fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {
+        let v = self.walk_expr(v);
+        let t = self.walk_expr(t);
+        Expr::As(Box::new(v), Box::new(t))
+    }
+
+    fn walk_any_type(&mut self) -> Self::ExprT {
+        Expr::AnyType
     }
 }

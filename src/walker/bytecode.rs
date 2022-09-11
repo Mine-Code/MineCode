@@ -101,7 +101,10 @@ impl Walker for ByteCodeWalker {
     fn walk_ranged(&mut self, _start: &Expr, _end: &Expr) -> Vec<u8> {
         unimplemented!()
     }
-    fn walk_pointer(&mut self, expr: &Expr) -> Vec<u8> {
+    fn walk_reference(&mut self, expr: &Expr) -> Self::ExprT {
+        unimplemented!()
+    }
+    fn walk_dereference(&mut self, expr: &Expr) -> Vec<u8> {
         let mut ret = vec![0x9du8];
         ret.extend(self.walk_expr(expr));
         ret
@@ -165,5 +168,13 @@ impl Walker for ByteCodeWalker {
 
     fn walk_nil(&mut self) -> Self::ExprT {
         vec![0xf7u8]
+    }
+
+    fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {
+        unimplemented!()
+    }
+
+    fn walk_any_type(&mut self) -> Self::ExprT {
+        unimplemented!()
     }
 }

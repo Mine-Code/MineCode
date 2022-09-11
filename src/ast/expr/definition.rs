@@ -3,19 +3,20 @@ use crate::ast::BinaryOp;
 #[derive(Debug, Clone, PartialEq)]
 pub enum Expr {
     Num(i32),
-
-    Attribute(Box<Expr>, String),
-
     Ident(String),
     Storage(usize),
     String(String),
-
     FuncCall(Box<Expr>, Vec<Expr>),
     DirectFuncCall(u64, Vec<Expr>),
 
+    Attribute(Box<Expr>, String),
+
     Ranged(Box<Expr>, Box<Expr>),
-    Pointer(Box<Expr>),
     CompileTime(Box<Expr>),
+
+    As(Box<Expr>, Box<Expr>),
+    Reference(Box<Expr>),
+    DeReference(Box<Expr>),
 
     ApplyOperator(BinaryOp, Box<Expr>, Box<Expr>),
 
@@ -38,4 +39,5 @@ pub enum Expr {
 
     Exprs(Vec<Expr>),
     Nil,
+    AnyType,
 }
