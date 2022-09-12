@@ -131,12 +131,12 @@ impl Walker for PreExecutingWalker {
                 return;
             }
             if let Expr::Reference(e) = e {
-                if let Expr::Num(_) = **e {
+                if self.expr_const_evaluative(e) == Some(true) {
                     return;
                 }
             }
             if let Expr::DeReference(e) = e {
-                if let Expr::Num(_) = **e {
+                if self.expr_const_evaluative(e) == Some(true) {
                     return;
                 }
             }
