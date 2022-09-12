@@ -57,6 +57,7 @@ impl std::fmt::Display for Expr {
             }
             Self::As(v, t) => format!("{} as {}", v, t),
             Self::AnyType => "AnyType".to_string(),
+            Self::TypeHolder(no) => format!("Type{{{}}}", no),
 
             Self::Nil => "nil".to_string(),
             Self::Assignment(a, b) => format!("{} = {}", a, b),

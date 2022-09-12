@@ -159,6 +159,9 @@ impl Walker for IdentNormalizeWalker {
         Expr::As(Box::new(v), Box::new(t))
     }
 
+    fn walk_type_holder(&mut self, n: usize) -> Self::ExprT {
+        Expr::TypeHolder(n)
+    }
     fn walk_any_type(&mut self) -> Self::ExprT {
         Expr::AnyType
     }

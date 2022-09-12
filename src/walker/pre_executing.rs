@@ -114,9 +114,9 @@ impl PreExecutingWalker {
                 Some(true)
             }
 
-            Expr::Nil | Expr::Num(_) | Expr::String(_) => Some(true),
+            Expr::Nil | Expr::AnyType | Expr::Num(_) | Expr::String(_) => Some(true),
             Expr::As(v, _) => self.expr_const_evaluative(&**v),
-            Expr::AnyType => Some(true),
+            Expr::TypeHolder(_) => panic!("TypeHolder must be deleted before this"),
             Expr::Assignment(_, _) => Some(false), // TODO: Itsuka yaru.
         }
     }
@@ -391,6 +391,9 @@ impl Walker for PreExecutingWalker {
     fn walk_nil(&mut self) -> Self::ExprT {
         Expr::Nil
     }
+    fn walk_any_type(&mut self) -> Self::ExprT {
+        Expr::AnyType
+    }
 
     fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {
         let v = self.walk_expr(v);
@@ -398,7 +401,7 @@ impl Walker for PreExecutingWalker {
         Expr::As(Box::new(v), Box::new(t))
     }
 
-    fn walk_any_type(&mut self) -> Self::ExprT {
-        Expr::AnyType
+    fn walk_type_holder(&mut self, n: usize) -> Self::ExprT {
+        Expr::TypeHolder(n)
     }
 }

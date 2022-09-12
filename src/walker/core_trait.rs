@@ -65,6 +65,7 @@ pub trait Walker {
             Expr::Exprs(x) => self.walk_exprs(x),
             Expr::Nil => self.walk_nil(),
             Expr::AnyType => self.walk_any_type(),
+            Expr::TypeHolder(n) => self.walk_type_holder(*n),
             Expr::As(x, y) => self.walk_as(&**x, &**y),
             Expr::Assignment(a, b) => self.walk_assignment(&**a, &**b),
         }
@@ -92,4 +93,5 @@ pub trait Walker {
     fn walk_assignment(&mut self, a: &Expr, b: &Expr) -> Self::ExprT;
     fn walk_nil(&mut self) -> Self::ExprT;
     fn walk_any_type(&mut self) -> Self::ExprT;
+    fn walk_type_holder(&mut self, n: usize) -> Self::ExprT;
 }

@@ -39,7 +39,9 @@ pub enum Expr {
 
     Exprs(Vec<Expr>),
     Nil,
+
     AnyType,
+    TypeHolder(usize), // Unknown type
 
     Assignment(Box<Expr>, Box<Expr>),
 }
