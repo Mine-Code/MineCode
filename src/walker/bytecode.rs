@@ -167,11 +167,11 @@ impl Walker for ByteCodeWalker {
         unimplemented!()
     }
 
-    fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {
+    fn walk_as(&mut self, _v: &Expr, _t: &Expr) -> Self::ExprT {
         unimplemented!()
     }
 
-    fn walk_type_holder(&mut self, n: usize) -> Self::ExprT {
+    fn walk_type_holder(&mut self, _: usize) -> Self::ExprT {
         unimplemented!()
     }
 
