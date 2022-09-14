@@ -1,4 +1,4 @@
-use crate::ast::{BinaryOp, Expr, Stmt};
+use crate::ast::{BinaryOp, Expr, Keyword, Stmt};
 
 pub trait Walker {
     type StmtT;
@@ -38,6 +38,7 @@ pub trait Walker {
     fn walk_expr(&mut self, expr: &Expr) -> Self::ExprT {
         match expr {
             Expr::Num(x) => self.walk_num(*x),
+            Expr::SizedNum(x, w) => self.walk_sized_num(*x, *w),
             Expr::Ident(x) => self.walk_ident(x.clone()),
             Expr::Storage(x) => self.walk_storage(*x),
             Expr::String(x) => self.walk_string(x.clone()),
@@ -63,14 +64,14 @@ pub trait Walker {
                 value,
             } => self.walk_for(name.clone(), &**iter, &**body, &**value),
             Expr::Exprs(x) => self.walk_exprs(x),
-            Expr::Nil => self.walk_nil(),
-            Expr::AnyType => self.walk_any_type(),
+            Expr::Keyword(x) => self.walk_keyword(x.clone()),
             Expr::TypeHolder(n) => self.walk_type_holder(*n),
             Expr::As(x, y) => self.walk_as(&**x, &**y),
             Expr::Assignment(a, b) => self.walk_assignment(&**a, &**b),
         }
     }
     fn walk_num(&mut self, num: i32) -> Self::ExprT;
+    fn walk_sized_num(&mut self, num: i32, width: u32) -> Self::ExprT;
     fn walk_ident(&mut self, ident: String) -> Self::ExprT;
     fn walk_storage(&mut self, index: usize) -> Self::ExprT;
     fn walk_string(&mut self, string: String) -> Self::ExprT;
@@ -91,7 +92,6 @@ pub trait Walker {
     fn walk_for(&mut self, name: String, iter: &Expr, body: &Expr, value: &Expr) -> Self::ExprT;
     fn walk_exprs(&mut self, exprs: &[Expr]) -> Self::ExprT;
     fn walk_assignment(&mut self, a: &Expr, b: &Expr) -> Self::ExprT;
-    fn walk_nil(&mut self) -> Self::ExprT;
-    fn walk_any_type(&mut self) -> Self::ExprT;
     fn walk_type_holder(&mut self, n: usize) -> Self::ExprT;
+    fn walk_keyword(&mut self, keyword: Keyword) -> Self::ExprT;
 }

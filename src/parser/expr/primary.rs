@@ -28,7 +28,9 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
         delimited(symbol('['), expr.map(Box::new), symbol(']')).map(|x| {
             Expr::DeReference(Box::new(Expr::As(
                 x,
-                Box::new(Expr::Reference(Box::new(Expr::AnyType))),
+                Box::new(Expr::Reference(Box::new(Expr::Keyword(
+                    crate::ast::Keyword::Nil,
+                )))),
             )))
         }),
         // SubExpr
@@ -142,7 +144,9 @@ mod test {
                 "",
                 Expr::DeReference(Box::new(Expr::As(
                     Box::new(Expr::Ident("a".to_string())),
-                    Box::new(Expr::Reference(Box::new(Expr::AnyType))),
+                    Box::new(Expr::Reference(Box::new(Expr::Keyword(
+                        crate::ast::Keyword::Nil
+                    )))),
                 )))
             ))
         );

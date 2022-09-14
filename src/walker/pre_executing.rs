@@ -114,7 +114,7 @@ impl PreExecutingWalker {
                 Some(true)
             }
 
-            Expr::Nil | Expr::AnyType | Expr::Num(_) | Expr::String(_) => Some(true),
+            Expr::Keyword(_) | Expr::Num(_) | Expr::SizedNum(_, _) | Expr::String(_) => Some(true),
             Expr::As(v, _) => self.expr_const_evaluative(&**v),
             Expr::TypeHolder(_) => panic!("TypeHolder must be deleted before this"),
             Expr::Assignment(_, _) => Some(false), // TODO: Itsuka yaru.
@@ -165,6 +165,9 @@ impl Walker for PreExecutingWalker {
 
     fn walk_num(&mut self, num: i32) -> Self::ExprT {
         Expr::Num(num)
+    }
+    fn walk_sized_num(&mut self, num: i32, width: u32) -> Self::ExprT {
+        Expr::SizedNum(num, width)
     }
     fn walk_ident(&mut self, _ident: String) -> Self::ExprT {
         panic!("walk_ident is not allowed in PreExecutingWalker");
@@ -388,11 +391,8 @@ impl Walker for PreExecutingWalker {
         // TODO: impl this (exprs)
         Expr::Exprs(exprs.iter().map(|x| self.walk_expr(x)).collect::<Vec<_>>())
     }
-    fn walk_nil(&mut self) -> Self::ExprT {
-        Expr::Nil
-    }
-    fn walk_any_type(&mut self) -> Self::ExprT {
-        Expr::AnyType
+    fn walk_keyword(&mut self, keyword: crate::ast::Keyword) -> Self::ExprT {
+        Expr::Keyword(keyword)
     }
 
     fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {

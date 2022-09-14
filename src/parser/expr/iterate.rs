@@ -1,4 +1,4 @@
-use crate::ast::Expr;
+use crate::ast::{Expr, Keyword};
 use crate::parser::basic::ident;
 use nom::branch::permutation;
 use nom::bytes::complete::tag;
@@ -23,7 +23,7 @@ pub fn _for(input: &str) -> IResult<&str, Expr> {
             permutation((multispace0, tag("=>"), multispace0, expr.map(Box::new)))
                 .map(|(_, _, _, a)| a),
         )
-        .map(|x| x.unwrap_or_else(|| Box::new(Expr::Nil))),
+        .map(|x| x.unwrap_or_else(|| Box::new(Expr::Keyword(Keyword::Nil)))),
     ))
     .map(|(name, _, _, _, iter, _, body, value)| Expr::For {
         name,
@@ -48,7 +48,7 @@ mod test {
                     name: "a".to_string(),
                     iter: Box::new(Expr::Ident("b".to_string())),
                     body: Box::new(Expr::Ident("c".to_string())),
-                    value: Box::new(Expr::Nil),
+                    value: Box::new(Expr::Keyword(Keyword::Nil)),
                 }
             ))
         );

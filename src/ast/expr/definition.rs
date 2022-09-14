@@ -1,8 +1,9 @@
-use crate::ast::BinaryOp;
+use crate::ast::{keyword::Keyword, BinaryOp};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Expr {
     Num(i32),
+    SizedNum(i32, u32),
     Ident(String),
     Storage(usize),
     String(String),
@@ -38,10 +39,8 @@ pub enum Expr {
     },
 
     Exprs(Vec<Expr>),
-    Nil,
-
-    AnyType,
     TypeHolder(usize), // Unknown type
 
     Assignment(Box<Expr>, Box<Expr>),
+    Keyword(Keyword),
 }

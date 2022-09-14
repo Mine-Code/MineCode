@@ -4,6 +4,7 @@ impl std::fmt::Display for Expr {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s = match self {
             Self::Num(x) => x.to_string(),
+            Self::SizedNum(x, w) => format!("{}:u{}", x, w),
             Self::Ident(x) => x.to_string(),
             Self::Storage(x) => format!("#{}", x),
             Self::String(x) => format!("\"{}\"", x.escape_default()),
@@ -56,10 +57,9 @@ impl std::fmt::Display for Expr {
                 format!("for {} in {}: [{}] => {}", name, iter, body, value)
             }
             Self::As(v, t) => format!("{} as {}", v, t),
-            Self::AnyType => "AnyType".to_string(),
             Self::TypeHolder(no) => format!("Type{{{}}}", no),
 
-            Self::Nil => "nil".to_string(),
+            Self::Keyword(k) => format!("{:?}", k),
             Self::Assignment(a, b) => format!("{} = {}", a, b),
         };
 
@@ -69,7 +69,7 @@ impl std::fmt::Display for Expr {
 
 #[cfg(test)]
 mod test {
-    use crate::ast::BinaryOp;
+    use crate::ast::{keyword::Keyword, BinaryOp};
 
     use super::*;
 
@@ -77,6 +77,11 @@ mod test {
     fn test_num_display() {
         let expr = Expr::Num(0);
         assert_eq!(expr.to_string(), "0");
+    }
+    #[test]
+    fn test_sized_num_display() {
+        let expr = Expr::SizedNum(0, 32);
+        assert_eq!(expr.to_string(), "0:u32");
     }
     #[test]
     fn test_ident_display() {
@@ -110,11 +115,6 @@ mod test {
     fn test_dereference_display() {
         let expr = Expr::DeReference(Box::new(Expr::Num(1000)));
         assert_eq!(expr.to_string(), "*1000");
-    }
-    #[test]
-    fn test_any_type_display() {
-        let expr = Expr::AnyType;
-        assert_eq!(expr.to_string(), "AnyType");
     }
     #[test]
     fn test_as_display() {
@@ -200,5 +200,10 @@ mod test {
     fn test_direct_function_call() {
         let expr = Expr::DirectFuncCall(0x1122334411223344, vec![Expr::Num(0), Expr::Num(1)]);
         assert_eq!(expr.to_string(), "$0x1122334411223344(0, 1)");
+    }
+    #[test]
+    fn test_keyword() {
+        let expr = Expr::Keyword(Keyword::Nil);
+        assert_eq!(expr.to_string(), "break");
     }
 }

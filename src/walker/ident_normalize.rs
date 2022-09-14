@@ -53,6 +53,9 @@ impl Walker for IdentNormalizeWalker {
     fn walk_num(&mut self, num: i32) -> Self::ExprT {
         Expr::Num(num)
     }
+    fn walk_sized_num(&mut self, num: i32, width: u32) -> Self::ExprT {
+        Expr::SizedNum(num, width)
+    }
     fn walk_ident(&mut self, ident: String) -> Self::ExprT {
         if !self.variable_replacement.contains_key(&ident) {
             self.last_used_index += 1;
@@ -149,9 +152,6 @@ impl Walker for IdentNormalizeWalker {
         let exprs = exprs.iter().map(|x| self.walk_expr(x)).collect();
         Expr::Exprs(exprs)
     }
-    fn walk_nil(&mut self) -> Self::ExprT {
-        Expr::Nil
-    }
 
     fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {
         let v = self.walk_expr(v);
@@ -162,8 +162,8 @@ impl Walker for IdentNormalizeWalker {
     fn walk_type_holder(&mut self, n: usize) -> Self::ExprT {
         Expr::TypeHolder(n)
     }
-    fn walk_any_type(&mut self) -> Self::ExprT {
-        Expr::AnyType
+    fn walk_keyword(&mut self, keyword: crate::ast::Keyword) -> Self::ExprT {
+        Expr::Keyword(keyword)
     }
 
     fn walk_assignment(&mut self, a: &Expr, b: &Expr) -> Self::ExprT {

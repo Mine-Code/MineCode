@@ -67,6 +67,37 @@ impl Walker for ByteCodeWalker {
         } */
         ret
     }
+    fn walk_sized_num(&mut self, num: i32, width: u32) -> Self::ExprT {
+        let mut ret = vec![];
+        if num < 0x100 {
+            ret.push(0x90u8);
+            ret.push(num as u8);
+        } else if num < 0x10000 {
+            ret.push(0x91u8);
+            ret.push((num >> 8) as u8);
+            ret.push(num as u8);
+        } else {
+            //if num < 0x100000000
+            ret.push(0x92u8);
+            ret.push((num >> 24) as u8);
+            ret.push((num >> 16) as u8);
+            ret.push((num >> 8) as u8);
+            ret.push(num as u8);
+        }
+        /*  else  if num < 0x10000000000000000{
+            ret.push(0x93u8);
+            ret.push((num >> 56) as u8);
+            ret.push((num >> 48) as u8);
+            ret.push((num >> 40) as u8);
+            ret.push((num >> 32) as u8);
+            ret.push((num >> 24) as u8);
+            ret.push((num >> 16) as u8);
+            ret.push((num >> 8) as u8);
+            ret.push(num as u8);
+
+        } */
+        ret
+    }
     fn walk_ident(&mut self, _ident: String) -> Vec<u8> {
         panic!("walk_ident is not allowed in bytecode")
     }
@@ -160,11 +191,10 @@ impl Walker for ByteCodeWalker {
         ret
     }
 
-    fn walk_nil(&mut self) -> Self::ExprT {
-        vec![0xf7u8]
-    }
-    fn walk_any_type(&mut self) -> Self::ExprT {
-        unimplemented!()
+    fn walk_keyword(&mut self, keyword: crate::ast::Keyword) -> Self::ExprT {
+        let mut ret = vec![0xf7u8];
+        ret.push(keyword.into());
+        ret
     }
 
     fn walk_as(&mut self, _v: &Expr, _t: &Expr) -> Self::ExprT {
