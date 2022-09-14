@@ -1,8 +1,4 @@
-[0x00000010] = 0
+[0x00000010] = 0 as u32
 # [0x00000010] as u8 = 0
 # [0x00000010] as u16 = 0
 # [0x00000010] as u32 = 0
-
-#    [num] as T
-# -> *(num as T&)
-# -> Deref(UnsafeAs(num, TypePointer(T))

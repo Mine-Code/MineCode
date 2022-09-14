@@ -60,13 +60,13 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
             continue;
         }
 
-        let a: Option<String>;
+        let a: Option<Expr>;
         (input, a) = opt(preceded(
             delimited(multispace0, tag("as"), multispace0),
-            ident,
+            expr,
         ))(input)?;
-        if let Some(name) = a {
-            ret = Expr::Attribute(Box::new(ret), name);
+        if let Some(t) = a {
+            ret = Expr::As(Box::new(ret), Box::new(t));
             continue;
         }
 

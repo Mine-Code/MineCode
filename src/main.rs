@@ -29,11 +29,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         stmt.optimize();
     }
 
-    let mut walker = IdentNormalizeWalker::new();
-    let stmts = walker.walk(stmts);
-
-    let mut walker = PreExecutingWalker::new();
-    let stmts = walker.walk_ref(stmts);
+    // let mut walker = IdentNormalizeWalker::new();
+    // let stmts = walker.walk(stmts);
+    // let mut walker = PreExecutingWalker::new();
+    // let stmts = walker.walk_ref(stmts);
 
     // let mut byte_code_walker = ByteCodeWalker::new();
     // let stmts = byte_code_walker.walk_ref(stmts).iter().map(|x| {

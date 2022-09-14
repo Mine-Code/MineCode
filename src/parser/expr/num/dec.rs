@@ -14,4 +14,8 @@ mod test {
     fn test_num_dec() {
         assert_eq!(_num_dec("123"), Ok(("", Expr::Num(123))));
     }
+    #[test]
+    fn test_a() {
+        assert_eq!(_num_dec("0 as u32"), Ok((" as u32", Expr::Num(0))));
+    }
 }

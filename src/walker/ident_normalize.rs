@@ -51,7 +51,13 @@ impl Walker for IdentNormalizeWalker {
     }
 
     fn walk_num(&mut self, num: i32) -> Self::ExprT {
-        Expr::Num(num)
+        if num < 0x100 {
+            Expr::SizedNum(num, 8)
+        } else if num < 0x10000 {
+            Expr::SizedNum(num, 16)
+        } else {
+            Expr::SizedNum(num, 32)
+        }
     }
     fn walk_sized_num(&mut self, num: i32, width: u32) -> Self::ExprT {
         Expr::SizedNum(num, width)

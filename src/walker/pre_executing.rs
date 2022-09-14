@@ -352,7 +352,7 @@ impl Walker for PreExecutingWalker {
         unimplemented!()
     }
     fn walk_attribute(&mut self, _expr: &Expr, _attr: String) -> Self::ExprT {
-        unimplemented!()
+        Expr::Attribute(Box::new(self.walk_expr(_expr)), _attr)
     }
     fn walk_if(&mut self, branches: &[(Expr, Expr)], fallback: &Expr) -> Self::ExprT {
         let mut all_cond_are_not_passed = true;
