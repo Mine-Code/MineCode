@@ -26,13 +26,9 @@ impl std::fmt::Display for Expr {
             ),
             Self::Attribute(r, l) => format!("{}.{}", r, l),
             Self::Ranged(begin, end) => format!("Range<{} -> {}>", begin, end),
-            Self::Reference(r) => format!("&({})", r),
-            Self::DeReference(r) => format!("*({})", r),
             Self::CompileTime(x) => format!("CompileTime<{}>", x),
             Self::ApplyOperator(op, r, l) => format!("({} {} {})", r, op, l),
-            Self::LogicalNot(x) => format!("!{}", x),
-            Self::BitwiseNot(x) => format!("~{}", x),
-            Self::Negative(x) => format!("-{}", x),
+            Self::UnaryOp(o, x) => format!("{}({})", o, x),
             Self::Subscript(arr, ind) => format!("{}[{}]", arr, ind),
             Self::If { branches, fallback } => format!(
                 "if {}_ => {}",
@@ -107,14 +103,9 @@ mod test {
         assert_eq!(expr.to_string(), "Range<0 -> 1>");
     }
     #[test]
-    fn test_reference_display() {
-        let expr = Expr::Reference(Box::new(Expr::Num(1000)));
-        assert_eq!(expr.to_string(), "&1000");
-    }
-    #[test]
-    fn test_dereference_display() {
-        let expr = Expr::DeReference(Box::new(Expr::Num(1000)));
-        assert_eq!(expr.to_string(), "*1000");
+    fn test_unary_op_display() {
+        let expr = Expr::UnaryOp(crate::ast::UnaryOp::Negative, Box::new(Expr::Num(1000)));
+        assert_eq!(expr.to_string(), "-(1000)");
     }
     #[test]
     fn test_as_display() {
@@ -137,21 +128,6 @@ mod test {
             Box::new(Expr::Num(1)),
         );
         assert_eq!(expr.to_string(), "(0 + 1)");
-    }
-    #[test]
-    fn test_logicalnot_display() {
-        let expr = Expr::LogicalNot(Box::new(Expr::Ident("x".to_string())));
-        assert_eq!(expr.to_string(), "!x");
-    }
-    #[test]
-    fn test_bitwisenot_display() {
-        let expr = Expr::BitwiseNot(Box::new(Expr::Ident("x".to_string())));
-        assert_eq!(expr.to_string(), "~x");
-    }
-    #[test]
-    fn test_negative_display() {
-        let expr = Expr::Negative(Box::new(Expr::Ident("x".to_string())));
-        assert_eq!(expr.to_string(), "-x");
     }
     #[test]
     fn test_subscript_display() {

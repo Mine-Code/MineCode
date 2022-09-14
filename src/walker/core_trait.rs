@@ -1,4 +1,4 @@
-use crate::ast::{BinaryOp, Expr, Keyword, Stmt};
+use crate::ast::{BinaryOp, Expr, Keyword, Stmt, UnaryOp};
 
 pub trait Walker {
     type StmtT;
@@ -46,14 +46,9 @@ pub trait Walker {
             Expr::DirectFuncCall(addr, args) => self.walk_direct_func_call(*addr, args),
 
             Expr::Ranged(x, y) => self.walk_ranged(&**x, &**y),
-            Expr::Reference(x) => self.walk_reference(&**x),
-            Expr::DeReference(x) => self.walk_dereference(&**x),
             Expr::CompileTime(x) => self.walk_compile_time(&**x),
             Expr::ApplyOperator(x, y, z) => self.walk_apply_operator(x.clone(), &**y, &**z),
-            Expr::LogicalNot(x) => self.walk_logical_not(&**x),
-
-            Expr::BitwiseNot(x) => self.walk_bitwise_not(&**x),
-            Expr::Negative(x) => self.walk_negative(&**x),
+            Expr::UnaryOp(x, y) => self.walk_unary_operator(x.clone(), &**y),
             Expr::Subscript(x, y) => self.walk_subscript(&**x, &**y),
             Expr::Attribute(x, y) => self.walk_attribute(&**x, y.clone()),
             Expr::If { branches, fallback } => self.walk_if(branches, &**fallback),
@@ -78,14 +73,10 @@ pub trait Walker {
     fn walk_func_call(&mut self, func_name: &Expr, args: &[Expr]) -> Self::ExprT;
     fn walk_direct_func_call(&mut self, addr: u64, args: &[Expr]) -> Self::ExprT;
     fn walk_ranged(&mut self, start: &Expr, end: &Expr) -> Self::ExprT;
-    fn walk_reference(&mut self, expr: &Expr) -> Self::ExprT;
-    fn walk_dereference(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_compile_time(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_apply_operator(&mut self, op: BinaryOp, left: &Expr, right: &Expr) -> Self::ExprT;
+    fn walk_unary_operator(&mut self, op: UnaryOp, x: &Expr) -> Self::ExprT;
     fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT;
-    fn walk_logical_not(&mut self, expr: &Expr) -> Self::ExprT;
-    fn walk_bitwise_not(&mut self, expr: &Expr) -> Self::ExprT;
-    fn walk_negative(&mut self, expr: &Expr) -> Self::ExprT;
     fn walk_subscript(&mut self, expr: &Expr, index: &Expr) -> Self::ExprT;
     fn walk_attribute(&mut self, expr: &Expr, attr: String) -> Self::ExprT;
     fn walk_if(&mut self, branches: &[(Expr, Expr)], fallback: &Expr) -> Self::ExprT;

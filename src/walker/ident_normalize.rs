@@ -94,13 +94,9 @@ impl Walker for IdentNormalizeWalker {
         let end = self.walk_expr(end);
         Expr::Ranged(Box::new(start), Box::new(end))
     }
-    fn walk_reference(&mut self, expr: &Expr) -> Self::ExprT {
-        let expr = self.walk_expr(expr);
-        Expr::Reference(Box::new(expr))
-    }
-    fn walk_dereference(&mut self, expr: &Expr) -> Self::ExprT {
-        let expr = self.walk_expr(expr);
-        Expr::DeReference(Box::new(expr))
+    fn walk_unary_operator(&mut self, op: crate::ast::UnaryOp, x: &Expr) -> Self::ExprT {
+        let x = self.walk_expr(x);
+        Expr::UnaryOp(op, Box::new(x))
     }
     fn walk_compile_time(&mut self, expr: &Expr) -> Self::ExprT {
         let expr = self.walk_expr(expr);
@@ -110,18 +106,6 @@ impl Walker for IdentNormalizeWalker {
         let left = self.walk_expr(left);
         let right = self.walk_expr(right);
         Expr::ApplyOperator(op, Box::new(left), Box::new(right))
-    }
-    fn walk_logical_not(&mut self, expr: &Expr) -> Self::ExprT {
-        let expr = self.walk_expr(expr);
-        Expr::LogicalNot(Box::new(expr))
-    }
-    fn walk_bitwise_not(&mut self, expr: &Expr) -> Self::ExprT {
-        let expr = self.walk_expr(expr);
-        Expr::BitwiseNot(Box::new(expr))
-    }
-    fn walk_negative(&mut self, expr: &Expr) -> Self::ExprT {
-        let expr = self.walk_expr(expr);
-        Expr::Negative(Box::new(expr))
     }
     fn walk_subscript(&mut self, expr: &Expr, index: &Expr) -> Self::ExprT {
         let expr = self.walk_expr(expr);

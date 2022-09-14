@@ -1,4 +1,4 @@
-use crate::ast::Expr;
+use crate::ast::{Expr, UnaryOp};
 use crate::parser::basic::{ident, symbol};
 use nom::branch::alt;
 use nom::bytes::complete::tag;
@@ -19,19 +19,25 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
     }
 
     let (mut input, mut ret) = alt((
-        preceded(symbol('-'), _primary.map(Box::new)).map(Expr::Negative),
-        preceded(symbol('~'), _primary.map(Box::new)).map(Expr::BitwiseNot),
-        preceded(symbol('!'), _primary.map(Box::new)).map(Expr::LogicalNot),
+        preceded(symbol('-'), _primary.map(Box::new)).map(|x| Expr::UnaryOp(UnaryOp::Negative, x)),
+        preceded(symbol('~'), _primary.map(Box::new))
+            .map(|x| Expr::UnaryOp(UnaryOp::BitwiseNot, x)),
+        preceded(symbol('!'), _primary.map(Box::new))
+            .map(|x| Expr::UnaryOp(UnaryOp::LogicalNot, x)),
         // CompileTime
         preceded(symbol('@'), _primary.map(Box::new)).map(Expr::CompileTime),
         // []
         delimited(symbol('['), expr.map(Box::new), symbol(']')).map(|x| {
-            Expr::DeReference(Box::new(Expr::As(
-                x,
-                Box::new(Expr::Reference(Box::new(Expr::Keyword(
-                    crate::ast::Keyword::Nil,
-                )))),
-            )))
+            Expr::UnaryOp(
+                UnaryOp::DeReference,
+                Box::new(Expr::As(
+                    x,
+                    Box::new(Expr::UnaryOp(
+                        UnaryOp::Reference,
+                        Box::new(Expr::Keyword(crate::ast::Keyword::Nil)),
+                    )),
+                )),
+            )
         }),
         // SubExpr
         delimited(symbol('('), expr, symbol(')')),
@@ -105,7 +111,10 @@ mod test {
     fn test_primary_negative() {
         assert_eq!(
             _primary("-a"),
-            Ok(("", Expr::Negative(Box::new(Expr::Ident("a".to_string())))))
+            Ok((
+                "",
+                Expr::UnaryOp(UnaryOp::Negative, Box::new(Expr::Ident("a".to_string())))
+            ))
         );
     }
 
@@ -113,7 +122,10 @@ mod test {
     fn test_primary_bitwise_not() {
         assert_eq!(
             _primary("~a"),
-            Ok(("", Expr::BitwiseNot(Box::new(Expr::Ident("a".to_string())))))
+            Ok((
+                "",
+                Expr::UnaryOp(UnaryOp::BitwiseNot, Box::new(Expr::Ident("a".to_string())))
+            ))
         );
     }
 
@@ -121,7 +133,10 @@ mod test {
     fn test_primary_logical_not() {
         assert_eq!(
             _primary("!a"),
-            Ok(("", Expr::LogicalNot(Box::new(Expr::Ident("a".to_string())))))
+            Ok((
+                "",
+                Expr::UnaryOp(UnaryOp::LogicalNot, Box::new(Expr::Ident("a".to_string())))
+            ))
         );
     }
 
@@ -142,12 +157,16 @@ mod test {
             _primary("[a]"),
             Ok((
                 "",
-                Expr::DeReference(Box::new(Expr::As(
-                    Box::new(Expr::Ident("a".to_string())),
-                    Box::new(Expr::Reference(Box::new(Expr::Keyword(
-                        crate::ast::Keyword::Nil
-                    )))),
-                )))
+                Expr::UnaryOp(
+                    UnaryOp::DeReference,
+                    Box::new(Expr::As(
+                        Box::new(Expr::Ident("a".to_string())),
+                        Box::new(Expr::UnaryOp(
+                            UnaryOp::Reference,
+                            Box::new(Expr::Keyword(crate::ast::Keyword::Nil))
+                        )),
+                    ))
+                )
             ))
         );
     }

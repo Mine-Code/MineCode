@@ -94,14 +94,7 @@ impl Walker for ByteCodeWalker {
     fn walk_ranged(&mut self, _start: &Expr, _end: &Expr) -> Vec<u8> {
         unimplemented!()
     }
-    fn walk_reference(&mut self, expr: &Expr) -> Self::ExprT {
-        unimplemented!()
-    }
-    fn walk_dereference(&mut self, expr: &Expr) -> Vec<u8> {
-        let mut ret = vec![0x9du8];
-        ret.extend(self.walk_expr(expr));
-        ret
-    }
+
     fn walk_compile_time(&mut self, _expr: &Expr) -> Vec<u8> {
         unimplemented!()
     }
@@ -111,13 +104,7 @@ impl Walker for ByteCodeWalker {
         ret.extend(self.walk_expr(right));
         ret
     }
-    fn walk_logical_not(&mut self, _expr: &Expr) -> Vec<u8> {
-        unimplemented!()
-    }
-    fn walk_bitwise_not(&mut self, _expr: &Expr) -> Vec<u8> {
-        unimplemented!()
-    }
-    fn walk_negative(&mut self, _expr: &Expr) -> Vec<u8> {
+    fn walk_unary_operator(&mut self, op: crate::ast::UnaryOp, x: &Expr) -> Self::ExprT {
         unimplemented!()
     }
     fn walk_subscript(&mut self, expr: &Expr, index: &Expr) -> Vec<u8> {

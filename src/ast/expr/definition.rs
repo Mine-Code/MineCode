@@ -1,4 +1,4 @@
-use crate::ast::{keyword::Keyword, BinaryOp};
+use crate::ast::{keyword::Keyword, BinaryOp, UnaryOp};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Expr {
@@ -16,14 +16,10 @@ pub enum Expr {
     CompileTime(Box<Expr>),
 
     As(Box<Expr>, Box<Expr>),
-    Reference(Box<Expr>),
-    DeReference(Box<Expr>),
 
     ApplyOperator(BinaryOp, Box<Expr>, Box<Expr>),
 
-    LogicalNot(Box<Expr>),
-    BitwiseNot(Box<Expr>),
-    Negative(Box<Expr>),
+    UnaryOp(UnaryOp, Box<Expr>),
 
     Subscript(Box<Expr>, Box<Expr>),
 

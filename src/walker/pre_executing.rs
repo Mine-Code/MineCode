@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::ast::{BinaryOp, Expr, Stmt};
+use crate::ast::{BinaryOp, Expr, Stmt, UnaryOp};
 
 use super::core_trait::Walker;
 
@@ -46,12 +46,11 @@ impl PreExecutingWalker {
                     _ => None,
                 }
             }
-            Expr::DeReference(_) => Some(false), // TODO: Optimize this ([x] as const -> true)
-            Expr::Reference(x) => self.expr_const_evaluative(&**x),
+
+            Expr::UnaryOp(UnaryOp::DeReference, _) => Some(false), // TODO: Optimize this ([x] as const -> true)
+            Expr::UnaryOp(_, x) => self.expr_const_evaluative(&**x),
+
             Expr::CompileTime(_s) => Some(true),
-            Expr::LogicalNot(e) => self.expr_const_evaluative(&**e),
-            Expr::BitwiseNot(e) => self.expr_const_evaluative(&**e),
-            Expr::Negative(e) => self.expr_const_evaluative(&**e),
             Expr::Subscript(a, i) => {
                 let a_const_evaluative = self.expr_const_evaluative(&**a);
                 let i_const_evaluative = self.expr_const_evaluative(&**i);
@@ -130,12 +129,7 @@ impl Walker for PreExecutingWalker {
             if let Expr::Num(_) = e {
                 return;
             }
-            if let Expr::Reference(e) = e {
-                if self.expr_const_evaluative(e) == Some(true) {
-                    return;
-                }
-            }
-            if let Expr::DeReference(e) = e {
+            if let Expr::UnaryOp(UnaryOp::Reference | UnaryOp::DeReference, e) = e {
                 if self.expr_const_evaluative(e) == Some(true) {
                     return;
                 }
@@ -199,11 +193,8 @@ impl Walker for PreExecutingWalker {
             Box::new(self.walk_expr(end)),
         )
     }
-    fn walk_reference(&mut self, _expr: &Expr) -> Self::ExprT {
-        Expr::Reference(Box::new(self.walk_expr(_expr)))
-    }
-    fn walk_dereference(&mut self, _expr: &Expr) -> Self::ExprT {
-        Expr::DeReference(Box::new(self.walk_expr(_expr)))
+    fn walk_unary_operator(&mut self, op: crate::ast::UnaryOp, x: &Expr) -> Self::ExprT {
+        Expr::UnaryOp(op, Box::new(self.walk_expr(x)))
     }
     fn walk_compile_time(&mut self, _expr: &Expr) -> Self::ExprT {
         unimplemented!()
@@ -223,7 +214,7 @@ impl Walker for PreExecutingWalker {
                 )));
                 return left.clone();
             }
-        } else if let Expr::DeReference(_) = left {
+        } else if let Expr::UnaryOp(UnaryOp::DeReference, _) = left {
             let left = self.walk_expr(left);
             let right = self.walk_expr(right);
             self.add_stmt(Stmt::Expression(Expr::Assignment(
@@ -338,15 +329,6 @@ impl Walker for PreExecutingWalker {
         }
 
         Expr::ApplyOperator(op, Box::new(l), Box::new(r))
-    }
-    fn walk_logical_not(&mut self, _expr: &Expr) -> Self::ExprT {
-        unimplemented!()
-    }
-    fn walk_bitwise_not(&mut self, _expr: &Expr) -> Self::ExprT {
-        unimplemented!()
-    }
-    fn walk_negative(&mut self, _expr: &Expr) -> Self::ExprT {
-        unimplemented!()
     }
     fn walk_subscript(&mut self, _expr: &Expr, _index: &Expr) -> Self::ExprT {
         unimplemented!()
