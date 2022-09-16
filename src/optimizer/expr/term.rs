@@ -6,6 +6,7 @@ impl Expr {
         let mut denom = vec![];
         if let Expr::ApplyOperator(op, r, l) = self {
             if *op == BinaryOp::Mul {
+                // (a/b)/(c/d) = (a/b)*(c/d)
                 let (sub_numer, sub_denom) = r._collect_factors();
                 numer.extend(sub_numer);
                 denom.extend(sub_denom);
@@ -14,6 +15,7 @@ impl Expr {
                 numer.extend(sub_numer);
                 denom.extend(sub_denom);
             } else if *op == BinaryOp::Div {
+                // (a/b)/(c/d) = (a/b)*(d/c)
                 let (sub_numer, sub_denom) = r._collect_factors();
                 numer.extend(sub_numer);
                 denom.extend(sub_denom);
@@ -46,7 +48,7 @@ impl Expr {
     }
 }
 
-fn fold_factors(factors: Vec<Expr>) -> (i32, Vec<Expr>) {
+fn fold_factors_with_optimize(factors: Vec<&Expr>) -> (i32, Vec<Expr>) {
     let mut constant = 1;
     let mut new_factors = Vec::new();
 
@@ -54,7 +56,7 @@ fn fold_factors(factors: Vec<Expr>) -> (i32, Vec<Expr>) {
         if let Expr::Num(x) = factor {
             constant *= x;
         } else {
-            new_factors.push(factor)
+            new_factors.push(factor.optimize())
         }
     }
 
@@ -67,10 +69,6 @@ fn gcd(a: i32, b: i32) -> i32 {
     } else {
         gcd(b, a % b)
     }
-}
-
-fn fold_factors_with_optimize(factors: Vec<&Expr>) -> (i32, Vec<Expr>) {
-    fold_factors(factors.iter().map(|e| e.optimize()).collect::<Vec<_>>())
 }
 
 fn div(a: i32, b: i32) -> (i32, i32) {

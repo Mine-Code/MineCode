@@ -4,15 +4,15 @@ mod ast;
 mod optimizer;
 mod parser;
 mod preprocess;
-mod walker;
 
 use ast::Stmt;
 use nom::{multi::many0, IResult};
 
-//use crate::walker::ByteCodeWalker;
-use crate::walker::IdentNormalizeWalker;
-use crate::walker::PreExecutingWalker;
-use crate::walker::Walker;
+// mod walker;
+// use crate::walker::ByteCodeWalker;
+// use crate::walker::IdentNormalizeWalker;
+// use crate::walker::PreExecutingWalker;
+// use crate::walker::Walker;
 
 fn program(input: &str) -> IResult<&str, Vec<Stmt>> {
     many0(parser::stmt)(input)
