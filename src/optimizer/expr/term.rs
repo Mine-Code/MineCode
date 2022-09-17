@@ -88,8 +88,8 @@ pub fn optimize_terms(expr: &Expr) -> Expr {
 
     let (coeff_numer, coeff_denom) = div(numer_constant, denom_constant);
 
-    let numer = Expr::multiply(coeff_numer, Expr::from_factors(numer));
-    let denom = Expr::multiply(coeff_denom, Expr::from_factors(denom));
+    let numer = Expr::multiply_immediate(Expr::from_factors(numer), coeff_numer);
+    let denom = Expr::multiply_immediate(Expr::from_factors(denom), coeff_denom);
 
     if denom == Expr::Num(1) {
         numer
