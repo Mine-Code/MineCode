@@ -1,4 +1,4 @@
-use crate::ast::BinaryOp;
+use crate::ast::{BinaryOp, Keyword, UnaryOp};
 
 use super::Expr;
 
@@ -24,28 +24,63 @@ impl Expr {
     pub fn is_known_type(&self) -> bool {
         match self {
             Expr::ApplyOperator(_, a, b) if a == b => a.is_known_type(),
-            Expr::ApplyOperator(_, _, _) => false,
-            Expr::Num(_) => true,
-            Expr::SizedNum(_, _) => true,
-            Expr::Ident(_) => false,
-            Expr::DirectFuncCall(_, _) => false,
             Expr::As(_, b) => b.is_known_type(),
-            Expr::Assignment(_, _) => false,
-            Expr::Attribute(_, _) => false,
-            Expr::CompileTime(_) => false,
-            Expr::Exprs(_) => false,
-            Expr::For { .. } => false,
-            Expr::FuncCall(_, _) => false,
 
-            Expr::If { .. } => false,
-            Expr::Keyword(_) => false,
+            Expr::Num(_)
+            | Expr::SizedNum(_, _)
+            | Expr::ApplyOperator(_, _, _)
+            | Expr::Ident(_)
+            | Expr::DirectFuncCall(_, _)
+            | Expr::Assignment(_, _)
+            | Expr::Attribute(_, _)
+            | Expr::CompileTime(_)
+            | Expr::Exprs(_)
+            | Expr::For { .. }
+            | Expr::FuncCall(_, _)
+            | Expr::If { .. }
+            | Expr::Keyword(_)
+            | Expr::Ranged(_, _)
+            | Expr::Storage(_)
+            | Expr::String(_)
+            | Expr::Subscript(_, _)
+            | Expr::TypeHolder(_)
+            | Expr::UnaryOp(_, _) => false,
+        }
+    }
 
-            Expr::Ranged(_, _) => false,
-            Expr::Storage(_) => false,
-            Expr::String(_) => false,
-            Expr::Subscript(_, _) => false,
-            Expr::TypeHolder(_) => false,
-            Expr::UnaryOp(_, _) => false,
+    pub fn get_type(&self) -> Expr {
+        println!("{:#}", self);
+        match self {
+            Expr::ApplyOperator(_, a, b) => {
+                if a.get_type() == b.get_type() {
+                    a.get_type()
+                } else {
+                    panic!("Type mismatch")
+                }
+            }
+            Expr::As(_, b) => (**b).clone(),
+
+            Expr::Keyword(Keyword::AnyType) => self.clone(),
+            Expr::UnaryOp(UnaryOp::Reference, _) => self.clone(),
+
+            Expr::Num(_)
+            | Expr::SizedNum(_, _)
+            | Expr::Ident(_)
+            | Expr::DirectFuncCall(_, _)
+            | Expr::Assignment(_, _)
+            | Expr::Attribute(_, _)
+            | Expr::CompileTime(_)
+            | Expr::Exprs(_)
+            | Expr::For { .. }
+            | Expr::FuncCall(_, _)
+            | Expr::If { .. }
+            | Expr::Keyword(_)
+            | Expr::Ranged(_, _)
+            | Expr::Storage(_)
+            | Expr::String(_)
+            | Expr::Subscript(_, _)
+            | Expr::TypeHolder(_)
+            | Expr::UnaryOp(_, _) => unimplemented!(),
         }
     }
 }

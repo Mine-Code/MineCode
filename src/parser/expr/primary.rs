@@ -34,7 +34,7 @@ pub fn _primary(input: &str) -> IResult<&str, Expr> {
                     x,
                     Box::new(Expr::UnaryOp(
                         UnaryOp::Reference,
-                        Box::new(Expr::Keyword(crate::ast::Keyword::Nil)),
+                        Box::new(Expr::Keyword(crate::ast::Keyword::AnyType)),
                     )),
                 )),
             )

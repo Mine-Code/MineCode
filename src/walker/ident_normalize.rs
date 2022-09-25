@@ -144,9 +144,26 @@ impl Walker for IdentNormalizeWalker {
     }
 
     fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {
-        let v = self.walk_expr(v);
-        let t = self.walk_expr(t);
+        let mut v = self.walk_expr(v);
+        let mut t = self.walk_expr(t);
 
+        println!(
+            "{}[{}] --> {}[{}]",
+            v,
+            v.is_known_type(),
+            t,
+            t.is_known_type()
+        );
+
+        println!("t: {}", t.get_type());
+        println!("v: {}", v.get_type());
+        match (v.is_known_type(), t.is_known_type()) {
+            (true, false) => {
+                t = v.get_type();
+            }
+
+            _ => panic!("Mada kangaeru toki deha nai."),
+        }
         println!(
             "{}[{}] as {}[{}]",
             v,
