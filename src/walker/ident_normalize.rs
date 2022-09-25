@@ -146,6 +146,15 @@ impl Walker for IdentNormalizeWalker {
     fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {
         let v = self.walk_expr(v);
         let t = self.walk_expr(t);
+
+        println!(
+            "{}[{}] as {}[{}]",
+            v,
+            v.is_known_type(),
+            t,
+            t.is_known_type()
+        );
+
         Expr::As(Box::new(v), Box::new(t))
     }
 

@@ -1,9 +1,22 @@
+use std::str::FromStr;
+
 use nom::{IResult, Parser};
 
-use crate::{ast::Expr, parser::basic::ident};
+use crate::{
+    ast::{Expr, Keyword},
+    parser::basic::ident,
+};
 
 pub fn _ident(input: &str) -> IResult<&str, Expr> {
-    ident.map(Expr::Ident).parse(input)
+    ident
+        .map(|x| {
+            if let Ok(x) = Keyword::from_str(&x) {
+                Expr::Keyword(x)
+            } else {
+                Expr::Ident(x)
+            }
+        })
+        .parse(input)
 }
 
 #[cfg(test)]

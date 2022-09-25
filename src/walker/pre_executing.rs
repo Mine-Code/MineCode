@@ -167,6 +167,7 @@ impl Walker for PreExecutingWalker {
         panic!("walk_ident is not allowed in PreExecutingWalker");
     }
     fn walk_storage(&mut self, index: usize) -> Self::ExprT {
+        println!("{:?}", self.virtual_variables);
         if self.virtual_variables.contains_key(&index) {
             self.virtual_variables[&index].clone()
         } else {
