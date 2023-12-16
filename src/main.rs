@@ -6,10 +6,26 @@ mod parser;
 mod preprocess;
 mod walker;
 
+use std::collections::HashMap;
+
 use ast::Stmt;
 use nom::{multi::many0, IResult};
 
 use crate::walker::Walker;
+
+enum Expr {
+    Num,
+}
+
+struct Scope {
+    variables: HashMap<String, Expr>,
+}
+
+struct MineCodeRuntime {
+    root_scope: Scope,
+}
+
+struct MineCodeInterpreter;
 
 fn program(input: &str) -> IResult<&str, Vec<Stmt>> {
     many0(parser::stmt)(input)
@@ -27,8 +43,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     println!("{:?}", stmts);
-    let mut walker = walker::IdentNormalizeWalker::new();
-    let stmts = walker.walk(stmts);
+
+    let runtime = MineCodeRuntime {
+        root_scope: Scope {
+            variables: {
+                let mut map = HashMap::new();
+                map.insert("a".to_string(), Expr::Num);
+                map
+            },
+        },
+    };
+
+    let (variable_replacement, stmts) = {
+        let mut walker = walker::IdentNormalizeWalker::new();
+        (
+            walker.variable_replacement.clone(),
+            walker.walk(stmts).clone(),
+        )
+    };
+
     // let mut walker = walker::PreExecutingWalker::new();
     // let stmts = walker.walk_ref(stmts);
 

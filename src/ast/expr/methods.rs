@@ -26,25 +26,7 @@ impl Expr {
             Expr::ApplyOperator(_, a, b) if a == b => a.is_known_type(),
             Expr::As(_, b) => b.is_known_type(),
 
-            Expr::Num(_)
-            | Expr::SizedNum(_, _)
-            | Expr::ApplyOperator(_, _, _)
-            | Expr::Ident(_)
-            | Expr::DirectFuncCall(_, _)
-            | Expr::Assignment(_, _)
-            | Expr::Attribute(_, _)
-            | Expr::CompileTime(_)
-            | Expr::Exprs(_)
-            | Expr::For { .. }
-            | Expr::FuncCall(_, _)
-            | Expr::If { .. }
-            | Expr::Keyword(_)
-            | Expr::Ranged(_, _)
-            | Expr::Storage(_)
-            | Expr::String(_)
-            | Expr::Subscript(_, _)
-            | Expr::TypeHolder(_)
-            | Expr::UnaryOp(_, _) => false,
+            _ => false,
         }
     }
 
@@ -63,24 +45,7 @@ impl Expr {
             Expr::Keyword(Keyword::AnyType) => self.clone(),
             Expr::UnaryOp(UnaryOp::Reference, _) => self.clone(),
 
-            Expr::Num(_)
-            | Expr::SizedNum(_, _)
-            | Expr::Ident(_)
-            | Expr::DirectFuncCall(_, _)
-            | Expr::Assignment(_, _)
-            | Expr::Attribute(_, _)
-            | Expr::CompileTime(_)
-            | Expr::Exprs(_)
-            | Expr::For { .. }
-            | Expr::FuncCall(_, _)
-            | Expr::If { .. }
-            | Expr::Keyword(_)
-            | Expr::Ranged(_, _)
-            | Expr::Storage(_)
-            | Expr::String(_)
-            | Expr::Subscript(_, _)
-            | Expr::TypeHolder(_)
-            | Expr::UnaryOp(_, _) => unimplemented!(),
+            _ => unimplemented!(),
         }
     }
 }

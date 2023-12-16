@@ -5,7 +5,7 @@ use crate::ast::{BinaryOp, Expr, Stmt};
 use super::Walker;
 pub struct IdentNormalizeWalker {
     stmts: Vec<Stmt>,
-    variable_replacement: HashMap<String, usize>,
+    pub variable_replacement: HashMap<String, usize>,
     last_used_index: usize,
 }
 
@@ -144,34 +144,8 @@ impl Walker for IdentNormalizeWalker {
     }
 
     fn walk_as(&mut self, v: &Expr, t: &Expr) -> Self::ExprT {
-        let mut v = self.walk_expr(v);
-        let mut t = self.walk_expr(t);
-
-        println!(
-            "{}[{}] --> {}[{}]",
-            v,
-            v.is_known_type(),
-            t,
-            t.is_known_type()
-        );
-
-        println!("t: {}", t.get_type());
-        println!("v: {}", v.get_type());
-        match (v.is_known_type(), t.is_known_type()) {
-            (true, false) => {
-                t = v.get_type();
-            }
-
-            _ => panic!("Mada kangaeru toki deha nai."),
-        }
-        println!(
-            "{}[{}] as {}[{}]",
-            v,
-            v.is_known_type(),
-            t,
-            t.is_known_type()
-        );
-
+        let v = self.walk_expr(v);
+        let t = self.walk_expr(t);
         Expr::As(Box::new(v), Box::new(t))
     }
 
